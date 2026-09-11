@@ -627,3 +627,152 @@
     -webkit-text-fill-color: currentColor;
   }
 }
+
+
+/* ===== V13 EMERALD LUXURY AI LEARNING ===== */
+
+:root{
+ --emerald-dark:#064E3B;
+ --emerald:#059669;
+ --emerald-light:#ECFDF5;
+ --gold:#F59E0B;
+}
+
+body{
+ background:
+ radial-gradient(circle at top left, rgba(16,185,129,.22), transparent 35%),
+ linear-gradient(135deg,#064E3B 0%,#059669 45%,#ECFDF5 100%);
+}
+
+header,nav{
+ background:linear-gradient(135deg,#064E3B,#059669)!important;
+ color:white!important;
+}
+
+.card,
+.rounded-xl,
+.rounded-2xl{
+ background:rgba(255,255,255,.97)!important;
+ border-radius:24px!important;
+ box-shadow:0 15px 40px rgba(6,78,59,.18);
+ transition:all .35s ease;
+}
+
+.card:hover,
+.rounded-xl:hover,
+.rounded-2xl:hover{
+ transform:translateY(-6px);
+ box-shadow:0 25px 55px rgba(6,78,59,.28);
+}
+
+h1,h2{
+ color:#064E3B!important;
+}
+
+button{
+ transition:.3s ease;
+}
+
+button:hover{
+ transform:translateY(-2px);
+ box-shadow:0 10px 25px rgba(5,150,105,.3);
+}
+
+@media(max-width:768px){
+ body{
+  overflow-x:hidden;
+ }
+
+ .card,
+ .rounded-xl,
+ .rounded-2xl{
+  width:100%!important;
+ }
+
+ button{
+  min-height:46px;
+ }
+}
+
+
+/* ===== V14 OCEAN BLUE HIGH CONTRAST EDUCATION THEME ===== */
+
+:root{
+ --ocean-dark:#0F3D75;
+ --ocean:#2563EB;
+ --sky:#EAF4FF;
+ --text-main:#0B2545;
+ --text-title:#063B82;
+ --white:#FFFFFF;
+ --gold:#F59E0B;
+}
+
+/* Nền sáng xanh biển dễ chịu */
+body{
+ background:#F5FAFF!important;
+ color:var(--text-main)!important;
+}
+
+/* Header */
+header, nav{
+ background:linear-gradient(135deg,#0F3D75,#2563EB)!important;
+ color:white!important;
+}
+
+/* Toàn bộ chữ chính */
+p, span, div{
+ color:var(--text-main);
+}
+
+/* Tiêu đề nổi bật */
+h1,h2,h3,h4{
+ color:#063B82!important;
+ font-weight:800!important;
+}
+
+/* Tiêu đề hero */
+.hero-title,
+.text-gradient{
+ color:#0F3D75!important;
+}
+
+/* Chữ nhấn */
+.text-primary,
+.text-blue{
+ color:#2563EB!important;
+}
+
+/* Card bài học */
+.card,
+.rounded-xl,
+.rounded-2xl{
+ background:#FFFFFF!important;
+ border:1px solid #D7E8FF!important;
+ box-shadow:0 12px 35px rgba(15,61,117,.12)!important;
+}
+
+/* Card hover */
+.card:hover,
+.rounded-xl:hover,
+.rounded-2xl:hover{
+ box-shadow:0 20px 45px rgba(37,99,235,.25)!important;
+}
+
+/* Nút */
+button{
+ color:#0F3D75!important;
+ background:#FFFFFF;
+ border-color:#2563EB!important;
+}
+
+button:hover{
+ background:#2563EB!important;
+ color:#FFFFFF!important;
+}
+
+/* Mobile */
+@media(max-width:768px){
+ h1{font-size:32px!important;}
+ h2{font-size:26px!important;}
+ p{font-size:16px!important;}
+}

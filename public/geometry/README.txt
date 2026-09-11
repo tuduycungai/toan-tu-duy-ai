@@ -1,0 +1,1 @@
+Nơi chứa biểu tượng SVG/3D tứ giác, hình học động cho AI Geometry Studio.
