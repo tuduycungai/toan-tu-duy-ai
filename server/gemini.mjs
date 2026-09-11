@@ -1,17 +1,17 @@
 import { timingSafeEqual } from 'node:crypto';
 import { instructions } from './policy.mjs';
 export function validMessages(value){
- if(!Array.isArray(value)||!value.length||value.length>12)return false;
- let n=0;for(let i=0;i<value.length;i++){const m=value[i];if(!m||m.role!==(i%2===0?'user':'assistant')||typeof m.content!=='string'||!m.content.trim()||m.content.length>6000)return false;n+=m.content.length;}
- return value.at(-1).role==='user'&&n<=20000;
+ if(!Array.isArray(value)||!value.length||value.length>39)return false;
+ let n=0;for(let i=0;i<value.length;i++){const m=value[i];if(!m||m.role!==(i%2===0?'user':'assistant')||typeof m.content!=='string'||!m.content.trim()||m.content.length>12000)return false;n+=m.content.length;}
+ return value.at(-1).role==='user'&&n<=60000;
 }
 export async function handleChat(request,env,fetcher=fetch){
  const reply=(v,status=200)=>Response.json(v,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
  if(request.method!=='POST')return reply({error:'Chỉ hỗ trợ gửi yêu cầu POST.'},405);
  if(request.headers.get('sec-fetch-site')==='cross-site')return reply({error:'Yêu cầu không hợp lệ.'},403);
  if(!request.headers.get('content-type')?.includes('application/json'))return reply({error:'Định dạng yêu cầu không hợp lệ.'},415);
- const apiKey=env.GEMINI_API_KEY?.trim(),access=(env.ACCESS_CODE?.trim()||'HOCTOAN').normalize('NFC');
- if(!apiKey||!access||access.length<6)return reply({error:'Giáo viên cần kiểm tra GEMINI_API_KEY trong Netlify. Nếu tự đặt ACCESS_CODE, mã phải có ít nhất 12 ký tự. Sau đó triển khai lại.'},503);
+ const apiKey=env.GEMINI_API_KEY?.trim(),access=(env.ACCESS_CODE?.trim()||'THPT Gia Định').normalize('NFC');
+ if(!apiKey||!access||access.length<12)return reply({error:'Giáo viên cần kiểm tra GEMINI_API_KEY trong Netlify. Nếu tự đặt ACCESS_CODE, mã phải có ít nhất 12 ký tự. Sau đó triển khai lại.'},503);
  const reader=request.body?.getReader();if(!reader)return reply({error:'Thiếu nội dung.'},400);
  let raw='',size=0;const decoder=new TextDecoder();try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>250000){await reader.cancel();return reply({error:'Nội dung quá dài. Hãy mở bài mới.'},413);}raw+=decoder.decode(value,{stream:true});}raw+=decoder.decode();}catch{return reply({error:'Không đọc được nội dung.'},400);}
  let body;try{body=JSON.parse(raw);}catch{return reply({error:'Dữ liệu không hợp lệ.'},400);}
@@ -21,13 +21,13 @@ export async function handleChat(request,env,fetcher=fetch){
  if(a.length!==b.length||!timingSafeEqual(a,b))return reply({error:'Mã truy cập chưa đúng. Hãy hỏi giáo viên để nhận mã.'},401);
  const check=body.check===true;
  if(!check&&(!validMessages(body.messages)||!['guide','review','compare'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);
- const model=env.GEMINI_MODEL?.trim()||'gemini-3.1-flash-lite';
+ const model=env.GEMINI_MODEL?.trim()||'gemini-2.5-flash';
  if(!/^gemini-[a-zA-Z0-9.-]+$/.test(model))return reply({error:'GEMINI_MODEL chưa hợp lệ. Giáo viên cần kiểm tra cấu hình.'},503);
  const contents=check?[{role:'user',parts:[{text:'Reply with OK only.'}]}]:body.messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
- const generationConfig={maxOutputTokens:check?64:1200, temperature:0.3};
- if(model==='gemini-3.1-flash-lite')generationConfig.thinkingConfig={thinkingBudget:check?0:128};
+ const generationConfig={maxOutputTokens:check?128:2400};
+ if(model==='gemini-2.5-flash')generationConfig.thinkingConfig={thinkingBudget:check?0:512};
  try{
- const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({systemInstruction:{parts:[{text:check?'Reply with OK only.':instructions(body.mode)}]},contents,generationConfig}),signal:AbortSignal.timeout(30000)});
+ const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({systemInstruction:{parts:[{text:check?'Reply with OK only.':instructions(body.mode)}]},contents,generationConfig}),signal:AbortSignal.timeout(22000)});
  if(!response.ok){const s=response.status;await response.body?.cancel();return reply({error:s===429?'Gemini đã đạt giới hạn lượt gọi hoặc hạn mức. Hãy đợi và thử lại; giáo viên kiểm tra hạn mức trong Google AI Studio.':s===400||s===401||s===403?'Gemini không chấp nhận khóa API hoặc cấu hình. Giáo viên kiểm tra khóa, quyền truy cập và mô hình.':s===404?'Không tìm thấy mô hình. Giáo viên cần đổi GEMINI_MODEL sang mã đang được Google cung cấp.':'Gemini tạm thời chưa phản hồi. Hãy thử lại.'},s===429?429:502);}
  const data=await response.json();const candidate=data.candidates?.[0];
  if(data.promptFeedback?.blockReason||candidate?.finishReason==='SAFETY')return reply({error:'Gemini chưa thể phản hồi nội dung này. Hãy diễn đạt lại đề toán và bỏ thông tin cá nhân.'},422);
