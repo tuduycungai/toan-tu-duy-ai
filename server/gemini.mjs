@@ -21,7 +21,7 @@ export async function handleChat(request,env,fetcher=fetch){
  if(a.length!==b.length||!timingSafeEqual(a,b))return reply({error:'Mã truy cập chưa đúng. Hãy hỏi giáo viên để nhận mã.'},401);
  const check=body.check===true;
  if(!check&&(!validMessages(body.messages)||!['guide','review','compare'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);
- const model=env.GEMINI_MODEL?.trim()||'gemini-3.1-flash-lite';
+ const model=env.GEMINI_MODEL?.trim()||'gemini-2.5-flash';
  if(!/^gemini-[a-zA-Z0-9.-]+$/.test(model))return reply({error:'GEMINI_MODEL chưa hợp lệ. Giáo viên cần kiểm tra cấu hình.'},503);
  const contents=check?[{role:'user',parts:[{text:'Reply with OK only.'}]}]:body.messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
  const generationConfig={maxOutputTokens:check?128:2400};
