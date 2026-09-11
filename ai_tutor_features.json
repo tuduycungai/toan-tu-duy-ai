@@ -1,0 +1,40 @@
+{
+  "version": "V6 UPGRADE",
+  "modes": [
+    {
+      "id": "tutor",
+      "name": "Gia sư cá nhân",
+      "description": "Cá nhân hóa theo lớp, mục tiêu và trình độ học sinh"
+    },
+    {
+      "id": "exercise_generator",
+      "name": "Tạo bài tập AI",
+      "description": "Sinh bài tập theo lớp, chương, mức độ"
+    },
+    {
+      "id": "exam_mode",
+      "name": "Ôn thi",
+      "description": "Tạo đề theo ma trận"
+    },
+    {
+      "id": "solution_checker",
+      "name": "Kiểm tra lỗi sai",
+      "description": "Phân tích bài làm của học sinh"
+    }
+  ],
+  "levels": [
+    "Nhận biết",
+    "Thông hiểu",
+    "Vận dụng",
+    "Vận dụng cao"
+  ],
+  "grades": [
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12"
+  ]
+}
