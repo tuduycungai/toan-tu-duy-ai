@@ -1,21 +1,21 @@
-# Báo cáo nâng cấp AI Tutor V6
+# AI Tutor Upgrade Report
 
-## Nguyên tắc bảo toàn
-- Giữ nguyên Netlify Function `netlify/functions/chat.mjs`.
-- Giữ nguyên module `server/gemini.mjs` và biến môi trường Gemini.
-- Không đưa API key vào client.
+## Bảo toàn
+- Giữ server/gemini.mjs.
+- Giữ netlify/functions/chat.mjs.
+- Giữ GEMINI_API_KEY và ACCESS_CODE.
+- Giữ endpoint /api/chat.
 
-## Đã bổ sung nền tảng
-- Bộ mô tả chế độ học tập AI Tutor.
-- Ngân hàng cấu hình lớp và mức độ bài tập.
-- System prompt định hướng trợ lý giáo viên Toán Việt Nam.
+## Nâng cấp
+- Hồ sơ học sinh.
+- Cá nhân hóa prompt theo trình độ.
+- Giao diện AI Tutor.
+- Hỗ trợ mở rộng ngân hàng bài tập.
 
-## Cần kiểm thử trước khi phát hành
-npm ci
+## Chạy
+npm install
 npm run build
-npm test
 
-Kiểm tra Netlify Environment Variables:
-- GEMINI_API_KEY
-- GEMINI_MODEL
-- ACCESS_CODE
+Deploy Netlify giữ nguyên biến môi trường:
+GEMINI_API_KEY
+ACCESS_CODE

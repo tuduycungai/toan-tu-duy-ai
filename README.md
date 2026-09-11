@@ -11,7 +11,3 @@ Biến máy chủ: GEMINI_API_KEY, GEMINI_MODEL, ACCESS_CODE
 Không chứa khóa API thật. Không dùng Netlify Drop chỉ với dist để chạy chatbot.
 
 Mã truy cập lớp mặc định: THPT Gia Định. Khóa Gemini thật vẫn phải đặt ở Netlify.
-
-
-## V6 Upgrade
-Có thêm cấu hình AI Tutor tại `ai_tutor_features.json`.
