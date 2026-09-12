@@ -1,0 +1,23 @@
+{
+  "baseline": "chatbot-toan-gia-dinh-TU-GIAC-AI-TUTOR-PRO-V2(2).zip",
+  "modified": [
+    "server/policy.mjs"
+  ],
+  "added": [
+    "HUONG_DAN_V3.md",
+    "tests/pedagogy-cases.mjs",
+    "tests/pedagogy-live.test.mjs",
+    "tests/policy.test.mjs",
+    "tests/preserved.test.mjs",
+    "tests/v2-preserved.json",
+    "BAO_CAO_V3.json"
+  ],
+  "deleted": [],
+  "unchanged_files": 62,
+  "validation": {
+    "npm test": "45 passed, 0 failed, 1 skipped (live Gemini)",
+    "npx tsc --noEmit": "passed",
+    "npm run build": "passed; generated dist byte-identical to V2"
+  },
+  "limits": "Policy contract and mock transport tests do not prove live Gemini pedagogy. Live cases and human rubric included; no live key supplied."
+}
