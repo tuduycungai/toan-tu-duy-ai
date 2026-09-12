@@ -1,4 +1,4 @@
-# Tư duy Tứ giác · Cùng Thầy Sang — PRO V2
+# Tư duy Toán học — PRO V2.1
 
 Gia sư AI hỗ trợ rèn luyện lập luận hình học tứ giác lớp 8. Bản nâng cấp từ ZIP AI-TUTOR-UPGRADE được cung cấp, bảo toàn giao thức Gemini và cấu hình triển khai.
 
