@@ -4,8 +4,8 @@
     {
       "file": "server/gemini.mjs",
       "source_sha256": "65667920c48e03037b3698b5eda95cfdda2f584e1fe0220132c01a725dbe8b8b",
-      "upgrade_sha256": "65667920c48e03037b3698b5eda95cfdda2f584e1fe0220132c01a725dbe8b8b",
-      "identical": true
+      "upgrade_sha256": "249bda5b198149c67593e5f511be3b78f42b28e9052bc41a82099c0c935e027a",
+      "identical": false
     },
     {
       "file": "netlify/functions/chat.mjs",
@@ -22,8 +22,8 @@
     {
       "file": ".env.example",
       "source_sha256": "94e737501c088edf271152736fbc2a503ecfef8aabab157a315d9079b57225d0",
-      "upgrade_sha256": "94e737501c088edf271152736fbc2a503ecfef8aabab157a315d9079b57225d0",
-      "identical": true
+      "upgrade_sha256": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e",
+      "identical": false
     },
     {
       "file": "vite.config.ts",
@@ -46,8 +46,9 @@
     {
       "file": "tests/gemini.test.mjs",
       "source_sha256": "1b17f35e946d29b27f9fc53976a57a3195c91628e118f1edc55d85303cae3767",
-      "upgrade_sha256": "1b17f35e946d29b27f9fc53976a57a3195c91628e118f1edc55d85303cae3767",
-      "identical": true
+      "upgrade_sha256": "1558e8a30c24f48a33c283cfb61112f1cc94b310245b7469617ba965c9dcf703",
+      "identical": false
     }
-  ]
+  ],
+  "update_note": "User-requested HOCGIOITOAN code: auth minimum 10; Gemini transport unchanged. See CAP_NHAT_MA_LOP.md."
 }

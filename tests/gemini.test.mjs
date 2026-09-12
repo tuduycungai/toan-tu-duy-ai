@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {handleChat} from '../server/gemini.mjs';
-const env={GEMINI_API_KEY:'test-only-not-real-key',ACCESS_CODE:'class-test-12345',GEMINI_MODEL:'gemini-2.5-flash'};
+const env={GEMINI_API_KEY:'test-only-not-real-key',ACCESS_CODE:'HOCGIOITOAN',GEMINI_MODEL:'gemini-2.5-flash'};
 const body={accessCode:env.ACCESS_CODE,mode:'guide',messages:[{role:'user',content:'Cho hình bình hành ABCD. Em cần chứng minh hai cạnh kề bằng nhau.'}]};
 const req=(b=body)=>new Request('https://example.netlify.app/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
 const success=()=>Response.json({candidates:[{finishReason:'STOP',content:{parts:[{text:'Em hãy nêu giả thiết đã có.'}]}}]});
@@ -15,5 +15,5 @@ test('empty response never means connected',async()=>{const r=await handleChat(r
 test('blocks unsafe or truncated output',async()=>{for(const [finishReason,status] of [['SAFETY',422],['MAX_TOKENS',502]]){const r=await handleChat(req(),env,()=>Response.json({candidates:[{finishReason,content:{parts:[{text:'partial'}]}}]}));assert.equal(r.status,status);}});
 test('does not expose thought parts',async()=>{const r=await handleChat(req(),env,()=>Response.json({candidates:[{finishReason:'STOP',content:{parts:[{thought:true,text:'private'},{text:'public'}]}}]}));assert.equal((await r.json()).text,'public');});
 test('handles timeout and oversized input',async()=>{let r=await handleChat(req(),env,()=>{throw new Error('timeout')});assert.equal(r.status,504);r=await handleChat(req({...body,data:'a'.repeat(250001)}),env);assert.equal(r.status,413);});
-test('requested default class code works without ACCESS_CODE override',async()=>{const r=await handleChat(req({...body,accessCode:'THPT Gia Định'}),{GEMINI_API_KEY:env.GEMINI_API_KEY},()=>success());assert.equal(r.status,200);});
-test('Vietnamese access code accepts equivalent Unicode composition',async()=>{const r=await handleChat(req({...body,accessCode:' THPT Gia Định '.normalize('NFD')}),{GEMINI_API_KEY:env.GEMINI_API_KEY},()=>success());assert.equal(r.status,200);});
+test('requested default class code works without ACCESS_CODE override',async()=>{const r=await handleChat(req({...body,accessCode:'HOCGIOITOAN'}),{GEMINI_API_KEY:env.GEMINI_API_KEY},()=>success());assert.equal(r.status,200);});
+test('Vietnamese access code accepts equivalent Unicode composition',async()=>{const r=await handleChat(req({...body,accessCode:' THPT Gia Định '.normalize('NFD')}),{GEMINI_API_KEY:env.GEMINI_API_KEY,ACCESS_CODE:'THPT Gia Định'},()=>success());assert.equal(r.status,200);});

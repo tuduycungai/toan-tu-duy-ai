@@ -20,7 +20,7 @@ Mở địa chỉ được terminal thông báo (mặc định http://localhost:
 
 1. Đưa mã nguồn vào kho Git và kết nối Netlify; chọn thư mục chứa package.json làm base directory.
 2. Giữ netlify.toml: build `npm run build`, publish `dist`, functions `netlify/functions`, Node 22.
-3. Đặt GEMINI_API_KEY trong biến môi trường dành cho Functions. Giữ GEMINI_MODEL theo cấu hình đang dùng (mặc định gemini-2.5-flash). ACCESS_CODE là mã lớp riêng, không phải khóa Gemini; nếu thay, dùng tối thiểu 12 ký tự.
+3. Đặt GEMINI_API_KEY trong biến môi trường dành cho Functions. Giữ GEMINI_MODEL theo cấu hình đang dùng (mặc định gemini-2.5-flash). ACCESS_CODE=HOCGIOITOAN là mã lớp mới. Nếu Netlify hoặc .env đang có ACCESS_CODE cũ, hãy thay giá trị thành HOCGIOITOAN và deploy/khởi động lại. ACCESS_CODE là mã lớp riêng, không phải khóa Gemini; nếu thay, dùng tối thiểu 10 ký tự.
 4. Deploy và kiểm tra bằng mã lớp. Không chỉ kéo thả thư mục dist: ứng dụng cần Netlify Functions.
 5. Thử một câu hỏi tứ giác và một đánh giá thật có sự đồng ý của người dùng, rồi kiểm tra Google Forms. Bản đóng gói chưa được triển khai lên tài khoản Netlify của bạn.
 

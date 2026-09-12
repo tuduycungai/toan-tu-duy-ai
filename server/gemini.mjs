@@ -10,8 +10,8 @@ export async function handleChat(request,env,fetcher=fetch){
  if(request.method!=='POST')return reply({error:'Chỉ hỗ trợ gửi yêu cầu POST.'},405);
  if(request.headers.get('sec-fetch-site')==='cross-site')return reply({error:'Yêu cầu không hợp lệ.'},403);
  if(!request.headers.get('content-type')?.includes('application/json'))return reply({error:'Định dạng yêu cầu không hợp lệ.'},415);
- const apiKey=env.GEMINI_API_KEY?.trim(),access=(env.ACCESS_CODE?.trim()||'THPT Gia Định').normalize('NFC');
- if(!apiKey||!access||access.length<12)return reply({error:'Giáo viên cần kiểm tra GEMINI_API_KEY trong Netlify. Nếu tự đặt ACCESS_CODE, mã phải có ít nhất 12 ký tự. Sau đó triển khai lại.'},503);
+ const apiKey=env.GEMINI_API_KEY?.trim(),access=(env.ACCESS_CODE?.trim()||'HOCGIOITOAN').normalize('NFC');
+ if(!apiKey||!access||access.length<10)return reply({error:'Giáo viên cần kiểm tra GEMINI_API_KEY trong Netlify. Nếu tự đặt ACCESS_CODE, mã phải có ít nhất 10 ký tự. Sau đó triển khai lại.'},503);
  const reader=request.body?.getReader();if(!reader)return reply({error:'Thiếu nội dung.'},400);
  let raw='',size=0;const decoder=new TextDecoder();try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>250000){await reader.cancel();return reply({error:'Nội dung quá dài. Hãy mở bài mới.'},413);}raw+=decoder.decode(value,{stream:true});}raw+=decoder.decode();}catch{return reply({error:'Không đọc được nội dung.'},400);}
  let body;try{body=JSON.parse(raw);}catch{return reply({error:'Dữ liệu không hợp lệ.'},400);}

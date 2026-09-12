@@ -21,10 +21,10 @@ export async function handleFeedback(request,env,fetcher=fetch){
  if(request.headers.get('sec-fetch-site')==='cross-site')return reply({error:'Yêu cầu không hợp lệ.'},403);
  if(!request.headers.get('content-type')?.includes('application/json'))return reply({error:'Cần dữ liệu JSON.'},415);
  let body;try{const reader=request.body?.getReader();if(!reader)throw Error();let raw='',size=0;const decoder=new TextDecoder();while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>16000){await reader.cancel();return reply({error:'Nội dung quá dài.'},413);}raw+=decoder.decode(value,{stream:true});}body=JSON.parse(raw+decoder.decode());}catch{return reply({error:'Không đọc được dữ liệu.'},400);}
- const expected=(env.ACCESS_CODE?.trim()||'THPT Gia Định').normalize('NFC');
+ const expected=(env.ACCESS_CODE?.trim()||'HOCGIOITOAN').normalize('NFC');
  const given=typeof body?.accessCode==='string'?body.accessCode.trim().normalize('NFC'):'';
  const a=Buffer.from(expected),b=Buffer.from(given);
- if(expected.length<12||a.length!==b.length||!timingSafeEqual(a,b))return reply({error:'Mã truy cập chưa đúng. Hãy kết nối lại.'},401);
+ if(expected.length<10||a.length!==b.length||!timingSafeEqual(a,b))return reply({error:'Mã truy cập chưa đúng. Hãy kết nối lại.'},401);
  let data;try{data=feedbackPayload(body);}catch(e){return reply({error:e.message},400);}
  if(typeof body.submissionId!=='string'||! /^[a-zA-Z0-9-]{16,80}$/.test(body.submissionId))return reply({error:'Mã phiên đánh giá chưa hợp lệ.'},400);
  for(const [key,value] of submitted){if(Date.now()-value.created>3600000)submitted.delete(key);}

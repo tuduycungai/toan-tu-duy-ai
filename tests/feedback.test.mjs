@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
 import {handleFeedback,feedbackPayload} from '../server/feedback.mjs';
-const env={ACCESS_CODE:'class-test-12345'};
+const env={ACCESS_CODE:'HOCGIOITOAN'};
 const sample=()=>({accessCode:env.ACCESS_CODE,name:'Học sinh thử',school:'Trường thử',email:'student@example.com',rating:4,comment:'Dễ hiểu',consent:true,submissionId:randomUUID()});
 const req=(body)=>new Request('https://example.netlify.app/.netlify/functions/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 test('five Google Form fields have exact verified entry IDs',()=>{const p=feedbackPayload(sample());assert.deepEqual([...p.keys()],['entry.551915748','entry.1887301755','entry.1301171588','entry.54850382','entry.326585189']);assert.equal(p.get('entry.54850382'),'4');assert.equal(p.size,5);});
