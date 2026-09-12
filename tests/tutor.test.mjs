@@ -1,0 +1,12 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import ts from 'typescript';
+const compiled=ts.transpileModule(readFileSync(new URL('../lib/tutor.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
+const {context,requestMessages,emptyProfile,modes}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+import {validMessages} from '../server/gemini.mjs';
+const profile={...emptyProfile,name:'PRIVATE_NAME',school:'PRIVATE_SCHOOL',className:'PRIVATE_CLASS',teacher:'PRIVATE_TEACHER',level:'Khá',difficulties:['Đại số']};
+test('personalization excludes identifying profile fields',()=>{const c=context(profile,'personal');for(const value of [profile.name,profile.school,profile.className,profile.teacher])assert(!c.includes(value));assert(c.includes('Khá'));assert(c.includes('Đại số'));});
+test('all UI modes map to existing backend enum',()=>{for(const m of modes)assert(['guide','review','compare'].includes(m.api));});
+test('long history remains within backend bounds and alternating roles',()=>{const history=Array.from({length:60},(_,i)=>({role:i%2?'assistant':'user',content:'x'.repeat(4000)}));const result=requestMessages(history,'Đề mới',profile,'daily');assert(validMessages(result));assert.equal(result.at(-1).role,'user');assert(result.at(-1).content.includes('Đề mới'));});
+test('oversize prompt blocked before network request',()=>{assert.throws(()=>requestMessages([],'x'.repeat(12000),profile,'quick'));});
