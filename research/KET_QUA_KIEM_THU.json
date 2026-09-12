@@ -1,0 +1,18 @@
+{
+  "npm_install": "passed",
+  "npm_build": "passed",
+  "unit_tests": {
+    "passed": 31,
+    "failed": 0
+  },
+  "typescript": "passed",
+  "npm_start_and_playwright": "passed",
+  "browser_errors": [],
+  "mocked_services": [
+    "Gemini",
+    "Google Form POST"
+  ],
+  "live_Gemini": "not tested: no key supplied",
+  "live_Form_submission": "not performed",
+  "Netlify_deploy": "not performed"
+}

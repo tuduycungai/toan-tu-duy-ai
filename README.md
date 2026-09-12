@@ -1,66 +1,66 @@
-# Tư duy Toán học — AI Tutor cùng Thầy Sang
+# Tư duy Tứ giác · Cùng Thầy Sang — PRO V2
 
-Bản nâng cấp từ `chatbot-toan-gia-dinh-main.zip` được đính kèm. Không nhận được bản riêng có hậu tố `(2)`; bản tham khảo thực tế là `Tu_duy_Tu_giac_AI_Tutor_V6_GEMINI_3_1_FLASH_LITE_FIXED.zip`.
+Gia sư AI hỗ trợ rèn luyện lập luận hình học tứ giác lớp 8. Bản nâng cấp từ ZIP AI-TUTOR-UPGRADE được cung cấp, bảo toàn giao thức Gemini và cấu hình triển khai.
 
 ## Chạy trên máy
 
-Yêu cầu Node.js >=22.13.0, npm. Mở terminal trong thư mục chứa package.json:
+Cài Node.js >=22.13.0, giải nén và mở terminal tại thư mục chứa package.json:
 
 ```bash
 npm install
 cp .env.example .env
-# Điền GEMINI_API_KEY vào .env; giữ giá trị cấu hình đang dùng của thầy.
+# Điền GEMINI_API_KEY trong .env bằng trình soạn thảo
 npm run build
-npm test
 npm start
 ```
 
-Trên Windows, sao chép `.env.example` thành `.env` bằng File Explorer hoặc `Copy-Item .env.example .env` trong PowerShell. Mở http://localhost:3000. `PORT` là tùy chọn cho cổng cục bộ. `npm start` chạy Vite qua adapter phát triển, chuyển `/api/chat` tới chính hàm `handleChat` gốc. Không dùng adapter này làm máy chủ production.
+Mở địa chỉ được terminal thông báo (mặc định http://localhost:3000). Windows có thể sao chép .env.example và đổi tên bản sao thành .env. Không đưa khóa thật vào frontend hoặc Git. `npm start` phục vụ giao diện cùng API; `npm run dev`/`npm run preview` đơn lẻ không cung cấp đầy đủ backend.
 
-`npm run dev` và `npm run preview` được giữ nguyên, chỉ phục vụ frontend, không có Gemini backend. Dùng `npm start` để kiểm tra đầy đủ cục bộ. Có thể dùng `npx tsc --noEmit` để kiểm tra TypeScript.
+## Triển khai Netlify
 
-## Triển khai Netlify (giữ kiến trúc gốc)
+1. Đưa mã nguồn vào kho Git và kết nối Netlify; chọn thư mục chứa package.json làm base directory.
+2. Giữ netlify.toml: build `npm run build`, publish `dist`, functions `netlify/functions`, Node 22.
+3. Đặt GEMINI_API_KEY trong biến môi trường dành cho Functions. Giữ GEMINI_MODEL theo cấu hình đang dùng (mặc định gemini-2.5-flash). ACCESS_CODE là mã lớp riêng, không phải khóa Gemini; nếu thay, dùng tối thiểu 12 ký tự.
+4. Deploy và kiểm tra bằng mã lớp. Không chỉ kéo thả thư mục dist: ứng dụng cần Netlify Functions.
+5. Thử một câu hỏi tứ giác và một đánh giá thật có sự đồng ý của người dùng, rồi kiểm tra Google Forms. Bản đóng gói chưa được triển khai lên tài khoản Netlify của bạn.
 
-1. Đưa source trong thư mục này lên repository kết nối với Netlify hiện có, giữ các biến môi trường trên site cũ. Không cần tạo site mới.
-2. Build command: `npm run build`; publish: `dist`; functions: `netlify/functions`; Node 22 theo `netlify.toml` gốc.
-3. Giữ `GEMINI_API_KEY`, `GEMINI_MODEL`, `ACCESS_CODE` đang chạy. Không đặt khóa API vào biến có tiền tố VITE hoặc mã frontend.
-4. Nếu thiết lập mới: điền khóa hợp lệ vào `GEMINI_API_KEY`. `GEMINI_MODEL` mặc định `gemini-2.5-flash`; `ACCESS_CODE` mặc định `THPT Gia Định`, mã tự đặt cần ít nhất 12 ký tự.
-5. Build và triển khai đầy đủ cả Functions; chỉ kéo thư mục dist lên hosting tĩnh sẽ không cung cấp backend.
-6. Mở ứng dụng, nhập hồ sơ, chọn Kết nối AI, nhập mã truy cập. Nút kiểm tra gửi một yêu cầu Gemini thật. Thử câu hỏi ngắn và một bộ 5 câu sau khi kết nối.
+## Trình tự sử dụng
 
-Chưa thực hiện deploy vào tài khoản Netlify của thầy. Chưa kiểm chứng khóa/hạn mức Gemini thật trong môi trường này vì file đính kèm chỉ có cấu hình mẫu.
+Kết nối bằng **mã truy cập lớp** → điền hồ sơ → chọn bài/chế độ → xem sơ đồ định hướng → trao đổi từng bước → tự giải thích lại → đánh giá.
 
-## Tính năng
+Đây là cách kết nối của bản gốc: khóa Gemini đặt ở server, học sinh nhập mã truy cập. Hồ sơ chỉ mở sau khi kết nối được xác nhận. Ghi nhớ hồ sơ trên thiết bị là lựa chọn của người dùng. Tên, trường và email không tự động được đưa vào ngữ cảnh Gemini; ngữ cảnh chỉ dùng thông tin học tập. Nội dung học sinh tự gõ trong chat vẫn được chuyển đến Gemini.
 
-- Trang chủ chọn lớp 1–12, môn Toán, chế độ học; giao diện điện thoại, sáng/tối, avatar, trạng thái suy nghĩ, hiệu ứng hiện chữ (không phải streaming API).
-- Hồ sơ: họ tên, lớp, trường, khối, môn, giáo viên tùy chọn, điểm Toán, mức độ, khó khăn, mục tiêu. Lưu/sửa/xóa ở trình duyệt.
-- Hỏi bài nhanh; Gia sư cá nhân; Luyện tập mỗi ngày; Kiểm tra kiến thức; Phân tích lỗi sai; giữ So sánh cách giải của bản gốc.
-- Bài tập AI theo lớp/chương/chủ đề/mức độ, 5–10 câu; mở gợi ý, lời giải từng bước, đáp án và bài tương tự qua hội thoại. Khi hỏi về một câu, nên ghi rõ số câu. Kiểm tra không hiện đáp án ngay khi ra đề; chấm bài thông qua hội thoại với AI.
-- Cá nhân hóa bằng khối lớp, mức độ tự khai, điểm, khó khăn và mục tiêu. Đây là điều chỉnh prompt, không phải mô hình đã huấn luyện riêng hoặc đánh giá năng lực được kiểm định.
-- Phiên học mẫu soạn sẵn, hướng dẫn, dừng yêu cầu và giữ bài để gửi lại khi lỗi.
+Nút **“Em đã biết làm, cảm ơn Thầy”** mở đánh giá bất cứ lúc nào trong buổi học. Gia sư có thể đề nghị đánh giá khi bài học hoàn tất và học sinh đã phản hồi tự kiểm tra. Học sinh chọn 1–5 sao, ghi nhận xét và đồng ý gửi. Không tự chọn sẵn mức hài lòng.
 
-## API được bảo toàn
+## Google Forms
 
+Tên, trường, email, điểm hài lòng và nhận xét được gửi đến đúng biểu mẫu đã cung cấp. Hồ sơ không gửi ngay khi nhập; được gửi cùng đánh giá sau thao tác xác nhận. Tóm tắt học tập chỉ đính kèm nếu chọn. Không gửi mã truy cập hay khóa Gemini sang Google.
+
+Endpoint mới `/.netlify/functions/feedback` tách biệt với `/api/chat`. Chỉ báo thành công khi nhận nội dung xác nhận của Google Forms. Khi chưa xác nhận được, ứng dụng cung cấp liên kết biểu mẫu điền sẵn để học sinh kiểm tra và gửi trực tiếp. Không tự gửi lại vì có thể trùng phản hồi. Chống trùng trong bộ nhớ một phiên function, không phải bảo đảm duy nhất trên nhiều máy chủ. Nếu chủ biểu mẫu đổi trường, cập nhật lib/form-config.json; không đổi API Gemini.
+
+## Nội dung và kiểm tra
+
+- 5 chế độ: gợi mở, kiểm tra lời giải, so sánh, luyện mỗi ngày, tự kiểm tra.
+- 6 bài mẫu có hình SVG, gợi ý, lời giải đối chiếu và câu hỏi chuyển giao.
+- Sơ đồ công khai: giả thiết + mục tiêu → kiến thức kết nối → bước tiếp theo. Đây là định hướng sư phạm, không phải suy nghĩ nội bộ của mô hình.
+- Chính sách giới hạn chủ đề tứ giác và kiến thức phụ trợ; độ tuân thủ thực tế vẫn cần kiểm tra với Gemini.
+- Giao diện sáng/tối, điện thoại, hiệu ứng gõ, dừng phản hồi, hỗ trợ giảm chuyển động.
+
+```bash
+npm test
+npx tsc --noEmit
 ```
-Frontend → POST /api/chat → Netlify redirect
-→ netlify/functions/chat.mjs → server/gemini.mjs
-→ Gemini generateContent → {text, model} → Frontend
-```
 
-- Request chat: `{accessCode, messages:[{role,content}], mode}`.
-- Request kết nối: `{accessCode, check:true}`.
-- Mode backend vẫn chỉ `guide`, `review`, `compare`. Chế độ mới ánh xạ trong `lib/tutor.ts`.
-- Response chat vẫn `{text, model}`; kiểm tra `{ok:true, model}`; lỗi `{error}` với status gốc.
-- REST fetch, header khóa, model mặc định, timeout, token budget, validate, xử lý lỗi, biến môi trường và cấu hình deploy giữ nguyên.
-- **Ngoại lệ có chủ đích:** `server/policy.mjs` chỉ thay nội dung chỉ dẫn sư phạm theo Phần 7, mở phạm vi từ tứ giác lớp 8 sang Toán phổ thông. Không thay hàm, exports hoặc ba mã mode. Không sao chép policy/backend từ ZIP tham khảo.
-- Bản backup ZIP gốc đầy đủ tại `backup/chatbot-toan-gia-dinh-main-original.zip`. `API_INTEGRITY.json` đối chiếu SHA-256 các file quan trọng.
+Kiểm tra trình duyệt tùy chọn: scripts/check-ui.mjs cần Playwright và Chromium có sẵn; không thêm chúng vào dependencies ứng dụng. Script dùng phản hồi giả lập và chặn gửi Google Forms thật.
 
-## Dữ liệu và giới hạn
+## Tài liệu
 
-Hồ sơ lưu trong localStorage trên trình duyệt này. Tên, trường, lớp cụ thể và giáo viên không tự động gửi đến Gemini; chỉ bối cảnh học tập cần thiết được thêm vào chuỗi content của tin nhắn user. Nội dung người học tự gõ vẫn được gửi nguyên văn khi nhấn Gửi. Không gửi hồ sơ sang Google Forms của file tham khảo.
+- BAO_CAO_NANG_CAP.md: phạm vi chỉnh sửa và kết quả kiểm tra.
+- API_INTEGRITY.json: SHA-256 đối chiếu các tệp cần bảo toàn.
+- research/CO_SO_SU_PHAM.md và public/co-so-su-pham.html: cơ sở sư phạm và nguồn trong/ngoài nước.
+- research/BAI_MAU_VA_DAP_AN.md: bài mẫu và lời giải tham chiếu.
+- research/KICH_BAN_KIEM_THU_SU_PHAM.md: nghiệm thu với Gemini thật.
+- research/screenshots: ảnh kiểm thử giao diện bằng dữ liệu giả lập.
+- backup: bản sao trước nâng cấp; research/legacy-v1 chứa hướng dẫn cũ, được thay thế bởi README này.
 
-Hồ sơ không đồng bộ thiết bị, không có cơ sở dữ liệu/bảng quản trị giáo viên mới. Mã truy cập và hội thoại chỉ nằm trong bộ nhớ phiên. Xóa hồ sơ trên máy dùng chung sau buổi học. Phiên hội thoại dài được rút bớt các cặp tin cũ để phù hợp giới hạn API, vì vậy AI có thể không còn thấy phần cũ; mở Bài mới khi đổi bài.
-
-Ngân hàng bài tập là sinh theo yêu cầu và làm trong phiên chat, chưa có kho bài được giáo viên duyệt/lưu trên server. AI có thể tạo bài hoặc lời giải sai; cần kiểm tra. Giới hạn output/timeout của backend gốc vẫn giữ nguyên; nếu một bộ đề quá dài, chọn 5 câu hoặc chủ đề hẹp hơn. Chưa hỗ trợ ảnh, file bài làm hoặc LaTeX renderer; vẫn hiển thị văn bản và kí hiệu Unicode như bản gốc.
-
-`HUONG_DAN.md` và ZIP lồng bên trong được giữ nguyên để bảo toàn tư liệu cũ; tài liệu này là hướng dẫn áp dụng cho bản nâng cấp.
+Chưa có khóa Gemini thật để nghiệm thu đầu cuối. Kiểm thử API dùng phản hồi mô phỏng; không gửi dữ liệu thử vào biểu mẫu thật. Phần mềm áp dụng tài liệu vào thiết kế và prompt, không huấn luyện lại Gemini và chưa có nghiên cứu thực nghiệm chứng minh hiệu quả của bản phát hành.

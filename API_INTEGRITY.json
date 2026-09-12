@@ -1,38 +1,53 @@
-[
-  {
-    "file": "server/gemini.mjs",
-    "original_sha256": "65667920c48e03037b3698b5eda95cfdda2f584e1fe0220132c01a725dbe8b8b",
-    "upgrade_sha256": "65667920c48e03037b3698b5eda95cfdda2f584e1fe0220132c01a725dbe8b8b",
-    "identical": true
-  },
-  {
-    "file": "netlify/functions/chat.mjs",
-    "original_sha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
-    "upgrade_sha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
-    "identical": true
-  },
-  {
-    "file": "netlify.toml",
-    "original_sha256": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6",
-    "upgrade_sha256": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6",
-    "identical": true
-  },
-  {
-    "file": ".env.example",
-    "original_sha256": "94e737501c088edf271152736fbc2a503ecfef8aabab157a315d9079b57225d0",
-    "upgrade_sha256": "94e737501c088edf271152736fbc2a503ecfef8aabab157a315d9079b57225d0",
-    "identical": true
-  },
-  {
-    "file": "vite.config.ts",
-    "original_sha256": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9",
-    "upgrade_sha256": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9",
-    "identical": true
-  },
-  {
-    "file": "tests/gemini.test.mjs",
-    "original_sha256": "1b17f35e946d29b27f9fc53976a57a3195c91628e118f1edc55d85303cae3767",
-    "upgrade_sha256": "1b17f35e946d29b27f9fc53976a57a3195c91628e118f1edc55d85303cae3767",
-    "identical": true
-  }
-]
+{
+  "baseline": "uploaded AI-TUTOR-UPGRADE (1).zip",
+  "files": [
+    {
+      "file": "server/gemini.mjs",
+      "source_sha256": "65667920c48e03037b3698b5eda95cfdda2f584e1fe0220132c01a725dbe8b8b",
+      "upgrade_sha256": "65667920c48e03037b3698b5eda95cfdda2f584e1fe0220132c01a725dbe8b8b",
+      "identical": true
+    },
+    {
+      "file": "netlify/functions/chat.mjs",
+      "source_sha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
+      "upgrade_sha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
+      "identical": true
+    },
+    {
+      "file": "netlify.toml",
+      "source_sha256": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6",
+      "upgrade_sha256": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6",
+      "identical": true
+    },
+    {
+      "file": ".env.example",
+      "source_sha256": "94e737501c088edf271152736fbc2a503ecfef8aabab157a315d9079b57225d0",
+      "upgrade_sha256": "94e737501c088edf271152736fbc2a503ecfef8aabab157a315d9079b57225d0",
+      "identical": true
+    },
+    {
+      "file": "vite.config.ts",
+      "source_sha256": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9",
+      "upgrade_sha256": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9",
+      "identical": true
+    },
+    {
+      "file": "package.json",
+      "source_sha256": "56f33a014cf8820aa2490aa8d68dd8f75f592acc573f2d0df8a5a6a5dcd1be40",
+      "upgrade_sha256": "56f33a014cf8820aa2490aa8d68dd8f75f592acc573f2d0df8a5a6a5dcd1be40",
+      "identical": true
+    },
+    {
+      "file": "package-lock.json",
+      "source_sha256": "d3d2c063bc219824a7ef9171964b908ff9fadb6bc7440fd8ea65894de8dc9c0b",
+      "upgrade_sha256": "d3d2c063bc219824a7ef9171964b908ff9fadb6bc7440fd8ea65894de8dc9c0b",
+      "identical": true
+    },
+    {
+      "file": "tests/gemini.test.mjs",
+      "source_sha256": "1b17f35e946d29b27f9fc53976a57a3195c91628e118f1edc55d85303cae3767",
+      "upgrade_sha256": "1b17f35e946d29b27f9fc53976a57a3195c91628e118f1edc55d85303cae3767",
+      "identical": true
+    }
+  ]
+}

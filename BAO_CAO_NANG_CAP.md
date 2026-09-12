@@ -1,61 +1,73 @@
-# Báo cáo nâng cấp AI Tutor
+# Báo cáo nâng cấp PRO V2
 
-## Nguồn và bảo toàn
-Dùng đúng hai ZIP đính kèm (không có hậu tố (2)/(3)). Sao lưu toàn bộ ZIP gốc trước chỉnh sửa, kèm trong thư mục backup. Không sao chép backend, Gemini config hoặc môi trường từ bản tham khảo. Không có server.js/api folder/backend folder trong bản gốc; backend thực tế là server/*.mjs và netlify/functions/chat.mjs.
+## Phạm vi và bảo toàn
 
-Gemini gọi bằng REST fetch tại server/gemini.mjs, model mặc định gemini-2.5-flash hoặc GEMINI_MODEL hiện có. Luồng: frontend → /api/chat → Netlify Function → handleChat → Gemini generateContent → {text,model}. Mã API, cấu trúc request/response, mode backend, auth, timeout và giới hạn token giữ nguyên.
+Nâng cấp trên ZIP AI-TUTOR-UPGRADE (1) do người dùng cung cấp; ba ảnh là tham khảo giao diện. Không nhận được ba tài liệu tập huấn riêng. Bản ZIP đầu vào có bản sao trong backup trước khi chỉnh sửa.
 
-**server/policy.mjs có chỉnh sửa riêng nội dung prompt theo Phần 7**, để bỏ giới hạn tứ giác lớp 8 và bổ sung cá nhân hóa. Đây là file chỉ dẫn trên server, không phải toàn bộ thư mục server giữ nguyên. Không thay hàm/exports hay logic API.
+Luồng giữ nguyên: người dùng → frontend → POST /api/chat → server/gemini.mjs → Gemini REST generateContent → {text, model}. Kiểm tra kết nối dùng {accessCode, check:true}; chat dùng {accessCode, messages:[{role,content}], mode}. Không thay endpoint, tên trường, enum guide/review/compare, response hoặc SDK. GEMINI_MODEL mặc định gemini-2.5-flash, biến môi trường có thể ghi đè như trước.
 
-## File đã chỉnh sửa
-- `README.md`
-- `app/globals.css`
-- `app/page.tsx`
-- `dist/index.html`
-- `package.json`
-- `server/policy.mjs`
+Các tệp sau giữ nguyên byte, đã đối chiếu SHA-256:
 
-## File bổ sung
-- `API_INTEGRITY.json`
-- `backup/chatbot-toan-gia-dinh-main-original.zip`
-- `dist/assets/index-D8FPtirC.css`
-- `dist/assets/index-DDfVwQ-9.js`
-- `lib/tutor.ts`
-- `scripts/start.mjs`
-- `tests/tutor.test.mjs`
-- `tsconfig.json`
-
-## File API/cấu hình giữ nguyên
 - server/gemini.mjs
 - netlify/functions/chat.mjs
 - netlify.toml
 - .env.example
 - vite.config.ts
+- package.json
+- package-lock.json
 - tests/gemini.test.mjs
 
-Đã đối chiếu SHA-256, xem API_INTEGRITY.json. Các UI component, tiện ích gốc, vendor và tư liệu cũ giữ nguyên. Assets dist cũ được thay bằng bản build mới.
+Không tuyên bố toàn bộ backend bất biến: server/policy.mjs được chỉnh nội dung sư phạm theo yêu cầu. Bổ sung server/feedback.mjs và Netlify function tương ứng để gửi Google Forms, scripts/start.mjs thêm tuyến tương ứng trên máy. Module Gemini vận chuyển dữ liệu hoàn toàn giữ nguyên. Không xóa module dữ liệu cũ.
 
-## Tính năng mới
-Trang chủ chọn lớp/môn/chế độ, giao diện sáng/tối và responsive; avatar AI, animation và typing phía frontend; hồ sơ lưu/sửa/xóa trên trình duyệt; cá nhân hóa bằng thông tin học tập; 5 chế độ được yêu cầu cộng So sánh cách giải; tạo 5–10 câu theo lớp/chương/chủ đề/mức độ; gợi ý, lời giải/đáp án và bài tương tự qua chat; kiểm tra kiến thức và phân tích bài làm; phiên mẫu và hướng dẫn. Bản tham khảo có hàm finishLesson khai báo lặp; không mang lỗi này sang bản nâng cấp. Không mang theo luồng Google Forms gửi dữ liệu cá nhân.
+## Chức năng mới
 
-## Kiểm tra thực tế
-- npm install: thành công.
-- npm run build: thành công, có dist mới.
-- npm test: 16/16 đạt (12 test gốc + 4 test cá nhân hóa/giới hạn/ánh xạ mode). Test Gemini dùng fetch giả lập.
-- npx tsc --noEmit: đạt.
-- npm start: khởi động được; trang chủ HTTP 200; POST /api/chat trả JSON 503 đúng thiết kế khi thiếu GEMINI_API_KEY.
-- Chưa xác nhận Gemini trả lời trực tiếp: không có khóa thật trong tệp được cung cấp.
-- Chưa xác nhận render/tương tác bằng trình duyệt: môi trường không có Chromium, tải Chromium bị timeout/502. Không khẳng định đã kiểm thử giao diện desktop/mobile bằng trình duyệt.
-- Chưa deploy thực tế vào Netlify. Cấu hình deploy gốc giữ nguyên và build đạt.
+Giao diện tập trung tứ giác; hình SVG chính xác theo dữ kiện mẫu; sơ đồ định hướng công khai trước hướng dẫn; năm chế độ; sáu bài vận dụng; phân tích lỗi có căn cứ; cá nhân hóa bằng thông tin học tập; hồ sơ sau kết nối; đánh giá bằng nút hoặc khi hoàn tất bài; đồng ý gửi dữ liệu; liên kết dự phòng khi Google chưa xác nhận; light/dark, điện thoại, giảm chuyển động và khôi phục tiêu điểm hộp thoại.
 
-## Cách chạy và deploy
-Xem README.md: Node >=22.13.0, npm install, sao chép .env.example thành .env và điền khóa, npm run build, npm test, npm start. Truy cập http://localhost:3000. npm start là adapter phát triển dùng nguyên handleChat, không thay máy chủ Netlify production. Deploy source qua Netlify với npm run build, dist, netlify/functions; giữ ba biến môi trường gốc.
+## Kiểm tra
 
-## Giới hạn cần biết
-Hồ sơ chỉ lưu trên thiết bị, chưa có đồng bộ hoặc dashboard giáo viên. Hội thoại và bài tập chỉ giữ trong phiên. Ngân hàng bài là sinh theo yêu cầu, chưa có kho bài được duyệt. Mức độ cá nhân hóa dựa trên tự khai, chưa tự đo năng lực. AI cần được kiểm tra, bộ 10 câu phức tạp có thể vượt giới hạn phản hồi gốc. Không có streaming API, upload ảnh hay renderer LaTeX mới.
+npm install, npm run build, npm test (31/31) và TypeScript đã chạy thành công. npm start được sử dụng trong kiểm thử trình duyệt. Kiểm thử Playwright bao gồm thứ tự kết nối/hồ sơ, chat/sơ đồ, kết thúc thủ công và tự động, sao đánh giá, liên kết dự phòng, lịch sử lỗi, bài luyện mới, mobile, dark mode và ghi nhớ hồ sơ. Xem ảnh trong research/screenshots (dữ liệu giả lập).
 
-## Kiểm tra sau triển khai
-1. Kết nối bằng mã lớp thật, xác nhận nút kết nối thành công.
-2. Tạo hồ sơ, tải lại để kiểm tra lưu; sửa và xóa trên máy thử.
-3. Thử từng chế độ với câu ngắn, sinh 5 câu, hỏi gợi ý câu 1, nộp bài và xin bài tương tự.
-4. Thử mã sai, dừng yêu cầu, gửi lại; xem màn hình điện thoại 390px và dark mode.
+Không có khóa Gemini thật; không khẳng định đã kiểm thử phản hồi Gemini thực tế. Google Form đã được đọc để đối chiếu năm entry ID; không gửi phản hồi thử vào biểu mẫu thật. Chưa triển khai lên Netlify của người dùng. Kiểm thử không chứng minh mô hình luôn từ chối mọi câu ngoài lề; bộ ca nghiệm thu sư phạm được đính kèm. Đánh giá hài lòng không đồng nghĩa với kết quả học tập.
+
+## Tệp thay đổi so với ZIP đầu vào
+
+- API_INTEGRITY.json
+- BAO_CAO_NANG_CAP.md
+- HUONG_DAN.md
+- README.md
+- app/globals.css
+- app/page.tsx
+- index.html
+- lib/tutor.ts
+- scripts/start.mjs
+- server/policy.mjs
+- tsconfig.json
+
+## Tệp bổ sung
+
+- backup/AI-TUTOR-UPGRADE-before-V2.zip
+- components/learning-visuals.tsx
+- lib/feedback.ts
+- lib/form-config.json
+- lib/learning.ts
+- netlify/functions/feedback.mjs
+- public/co-so-su-pham.html
+- research/BAI_MAU_VA_DAP_AN.md
+- research/CO_SO_SU_PHAM.md
+- research/KICH_BAN_KIEM_THU_SU_PHAM.md
+- research/legacy-v1/BAO_CAO_NANG_CAP.md
+- research/legacy-v1/HUONG_DAN.md
+- research/legacy-v1/README.md
+- research/screenshots/01-home-desktop.png
+- research/screenshots/02-profile-after-connection.png
+- research/screenshots/03-chat-diagram.png
+- research/screenshots/04-feedback.png
+- research/screenshots/05-home-mobile.png
+- research/screenshots/06-dark-mobile.png
+- research/screenshots/07-chat-mobile.png
+- scripts/check-ui.mjs
+- server/feedback.mjs
+- tests/feedback.test.mjs
+- tests/learning.test.mjs
+
+Ngoài danh sách, dist được tạo lại từ mã nguồn; không chứa node_modules trong ZIP. Cách chạy và deploy: xem README.md. Tài liệu trong research/legacy-v1 chỉ để đối chiếu phiên bản cũ.

@@ -1,0 +1,17 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {handleFeedback,feedbackPayload} from '../server/feedback.mjs';
+const env={ACCESS_CODE:'class-test-12345'};
+const sample=()=>({accessCode:env.ACCESS_CODE,name:'Học sinh thử',school:'Trường thử',email:'student@example.com',rating:4,comment:'Dễ hiểu',consent:true,submissionId:randomUUID()});
+const req=(body)=>new Request('https://example.netlify.app/.netlify/functions/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+test('five Google Form fields have exact verified entry IDs',()=>{const p=feedbackPayload(sample());assert.deepEqual([...p.keys()],['entry.551915748','entry.1887301755','entry.1301171588','entry.54850382','entry.326585189']);assert.equal(p.get('entry.54850382'),'4');assert.equal(p.size,5);});
+test('rating, identity and consent are validated before posting',async()=>{for(const patch of [{rating:0},{rating:6},{rating:2.2},{consent:false},{email:'invalid'},{name:' '},{school:''}]){const r=await handleFeedback(req({...sample(),...patch}),env,()=>assert.fail('must not POST'));assert.equal(r.status,400);}});
+test('unauthorized requests never reach Google Forms',async()=>{const r=await handleFeedback(req({...sample(),accessCode:'wrong'}),env,()=>assert.fail('must not POST'));assert.equal(r.status,401);});
+test('confirmed submission excludes access code from Google body',async()=>{const r=await handleFeedback(req(sample()),env,async(url,o)=>{assert.match(url,/1FAIpQLScySWZ7CZxnxKjmfwUOZov9LXzd5aeQ_iZ7TEa7qaccUjz41A\/formResponse/);assert.equal(o.method,'POST');assert(!o.body.toString().includes(env.ACCESS_CODE));return new Response('<div>Your response has been recorded.</div>',{status:200});});assert.equal((await r.json()).delivery,'confirmed');});
+test('HTTP 200 validation page is not reported as success',async()=>{const r=await handleFeedback(req(sample()),env,()=>new Response('<form>Required question</form>'));const d=await r.json();assert.equal(d.ok,false);assert.equal(d.delivery,'unconfirmed');});
+test('provider error or timeout is unconfirmed, never retried automatically',async()=>{for(const fn of [()=>new Response('Forbidden',{status:403}),()=>{throw Error('timeout');}]){let calls=0;const r=await handleFeedback(req(sample()),env,(...args)=>{calls++;return fn(...args)});assert.equal((await r.json()).delivery,'unconfirmed');assert.equal(calls,1);}});
+test('same submission ID deduplicates concurrent requests in a warm instance',async()=>{const body=sample();let calls=0;const provider=async()=>{calls++;await new Promise(r=>setTimeout(r,10));return new Response('Your response has been recorded.');};const result=await Promise.all([handleFeedback(req(body),env,provider),handleFeedback(req(body),env,provider)]);assert.equal(calls,1);for(const r of result)assert.equal((await r.json()).delivery,'confirmed');});
+test('oversized payload rejected before external request',async()=>{const r=await handleFeedback(req({...sample(),comment:'x'.repeat(18000)}),env,()=>assert.fail('must not POST'));assert.equal(r.status,413);});
+
+test('echoed confirmation words inside an invalid form are not delivery proof',async()=>{const r=await handleFeedback(req(sample()),env,()=>new Response('<form action="/formResponse"><textarea name="entry.326585189">Your response has been recorded.</textarea></form>'));assert.equal((await r.json()).delivery,'unconfirmed');});
