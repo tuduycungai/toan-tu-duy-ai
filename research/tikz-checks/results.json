@@ -1,0 +1,30 @@
+[
+  {
+    "id": "midpoints",
+    "exitCode": 0
+  },
+  {
+    "id": "reflection",
+    "exitCode": 0
+  },
+  {
+    "id": "concurrency",
+    "exitCode": 0
+  },
+  {
+    "id": "trapezoid",
+    "exitCode": 0
+  },
+  {
+    "id": "square",
+    "exitCode": 0
+  },
+  {
+    "id": "counterexample",
+    "exitCode": 0
+  },
+  {
+    "id": "ak-ci",
+    "exitCode": 0
+  }
+]

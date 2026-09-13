@@ -1,4 +1,3 @@
-import {parseDiagram,stripDiagram} from './diagram';
 export type Plan={given:string;goal:string;bridge:string;next:string};
 export type Point={name:string;x:number;y:number};
 export type Figure={points:Point[];outline:string[];lines:[string,string][]};
@@ -48,6 +47,6 @@ export function parseTutorResponse(raw:string){
  let plan:Plan|null=null;
  if(block){const field=(label:string)=>block[1].match(new RegExp('^'+label+':\\s*(.+)$','m'))?.[1].trim().slice(0,300)||'';const p={given:field('DU_KIEN'),goal:field('MUC_TIEU'),bridge:field('CAU_NOI'),next:field('BUOC_TIEP')};if(Object.values(p).every(Boolean))plan=p;}
  const complete=/\[KET_THUC_BUOI_HOC\]\s*$/.test(raw.trim());
- const text=stripDiagram(raw).replace(/\[SO_DO\][\s\S]*?(?:\[\/SO_DO\]|$)/g,'').replace(/\[KET_THUC_BUOI_HOC\]/g,'').trim();
- return {text:text||'Em hãy gửi thêm dữ kiện để Thầy cùng kiểm tra bài toán.',plan,complete,...parseDiagram(raw)};
+ const text=raw.replace(/\[HINH_VE\][\s\S]*?(?:\[\/HINH_VE\]|$)/g,'').replace(/\[SO_DO\][\s\S]*?(?:\[\/SO_DO\]|$)/g,'').replace(/\[KET_THUC_BUOI_HOC\]/g,'').trim();
+ return {text:text||'Em hãy gửi thêm dữ kiện để Thầy cùng kiểm tra bài toán.',plan,complete};
 }

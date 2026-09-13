@@ -1,0 +1,60 @@
+{
+  "baseline": "AI-TUTOR-TU-GIAC-PRO-V3-THAO-TAC-TU-DUY.zip",
+  "modified_existing_files": [
+    "app/globals.css",
+    "app/page.tsx",
+    "lib/learning.ts",
+    "tests/preserved.test.mjs"
+  ],
+  "missing_existing_files": [],
+  "protected_files": {
+    "server/gemini.mjs": {
+      "unchanged": true,
+      "sha256": "249bda5b198149c67593e5f511be3b78f42b28e9052bc41a82099c0c935e027a"
+    },
+    "server/policy.mjs": {
+      "unchanged": true,
+      "sha256": "6bf20619a31c22dd199f68e423b76da7fe94b5a75bc3829e91bda1fd2ba70802"
+    },
+    "server/feedback.mjs": {
+      "unchanged": true,
+      "sha256": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c"
+    },
+    "netlify/functions/chat.mjs": {
+      "unchanged": true,
+      "sha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e"
+    },
+    "netlify/functions/feedback.mjs": {
+      "unchanged": true,
+      "sha256": "0e1146a4a35987f574a5dc2c4c9cf184fb25f9ac2f045ae14b4aea23565d4912"
+    },
+    "netlify.toml": {
+      "unchanged": true,
+      "sha256": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6"
+    },
+    ".env.example": {
+      "unchanged": true,
+      "sha256": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e"
+    },
+    "package.json": {
+      "unchanged": true,
+      "sha256": "56f33a014cf8820aa2490aa8d68dd8f75f592acc573f2d0df8a5a6a5dcd1be40"
+    },
+    "package-lock.json": {
+      "unchanged": true,
+      "sha256": "d3d2c063bc219824a7ef9171964b908ff9fadb6bc7440fd8ea65894de8dc9c0b"
+    },
+    "lib/tutor.ts": {
+      "unchanged": true,
+      "sha256": "ccc70dfd094d1bb5a8c119931080bee1d7e7c587597418de8bc1c1ed311d4517"
+    },
+    "lib/feedback.ts": {
+      "unchanged": true,
+      "sha256": "fb29bbbb36f58e1cf267dfc53ce1cd7f3dd9cc20e3870a8f9bf0e8dc1d8c45ce"
+    },
+    "lib/form-config.json": {
+      "unchanged": true,
+      "sha256": "ab79a36d1684de279cdf8ffe81fe1d8317ec3ee3edf55f466b208614515e94bd"
+    }
+  }
+}

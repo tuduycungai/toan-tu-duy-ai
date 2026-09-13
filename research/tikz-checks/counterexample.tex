@@ -1,0 +1,28 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1,line cap=round,line join=round]
+\coordinate (p0) at (0,3);
+\coordinate (p1) at (2,0);
+\coordinate (p2) at (0,-1);
+\coordinate (p3) at (-2,0);
+\coordinate (p4) at (0,0);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p1) -- (p2);
+\draw[thick] (p2) -- (p3);
+\draw[thick] (p3) -- (p0);
+\draw[dashed] (p0) -- (p2);
+\draw[dashed] (p1) -- (p3);
+\draw (0,0.1156) -- (0.1156,0.1156);
+\draw (0.1156,0.1156) -- (0.1156,0);
+\draw (0.068,1.0238) -- (-0.068,1.0238);
+\draw (0.068,0.9762) -- (-0.068,0.9762);
+\draw (0.0238,-0.068) -- (0.0238,0.068);
+\draw (-0.0238,-0.068) -- (-0.0238,0.068);
+\fill (p0) circle (1.1pt) node[above right] {$A$};
+\fill (p1) circle (1.1pt) node[below right] {$B$};
+\fill (p2) circle (1.1pt) node[below right] {$C$};
+\fill (p3) circle (1.1pt) node[below left] {$D$};
+\fill (p4) circle (1.1pt) node[below right] {$O$};
+\end{tikzpicture}
+\end{document}

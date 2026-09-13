@@ -1,0 +1,31 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1,line cap=round,line join=round]
+\coordinate (p0) at (0,0);
+\coordinate (p1) at (6,0);
+\coordinate (p2) at (7.4,3.5);
+\coordinate (p3) at (1.4,3.5);
+\coordinate (p4) at (3.7,1.75);
+\coordinate (p5) at (2.34,0);
+\coordinate (p6) at (5.06,3.5);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p1) -- (p2);
+\draw[thick] (p2) -- (p3);
+\draw[thick] (p3) -- (p0);
+\draw[dashed] (p0) -- (p2);
+\draw[dashed] (p1) -- (p3);
+\draw[dashed] (p0) -- (p5);
+\draw[dashed] (p2) -- (p6);
+\draw[dashed] (p5) -- (p6);
+\draw (1.17,0.1258) -- (1.17,-0.1258);
+\draw (6.23,3.3742) -- (6.23,3.6258);
+\fill (p0) circle (1.1pt) node[below left] {$A$};
+\fill (p1) circle (1.1pt) node[below right] {$B$};
+\fill (p2) circle (1.1pt) node[above right] {$C$};
+\fill (p3) circle (1.1pt) node[above left] {$D$};
+\fill (p4) circle (1.1pt) node[above right] {$O$};
+\fill (p5) circle (1.1pt) node[below left] {$K$};
+\fill (p6) circle (1.1pt) node[above right] {$I$};
+\end{tikzpicture}
+\end{document}

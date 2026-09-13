@@ -1,0 +1,27 @@
+{
+  "commands": [
+    {
+      "command": "npm test",
+      "exit_code": 0
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0
+    }
+  ],
+  "unit_tests": {
+    "total": 93,
+    "pass": 92,
+    "fail": 0,
+    "skipped": 1,
+    "skip_reason": "Live Gemini opt-in/key not supplied"
+  },
+  "gemini_live_tested": false,
+  "google_forms_live_submission": false,
+  "original_ui_regression": "passed; mocked API and feedback",
+  "tikz_compilation": "7/7 successful with pdflatex -no-shell-escape"
+}
