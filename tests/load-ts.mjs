@@ -1,0 +1,2 @@
+import ts from 'typescript';import {readFileSync} from 'node:fs';
+export function moduleURL(path){let src=readFileSync(new URL('../'+path,import.meta.url),'utf8');if(path==='lib/learning.ts')src=src.replace("'./diagram'",JSON.stringify(moduleURL('lib/diagram.ts')));const js=ts.transpileModule(src,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;return 'data:text/javascript;base64,'+Buffer.from(js).toString('base64');}

@@ -1,0 +1,58 @@
+{
+  "baseline": "AI-TUTOR-TU-GIAC-PRO-V3-THAO-TAC-TU-DUY(1).zip",
+  "changes": [
+    "app/globals.css",
+    "app/page.tsx",
+    "dist/index.html",
+    "lib/learning.ts",
+    "server/policy.mjs",
+    "tests/learning.test.mjs",
+    "tests/pedagogy-live.test.mjs",
+    "tests/preserved.test.mjs"
+  ],
+  "new_files": [
+    "HUONG_DAN_HINH_VE_V4.md",
+    "components/tutor-diagram.tsx",
+    "dist/assets/index-CiEw8WQS.js",
+    "dist/assets/index-D8prkETD.css",
+    "dist/assets/index-DOxqXD1E.js",
+    "lib/diagram.ts",
+    "research/screenshots-v4/01-figure-light.png",
+    "research/screenshots-v4/02-figure-expanded.png",
+    "research/screenshots-v4/03-figure-mobile.png",
+    "research/screenshots-v4/04-figure-dark.png",
+    "research/screenshots-v4/05-feet-mobile.png",
+    "scripts/check-diagrams-ui.mjs",
+    "tests/diagram-fixtures.mjs",
+    "tests/diagram.test.mjs",
+    "tests/load-ts.mjs",
+    "BAO_CAO_V4.json"
+  ],
+  "removed_generated_assets": [],
+  "preserved_files": 62,
+  "protected": {
+    "server/gemini.mjs": "249bda5b198149c67593e5f511be3b78f42b28e9052bc41a82099c0c935e027a",
+    "server/feedback.mjs": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c",
+    "netlify/functions/chat.mjs": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
+    "netlify/functions/feedback.mjs": "0e1146a4a35987f574a5dc2c4c9cf184fb25f9ac2f045ae14b4aea23565d4912",
+    "netlify.toml": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6",
+    "vite.config.ts": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9",
+    "package.json": "56f33a014cf8820aa2490aa8d68dd8f75f592acc573f2d0df8a5a6a5dcd1be40",
+    "package-lock.json": "d3d2c063bc219824a7ef9171964b908ff9fadb6bc7440fd8ea65894de8dc9c0b",
+    ".env.example": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e",
+    "lib/tutor.ts": "ccc70dfd094d1bb5a8c119931080bee1d7e7c587597418de8bc1c1ed311d4517",
+    "lib/feedback.ts": "fb29bbbb36f58e1cf267dfc53ce1cd7f3dd9cc20e3870a8f9bf0e8dc1d8c45ce",
+    "lib/form-config.json": "ab79a36d1684de279cdf8ffe81fe1d8317ec3ee3edf55f466b208614515e94bd",
+    "index.html": "68f041b0debdf489d6065b7919ef299bc47889216b755e5f48c72184a92c74eb"
+  },
+  "V3_system_policy": "unchanged; diagram instructions appended",
+  "palettes": "light and dark variables unchanged",
+  "validation": {
+    "npm test": "75 passed, 0 failed, 1 skipped (real Gemini opt-in)",
+    "npx tsc --noEmit": "passed",
+    "npm run build": "passed",
+    "existing UI": "passed with mocked API/Forms",
+    "drawing UI": "passed with mocked Gemini, mobile 390px and desktop 1440px, light/dark, enlarge/focus, redraw, invalid/missing metadata, reset"
+  },
+  "limitations": "No real Gemini key provided; model parsing of arbitrary prose requires live acceptance. Geometry engine checks input consistency; it cannot verify that AI understood every written condition. No actual Google Form submission or Netlify deploy performed."
+}

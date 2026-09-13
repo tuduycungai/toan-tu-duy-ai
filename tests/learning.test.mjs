@@ -1,7 +1,6 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';
-const source=readFileSync(new URL('../lib/learning.ts',import.meta.url),'utf8');
-const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
-const {parseTutorResponse,lessons,learningModes}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+import {moduleURL} from './load-ts.mjs';
+const {parseTutorResponse,lessons,learningModes}=await import(moduleURL('lib/learning.ts'));
 const raw='[SO_DO]\nDU_KIEN: M là trung điểm AD, BC.\nMUC_TIEU: ABDC là hình chữ nhật.\nCAU_NOI: Tính chất đường chéo.\nBUOC_TIEP: Nhận biết hình bình hành.\n[/SO_DO]\nEm hãy giải thích.\n[KET_THUC_BUOI_HOC]';
 test('diagram is parsed as educational content and control markers are hidden',()=>{const r=parseTutorResponse(raw);assert(r.plan);assert.equal(r.plan.goal,'ABDC là hình chữ nhật.');assert.equal(r.text,'Em hãy giải thích.');assert.equal(r.complete,true);});
 test('malformed diagram cannot create empty or fabricated nodes',()=>{const r=parseTutorResponse('[SO_DO]\nMUC_TIEU: x\n[/SO_DO]\nHãy bổ sung đề.');assert.equal(r.plan,null);assert.equal(r.text,'Hãy bổ sung đề.');assert.equal(r.complete,false);});

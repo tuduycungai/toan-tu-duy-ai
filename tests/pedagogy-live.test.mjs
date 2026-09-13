@@ -1,5 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {mkdir,writeFile} from 'node:fs/promises';
-import {handleChat} from '../server/gemini.mjs';import {cases} from './pedagogy-cases.mjs';
+import {handleChat} from '../server/gemini.mjs';import {moduleURL} from './load-ts.mjs';
+const {stripDiagram,parseDiagram}=await import(moduleURL('lib/diagram.ts'));
+import {cases} from './pedagogy-cases.mjs';
 // Explicit opt-in: uses real quota. No Google Forms calls; synthetic pupils only.
 const enabled=process.env.RUN_PEDAGOGY_LIVE==='1'&&!!process.env.GEMINI_API_KEY;
 test('live Gemini pedagogical acceptance (opt-in; semantic review required)',{skip:enabled?false:'No opt-in/key: model behavior has NOT been verified'},async t=>{
@@ -9,7 +11,8 @@ test('live Gemini pedagogical acceptance (opt-in; semantic review required)',{sk
   const data=await response.json();assert.equal(response.status,200,data.error);
   results.push({id:c.id,rubric:c.rubric,response:data.text,model:data.model,semanticReview:'PENDING'});
   await mkdir('research/live-results',{recursive:true});await writeFile('research/live-results/pedagogy.json',JSON.stringify(results,null,2));
-  const s=data.text;assert.equal((s.match(/\[SO_DO\]/g)||[]).length,1);
+  const s=stripDiagram(data.text);
+  if(['first','first-request','reference'].includes(c.id))assert.equal(parseDiagram(data.text).status,'ready','Expected valid generated figure for specified problem');assert.equal((s.match(/\[SO_DO\]/g)||[]).length,1);
   assert.match(s,/^\[SO_DO\]\s*\nDU_KIEN: [^\n]+\nMUC_TIEU: [^\n]+\nCAU_NOI: [^\n]+\nBUOC_TIEP: [^\n]+\n\[\/SO_DO\]/);
   assert.match(s,/Thao tác tư duy: (Phân tích|Tổng hợp|So sánh|Tương tự hóa|Đặc biệt hóa|Khái quát hóa|Phản ví dụ)/);
   const done=s.trim().endsWith('[KET_THUC_BUOI_HOC]');

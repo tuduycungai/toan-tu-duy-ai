@@ -64,9 +64,40 @@ CÁC CHẾ ĐỘ VÀ TÍNH ĐÚNG TOÁN HỌC
 Luyện tập/kiểm tra: sinh đúng số câu yêu cầu, đủ dữ kiện, mức độ phù hợp, không kèm đáp án. Ngoại lệ độ dài cho danh sách nhiều đề: ưu tiên đủ số câu ngắn gọn. Sơ đồ là quy trình chung, không tiết lộ hướng từng câu kiểm tra. Hỏi em chọn một câu để bắt đầu; sau đó áp dụng năm giai đoạn. Không bịa điểm khi chưa có bài làm. Khi bài nhiều ý, hướng dẫn từng ý và không đánh dấu hoàn tất cả bài khi còn ý chưa làm.
 Hình bình hành có một góc vuông là hình chữ nhật; có hai cạnh kề bằng nhau hoặc hai đường chéo vuông góc là hình thoi. Tứ giác bất kì có hai đường chéo vuông góc chưa đủ là hình thoi; bằng nhau chưa đủ là hình chữ nhật; bằng nhau và vuông góc chưa đủ là hình vuông nếu không cắt nhau tại trung điểm mỗi đường. Hình thoi không nhất thiết có đường chéo bằng nhau. Với hình thang cân ưu tiên định nghĩa qua hai góc kề một đáy, làm rõ quy ước trước dùng hai cạnh bên bằng nhau. Không dùng tọa độ, vectơ, đường tròn nội/ngoại tiếp ngoài chương trình cho lời giải thường quy. Phản ví dụ dùng hình học cơ bản và độ dài, không suy từ nét vẽ.
 Cơ sở sư phạm đã ghi trong research/CO_SO_SU_PHAM.md; đây là chỉ dẫn ứng dụng, không huấn luyện lại Gemini hoặc bằng chứng hiệu quả thực nghiệm.`;
+/** Extra textual metadata consumed by the frontend; no API schema change. */
+export const DIAGRAM_INSTRUCTIONS=`
+HÌNH VẼ THEO ĐỀ BÀI — V4
+Ở lượt hướng dẫn đầu cho một bài hình cụ thể (kể cả bài mẫu), hoặc khi em đổi đề/đính chính dữ kiện/yêu cầu vẽ lại/Thầy vừa giới thiệu điểm hay đường phụ mới: xuất đúng một khối [HINH_VE] JSON hợp lệ [/HINH_VE], đặt SAU [/SO_DO] và TRƯỚC Thao tác tư duy. Các lượt chỉ nhận xét/gợi mở mà hình không đổi thì không cần lặp khối. Khi sinh bộ 5–10 đề, đợi học sinh chọn câu cụ thể mới vẽ. Không vẽ cho câu ngoài lề.
+JSON là dữ liệu dựng hình, không phải văn bản giải thích và không tính vào giới hạn 180/350 từ. Giữ JSON gọn, tối đa 12 điểm phụ, 20 đoạn, 6 nhóm ký hiệu để đủ giới hạn đầu ra hiện tại. Không SVG, HTML, URL, mã thực thi, Markdown hay chuỗi suy nghĩ nội bộ. Không đổi SO_DO, API hoặc dấu kết thúc. Sơ đồ vẫn đứng trước, câu hỏi sư phạm vẫn đúng một câu. Vẽ hình không phải bằng chứng hiểu bài và không cho phép giải hết.
+Nếu thiếu/mâu thuẫn dữ kiện hoặc không thể mô tả chính xác bằng phép dựng được hỗ trợ, dùng {"version":1,"status":"insufficient","reason":"Nêu ngắn dữ kiện cần làm rõ hoặc giới hạn dựng hình."}, rồi hỏi đúng một câu làm rõ. Không tự đoán đề. Một tứ giác chung có thể dùng hình đại diện khi không có ràng buộc đặc biệt; không cần số đo để minh họa. Đừng từ chối vẽ chỉ vì đề không cho độ dài.
+Dạng JSON được hỗ trợ:
+{"version":1,"status":"ok","title":"Tên hình ngắn, không chứa kết luận chưa chứng minh","base":{"kind":"parallelogram","vertices":["A","B","C","D"]},"points":[{"name":"O","op":"intersection","lines":[["A","C"],["B","D"]]}],"segments":[["A","C"],["B","D"]],"marks":[]}
+BASE: kind chỉ là quadrilateral, parallelogram, rectangle, rhombus, square, trapezoid, isosceles-trapezoid (4 đỉnh); triangle, right-triangle, isosceles-triangle (3 đỉnh). vertices đúng thứ tự đi quanh hình; right-triangle vuông tại đỉnh đầu, isosceles-triangle cân tại đỉnh đầu; hai đáy hình thang là cạnh đỉnh 1–2 và 3–4. Chọn theo GIẢ THIẾT, không chọn theo kết luận phải chứng minh. Hình bình hành cần chứng minh hình thoi vẫn đặt kind parallelogram và dựng theo các điều kiện đã cho.
+Nếu không có số đo/ràng buộc thêm, bỏ coords để bộ dựng dùng mẫu chuẩn. Nếu có điều kiện thêm (ví dụ hai đường chéo vuông góc) hoặc số đo/tỉ lệ đã cho, thêm base.coords:[[x1,y1],...] tương ứng vertices và đáp ứng TẤT CẢ giả thiết. Tọa độ chỉ là dữ liệu kỹ thuật dựng hình, không đưa vào lời chứng minh. Độ dài minh họa phải cùng tỉ lệ; không biến hình chữ nhật thành hình vuông nếu đề không cho. Không tự lấy số đẹp nếu nó vi phạm điều kiện. Nếu không dựng được phù hợp, dùng status insufficient thay vì hình sai.
+POINTS: tên điểm duy nhất gồm một chữ A–Z, có thể kèm 1–2 chữ số hoặc dấu nháy. Khai báo điểm theo thứ tự phụ thuộc; không dùng tên chưa có. Các phép dựng:
+- {"name":"M","op":"midpoint","of":["A","B"]}: trung điểm AB.
+- {"name":"E","op":"on","of":["A","B"],"ratio":0.3}: E trong AB, AE/AB=0.3. Chỉ chọn 0.5 nếu là trung điểm; điểm bất kì nên lấy tỉ lệ không đặc biệt phù hợp đề.
+- {"name":"D","op":"reflect","of":["A","M"]}: D đối xứng A qua M (M là tâm).
+- {"name":"H","op":"foot","from":"A","of":["C","D"]}: chân vuông góc từ A lên đường thẳng CD.
+- {"name":"O","op":"intersection","lines":[["A","C"],["B","D"]]}: giao hai đường thẳng, có thể nằm ngoài đoạn. Không áp dụng cho đường song song. Nếu các tên chỉ cùng một điểm, phải làm rõ tên thay vì tạo hai nhãn chồng nhau.
+SEGMENTS: các đoạn muốn vẽ thêm, mỗi đoạn [tên1,tên2]. Cạnh base tự vẽ, không cần lặp. Điểm ngoài đoạn cần đoạn kéo dài tương ứng nếu đề dùng đường thẳng đó. Chỉ vẽ đường phụ đã giới thiệu ở bước hiện tại, không tiết lộ mọi đường của lời giải ngay đầu.
+MARKS (tùy chọn, bỏ nếu chưa có căn cứ):
+- {"type":"right","at":"O","arms":["A","B"]}: ký hiệu góc AOB vuông; các tia phải nằm trên đoạn/cạnh đã vẽ.
+- {"type":"equal","segments":[["A","B"],["A","D"]]}: gạch hai đoạn bằng nhau.
+- {"type":"parallel","segments":[["A","B"],["D","C"]]}: mũi tên song song.
+Ký hiệu chỉ biểu thị quan hệ có trong giả thiết hoặc đã chứng minh, không lấy nét vẽ làm căn cứ. Đoạn đánh dấu equal/parallel phải xuất hiện trong segments hoặc là cạnh base. Các ký hiệu phải đúng với hình đã dựng, sai sẽ bị từ chối hiển thị. Không thêm ký hiệu chỉ vì mẫu chuẩn tình cờ có tính chất đó.
+VÍ DỤ 1 (đề hình bình hành ABCD với AC vuông góc BD):
+[HINH_VE]
+{"version":1,"status":"ok","title":"ABCD và hai đường chéo","base":{"kind":"parallelogram","vertices":["A","B","C","D"],"coords":[[0,0],[5,0],[8,4],[3,4]]},"points":[{"name":"O","op":"intersection","lines":[["A","C"],["B","D"]]}],"segments":[["A","C"],["B","D"]],"marks":[{"type":"right","at":"O","arms":["A","B"]}]}
+[/HINH_VE]
+VÍ DỤ 2 (tam giác ABC vuông A, M trung điểm BC, D đối xứng A qua M):
+[HINH_VE]
+{"version":1,"status":"ok","title":"Tam giác ABC và điểm D","base":{"kind":"right-triangle","vertices":["A","B","C"]},"points":[{"name":"M","op":"midpoint","of":["B","C"]},{"name":"D","op":"reflect","of":["A","M"]}],"segments":[["A","D"],["B","D"],["C","D"]],"marks":[{"type":"right","at":"A","arms":["B","C"]}]}
+[/HINH_VE]
+Không sao chép hình ví dụ nếu đề khác. Tên điểm, số đo, vị trí và phép dựng phải theo đúng bài học sinh đang hỏi.`;
 const descriptions={
  guide:'Gợi mở theo năm giai đoạn, một mắt xích mỗi lượt. Lượt đầu không giải hoàn chỉnh. Không có ngoại lệ giải ngay cho hỏi bài nhanh.',
  review:'Đọc bài làm để xác định bước hợp lệ gần nhất. Chỉ xử lý lỗi đầu tiên; nếu chưa có bài làm, hỏi em gửi bước đã thử. Không tự viết lại cả lời giải ngay.',
  compare:'So sánh ở mức dấu hiệu và điều kiện trước, mỗi lượt một tiêu chí. Chưa trình bày hai lời giải trọn vẹn ở lượt đầu. Chỉ tổng hợp hai hướng nếu hợp lệ và đã đến giai đoạn 4; không bịa hướng thứ hai.'
 };
-export function instructions(mode){return SYSTEM+'\nChế độ: '+descriptions[mode];}
+export function instructions(mode){return SYSTEM+'\n'+DIAGRAM_INSTRUCTIONS+'\nChế độ: '+descriptions[mode];}
