@@ -1,17 +1,19 @@
 /** Geometry construction and validation. Never executes model code or trusts model coordinates. */
 export type XY = {x:number;y:number};
 export type Segment = [string,string];
+export type DirectedLine={through:string;of:Segment;relation:'parallel'|'perpendicular';name?:string};
+export type LineRef=Segment|DirectedLine;
 export type Mark = {type:'equal'|'parallel';segments:Segment[]} | {type:'right';at:string;arms:Segment};
 export type Construction =
  | {name:string;op:'midpoint';of:Segment}
  | {name:string;op:'on';of:Segment;ratio:number}
  | {name:string;op:'equalOn';of:Segment;length:Segment}
- | {name:string;op:'intersection';lines:[Segment,Segment]}
+ | {name:string;op:'intersection';lines:[LineRef,LineRef]}
  | {name:string;op:'reflect';of:Segment}
  | {name:string;op:'foot';from:string;of:Segment};
 export type Shape='quadrilateral'|'parallelogram'|'rectangle'|'rhombus'|'square'|'trapezoid'|'isosceles-trapezoid'|'triangle'|'right-triangle'|'isosceles-triangle';
-export type Recipe={title:string;kind:Shape;vertices:string[];coords?:XY[];points:Construction[];segments:Segment[];marks:Mark[];outline?:string[]};
-export type Drawing={title:string;points:Record<string,XY>;outline:string[];segments:Segment[];marks:Mark[];checks:string[]};
+export type Recipe={title:string;kind:Shape;vertices:string[];coords?:XY[];points:Construction[];segments:Segment[];marks:Mark[];outline?:string[];guides?:DirectedLine[]};
+export type Drawing={title:string;points:Record<string,XY>;outline:string[];segments:Segment[];marks:Mark[];checks:string[];guides?:{name:string;a:XY;b:XY}[];interpretation?:'ai'};
 export type DiagramResult={status:'ready';drawing:Drawing}|{status:'unsupported'|'invalid'|'none';note:string};
 export const EPS=1e-7;
 export const sub=(a:XY,b:XY):XY=>({x:a.x-b.x,y:a.y-b.y});
@@ -25,6 +27,18 @@ export function onSegment(p:XY,a:XY,b:XY){const v=sub(b,a),w=sub(p,a);return nor
 export function parallel(a:XY,b:XY,c:XY,d:XY){const u=sub(b,a),v=sub(d,c);return norm(u)>EPS&&norm(v)>EPS&&Math.abs(cross(u,v))<=EPS*norm(u)*norm(v);}
 export function perpendicular(a:XY,b:XY,c:XY,d:XY){const u=sub(b,a),v=sub(d,c);return norm(u)>EPS&&norm(v)>EPS&&Math.abs(dot(u,v))<=EPS*norm(u)*norm(v);}
 export function intersection(a:XY,b:XY,c:XY,d:XY):XY{const u=sub(b,a),v=sub(d,c),det=cross(u,v);if(Math.abs(det)<EPS*norm(u)*norm(v))throw Error('Hai đường không có giao điểm duy nhất.');return lerp(a,b,cross(sub(c,a),v)/det);}
+export const linePoints=(line:LineRef):string[]=>Array.isArray(line)?line:[line.through,...line.of];
+export function resolveLine(line:LineRef,points:Record<string,XY>):[XY,XY]{
+ const p=(n:string)=>{if(!Object.hasOwn(points,n))throw Error('Thiếu điểm '+n);return points[n];};
+ if(Array.isArray(line)){const a=p(line[0]),b=p(line[1]);if(distance(a,b)<EPS)throw Error('Hai điểm trùng nhau chưa xác định được đường thẳng.');return [a,b];}
+ const a=p(line.through),v=sub(p(line.of[1]),p(line.of[0]));if(norm(v)<EPS)throw Error('Hướng của đường thẳng chưa xác định.');
+ const w=line.relation==='parallel'?v:{x:-v.y,y:v.x};return [a,{x:a.x+w.x,y:a.y+w.y}];
+}
+export const describeLine=(line:LineRef)=>Array.isArray(line)?line.join(''):(line.name||'đường qua '+line.through+' '+(line.relation==='parallel'?'∥':'⟂')+' '+line.of.join(''));
+export function onLine(point:XY,line:LineRef,points:Record<string,XY>){const [a,b]=resolveLine(line,points);return Math.abs(cross(sub(b,a),sub(point,a)))<=EPS*Math.max(1,distance(a,b)*distance(point,a));}
+export function pointGroups(d:Drawing):{names:string[];point:XY}[]{
+ const groups:{names:string[];point:XY}[]=[];for(const [name,point] of Object.entries(d.points)){const found=groups.find(g=>distance(g.point,point)<EPS);if(found)found.names.push(name);else groups.push({names:[name],point});}return groups;
+}
 export const defaults:Record<Shape,number[][]>={
  quadrilateral:[[0,0],[6,.6],[5,4],[-1,3]],parallelogram:[[0,0],[6,0],[7.4,3.5],[1.4,3.5]],rectangle:[[0,0],[6,0],[6,3.6],[0,3.6]],rhombus:[[0,0],[5,0],[8,4],[3,4]],square:[[0,0],[4,0],[4,4],[0,4]],trapezoid:[[1.2,3.6],[4.6,3.6],[6,0],[0,0]],'isosceles-trapezoid':[[1.3,3.6],[4.7,3.6],[6,0],[0,0]],triangle:[[0,3.8],[-2,0],[4,0]],'right-triangle':[[0,0],[5,0],[0,3.6]],'isosceles-triangle':[[0,4],[-3,0],[3,0]]
 };
@@ -51,9 +65,9 @@ export function construct(recipe:Recipe):Drawing{
  const todo=[...recipe.points];let attempts=todo.length+1;
  while(todo.length&&attempts-->0){let made=0;for(let i=0;i<todo.length;){const c=todo[i];let v:XY;
    // Only defer unresolved dependencies. Invalid geometry must never be ignored.
-   const refs=c.op==='intersection'?c.lines.flat():c.op==='foot'?[c.from,...c.of]:c.op==='equalOn'?[...c.of,...c.length]:c.of;
+   const refs=c.op==='intersection'?c.lines.flatMap(linePoints):c.op==='foot'?[c.from,...c.of]:c.op==='equalOn'?[...c.of,...c.length]:c.of;
    if(refs.some(n=>!Object.hasOwn(points,n))){i++;continue;}
-   if(c.op==='intersection')v=intersection(p(c.lines[0][0]),p(c.lines[0][1]),p(c.lines[1][0]),p(c.lines[1][1]));
+   if(c.op==='intersection')v=intersection(...resolveLine(c.lines[0],points),...resolveLine(c.lines[1],points));
    else {const a=p(c.of[0]),b=p(c.of[1]);if(distance(a,b)<EPS)throw Error('Đoạn dựng suy biến.');
      if(c.op==='midpoint')v=lerp(a,b,.5);
      else if(c.op==='reflect')v=lerp(a,b,2);
@@ -64,14 +78,24 @@ export function construct(recipe:Recipe):Drawing{
  }
  const outline=recipe.outline||recipe.vertices;validateShape(outline.length===3?'triangle':'quadrilateral',outline.map(p));
  const sides=outline.map((n,i)=>[n,outline[(i+1)%outline.length]] as Segment);
- const segments:Segment[]=[];const seen=new Set<string>();for(const seg of [...sides,...recipe.segments]){if(distance(p(seg[0]),p(seg[1]))<EPS)throw Error('Đoạn suy biến.');const key=[...seg].sort().join('|');if(!seen.has(key)){segments.push(seg);seen.add(key);}}
- const drawing={title:recipe.title.slice(0,140),points,outline,segments,marks:recipe.marks,checks:[]} satisfies Drawing;
+ const segments:Segment[]=[];const seen=new Set<string>();for(const seg of [...sides,...recipe.segments]){if(distance(p(seg[0]),p(seg[1]))<EPS)continue;const key=[...seg].sort().join('|');if(!seen.has(key)){segments.push(seg);seen.add(key);}}
+ const guides=(recipe.guides||[]).map(line=>{
+  if(line.name&&!/^[a-z](?:['′])?$/i.test(line.name))throw Error('Tên đường thẳng không hợp lệ.');
+  const [a,b]=resolveLine(line,points),hits:XY[]=[];
+  // Clip the guide to the polygon. No artificial named point is introduced.
+  for(const [u,v] of sides){try{const hit=intersection(a,b,p(u),p(v));if(onSegment(hit,p(u),p(v))&&!hits.some(h=>distance(h,hit)<EPS))hits.push(hit);}catch{/* parallel edge */}}
+  for(const pt of Object.values(points))if(onLine(pt,line,points)&&!hits.some(h=>distance(h,pt)<EPS))hits.push(pt);
+  if(hits.length<2)throw Error('Chưa xác định được phần đường thẳng cần vẽ.');
+  hits.sort((x,y)=>dot(sub(x,a),sub(b,a))-dot(sub(y,a),sub(b,a)));
+  return {name:line.name||'',a:hits[0],b:hits.at(-1)!};
+ });
+ const drawing:Drawing={title:recipe.title.slice(0,140),points,outline,segments,marks:recipe.marks,checks:[],guides};
  for(const mark of recipe.marks){if(mark.type==='right'){if(!segmentVisible(drawing,[mark.at,mark.arms[0]])||!segmentVisible(drawing,[mark.at,mark.arms[1]])||!perpendicular(p(mark.at),p(mark.arms[0]),p(mark.at),p(mark.arms[1])))throw Error('Kí hiệu góc vuông không đúng.');}
  else{if(mark.segments.length<2||mark.segments.some(s=>!segmentVisible(drawing,s)))throw Error('Kí hiệu dùng đoạn chưa vẽ.');const [a,b]=mark.segments[0].map(p);for(const seg of mark.segments.slice(1)){const [c,d]=seg.map(p);if(mark.type==='equal'?!near(distance(a,b),distance(c,d)):!parallel(a,b,c,d))throw Error('Kí hiệu quan hệ không đúng.');}}}
  return drawing;
 }
 /** A subsegment of a drawn edge is visible (AE on AB, CF on CD). */
-export function segmentVisible(d:Drawing,s:Segment){const a=d.points[s[0]],b=d.points[s[1]];return !!a&&!!b&&distance(a,b)>EPS&&d.segments.some(([u,v])=>onSegment(a,d.points[u],d.points[v])&&onSegment(b,d.points[u],d.points[v]));}
+export function segmentVisible(d:Drawing,s:Segment){const a=d.points[s[0]],b=d.points[s[1]];return !!a&&!!b&&distance(a,b)>EPS&&(d.segments.some(([u,v])=>onSegment(a,d.points[u],d.points[v])&&onSegment(b,d.points[u],d.points[v]))||(d.guides||[]).some(g=>onSegment(a,g.a,g.b)&&onSegment(b,g.a,g.b)));}
 
 // Numeric primitives are shared by SVG and TikZ so that both exports show the same relations.
 export function markStrokes(d:Drawing):{a:XY;b:XY;type:Mark['type']}[]{
@@ -88,5 +112,5 @@ export function toTikZ(d:Drawing):string{
  const xs=entries.map(([,p])=>p.x),ys=entries.map(([,p])=>p.y),width=Math.max(...xs)-Math.min(...xs),height=Math.max(...ys)-Math.min(...ys),scale=Math.min(1,11/Math.max(width,height));
  const center={x:xs.reduce((a,b)=>a+b,0)/xs.length,y:ys.reduce((a,b)=>a+b,0)/ys.length};
  const isSide=([a,b]:Segment)=>d.outline.some((n,i)=>(n===a&&d.outline[(i+1)%d.outline.length]===b)||(n===b&&d.outline[(i+1)%d.outline.length]===a));
- return ['% Constructed and checked from the problem; not a geometric proof.','\\documentclass[tikz,border=8pt]{standalone}','\\begin{document}',`\\begin{tikzpicture}[scale=${f(scale)},line cap=round,line join=round]`,...entries.map(([n,p])=>`\\coordinate (${ids[n]}) at ${xy(p)};`),...d.segments.map(s=>`\\draw[${isSide(s)?'thick':'dashed'}] (${ids[s[0]]}) -- (${ids[s[1]]});`),...markStrokes(d).map(s=>`\\draw ${xy(s.a)} -- ${xy(s.b)};`),...entries.map(([n,p])=>`\\fill (${ids[n]}) circle (1.1pt) node[${p.y>=center.y?'above':'below'} ${p.x>=center.x?'right':'left'}] {$${label(n)}$};`),'\\end{tikzpicture}','\\end{document}',''].join('\n');
+ return ['% Constructed and checked from the problem; not a geometric proof.','\\documentclass[tikz,border=8pt]{standalone}','\\begin{document}',`\\begin{tikzpicture}[scale=${f(scale)},line cap=round,line join=round]`,...entries.map(([n,p])=>`\\coordinate (${ids[n]}) at ${xy(p)};`),...d.segments.map(s=>`\\draw[${isSide(s)?'thick':'dashed'}] (${ids[s[0]]}) -- (${ids[s[1]]});`),...markStrokes(d).map(s=>`\\draw ${xy(s.a)} -- ${xy(s.b)};`),...(d.guides||[]).map(g=>`\\draw[dashed] ${xy(g.a)} -- ${xy(g.b)}${g.name?' node[pos=0.88,above] {$'+label(g.name.toUpperCase()).toLowerCase()+'$}':''};`),...pointGroups(d).map(({names,point:p})=>`\\fill (${ids[names[0]]}) circle (1.1pt) node[fill=white,inner sep=1pt,${p.y>=center.y?'above':'below'} ${p.x>=center.x?'right':'left'}] {$${names.map(label).join(',\\,')}$};`),'\\end{tikzpicture}','\\end{document}',''].join('\n');
 }

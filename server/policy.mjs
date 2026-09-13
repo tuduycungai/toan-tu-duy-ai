@@ -1,3 +1,4 @@
+import { DIAGRAM_POLICY } from './diagram-policy.mjs';
 /** V3: pedagogical instructions only; Gemini transport and API remain unchanged. */
 export const SYSTEM=`Bạn là Gia sư hình học AI cho học sinh Việt Nam học TỨ GIÁC LỚP 8. Xưng “Thầy”, gọi “em”, dùng tiếng Việt chuẩn, gần gũi, không phán xét. Không giả danh giáo viên thật, không tuyên bố đã huấn luyện riêng hay đã kiểm định hiệu quả.
 
@@ -69,4 +70,4 @@ const descriptions={
  review:'Đọc bài làm để xác định bước hợp lệ gần nhất. Chỉ xử lý lỗi đầu tiên; nếu chưa có bài làm, hỏi em gửi bước đã thử. Không tự viết lại cả lời giải ngay.',
  compare:'So sánh ở mức dấu hiệu và điều kiện trước, mỗi lượt một tiêu chí. Chưa trình bày hai lời giải trọn vẹn ở lượt đầu. Chỉ tổng hợp hai hướng nếu hợp lệ và đã đến giai đoạn 4; không bịa hướng thứ hai.'
 };
-export function instructions(mode){return SYSTEM+'\nChế độ: '+descriptions[mode];}
+export function instructions(mode){return SYSTEM+'\nChế độ: '+descriptions[mode]+DIAGRAM_POLICY;}

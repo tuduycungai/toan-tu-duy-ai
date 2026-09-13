@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "samples": 6,
+  "midpointWordingScreenshot": true,
+  "namedLineContext": true,
+  "coincidentPointLabels": true,
+  "normalization": "mocked; accepted with complete source coverage",
+  "akEqualsCi": true,
+  "kOiCollinear": true,
+  "wrongModelGeometryIgnored": true,
+  "tikzDownload": true,
+  "lightDarkMobile": true,
+  "apiContractUnchanged": true,
+  "gemini": "mocked",
+  "feedback": "blocked"
+}

@@ -1,5 +1,7 @@
 import {lessons} from './learning';
-import {construct,defaults,distance,intersection,lerp,near,onSegment,parallel,perpendicular,type Recipe,type Drawing,type Segment,type Construction,type DiagramResult,type Shape,type XY} from './geometry';
+import {readLineDescriptions} from './line-language';
+import {readMidpointDescriptions} from './midpoint-language';
+import {describeLine,resolveLine,linePoints,type LineRef,type DirectedLine,construct,defaults,distance,intersection,lerp,near,onSegment,parallel,perpendicular,type Recipe,type Drawing,type Segment,type Construction,type DiagramResult,type Shape,type XY} from './geometry';
 
 export const normalizeProblem=(s:string)=>s.normalize('NFC').replace(/\\(?:perp)/g,'⟂').replace(/\\(?:parallel)/g,'∥').replace(/\\(?:cap)/g,'∩').replace(/\\(?:in)\b/g,'∈').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/\s+/g,' ').trim();
 const fingerprint=(s:string)=>normalizeProblem(s).replace(/[“”"]/g,'').replace(/\s*([,;:.!?])\s*/g,'$1').toLocaleLowerCase('vi');
@@ -8,31 +10,37 @@ const P=(s:string)=>s.toUpperCase();
 export type Constraint=
  | {type:'equal'|'parallel'|'perpendicular';a:Segment;b:Segment}
  | {type:'on'|'midpoint';point:string;of:Segment}
- | {type:'intersection';point:string;lines:[Segment,Segment]}
+ | {type:'intersection';point:string;lines:[LineRef,LineRef]}
  | {type:'reflect';point:string;from:string;center:string}
  | {type:'length';of:Segment;value:number}
- | {type:'less';a:Segment;b:Segment};
+ | {type:'less';a:Segment;b:Segment}
+ | {type:'directedLine';line:DirectedLine};
 export type ParsedProblem={recipe:Recipe;constraints:Constraint[];remainder:string;given:string};
-function constraintText(c:Constraint):string{switch(c.type){case'equal':return c.a.join('')+' = '+c.b.join('');case'parallel':return c.a.join('')+' ∥ '+c.b.join('');case'perpendicular':return c.a.join('')+' ⟂ '+c.b.join('');case'on':return c.point+' ∈ '+c.of.join('');case'midpoint':return c.point+' là trung điểm '+c.of.join('');case'intersection':return c.point+' = '+c.lines[0].join('')+' ∩ '+c.lines[1].join('');case'reflect':return c.point+' đối xứng với '+c.from+' qua '+c.center;case'length':return c.of.join('')+' = '+c.value;case'less':return c.a.join('')+' < '+c.b.join('');}}
+function constraintText(c:Constraint):string{switch(c.type){case'directedLine':return (c.line.name||'Đường thẳng')+' qua '+c.line.through+' và '+(c.line.relation==='parallel'?'∥':'⟂')+' '+c.line.of.join('');case'equal':return c.a.join('')+' = '+c.b.join('');case'parallel':return c.a.join('')+' ∥ '+c.b.join('');case'perpendicular':return c.a.join('')+' ⟂ '+c.b.join('');case'on':return c.point+' ∈ '+c.of.join('');case'midpoint':return c.point+' là trung điểm '+c.of.join('');case'intersection':return c.point+' = '+describeLine(c.lines[0])+' ∩ '+describeLine(c.lines[1]);case'reflect':return c.point+' đối xứng với '+c.from+' qua '+c.center;case'length':return c.of.join('')+' = '+c.value;case'less':return c.a.join('')+' < '+c.b.join('');}}
 export function verifyConstraints(d:Drawing,cs:Constraint[]):string[]{
  const p=(n:string)=>{if(!d.points[n])throw Error('Chưa dựng điểm '+n);return d.points[n];};const len=(s:Segment)=>distance(p(s[0]),p(s[1]));
  const checks:string[]=[];for(const c of cs){let ok=false;
- switch(c.type){case'equal':ok=near(len(c.a),len(c.b));break;case'parallel':ok=parallel(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;case'perpendicular':ok=perpendicular(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;
+ switch(c.type){case'directedLine':{const [a,b]=resolveLine(c.line,d.points);ok=c.line.relation==='parallel'?parallel(a,b,p(c.line.of[0]),p(c.line.of[1])):perpendicular(a,b,p(c.line.of[0]),p(c.line.of[1]));break;}case'equal':ok=near(len(c.a),len(c.b));break;case'parallel':ok=parallel(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;case'perpendicular':ok=perpendicular(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;
  case'on':ok=onSegment(p(c.point),p(c.of[0]),p(c.of[1]));break;case'midpoint':ok=near(distance(p(c.point),lerp(p(c.of[0]),p(c.of[1]),.5)),0);break;
- case'intersection':ok=near(distance(p(c.point),intersection(p(c.lines[0][0]),p(c.lines[0][1]),p(c.lines[1][0]),p(c.lines[1][1]))),0);break;
+ case'intersection':ok=near(distance(p(c.point),intersection(...resolveLine(c.lines[0],d.points),...resolveLine(c.lines[1],d.points))),0);break;
  case'reflect':ok=near(distance(p(c.point),lerp(p(c.from),p(c.center),2)),0);break;
  case'length':ok=near(len(c.of),c.value);break;case'less':ok=len(c.a)<len(c.b)-1e-7;break;}
  if(!ok)throw Error('Hình không thỏa '+constraintText(c));checks.push(constraintText(c));}
  return checks;
 }
 
-/** Only consumes understood givens. Unknown text is retained and prevents drawing. */
-export function parseProblem(problem:string):ParsedProblem|null{
+export function problemParts(problem:string){
  const full=normalizeProblem(problem);let given=full.split(/\bchứng\s+minh\b|\bcmr\b|\ba\)\s*|\btính\b|\bhãy\s+kiểm\s+tra\b/iu)[0];
  // Later subquestions can introduce real data too (e.g. b) Biết AB = 8, CD = 14).
  let tail=full.slice(given.length);
  tail=tail.replace(/\b(biết|gọi)\s+(.+?)(?=\b(?:tính|chứng minh|cmr)\b|\b[a-e]\)|$)/giu,(_m,verb,data)=>{given+=' '+verb+' '+data;return ' ';});
  const extraConditions=/(?<![\p{L}])(?:nếu|lấy|kẻ|bổ sung|thêm điều kiện|giả sử)(?![\p{L}])/iu.test(tail);
+ return {full,given,extraConditions};
+}
+
+/** Only consumes understood givens. Unknown text is retained and prevents drawing. */
+export function parseProblem(problem:string):ParsedProblem|null{
+ const {full,given,extraConditions}=problemParts(problem);
  let rest=given;
  const shape=rest.match(/(?:hình (bình hành|chữ nhật|thoi|vuông|thang cân|thang)|tứ giác(?: lồi)?|tam giác)\s+([A-Z]{3,4})\b/iu);if(!shape)return null;
  const kind:Shape=shape[0].toLowerCase().startsWith('tam')?'triangle':({'bình hành':'parallelogram','chữ nhật':'rectangle','thoi':'rhombus','vuông':'square','thang cân':'isosceles-trapezoid','thang':'trapezoid'} as Record<string,Shape>)[(shape[1]||'').toLowerCase()]||'quadrilateral';
@@ -40,13 +48,17 @@ export function parseProblem(problem:string):ParsedProblem|null{
  const consume=(re:RegExp,fn:(...s:string[])=>void)=>{rest=rest.replace(re,(...args:unknown[])=>{fn(...args.slice(1,-2) as string[]);return ' ';});};
  const add=(c:Construction)=>{const old=recipe.points.find(p=>p.name===c.name);if(old&&JSON.stringify(old)!==JSON.stringify(c))throw Error('Điểm '+c.name+' có nhiều định nghĩa.');if(!old)recipe.points.push(c);};
  const on=(n:string,s:string)=>{n=P(n);const of=pair(s);if(!recipe.points.some(p=>p.name===n))add({name:n,op:'on',of,ratio:.32+(recipe.points.length%3)*.07});constraints.push({type:'on',point:n,of});};
- const mid=(n:string,s:string)=>{n=P(n);const of=pair(s);add({name:n,op:'midpoint',of});constraints.push({type:'midpoint',point:n,of});};
+ const mid=(n:string,s:string)=>{n=P(n);const of=pair(s);if(!recipe.points.some(p=>p.name===n))add({name:n,op:'midpoint',of});constraints.push({type:'midpoint',point:n,of});};
  const inter=(n:string,a:Segment,b:Segment)=>{n=P(n);add({name:n,op:'intersection',lines:[a,b]});constraints.push({type:'intersection',point:n,lines:[a,b]});recipe.segments.push(a,b);};
  if(vertices.length===3){consume(/vuông\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0)throw Error('Đỉnh góc vuông chưa có.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='right-triangle';});consume(/cân\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0||recipe.kind==='right-triangle')throw Error('Chưa hỗ trợ cấu hình này.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='isosceles-triangle';});}
  consume(/([A-Z])\s*(?:=|là giao điểm(?: của)?)\s*([A-Z]{2})\s*(?:∩|và)\s*([A-Z]{2})/giu,(n,a,b)=>inter(n,pair(a),pair(b)));
  consume(/([A-Z])\s+là giao điểm(?: của)?\s+hai đường chéo(?:\s+([A-Z]{2})\s+và\s+([A-Z]{2}))?/giu,(n,a,b)=>{if(vertices.length!==4)throw Error('Thiếu đường chéo.');inter(n,a?pair(a):[vertices[0],vertices[2]],b?pair(b):[vertices[1],vertices[3]]);});
- consume(/([A-Z](?:\s*,\s*[A-Z]){1,3})\s+lần lượt là trung điểm(?: của)?\s+([A-Z]{2}(?:\s*(?:,|và)\s*[A-Z]{2}){1,3})/giu,(ns,ss)=>{const names=ns.match(/[A-Z]/gi)||[],segs=ss.match(/[A-Z]{2}/gi)||[];if(names.length!==segs.length)throw Error('Thiếu cặp trung điểm và cạnh.');names.forEach((n,i)=>mid(n,segs[i]));});
- consume(/([A-Z])\s+(?:là\s+)?trung điểm(?: của)?\s+([A-Z]{2})/giu,mid);
+ const lineReading=readLineDescriptions(rest);rest=lineReading.text;recipe.guides=lineReading.guides;
+ for(const line of lineReading.guides)constraints.push({type:'directedLine',line});
+ for(const item of lineReading.points){add(item);if(item.op==='intersection'){constraints.push({type:'intersection',point:item.name,lines:item.lines});for(const ref of item.lines)if(Array.isArray(ref))recipe.segments.push(ref);}}
+ for(const item of lineReading.memberships)constraints.push({type:'on',point:item.point,of:item.of});
+ const midpoints=readMidpointDescriptions(rest);rest=midpoints.text;
+ for(const item of midpoints.items)mid(item.point,item.segment.join(''));
  consume(/([A-Z])\s+(?:là điểm\s+)?đối xứng(?: với)?\s+([A-Z])\s+qua\s+([A-Z])/giu,(n,a,m)=>{add({name:P(n),op:'reflect',of:[P(a),P(m)]});constraints.push({type:'reflect',point:P(n),from:P(a),center:P(m)});recipe.segments.push([P(a),P(n)]);});
  consume(/trên\s+(?:cạnh\s+|đoạn(?: thẳng)?\s+)?([A-Z]{2})\s+(?:lấy|chọn)\s+(?:điểm\s+)?([A-Z])/giu,(s,n)=>on(n,s));
  consume(/(?<![A-Z])([A-Z](?:\s*,\s*[A-Z]){1,3})\s*∈\s*([A-Z]{2})/giu,(ns,ss)=>(ns.match(/[A-Z]/gi)||[]).forEach(n=>on(n,ss)));
@@ -68,6 +80,11 @@ export function parseProblem(problem:string):ParsedProblem|null{
  // Named segments/polygons in the question may be drawn, but are NEVER constraints.
  const names=new Set([...recipe.vertices,...recipe.points.map(p=>p.name)]);
  for(const m of full.matchAll(/(?<![A-Z])[A-Z]{2,4}(?![A-Z])/g)){const ns=m[0].split('');if(ns.every(n=>names.has(n))&&new Set(ns).size===ns.length){for(let i=0;i<ns.length-1;i++)recipe.segments.push([ns[i],ns[i+1]]);if(ns.length>2)recipe.segments.push([ns.at(-1)!,ns[0]]);}}
+ // Lowercase segment names in an explicit relation still name drawable objects.
+ // This only adds strokes; a relation in the conclusion is never a given.
+ for(const m of full.matchAll(/(?<![\p{L}\p{N}])([A-Z]{2})\s*(?:=|⟂|∥|bằng|song song(?: với)?|vuông góc(?: với)?)\s*([A-Z]{2})(?![\p{L}\p{N}])/giu)){
+  for(const s of [m[1],m[2]]){const segment=pair(s);if(segment.every(n=>names.has(n)))recipe.segments.push(segment);}
+ }
  return {recipe,constraints,remainder:extraConditions?rest+' Phần sau còn điều kiện mới; em hãy gửi riêng từng ý.':rest,given};
 }
 const unordered=(s:Segment)=>[...s].sort().join('');
@@ -97,11 +114,11 @@ function satisfy(parsed:ParsedProblem):Drawing{
  candidates.sort((a,b)=>b.index-a.index);const t=candidates[0];if(t)r.points[t.index]={name:r.points[t.index].name,op:'equalOn',of:[t.anchor,t.other],length:t.length};
  }
  // Include only named objects, not conclusions as constraints.
- for(const c of cs)if(['equal','parallel','perpendicular'].includes(c.type)&&'a'in c)r.segments.push(c.a,c.b);
+ for(const c of cs){if(['equal','parallel','perpendicular'].includes(c.type)&&'a'in c)r.segments.push(c.a,c.b);if(c.type==='midpoint')r.segments.push(c.of);}
  const free=r.points.filter(p=>['on','equalOn'].includes(p.op));if(free.length===2)r.segments.push([free[0].name,free[1].name]);
  const d=construct(r);d.checks=[baseLabel(r.kind,r.vertices),...verifyConstraints(d,cs)];
  // Marks only reflect explicitly supplied relations. They are numerically rechecked by construct.
- for(const c of cs){if(c.type==='equal')r.marks.push({type:'equal',segments:[c.a,c.b]});if(c.type==='parallel')r.marks.push({type:'parallel',segments:[c.a,c.b]});}
+ for(const c of cs){if(c.type==='midpoint')r.marks.push({type:'equal',segments:[[c.of[0],c.point],[c.point,c.of[1]]]});if(c.type==='equal')r.marks.push({type:'equal',segments:[c.a,c.b]});if(c.type==='parallel')r.marks.push({type:'parallel',segments:[c.a,c.b]});}
  const result=construct(r);result.checks=d.checks;return result;
 }
 const baseLabel=(kind:Shape,v:string[])=>({quadrilateral:'Tứ giác lồi',parallelogram:'Hình bình hành',rectangle:'Hình chữ nhật',rhombus:'Hình thoi',square:'Hình vuông',trapezoid:'Hình thang','isosceles-trapezoid':'Hình thang cân',triangle:'Tam giác','right-triangle':'Tam giác vuông','isosceles-triangle':'Tam giác cân'}[kind])+' '+v.join('');
@@ -132,9 +149,11 @@ export function resolveProblemDiagram(problem:string):DiagramResult{
 /** Bind each response to its own original problem. A new task must not reuse a previous figure. */
 export function problemForTurn(text:string,previous=''):string{
  const t=normalizeProblem(text);
+ if(previous&&/^(?:vì|do|em nhận thấy|em nghĩ|suy ra|ta có|vậy|từ đó|nên)(?![\p{L}])/iu.test(t))return previous;
  if(/(?:sửa đề|đính chính|đổi giả thiết|thay giả thiết)/iu.test(t)&&!/(?:cho|hình|tứ giác|tam giác)\s/iu.test(t))return t;
  if(/(?:bài tương tự|sinh\s+\d|tạo\s+(?:bài|\d)|luyện tập|bài khác)/iu.test(t))return '';
  if(/(?:\bcho\b.{0,50}(?:hình|tứ giác|tam giác)|một bạn khẳng định)/iu.test(t))return t;
+ if((!previous||/chứng minh|cmr/iu.test(t))&&/[A-Z]{3,4}\s+là\s+(?:một\s+)?(?:hình|tứ giác|tam giác)/iu.test(t))return t;
  if(/(?:tứ giác|hình bình hành|hình vuông|hình thoi|hình chữ nhật|hình thang|tam giác)\s+[A-Z]{3,4}\b/iu.test(t))return t;
  return previous;
 }
