@@ -1,6 +1,8 @@
-# Tư duy Toán học — PRO V2.1
+# Tư duy Toán học — PRO V4.4
 
-Gia sư AI hỗ trợ rèn luyện lập luận hình học tứ giác lớp 8. Bản nâng cấp từ ZIP AI-TUTOR-UPGRADE được cung cấp, bảo toàn giao thức Gemini và cấu hình triển khai.
+Gia sư hỗ trợ rèn luyện lập luận hình học tứ giác lớp 8. Mỗi tứ giác là một câu chuyện tư duy — Mỗi lời giải là một hành trình khám phá.
+
+Bản này bổ sung dựng hình có kiểm tra ràng buộc, tỉ lệ như `2AM=AB`, công thức toán trên điện thoại, 81 bài từ phiếu bài tập (93 hình), lý thuyết dưới hình và câu hỏi theo năm mức học sinh. Gia sư chỉ hỏi gợi mở, không cung cấp đáp án hoặc lời giải hoàn chỉnh dù học sinh yêu cầu. Đọc **PHAT_HANH_V4_4.md** để xem phạm vi, minh chứng và giới hạn kiểm tra của bản hiện tại.
 
 ## Chạy trên máy
 
@@ -41,7 +43,10 @@ Endpoint mới `/.netlify/functions/feedback` tách biệt với `/api/chat`. Ch
 ## Nội dung và kiểm tra
 
 - 5 chế độ: gợi mở, kiểm tra lời giải, so sánh, luyện mỗi ngày, tự kiểm tra.
-- 6 bài mẫu có hình SVG, gợi ý, lời giải đối chiếu và câu hỏi chuyển giao.
+- 6 bài mẫu gốc và 81 bài đã biên tập từ phiếu PDF. Lời giải đối chiếu của 6 bài gốc chỉ là tư liệu kiểm tra; gia sư không chép cho học sinh.
+- 93 hình của phiếu có kiểm tra điều kiện bằng tính toán; SVG và TikZ dùng chung tọa độ. Ngân hàng xem được trước khi kết nối. Với đề nhập ngoài ngân hàng, bộ đọc chỉ dựng khi xác định được các điều kiện hỗ trợ; không tự thêm giả thiết để ép vẽ.
+- Hồ sơ có năm mức học sinh, dùng để chọn điểm bắt đầu. Gia sư tăng/giảm hỗ trợ theo cách em nêu đối tượng, quan hệ và căn cứ; không tự gán nhãn năng lực cố định.
+- Lý thuyết dưới hình trình bày kiến thức và điều kiện áp dụng, để học sinh tự chọn bước giải.
 - Sơ đồ công khai: giả thiết + mục tiêu → kiến thức kết nối → bước tiếp theo. Đây là định hướng sư phạm, không phải suy nghĩ nội bộ của mô hình.
 - Chính sách giới hạn chủ đề tứ giác và kiến thức phụ trợ; độ tuân thủ thực tế vẫn cần kiểm tra với Gemini.
 - Giao diện sáng/tối, điện thoại, hiệu ứng gõ, dừng phản hồi, hỗ trợ giảm chuyển động.
@@ -49,18 +54,26 @@ Endpoint mới `/.netlify/functions/feedback` tách biệt với `/api/chat`. Ch
 ```bash
 npm test
 npx tsc --noEmit
+npm run build
 ```
+
+Chạy `node scripts/verify-release.mjs` để ghi lại kết quả ba lệnh trên và danh sách từng kiểm thử vào `research/release-checks`. Kiểm thử API dùng phản hồi mô phỏng. `node scripts/audit-worksheets.mjs --compile` kiểm tra biên dịch 93 hình, cần cài TeX Live hoặc MiKTeX có TikZ; website không cần cài LaTeX. `node scripts/build-qa.mjs` tạo trang xem thử ngoại tuyến `qa/output/preview.html` và `mobile.html` cho kiểm tra thủ công trên trình duyệt.
 
 Kiểm tra trình duyệt tùy chọn: scripts/check-ui.mjs cần Playwright và Chromium có sẵn; không thêm chúng vào dependencies ứng dụng. Script dùng phản hồi giả lập và chặn gửi Google Forms thật.
 
 ## Tài liệu
 
-- BAO_CAO_NANG_CAP.md: phạm vi chỉnh sửa và kết quả kiểm tra.
+- PHAT_HANH_V4_4.md: thay đổi và giới hạn của bản phát hành hiện tại.
+- research/provenance: ghi nhận đoạn mã do AI tạo/sửa, nhật ký câu lệnh, bản đối chiếu theo dòng và nguồn nghiên cứu. Sổ tay Word đi kèm trình bày các minh chứng này.
+- research/release-checks: log thật, danh sách kiểm thử và dấu vân tay mã nguồn của V4.4.
+- research/AP_DUNG_NGHIEN_CUU_2019.md: cách vận dụng bài nghiên cứu, phân hóa câu hỏi và ba hội thoại minh họa.
+- research/worksheet-checks/DANH_MUC_81_BAI.md: toàn bộ đề đã biên tập, trang nguồn và ghi chú sửa đề.
+- Các báo cáo V2/V3/V4.2/V4.3 và thư mục kiểm tra cũ là lịch sử của những bản trước; không phải kết quả nghiệm thu V4.4.
 - API_INTEGRITY.json: SHA-256 đối chiếu các tệp cần bảo toàn.
 - research/CO_SO_SU_PHAM.md và public/co-so-su-pham.html: cơ sở sư phạm và nguồn trong/ngoài nước.
 - research/BAI_MAU_VA_DAP_AN.md: bài mẫu và lời giải tham chiếu.
 - research/KICH_BAN_KIEM_THU_SU_PHAM.md: nghiệm thu với Gemini thật.
 - research/screenshots: ảnh kiểm thử giao diện bằng dữ liệu giả lập.
-- backup: bản sao trước nâng cấp; research/legacy-v1 chứa hướng dẫn cũ, được thay thế bởi README này.
+- research/legacy-v1 chứa hướng dẫn cũ, được thay thế bởi README này. ZIP gốc được giữ riêng, không chèn bản sao mã nguồn cũ vào bản phát hành.
 
 Chưa có khóa Gemini thật để nghiệm thu đầu cuối. Kiểm thử API dùng phản hồi mô phỏng; không gửi dữ liệu thử vào biểu mẫu thật. Phần mềm áp dụng tài liệu vào thiết kế và prompt, không huấn luyện lại Gemini và chưa có nghiên cứu thực nghiệm chứng minh hiệu quả của bản phát hành.
