@@ -7,7 +7,7 @@ export type Mark = {type:'equal'|'parallel';segments:Segment[]} | {type:'right';
 export type Construction =
  | {name:string;op:'midpoint';of:Segment}
  | {name:string;op:'on';of:Segment;ratio:number}
- | {name:string;op:'equalOn';of:Segment;length:Segment}
+ | {name:string;op:'equalOn';of:Segment;length:Segment;factor?:number}
  | {name:string;op:'intersection';lines:[LineRef,LineRef]}
  | {name:string;op:'reflect';of:Segment}
  | {name:string;op:'foot';from:string;of:Segment};
@@ -72,7 +72,7 @@ export function construct(recipe:Recipe):Drawing{
      if(c.op==='midpoint')v=lerp(a,b,.5);
      else if(c.op==='reflect')v=lerp(a,b,2);
      else if(c.op==='foot'){const w=sub(b,a);v=lerp(a,b,dot(sub(p(c.from),a),w)/dot(w,w));}
-     else{const t=c.op==='on'?c.ratio:distance(p(c.length[0]),p(c.length[1]))/distance(a,b);if(!Number.isFinite(t)||t<=EPS||t>=1-EPS)throw Error('Điểm phải nằm trong đoạn và không trùng đầu mút.');v=lerp(a,b,t);}
+     else{const t=c.op==='on'?c.ratio:(c.factor??1)*distance(p(c.length[0]),p(c.length[1]))/distance(a,b);if(!Number.isFinite(t)||t<=EPS||t>=1-EPS)throw Error('Điểm phải nằm trong đoạn và không trùng đầu mút.');v=lerp(a,b,t);}
    }put(c.name,v);todo.splice(i,1);made++;}
    if(!made)throw Error('Điểm thiếu định nghĩa hoặc phụ thuộc vòng.');
  }

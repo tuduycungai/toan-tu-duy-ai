@@ -1,13 +1,18 @@
 import {lessons} from './learning';
 import {readLineDescriptions} from './line-language';
 import {readMidpointDescriptions} from './midpoint-language';
+import {readPointPlacements} from './point-language';
+import {readRatios,type Ratio} from './ratio-language';
+import {mathParts} from './math-parts';
+import {findWorksheet,worksheetDrawings} from './worksheets';
 import {describeLine,resolveLine,linePoints,type LineRef,type DirectedLine,construct,defaults,distance,intersection,lerp,near,onSegment,parallel,perpendicular,type Recipe,type Drawing,type Segment,type Construction,type DiagramResult,type Shape,type XY} from './geometry';
 
-export const normalizeProblem=(s:string)=>s.normalize('NFC').replace(/\\(?:perp)/g,'⟂').replace(/\\(?:parallel)/g,'∥').replace(/\\(?:cap)/g,'∩').replace(/\\(?:in)\b/g,'∈').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/\s+/g,' ').trim();
+export const normalizeProblem=(s:string)=>mathParts(s.normalize('NFC')).map(p=>p.value).join('').replace(/\\(?:dfrac|tfrac|frac)\{([A-Z]{2})\}\{(\d+(?:[.,]\d+)?)\}/g,'$1/$2').replace(/\\(?:dfrac|tfrac|frac)\{(\d+)\}\{(\d+)\}/g,'($1/$2)').replace(/\\(?:cdot|times)\b/g,'×').replace(/\\(?:perp)\b/g,'⟂').replace(/\\(?:parallel)\b/g,'∥').replace(/\\(?:cap)\b/g,'∩').replace(/\\(?:in)\b/g,'∈').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/\s+/g,' ').trim();
 const fingerprint=(s:string)=>normalizeProblem(s).replace(/[“”"]/g,'').replace(/\s*([,;:.!?])\s*/g,'$1').toLocaleLowerCase('vi');
 const pair=(s:string):Segment=>[s.replace(/\s/g,'')[0].toUpperCase(),s.replace(/\s/g,'')[1].toUpperCase()];
 const P=(s:string)=>s.toUpperCase();
 export type Constraint=
+ | Ratio
  | {type:'equal'|'parallel'|'perpendicular';a:Segment;b:Segment}
  | {type:'on'|'midpoint';point:string;of:Segment}
  | {type:'intersection';point:string;lines:[LineRef,LineRef]}
@@ -16,11 +21,11 @@ export type Constraint=
  | {type:'less';a:Segment;b:Segment}
  | {type:'directedLine';line:DirectedLine};
 export type ParsedProblem={recipe:Recipe;constraints:Constraint[];remainder:string;given:string};
-function constraintText(c:Constraint):string{switch(c.type){case'directedLine':return (c.line.name||'Đường thẳng')+' qua '+c.line.through+' và '+(c.line.relation==='parallel'?'∥':'⟂')+' '+c.line.of.join('');case'equal':return c.a.join('')+' = '+c.b.join('');case'parallel':return c.a.join('')+' ∥ '+c.b.join('');case'perpendicular':return c.a.join('')+' ⟂ '+c.b.join('');case'on':return c.point+' ∈ '+c.of.join('');case'midpoint':return c.point+' là trung điểm '+c.of.join('');case'intersection':return c.point+' = '+describeLine(c.lines[0])+' ∩ '+describeLine(c.lines[1]);case'reflect':return c.point+' đối xứng với '+c.from+' qua '+c.center;case'length':return c.of.join('')+' = '+c.value;case'less':return c.a.join('')+' < '+c.b.join('');}}
+function constraintText(c:Constraint):string{switch(c.type){case'ratio':return c.a.join('')+' = '+c.factor+' × '+c.b.join('');case'directedLine':return (c.line.name||'Đường thẳng')+' qua '+c.line.through+' và '+(c.line.relation==='parallel'?'∥':'⟂')+' '+c.line.of.join('');case'equal':return c.a.join('')+' = '+c.b.join('');case'parallel':return c.a.join('')+' ∥ '+c.b.join('');case'perpendicular':return c.a.join('')+' ⟂ '+c.b.join('');case'on':return c.point+' ∈ '+c.of.join('');case'midpoint':return c.point+' là trung điểm '+c.of.join('');case'intersection':return c.point+' = '+describeLine(c.lines[0])+' ∩ '+describeLine(c.lines[1]);case'reflect':return c.point+' đối xứng với '+c.from+' qua '+c.center;case'length':return c.of.join('')+' = '+c.value;case'less':return c.a.join('')+' < '+c.b.join('');}}
 export function verifyConstraints(d:Drawing,cs:Constraint[]):string[]{
  const p=(n:string)=>{if(!d.points[n])throw Error('Chưa dựng điểm '+n);return d.points[n];};const len=(s:Segment)=>distance(p(s[0]),p(s[1]));
  const checks:string[]=[];for(const c of cs){let ok=false;
- switch(c.type){case'directedLine':{const [a,b]=resolveLine(c.line,d.points);ok=c.line.relation==='parallel'?parallel(a,b,p(c.line.of[0]),p(c.line.of[1])):perpendicular(a,b,p(c.line.of[0]),p(c.line.of[1]));break;}case'equal':ok=near(len(c.a),len(c.b));break;case'parallel':ok=parallel(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;case'perpendicular':ok=perpendicular(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;
+ switch(c.type){case'ratio':ok=near(len(c.a),c.factor*len(c.b));break;case'directedLine':{const [a,b]=resolveLine(c.line,d.points);ok=c.line.relation==='parallel'?parallel(a,b,p(c.line.of[0]),p(c.line.of[1])):perpendicular(a,b,p(c.line.of[0]),p(c.line.of[1]));break;}case'equal':ok=near(len(c.a),len(c.b));break;case'parallel':ok=parallel(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;case'perpendicular':ok=perpendicular(...c.a.map(p) as [XY,XY],...c.b.map(p) as [XY,XY]);break;
  case'on':ok=onSegment(p(c.point),p(c.of[0]),p(c.of[1]));break;case'midpoint':ok=near(distance(p(c.point),lerp(p(c.of[0]),p(c.of[1]),.5)),0);break;
  case'intersection':ok=near(distance(p(c.point),intersection(...resolveLine(c.lines[0],d.points),...resolveLine(c.lines[1],d.points))),0);break;
  case'reflect':ok=near(distance(p(c.point),lerp(p(c.from),p(c.center),2)),0);break;
@@ -51,7 +56,7 @@ export function parseProblem(problem:string):ParsedProblem|null{
  const mid=(n:string,s:string)=>{n=P(n);const of=pair(s);if(!recipe.points.some(p=>p.name===n))add({name:n,op:'midpoint',of});constraints.push({type:'midpoint',point:n,of});};
  const inter=(n:string,a:Segment,b:Segment)=>{n=P(n);add({name:n,op:'intersection',lines:[a,b]});constraints.push({type:'intersection',point:n,lines:[a,b]});recipe.segments.push(a,b);};
  if(vertices.length===3){consume(/vuông\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0)throw Error('Đỉnh góc vuông chưa có.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='right-triangle';});consume(/cân\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0||recipe.kind==='right-triangle')throw Error('Chưa hỗ trợ cấu hình này.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='isosceles-triangle';});}
- consume(/([A-Z])\s*(?:=|là giao điểm(?: của)?)\s*([A-Z]{2})\s*(?:∩|và)\s*([A-Z]{2})/giu,(n,a,b)=>inter(n,pair(a),pair(b)));
+ consume(/([A-Z])\s*(?:=|là giao điểm(?: của)?)\s*(?:(?:hai|các)\s+)?(?:đường\s+thẳng\s+)?([A-Z]{2})\s*(?:∩|và|,)\s*(?:đường\s+thẳng\s+)?([A-Z]{2})/giu,(n,a,b)=>inter(n,pair(a),pair(b)));
  consume(/([A-Z])\s+là giao điểm(?: của)?\s+hai đường chéo(?:\s+([A-Z]{2})\s+và\s+([A-Z]{2}))?/giu,(n,a,b)=>{if(vertices.length!==4)throw Error('Thiếu đường chéo.');inter(n,a?pair(a):[vertices[0],vertices[2]],b?pair(b):[vertices[1],vertices[3]]);});
  const lineReading=readLineDescriptions(rest);rest=lineReading.text;recipe.guides=lineReading.guides;
  for(const line of lineReading.guides)constraints.push({type:'directedLine',line});
@@ -60,13 +65,14 @@ export function parseProblem(problem:string):ParsedProblem|null{
  const midpoints=readMidpointDescriptions(rest);rest=midpoints.text;
  for(const item of midpoints.items)mid(item.point,item.segment.join(''));
  consume(/([A-Z])\s+(?:là điểm\s+)?đối xứng(?: với)?\s+([A-Z])\s+qua\s+([A-Z])/giu,(n,a,m)=>{add({name:P(n),op:'reflect',of:[P(a),P(m)]});constraints.push({type:'reflect',point:P(n),from:P(a),center:P(m)});recipe.segments.push([P(a),P(n)]);});
- consume(/trên\s+(?:cạnh\s+|đoạn(?: thẳng)?\s+)?([A-Z]{2})\s+(?:lấy|chọn)\s+(?:điểm\s+)?([A-Z])/giu,(s,n)=>on(n,s));
+ const placements=readPointPlacements(rest);rest=placements.text;for(const item of placements.items)on(item.point,item.of.join(''));
  consume(/(?<![A-Z])([A-Z](?:\s*,\s*[A-Z]){1,3})\s*∈\s*([A-Z]{2})/giu,(ns,ss)=>(ns.match(/[A-Z]/gi)||[]).forEach(n=>on(n,ss)));
  consume(/([A-Z])\s+(?:nằm\s+(?:trên|trong)\s+(?:cạnh\s+|đoạn(?: thẳng)?\s+)?|thuộc\s+(?:cạnh\s+|đoạn(?: thẳng)?\s+)?|∈\s*)([A-Z]{2})/giu,on);
  // A point declared on a side and perpendicular from a known vertex is a projection.
  const feet=[...rest.matchAll(/([A-Z]{2})\s*(?:⟂|vuông góc(?: với)?)\s*([A-Z]{2})/giu)];
  for(const m of feet){const line=pair(m[1]),base=pair(m[2]);for(const [from,name] of [line,[...line].reverse()] as Segment[]){const index=recipe.points.findIndex(p=>p.name===name&&p.op==='on'&&unordered(p.of)===unordered(base));if(index>=0&&vertices.includes(from))recipe.points[index]={name,op:'foot',from,of:base};}}
  consume(/hai đường chéo(?:\s+([A-Z]{2})\s+và\s+([A-Z]{2}))?\s+(vuông góc|bằng nhau)(?: với nhau)?/giu,(a,b,t)=>{if(vertices.length!==4)throw Error('Thiếu đường chéo.');constraints.push({type:t.toLowerCase()==='vuông góc'?'perpendicular':'equal',a:a?pair(a):[vertices[0],vertices[2]],b:b?pair(b):[vertices[1],vertices[3]]});});
+ const ratioReading=readRatios(rest);rest=ratioReading.text;constraints.push(...ratioReading.ratios);
  // Explicit segment equalities retain endpoint order; CI measures from C, never D.
  consume(/([A-Z]{2})\s*(?:=|bằng)\s*([A-Z]{2})/giu,(a,b)=>constraints.push({type:'equal',a:pair(a),b:pair(b)}));
  consume(/([A-Z]{2})\s*(?:⟂|vuông góc(?: với)?)\s*([A-Z]{2})/giu,(a,b)=>constraints.push({type:'perpendicular',a:pair(a),b:pair(b)}));
@@ -103,10 +109,25 @@ function satisfy(parsed:ParsedProblem):Drawing{
   const top=lengthOf([v[0],v[1]]),bottom=lengthOf([v[2],v[3]]);
   if(top?.type==='length'&&bottom?.type==='length'&&top.value>0&&bottom.value>top.value){const a=top.value,b=bottom.value,h=Math.max(a,b)*.36;r.coords=[[(b-a)/2,h],[(b+a)/2,h],[b,0],[0,0]].map(([x,y])=>({x,y}));}
  }
- // One absolute length determines a uniform scale. More lengths are checked, never silently ignored.
- const length=cs.find(c=>c.type==='length');if(length?.type==='length'){
+ // Adjacent base lengths in a parallelogram: preserve the angle, scale the second side.
+ if(r.kind==='parallelogram'&&!diagEqual&&!diagPerp){for(const c of cs){if(c.type!=='ratio'||![...c.a,...c.b].every(n=>v.includes(n)))continue;
+ const ab=unordered([v[0],v[1]]),cd=unordered([v[2],v[3]]),ad=unordered([v[0],v[3]]),bc=unordered([v[1],v[2]]),a=unordered(c.a),b=unordered(c.b);
+ const factor=[ad,bc].includes(a)&&[ab,cd].includes(b)?c.factor:[ab,cd].includes(a)&&[ad,bc].includes(b)?1/c.factor:null;if(factor!==null){const q=r.coords!,length=distance(q[0],q[1])*factor,scale=length/distance(q[0],q[3]),d=lerp(q[0],q[3],scale);r.coords=[q[0],q[1],{x:q[1].x+d.x-q[0].x,y:q[1].y+d.y-q[0].y},d];}
+ }}
+ // Scale after solving base proportions: otherwise BC = 2AB could undo a given BC = 12.
+ const length=cs.find(c=>c.type==='length'&&c.of.every(n=>v.includes(n)));if(length?.type==='length'){
   const seed=r.coords||defaults[r.kind].map(([x,y])=>({x,y}));const a=v.indexOf(length.of[0]),b=v.indexOf(length.of[1]);
-  if(a>=0&&b>=0&&length.value>0){const k=length.value/distance(seed[a],seed[b]);r.coords=seed.map(p=>({x:p.x*k,y:p.y*k}));}
+  if(length.value>0){const k=length.value/distance(seed[a],seed[b]);r.coords=seed.map(p=>({x:p.x*k,y:p.y*k}));}
+ }
+ // Solve ratios along a declared segment, or bind a length from its explicit endpoint.
+ for(const c of cs){if(c.type!=='ratio')continue;let assigned=false;
+ for(const cp of r.points){if(cp.op!=='on'||!c.a.includes(cp.name)||!c.b.includes(cp.name))continue;
+ const oa=c.a.find(n=>n!==cp.name)!,ob=c.b.find(n=>n!==cp.name)!;if(oa===ob||!cp.of.includes(oa)||!cp.of.includes(ob))continue;
+ cp.ratio=oa===cp.of[0]?c.factor/(1+c.factor):1/(1+c.factor);assigned=true;break;}
+ if(assigned)continue;
+ const candidates:{index:number;anchor:string;other:string;length:Segment;factor:number}[]=[];
+ for(const [target,reference,factor] of [[c.a,c.b,c.factor],[c.b,c.a,1/c.factor]] as [Segment,Segment,number][]){for(const [anchor,n] of [target,[...target].reverse()] as Segment[]){const index=r.points.findIndex(p=>p.name===n&&p.op==='on'&&p.of.includes(anchor));if(index>=0&&!reference.includes(n)){const cp=r.points[index] as Extract<Construction,{op:'on'}>;candidates.push({index,anchor,other:cp.of.find(x=>x!==anchor)!,length:reference,factor});}}}
+ candidates.sort((a,b)=>b.index-a.index);const target=candidates[0];if(target)r.points[target.index]={name:r.points[target.index].name,op:'equalOn',of:[target.anchor,target.other],length:target.length,factor:target.factor};
  }
  // Bind a free point to an already defined length, measured from its explicit anchor.
  for(const c of cs){if(c.type!=='equal')continue;const candidates:{index:number;anchor:string;other:string;length:Segment}[]=[];
@@ -140,7 +161,7 @@ export function lessonDrawing(id:string):Drawing{
 export function resolveProblemDiagram(problem:string):DiagramResult{
  if(!problem.trim())return {status:'none',note:''};
  if(/(?:sửa đề|đính chính|đổi giả thiết|thay giả thiết)/iu.test(problem)&&!/(?:hình|tứ giác|tam giác)\s/iu.test(problem))return {status:'unsupported',note:'Em hãy gửi lại toàn bộ đề đã sửa để Thầy dựng hình theo đúng giả thiết mới.'};
- try{const exact=lessons.find(l=>fingerprint(l.problem)===fingerprint(problem));if(exact)return {status:'ready',drawing:lessonDrawing(exact.id)};
+ try{const worksheet=findWorksheet(problem);if(worksheet)return {status:'ready',drawing:worksheetDrawings(worksheet)[0]};const exact=lessons.find(l=>fingerprint(l.problem)===fingerprint(problem));if(exact)return {status:'ready',drawing:lessonDrawing(exact.id)};
  const parsed=parseProblem(problem);if(!parsed)return {status:'none',note:''};
  if(parsed.remainder)return {status:'unsupported',note:'Thầy chưa dựng hình vì còn dữ kiện chưa đọc được chắc chắn: “'+parsed.remainder.slice(0,160)+'”. Em hãy viết riêng từng giả thiết và vị trí các điểm để Thầy kiểm tra.'};
  return {status:'ready',drawing:satisfy(parsed)};
@@ -149,6 +170,7 @@ export function resolveProblemDiagram(problem:string):DiagramResult{
 /** Bind each response to its own original problem. A new task must not reuse a previous figure. */
 export function problemForTurn(text:string,previous=''):string{
  const t=normalizeProblem(text);
+ if(findWorksheet(t))return t;
  if(previous&&/^(?:vì|do|em nhận thấy|em nghĩ|suy ra|ta có|vậy|từ đó|nên)(?![\p{L}])/iu.test(t))return previous;
  if(/(?:sửa đề|đính chính|đổi giả thiết|thay giả thiết)/iu.test(t)&&!/(?:cho|hình|tứ giác|tam giác)\s/iu.test(t))return t;
  if(/(?:bài tương tự|sinh\s+\d|tạo\s+(?:bài|\d)|luyện tập|bài khác)/iu.test(t))return '';

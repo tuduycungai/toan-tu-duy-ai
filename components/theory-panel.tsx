@@ -1,0 +1,2 @@
+import {BookOpen} from 'lucide-react';import {theoryForProblem} from '../lib/theory';
+export function TheoryPanel({problem}:{problem:string}){const items=theoryForProblem(problem);return <section className="theory-panel" aria-label="Lý thuyết liên quan đến bài"><h3><BookOpen size={18}/>Lý thuyết liên quan đến bài</h3><p className="theory-intro">Em đối chiếu điều kiện để chọn kiến thức phù hợp với bước đang làm.</p>{items.map(t=><details key={t.id}><summary>{t.title}</summary><p>{t.content}</p><p><strong>Điều kiện áp dụng:</strong> {t.condition}</p></details>)}</section>;}
