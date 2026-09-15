@@ -1,0 +1,24 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1,line cap=round,line join=round]
+\coordinate (p0) at (1,4);
+\coordinate (p1) at (0,0);
+\coordinate (p2) at (7,0);
+\coordinate (p3) at (3.1826521,2.5448986);
+\coordinate (p4) at (0.6362246,2.5448986);
+\coordinate (p5) at (2.5464275,0);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p1) -- (p2);
+\draw[thick] (p2) -- (p0);
+\draw[dashed] (p3) -- (p4);
+\draw[dashed] (p3) -- (p5);
+\draw[dashed] (p0) -- (p5);
+\fill (p0) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$A$};
+\fill (p1) circle (1.1pt) node[fill=white,inner sep=1pt,below left] {$B$};
+\fill (p2) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$C$};
+\fill (p3) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$E$};
+\fill (p4) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$F$};
+\fill (p5) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$D$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,48 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1,line cap=round,line join=round]
+\coordinate (p0) at (0,0);
+\coordinate (p1) at (5,0);
+\coordinate (p2) at (0,7);
+\coordinate (p3) at (2.5,0);
+\coordinate (p4) at (2.5,3.5);
+\coordinate (p5) at (0,3.5);
+\coordinate (p6) at (-2.5,3.5);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p1) -- (p2);
+\draw[thick] (p2) -- (p0);
+\draw[dashed] (p3) -- (p6);
+\draw[dashed] (p4) -- (p5);
+\draw[dashed] (p6) -- (p4);
+\draw[dashed] (p6) -- (p5);
+\draw[dashed] (p0) -- (p3);
+\draw[dashed] (p3) -- (p4);
+\draw[dashed] (p5) -- (p0);
+\draw[dashed] (p1) -- (p3);
+\draw[dashed] (p5) -- (p1);
+\draw[dashed] (p0) -- (p4);
+\draw[dashed] (p4) -- (p2);
+\draw[dashed] (p2) -- (p6);
+\draw[dashed] (p6) -- (p0);
+\draw (1.25,0.1275) -- (1.25,-0.1275);
+\draw (3.75,0.1275) -- (3.75,-0.1275);
+\draw (3.6721867,1.6395793) -- (3.8796888,1.787795);
+\draw (3.6203112,1.712205) -- (3.8278133,1.8604207);
+\draw (1.1721867,5.1395793) -- (1.3796888,5.287795);
+\draw (1.1203112,5.212205) -- (1.3278133,5.3604207);
+\draw (-0.1275,1.66075) -- (0.1275,1.66075);
+\draw (-0.1275,1.75) -- (0.1275,1.75);
+\draw (-0.1275,1.83925) -- (0.1275,1.83925);
+\draw (-0.1275,5.16075) -- (0.1275,5.16075);
+\draw (-0.1275,5.25) -- (0.1275,5.25);
+\draw (-0.1275,5.33925) -- (0.1275,5.33925);
+\fill (p0) circle (1.1pt) node[fill=white,inner sep=1pt,below left] {$A$};
+\fill (p1) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$B$};
+\fill (p2) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$C$};
+\fill (p3) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$E$};
+\fill (p4) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$G$};
+\fill (p5) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$F$};
+\fill (p6) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$I$};
+\end{tikzpicture}
+\end{document}

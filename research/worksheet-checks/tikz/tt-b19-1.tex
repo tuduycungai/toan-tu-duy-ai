@@ -1,0 +1,38 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1,line cap=round,line join=round]
+\coordinate (p0) at (0,0);
+\coordinate (p1) at (6,0);
+\coordinate (p2) at (4.5,2.5980762);
+\coordinate (p3) at (-1.5,2.5980762);
+\coordinate (p4) at (3,0);
+\coordinate (p5) at (1.5,2.5980762);
+\coordinate (p6) at (1.5,-2.5980762);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p2) -- (p1);
+\draw[thick] (p2) -- (p3);
+\draw[thick] (p3) -- (p0);
+\draw[dashed] (p3) -- (p6);
+\draw[dashed] (p0) -- (p4);
+\draw[dashed] (p4) -- (p5);
+\draw[dashed] (p5) -- (p3);
+\draw[dashed] (p6) -- (p0);
+\draw[dashed] (p4) -- (p6);
+\draw[dashed] (p0) -- (p2);
+\draw[dashed] (p1) -- (p6);
+\draw (1.5,0.1275) -- (1.5,-0.1275);
+\draw (4.5,0.1275) -- (4.5,-0.1275);
+\draw (3.044625,2.4705762) -- (3.044625,2.7255762);
+\draw (2.955375,2.4705762) -- (2.955375,2.7255762);
+\draw (0.044625,2.4705762) -- (0.044625,2.7255762);
+\draw (-0.044625,2.4705762) -- (-0.044625,2.7255762);
+\fill (p0) circle (1.1pt) node[fill=white,inner sep=1pt,below left] {$M$};
+\fill (p1) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$N$};
+\fill (p2) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$P$};
+\fill (p3) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$Q$};
+\fill (p4) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$I$};
+\fill (p5) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$K$};
+\fill (p6) circle (1.1pt) node[fill=white,inner sep=1pt,below left] {$A$};
+\end{tikzpicture}
+\end{document}

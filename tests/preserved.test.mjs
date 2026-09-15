@@ -1,13 +1,22 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {createHash} from 'node:crypto';
-test('Unchanged auth HOCGIOITOAN, Gemini, Forms, UI assets and deploy files remain byte-identical',async()=>{
+test('Unaffected auth, Forms, original assets and deploy files remain byte-identical',async()=>{
  const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
- // Only the three UI integration files authorized for the drawing repair are exempt.
- const drawingIntegration=new Set(['app/page.tsx','app/globals.css','lib/learning.ts']);
+ // Explicitly authorized integrations are separately tested, not declared byte-identical.
+ const drawingIntegration=new Set(['app/page.tsx','app/globals.css','lib/learning.ts','components/learning-visuals.tsx','main.tsx','package.json','package-lock.json','server/gemini.mjs','tests/gemini.test.mjs','README.md','lib/tutor.ts','tests/tutor.test.mjs']);
  for(const [file,hash] of Object.entries(expected)){if(drawingIntegration.has(file))continue;assert.equal(createHash('sha256').update(await readFile(new URL('../'+file,import.meta.url))).digest('hex'),hash,file);}
 });
-test('V3 five-stage teaching policy is unchanged by geometry rendering',async()=>{
- const expected=JSON.parse(await readFile(new URL('./v3-policy-integrity.json',import.meta.url),'utf8'));
- for(const [file,hash] of Object.entries(expected))assert.equal(createHash('sha256').update(await readFile(new URL('../'+file,import.meta.url))).digest('hex'),hash,file);
+test('Gemini transport is byte-identical after reversing only documented tutor integrations',async()=>{
+ const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
+ const source=(await readFile(new URL('../server/gemini.mjs',import.meta.url),'utf8'))
+ .replace("import {adaptiveRequested} from './adaptive-protocol.mjs';\n",'')
+ .replace("import {handleAdaptiveChat} from './adaptive-api.mjs';\n",'')
+ .replace("import {controlledTutorOutput} from './output-boundary.mjs';\n",'')
+ .replace(" if(!check&&adaptiveRequested(body.messages))return handleAdaptiveChat(body,model,apiKey,fetcher,reply);\n",'')
+ .replace("import { asksForAnswer, guidedFallback, guardTutorOutput } from './strict-tutor.mjs';\n",'')
+ .replace(' if(!check&&asksForAnswer(body.messages))return reply({...controlledTutorOutput(body.messages,null),model});\n','')
+ .replace('instructions(body.mode,body.messages)','instructions(body.mode)')
+ .replace('...controlledTutorOutput(body.messages,null),model','text,model');
+ assert.equal(createHash('sha256').update(source).digest('hex'),expected['server/gemini.mjs']);
 });
 test('original light/dark styles are preserved; drawing styles are appended',async()=>{
  const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));

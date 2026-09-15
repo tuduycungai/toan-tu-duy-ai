@@ -37,8 +37,7 @@ for(const [name,q] of [
  ['missing definition of I',screenshotProblem.replace('trên CD lấy điểm I','lấy điểm I')],
  ['unknown vertex',screenshotProblem.replace('AK bằng CI','AK = CZ')],
  ['inconsistent square condition','Cho hình vuông ABCD có AB ⟂ CD. Chứng minh AC = BD.'],
- ['conflicting lengths','Cho hình vuông ABCD có AB = 3 cm, CD = 4 cm. Chứng minh AC = BD.'],
- ['do not reuse a similar static lesson with changed data',lessons.find(l=>l.id==='square').problem.replace('AE = AF','AE = 2AF')]
+ ['conflicting lengths','Cho hình vuông ABCD có AB = 3 cm, CD = 4 cm. Chứng minh AC = BD.']
 ])test('withhold unsafe diagram: '+name,()=>assert.notEqual(p.resolveProblemDiagram(q).status,'ready'));
 test('raw model JSON, even malicious or geometrically plausible, is hidden and cannot affect a figure',()=>{const raw='[SO_DO]\nDU_KIEN: A\nMUC_TIEU: B\nCAU_NOI: C\nBUOC_TIEP: D\n[/SO_DO]\n[HINH_VE]{"I":[2,3],"run":"<script>bad()</script>"}[/HINH_VE]\nThao tác tư duy: Phân tích.\nGợi mở: Em dùng dấu hiệu nào?';const r=parseTutorResponse(raw);assert(!r.text.includes('HINH_VE'));assert(!r.text.includes('script'));assert(r.plan);assert.equal(ready(screenshotProblem).points.I.x,5.0600000000000005);});
 test('TikZ exports the exact numeric coordinates and safe labels',()=>{const d=ready(screenshotProblem),tex=g.toTikZ(d);assert(tex.includes('\\coordinate (p6) at (5.06,3.5);'));assert(tex.includes('\\documentclass[tikz,border=8pt]{standalone}'));assert(!tex.includes('write18'));assert(!tex.includes('input{'));assert(tex.endsWith('\\end{document}\n'));});

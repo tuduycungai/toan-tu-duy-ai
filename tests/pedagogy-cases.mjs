@@ -17,5 +17,5 @@ export const cases=[
 const stuck=cases.find(c=>c.id==='unknown-3').messages;
 cases.push(
  {id:'unknown-4',messages:[...stuck,t('Thầy gợi ý em đối chiếu điều kiện vuông góc với dấu hiệu nhận biết hình thoi từ đường chéo. Điều kiện hình bình hành đã có ở đâu trong đề?'),u('Em vẫn chưa hiểu cách dùng.')],rubric:'Mức 4: minh họa một bước có căn cứ, giao bước kế; không lặp câu hoặc giải hết.'},
- {id:'unknown-5',messages:[...stuck,t('Đề cho ABCD là hình bình hành, vậy điều kiện loại hình đã có. Em hãy đối chiếu điều kiện về đường chéo với dấu hiệu em chọn?'),u('Em đã thử nhưng vẫn bế tắc, Thầy cho em lời giải từng bước.')],rubric:'Mức 5/yêu cầu rõ: lời giải ngắn có căn cứ, đúng một câu tự kiểm tra, chưa kết thúc.'}
+ {id:'unknown-5',messages:[...stuck,t('Đề cho ABCD là hình bình hành, vậy điều kiện loại hình đã có. Em hãy đối chiếu điều kiện về đường chéo với dấu hiệu em chọn?'),u('Em đã thử nhưng vẫn bế tắc, Thầy cho em lời giải từng bước.')],rubric:'Mức 5/yêu cầu rõ: vẫn từ chối đáp án, chia nhỏ nhiệm vụ và đúng một câu gợi mở, chưa kết thúc.'}
 );

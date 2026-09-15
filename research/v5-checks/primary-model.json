@@ -1,0 +1,288 @@
+{
+  "version": "5.0",
+  "source": "Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. Chứng minh rằng AE // CF.",
+  "normalized": "Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. Chứng minh rằng AE ∥ CF.",
+  "entities": [
+    {
+      "id": "A",
+      "type": "point"
+    },
+    {
+      "id": "B",
+      "type": "point"
+    },
+    {
+      "id": "C",
+      "type": "point"
+    },
+    {
+      "id": "D",
+      "type": "point"
+    },
+    {
+      "id": "O",
+      "type": "point"
+    },
+    {
+      "id": "E",
+      "type": "point"
+    },
+    {
+      "id": "F",
+      "type": "point"
+    },
+    {
+      "id": "ABCD",
+      "type": "parallelogram"
+    },
+    {
+      "id": "AB",
+      "type": "segment"
+    },
+    {
+      "id": "BC",
+      "type": "segment"
+    },
+    {
+      "id": "CD",
+      "type": "segment"
+    },
+    {
+      "id": "DA",
+      "type": "segment"
+    },
+    {
+      "id": "AC",
+      "type": "segment"
+    },
+    {
+      "id": "BD",
+      "type": "segment"
+    },
+    {
+      "id": "OD",
+      "type": "segment"
+    },
+    {
+      "id": "OB",
+      "type": "segment"
+    },
+    {
+      "id": "AE",
+      "type": "segment"
+    },
+    {
+      "id": "CF",
+      "type": "segment"
+    }
+  ],
+  "relations": [
+    {
+      "type": "intersection",
+      "point": "O",
+      "source": "Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. ",
+      "role": "given",
+      "detail": {
+        "type": "intersection",
+        "point": "O",
+        "lines": [
+          [
+            "A",
+            "C"
+          ],
+          [
+            "B",
+            "D"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "midpoint",
+      "point": "E",
+      "of": [
+        "O",
+        "D"
+      ],
+      "source": "Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. ",
+      "role": "given",
+      "detail": {
+        "type": "midpoint",
+        "point": "E",
+        "of": [
+          "O",
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "midpoint",
+      "point": "F",
+      "of": [
+        "O",
+        "B"
+      ],
+      "source": "Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. ",
+      "role": "given",
+      "detail": {
+        "type": "midpoint",
+        "point": "F",
+        "of": [
+          "O",
+          "B"
+        ]
+      }
+    },
+    {
+      "type": "centerOf",
+      "object": "O",
+      "target": "ABCD",
+      "source": "hình bình hành ABCD tâm O",
+      "role": "given"
+    },
+    {
+      "type": "parallel",
+      "objects": [
+        "AE",
+        "CF"
+      ],
+      "source": "AE ∥ CF",
+      "role": "goal"
+    }
+  ],
+  "givens": [
+    "Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. "
+  ],
+  "goal": "Chứng minh rằng AE ∥ CF.",
+  "auxiliaries": [],
+  "assumptions": [],
+  "confidence": 1,
+  "missingInformation": [],
+  "validation": {
+    "valid": true,
+    "checks": [
+      "Hình bình hành ABCD",
+      "O = AC ∩ BD",
+      "E là trung điểm OD",
+      "F là trung điểm OB"
+    ],
+    "errors": []
+  },
+  "status": "verified",
+  "drawing": {
+    "title": "Hình vẽ theo giả thiết",
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 0
+      },
+      "B": {
+        "x": 6,
+        "y": 0
+      },
+      "C": {
+        "x": 7.4,
+        "y": 3.5
+      },
+      "D": {
+        "x": 1.4,
+        "y": 3.5
+      },
+      "O": {
+        "x": 3.7,
+        "y": 1.75
+      },
+      "E": {
+        "x": 2.55,
+        "y": 2.625
+      },
+      "F": {
+        "x": 4.85,
+        "y": 0.875
+      }
+    },
+    "outline": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "segments": [
+      [
+        "A",
+        "B"
+      ],
+      [
+        "B",
+        "C"
+      ],
+      [
+        "C",
+        "D"
+      ],
+      [
+        "D",
+        "A"
+      ],
+      [
+        "A",
+        "C"
+      ],
+      [
+        "B",
+        "D"
+      ],
+      [
+        "O",
+        "D"
+      ],
+      [
+        "O",
+        "B"
+      ],
+      [
+        "A",
+        "E"
+      ],
+      [
+        "C",
+        "F"
+      ]
+    ],
+    "marks": [
+      {
+        "type": "equal",
+        "segments": [
+          [
+            "O",
+            "E"
+          ],
+          [
+            "E",
+            "D"
+          ]
+        ]
+      },
+      {
+        "type": "equal",
+        "segments": [
+          [
+            "O",
+            "F"
+          ],
+          [
+            "F",
+            "B"
+          ]
+        ]
+      }
+    ],
+    "checks": [
+      "Hình bình hành ABCD",
+      "O = AC ∩ BD",
+      "E là trung điểm OD",
+      "F là trung điểm OB"
+    ],
+    "guides": []
+  }
+}

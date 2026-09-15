@@ -1,0 +1,18 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1,line cap=round,line join=round]
+\coordinate (p0) at (0,0);
+\coordinate (p1) at (5,0);
+\coordinate (p2) at (5,6);
+\coordinate (p3) at (-0.875292,4.9640275);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p1) -- (p2);
+\draw[thick] (p2) -- (p3);
+\draw[thick] (p3) -- (p0);
+\fill (p0) circle (1.1pt) node[fill=white,inner sep=1pt,below left] {$E$};
+\fill (p1) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$F$};
+\fill (p2) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$G$};
+\fill (p3) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$H$};
+\end{tikzpicture}
+\end{document}

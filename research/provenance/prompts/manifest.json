@@ -1,0 +1,49 @@
+{
+  "capturedAt": "2026-09-14T09:25:58.602Z",
+  "kind": "Configuration snapshots, not live Gemini conversations",
+  "modelDefault": "gemini-2.5-flash",
+  "snapshots": [
+    {
+      "name": "guide-level-1.txt",
+      "mode": "guide",
+      "level": "Mất gốc",
+      "sha256": "16aaf43f70a839376cdbbc5a9f3ae43ae18a63fc695d58376a75351df3c27846"
+    },
+    {
+      "name": "guide-level-2.txt",
+      "mode": "guide",
+      "level": "Cơ bản",
+      "sha256": "6efdc62d0b9bbc2e80d7163e5a822d3a2a4194c59995695591ec4f4cbb3dccce"
+    },
+    {
+      "name": "guide-level-3.txt",
+      "mode": "guide",
+      "level": "Khá",
+      "sha256": "ee7692899a32e09de62615e8bca786499ad6e1a23a16c2366ccc2418736dc5cd"
+    },
+    {
+      "name": "guide-level-4.txt",
+      "mode": "guide",
+      "level": "Giỏi",
+      "sha256": "8126762cfe905e50657920b1c68a67cce614c068bdce535b9ddbe9a0ca2e97eb"
+    },
+    {
+      "name": "guide-level-5.txt",
+      "mode": "guide",
+      "level": "Học sinh năng khiếu",
+      "sha256": "54c2d20c4a5a161dc16fae3943da4517897a750bf14e5650f6006009ccf324f9"
+    },
+    {
+      "name": "review-level-2.txt",
+      "mode": "review",
+      "level": "Cơ bản",
+      "sha256": "37fca7c1dafd806b4da5c15797172e24b44bc31e57539a342ba7379c2e289c60"
+    },
+    {
+      "name": "compare-level-2.txt",
+      "mode": "compare",
+      "level": "Cơ bản",
+      "sha256": "2ca027c9e59f3bd994be161d99df7167a1bc4915577aae2f35d80dfbfe0e0771"
+    }
+  ]
+}

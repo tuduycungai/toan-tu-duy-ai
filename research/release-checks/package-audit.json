@@ -1,0 +1,16 @@
+{
+  "recordedAt": "2026-09-14T09:39:25.837676+00:00",
+  "secretScanMatches": 0,
+  "secretScanScope": "Text files in deliverable; known Google key prefix and private-key headers; no claim of exhaustive secret detection.",
+  "intentionalAIAttributionRetained": true,
+  "aiCodeFiles": 42,
+  "promptRecords": 10,
+  "configurationSnapshots": 7,
+  "suppliedSourceCopiesHashVerified": 3,
+  "licensesRetained": [
+    "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
+    "vendor/katex.LICENSE.txt"
+  ],
+  "sourceFileDeletions": 0,
+  "excluded": "Installed dependencies, local secret environment files, caches, duplicate ZIP backups and TeX temporary files. Technical logs, scholarly citations, AI attribution and prompt history retained."
+}

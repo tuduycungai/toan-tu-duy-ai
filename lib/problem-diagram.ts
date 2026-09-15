@@ -7,7 +7,7 @@ import {mathParts} from './math-parts';
 import {findWorksheet,worksheetDrawings} from './worksheets';
 import {describeLine,resolveLine,linePoints,type LineRef,type DirectedLine,construct,defaults,distance,intersection,lerp,near,onSegment,parallel,perpendicular,type Recipe,type Drawing,type Segment,type Construction,type DiagramResult,type Shape,type XY} from './geometry';
 
-export const normalizeProblem=(s:string)=>mathParts(s.normalize('NFC')).map(p=>p.value).join('').replace(/\\(?:dfrac|tfrac|frac)\{([A-Z]{2})\}\{(\d+(?:[.,]\d+)?)\}/g,'$1/$2').replace(/\\(?:dfrac|tfrac|frac)\{(\d+)\}\{(\d+)\}/g,'($1/$2)').replace(/\\(?:cdot|times)\b/g,'×').replace(/\\(?:perp)\b/g,'⟂').replace(/\\(?:parallel)\b/g,'∥').replace(/\\(?:cap)\b/g,'∩').replace(/\\(?:in)\b/g,'∈').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/\s+/g,' ').trim();
+export const normalizeProblem=(s:string)=>mathParts(s.normalize('NFC')).map(p=>p.value).join('').replace(/\\(?:dfrac|tfrac|frac)\{([A-Z]{2})\}\{(\d+(?:[.,]\d+)?)\}/g,'$1/$2').replace(/\\(?:dfrac|tfrac|frac)\{(\d+)\}\{(\d+)\}/g,'($1/$2)').replace(/\\(?:cdot|times)\b/g,'×').replace(/\\(?:perp)\b/g,'⟂').replace(/\\(?:parallel)\b/g,'∥').replace(/\\(?:cap)\b/g,'∩').replace(/\\(?:in)\b/g,'∈').replace(/\\(?:mathrm|text|overline)\{([^{}]*)\}/g,'$1').replace(/\\(?:triangle|Delta)\b|[△Δ]/g,'tam giác ').replace(/\\angle\b/g,'∠').replace(/\\(?:left|right)\b/g,'').replace(/\\[,;! ]/g,' ').replace(/\^?\\circ\b/g,'°').replace(/⊥/g,'⟂').replace(/\/\s*\//g,'∥').replace(/(?<![\p{L}])(?:HBH|HCN)(?![\p{L}])/giu,m=>m.toUpperCase()==='HBH'?'hình bình hành':'hình chữ nhật').replace(/(?<![\p{L}])(?:CMR|cmr|CM)(?=\s|:)/gu,'Chứng minh').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/\s+/g,' ').trim();
 const fingerprint=(s:string)=>normalizeProblem(s).replace(/[“”"]/g,'').replace(/\s*([,;:.!?])\s*/g,'$1').toLocaleLowerCase('vi');
 const pair=(s:string):Segment=>[s.replace(/\s/g,'')[0].toUpperCase(),s.replace(/\s/g,'')[1].toUpperCase()];
 const P=(s:string)=>s.toUpperCase();
@@ -55,6 +55,12 @@ export function parseProblem(problem:string):ParsedProblem|null{
  const on=(n:string,s:string)=>{n=P(n);const of=pair(s);if(!recipe.points.some(p=>p.name===n))add({name:n,op:'on',of,ratio:.32+(recipe.points.length%3)*.07});constraints.push({type:'on',point:n,of});};
  const mid=(n:string,s:string)=>{n=P(n);const of=pair(s);if(!recipe.points.some(p=>p.name===n))add({name:n,op:'midpoint',of});constraints.push({type:'midpoint',point:n,of});};
  const inter=(n:string,a:Segment,b:Segment)=>{n=P(n);add({name:n,op:'intersection',lines:[a,b]});constraints.push({type:'intersection',point:n,lines:[a,b]});recipe.segments.push(a,b);};
+ // V5: a center is defined by the two diagonals, never an arbitrary point.
+ if(['parallelogram','rectangle','rhombus','square'].includes(kind)){
+  consume(/(?:có\s+)?tâm\s+([A-Z])(?![\p{L}\p{N}'′])/giu,n=>inter(n,[vertices[0],vertices[2]],[vertices[1],vertices[3]]));
+ }
+ consume(/nối\s+([A-Z])\s+(?:với\s+)?([A-Z])(?![\p{L}])/giu,(a,b)=>recipe.segments.push([P(a),P(b)]));
+ consume(/(?:nối|vẽ)\s+(?:đoạn(?:\s+thẳng)?\s+)?([A-Z]{2})(?![\p{L}])/giu,ab=>recipe.segments.push(pair(ab)));
  if(vertices.length===3){consume(/vuông\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0)throw Error('Đỉnh góc vuông chưa có.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='right-triangle';});consume(/cân\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0||recipe.kind==='right-triangle')throw Error('Chưa hỗ trợ cấu hình này.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='isosceles-triangle';});}
  consume(/([A-Z])\s*(?:=|là giao điểm(?: của)?)\s*(?:(?:hai|các)\s+)?(?:đường\s+thẳng\s+)?([A-Z]{2})\s*(?:∩|và|,)\s*(?:đường\s+thẳng\s+)?([A-Z]{2})/giu,(n,a,b)=>inter(n,pair(a),pair(b)));
  consume(/([A-Z])\s+là giao điểm(?: của)?\s+hai đường chéo(?:\s+([A-Z]{2})\s+và\s+([A-Z]{2}))?/giu,(n,a,b)=>{if(vertices.length!==4)throw Error('Thiếu đường chéo.');inter(n,a?pair(a):[vertices[0],vertices[2]],b?pair(b):[vertices[1],vertices[3]]);});
@@ -94,7 +100,7 @@ export function parseProblem(problem:string):ParsedProblem|null{
  return {recipe,constraints,remainder:extraConditions?rest+' Phần sau còn điều kiện mới; em hãy gửi riêng từng ý.':rest,given};
 }
 const unordered=(s:Segment)=>[...s].sort().join('');
-function satisfy(parsed:ParsedProblem):Drawing{
+export function satisfy(parsed:ParsedProblem):Drawing{
  const r:Recipe=structuredClone(parsed.recipe),cs=parsed.constraints,v=r.vertices;
  const isDiag=(s:Segment)=>v.length===4&&[v[0]+v[2],v[1]+v[3]].some(x=>unordered(pair(x))===unordered(s));
  const diagPerp=cs.some(c=>c.type==='perpendicular'&&isDiag(c.a)&&isDiag(c.b)&&unordered(c.a)!==unordered(c.b));
@@ -169,12 +175,14 @@ export function resolveProblemDiagram(problem:string):DiagramResult{
 }
 /** Bind each response to its own original problem. A new task must not reuse a previous figure. */
 export function problemForTurn(text:string,previous=''):string{
+ if(findWorksheet(text))return text;
  const t=normalizeProblem(text);
  if(findWorksheet(t))return t;
+ if(previous&&/^(?:nối|kẻ|qua|vẽ|dựng)\s/iu.test(t)&&/(?<![\p{L}])[A-Z]{1,2}(?![\p{L}])/u.test(t)){const parts=problemParts(previous);return parts.given+' '+t.replace(/[.!]$/,'')+'. '+parts.full.slice(parts.given.length);}
  if(previous&&/^(?:vì|do|em nhận thấy|em nghĩ|suy ra|ta có|vậy|từ đó|nên)(?![\p{L}])/iu.test(t))return previous;
  if(/(?:sửa đề|đính chính|đổi giả thiết|thay giả thiết)/iu.test(t)&&!/(?:cho|hình|tứ giác|tam giác)\s/iu.test(t))return t;
  if(/(?:bài tương tự|sinh\s+\d|tạo\s+(?:bài|\d)|luyện tập|bài khác)/iu.test(t))return '';
- if(/(?:\bcho\b.{0,50}(?:hình|tứ giác|tam giác)|một bạn khẳng định)/iu.test(t))return t;
+ if(/(?:\bcho\b.{0,50}(?:hình|tứ giác|tam giác|đường tròn)|một bạn khẳng định)/iu.test(t))return t;
  if((!previous||/chứng minh|cmr/iu.test(t))&&/[A-Z]{3,4}\s+là\s+(?:một\s+)?(?:hình|tứ giác|tam giác)/iu.test(t))return t;
  if(/(?:tứ giác|hình bình hành|hình vuông|hình thoi|hình chữ nhật|hình thang|tam giác)\s+[A-Z]{3,4}\b/iu.test(t))return t;
  return previous;

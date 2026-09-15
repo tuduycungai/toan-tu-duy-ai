@@ -1,0 +1,419 @@
+[
+  {
+    "id": "01-parallelogram",
+    "problem": "Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. Chứng minh rằng AE // CF.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 0
+      },
+      "B": {
+        "x": 6,
+        "y": 0
+      },
+      "C": {
+        "x": 7.4,
+        "y": 3.5
+      },
+      "D": {
+        "x": 1.4,
+        "y": 3.5
+      },
+      "O": {
+        "x": 3.7,
+        "y": 1.75
+      },
+      "E": {
+        "x": 2.55,
+        "y": 2.625
+      },
+      "F": {
+        "x": 4.85,
+        "y": 0.875
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Đường trung bình của tam giác",
+      "Song song, vuông góc và góc",
+      "Hình bình hành",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "02-rectangle",
+    "problem": "Cho hình chữ nhật ABCD. M thuộc AB. Qua M kẻ đường thẳng d vuông góc AB, cắt CD tại N. Chứng minh MN song song AD.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 0
+      },
+      "B": {
+        "x": 6,
+        "y": 0
+      },
+      "C": {
+        "x": 6,
+        "y": 3.6
+      },
+      "D": {
+        "x": 0,
+        "y": 3.6
+      },
+      "M": {
+        "x": 2.34,
+        "y": 0
+      },
+      "N": {
+        "x": 2.34,
+        "y": 3.6000000000000005
+      }
+    },
+    "theories": [
+      "Song song, vuông góc và góc",
+      "Hình chữ nhật",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "03-rhombus",
+    "problem": "Cho hình thoi ABCD tâm O. E là trung điểm AD, F là trung điểm AB. Chứng minh EF song song BD.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 0
+      },
+      "B": {
+        "x": 5,
+        "y": 0
+      },
+      "C": {
+        "x": 8,
+        "y": 4
+      },
+      "D": {
+        "x": 3,
+        "y": 4
+      },
+      "O": {
+        "x": 4,
+        "y": 2
+      },
+      "E": {
+        "x": 1.5,
+        "y": 2
+      },
+      "F": {
+        "x": 2.5,
+        "y": 0
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Đường trung bình của tam giác",
+      "Song song, vuông góc và góc",
+      "Hình thoi",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "04-trapezoid",
+    "problem": "Cho hình thang ABCD có AB // CD. M và N theo thứ tự là trung điểm AD và BC. Chứng minh MN // AB.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "A": {
+        "x": 1.2,
+        "y": 3.6
+      },
+      "B": {
+        "x": 4.6,
+        "y": 3.6
+      },
+      "C": {
+        "x": 6,
+        "y": 0
+      },
+      "D": {
+        "x": 0,
+        "y": 0
+      },
+      "M": {
+        "x": 0.6,
+        "y": 1.8
+      },
+      "N": {
+        "x": 5.3,
+        "y": 1.8
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Song song, vuông góc và góc",
+      "Hình thang và hình thang cân",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "05-triangle",
+    "problem": "Cho tam giác ABC. M là trung điểm AB. N thuộc AC. MN // BC. Chứng minh N là trung điểm AC.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 3.8
+      },
+      "B": {
+        "x": -2,
+        "y": 0
+      },
+      "C": {
+        "x": 4,
+        "y": 0
+      },
+      "M": {
+        "x": -1,
+        "y": 1.9
+      },
+      "N": {
+        "x": 2,
+        "y": 1.9
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Đường trung bình của tam giác",
+      "Song song, vuông góc và góc",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "06-circle",
+    "problem": "Cho đường tròn (O) bán kính 3 cm. Dây cung AB. Kẻ tiếp tuyến d tại A. Chứng minh OA vuông góc d.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "O": {
+        "x": 0,
+        "y": 0
+      },
+      "A": {
+        "x": 2.8181181385421366,
+        "y": 1.028693422366354
+      },
+      "B": {
+        "x": -1.7655033517660375,
+        "y": 2.4254892114587703
+      }
+    },
+    "theories": [
+      "Song song, vuông góc và góc",
+      "Hai tam giác bằng nhau",
+      "Đường tròn, bán kính và dây cung",
+      "Tiếp tuyến và bán kính",
+      "Góc nội tiếp và tứ giác nội tiếp"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "07-novel",
+    "problem": "Cho hình chữ nhật KLMN. P là trung điểm KL. Qua P kẻ đường thẳng d song song KN, cắt MN tại Q. Chứng minh KP = NQ.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "K": {
+        "x": 0,
+        "y": 0
+      },
+      "L": {
+        "x": 6,
+        "y": 0
+      },
+      "M": {
+        "x": 6,
+        "y": 3.6
+      },
+      "N": {
+        "x": 0,
+        "y": 3.6
+      },
+      "P": {
+        "x": 3,
+        "y": 0
+      },
+      "Q": {
+        "x": 3,
+        "y": 3.6
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Đường trung bình của tam giác",
+      "Song song, vuông góc và góc",
+      "Hình chữ nhật",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "08-latex",
+    "problem": "Cho hình bình hành \\(ABCD\\) tâm \\(O\\). \\(E\\) và \\(F\\) theo thứ tự là trung điểm của \\(OD\\) và \\(OB\\). Chứng minh \\(AE\\parallel CF\\).",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 0
+      },
+      "B": {
+        "x": 6,
+        "y": 0
+      },
+      "C": {
+        "x": 7.4,
+        "y": 3.5
+      },
+      "D": {
+        "x": 1.4,
+        "y": 3.5
+      },
+      "O": {
+        "x": 3.7,
+        "y": 1.75
+      },
+      "E": {
+        "x": 2.55,
+        "y": 2.625
+      },
+      "F": {
+        "x": 4.85,
+        "y": 0.875
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Đường trung bình của tam giác",
+      "Song song, vuông góc và góc",
+      "Hình bình hành",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "09-ordered",
+    "problem": "Cho hình bình hành ABCD tâm O. Các điểm E và F theo thứ tự là trung điểm của OD và OB. Chứng minh AE ∥ CF.",
+    "status": "verified",
+    "validation": true,
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 0
+      },
+      "B": {
+        "x": 6,
+        "y": 0
+      },
+      "C": {
+        "x": 7.4,
+        "y": 3.5
+      },
+      "D": {
+        "x": 1.4,
+        "y": 3.5
+      },
+      "O": {
+        "x": 3.7,
+        "y": 1.75
+      },
+      "E": {
+        "x": 2.55,
+        "y": 2.625
+      },
+      "F": {
+        "x": 4.85,
+        "y": 0.875
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Đường trung bình của tam giác",
+      "Song song, vuông góc và góc",
+      "Hình bình hành",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [],
+    "missing": []
+  },
+  {
+    "id": "10-missing",
+    "problem": "Cho hình bình hành ABCD. E là trung điểm OD. Chứng minh AE // CF.",
+    "status": "provisional",
+    "validation": false,
+    "points": {
+      "A": {
+        "x": 0,
+        "y": 0
+      },
+      "B": {
+        "x": 6,
+        "y": 0
+      },
+      "C": {
+        "x": 7.4,
+        "y": 3.5
+      },
+      "D": {
+        "x": 1.4,
+        "y": 3.5
+      }
+    },
+    "theories": [
+      "Trung điểm và tỉ lệ đoạn thẳng",
+      "Đường trung bình của tam giác",
+      "Song song, vuông góc và góc",
+      "Hình bình hành",
+      "Hai tam giác bằng nhau"
+    ],
+    "render": "React SVG SSR passed",
+    "assumptions": [
+      "Hình tạm chỉ thể hiện phần dữ kiện đã đọc; các điều kiện ghi ở mục cần xác nhận chưa được bảo đảm đồng thời."
+    ],
+    "missing": [
+      "Điểm E xuất hiện trong mục tiêu nhưng chưa có định nghĩa.",
+      "Điểm F xuất hiện trong mục tiêu nhưng chưa có định nghĩa.",
+      "Điểm thiếu định nghĩa hoặc phụ thuộc vòng.",
+      "Thiếu điểm cho hệ ràng buộc.",
+      "Chưa dựng điểm E: thiếu định nghĩa hoặc quan hệ mâu thuẫn.",
+      "Chưa dựng điểm E"
+    ]
+  }
+]

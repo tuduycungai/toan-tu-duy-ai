@@ -1,0 +1,64 @@
+{
+  "at": "2026-09-15T12:19:45.238Z",
+  "node": "v24.19.0",
+  "tests": {
+    "total": 404,
+    "passed": 403,
+    "failed": 0,
+    "skipped": 1
+  },
+  "commands": [
+    {
+      "label": "Existing package tests",
+      "command": "npm test",
+      "exitCode": 0,
+      "durationMs": 2190,
+      "at": "2026-09-15T12:19:35.219Z",
+      "log": "npm-test.log"
+    },
+    {
+      "label": "Per-case structured report",
+      "command": "node --test --test-reporter=./scripts/test-report.mjs tests/*.test.mjs",
+      "exitCode": 0,
+      "durationMs": 2111,
+      "at": "2026-09-15T12:19:37.331Z",
+      "log": "tests.jsonl"
+    },
+    {
+      "label": "TypeScript",
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "durationMs": 2757,
+      "at": "2026-09-15T12:19:40.088Z",
+      "log": "tsc.log"
+    },
+    {
+      "label": "Production build",
+      "command": "npm run build",
+      "exitCode": 0,
+      "durationMs": 1300,
+      "at": "2026-09-15T12:19:41.388Z",
+      "log": "build.log"
+    },
+    {
+      "label": "React/SVG render of ten mandatory problems",
+      "command": "node scripts/check-v5-render.mjs",
+      "exitCode": 0,
+      "durationMs": 3283,
+      "at": "2026-09-15T12:19:44.671Z",
+      "log": "render.log"
+    },
+    {
+      "label": "Local HTTP smoke (no external writes)",
+      "exitCode": 0,
+      "result": {
+        "home": 200,
+        "chatWithoutKey": 503,
+        "feedbackReadOnly": 405,
+        "pass": true
+      }
+    }
+  ],
+  "liveGemini": "NOT RUN: no live API key; unit tests use synthetic fetch responses",
+  "browser": "NOT VERIFIED: local Chromium startup failed; React/SVG render is not browser interaction coverage"
+}

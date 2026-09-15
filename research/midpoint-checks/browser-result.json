@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "samples": 6,
+  "midpointWordingScreenshot": true,
+  "akEqualsCi": true,
+  "kOiCollinear": true,
+  "wrongModelGeometryIgnored": true,
+  "tikzDownload": true,
+  "lightDarkMobile": true,
+  "apiContractUnchanged": true,
+  "gemini": "mocked",
+  "feedback": "blocked"
+}

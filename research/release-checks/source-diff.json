@@ -1,0 +1,297 @@
+{
+  "recordedAt": "2026-09-14T09:39:25.837676+00:00",
+  "baseline": "AI-TUTOR-TU-GIAC-PRO-V4_3-DOC-DE-THEO-NGU-CANH.zip",
+  "changes": [
+    {
+      "file": "PHAT_HANH_V4_4.md",
+      "status": "added",
+      "before": null,
+      "after": "8ff46c5601b5b211fc7250900d4f9107dc4a7f1d8b9a8ec9af63ee97966c405e"
+    },
+    {
+      "file": "README.md",
+      "status": "modified",
+      "before": "2cb11900ed260d6eaf823059c9d95fada190d71b4af5f07579f9ce3785b8cbb3",
+      "after": "200017532f0e81eca07a0a9c8c0ec482cf0b82f0920b383aeeb2e0dfe6442d11"
+    },
+    {
+      "file": "app/enhancements.css",
+      "status": "added",
+      "before": null,
+      "after": "5b8b7fdf93c0e7dd72381c5a6f44d7d1dac658a28caea51294513437c6fb6864"
+    },
+    {
+      "file": "app/page.tsx",
+      "status": "modified",
+      "before": "90036b09c60403c34ab0371bd3aa1f840f69678cd94147937a114da463e74691",
+      "after": "2b3e7fc768bfa78ec37d5725341a13b23fa1f8713b3afc4c752b9c1e7cade45d"
+    },
+    {
+      "file": "components/learning-visuals.tsx",
+      "status": "modified",
+      "before": "8856de399c54f9ca1b55744b54b7a7437b0f31784b33407afd82883f23392401",
+      "after": "10c29e2a5dcc7a1e4859f4016b4eeb71c9e6ae557f68c077177be839f397e81d"
+    },
+    {
+      "file": "components/math-text.tsx",
+      "status": "added",
+      "before": null,
+      "after": "3100f0170f9a42b5778d448d373883a3b3ff62b001ebdcacde7fccdbbda75506"
+    },
+    {
+      "file": "components/problem-figure.tsx",
+      "status": "modified",
+      "before": "a52f57141ff22357c848e126ade10adaecd9ba12e8b31dec4a8c81ed9436af06",
+      "after": "5e6148907e471aa7c496b85493bf5b0940fc70778d8f5f900703f66e3de5f3e2"
+    },
+    {
+      "file": "components/theory-panel.tsx",
+      "status": "added",
+      "before": null,
+      "after": "ec6b106225c40a49839bec2f127ce36afe5faee2f96e20fabafa686ad5203f0d"
+    },
+    {
+      "file": "components/worksheet-bank.tsx",
+      "status": "added",
+      "before": null,
+      "after": "9a0f876fd69b218ce3424be979f5e866e4e0e29ca64f102216ff07a2c6261c6c"
+    },
+    {
+      "file": "lib/geometry.ts",
+      "status": "modified",
+      "before": "ec82f57182f6a42d554ceb00b727226eb1c8789b3269e18b595279d92ebc032a",
+      "after": "7d95b5ebe30bcd8a25d3c05d1132dfab9ebb2ffce5922bfbc144785288a722e7"
+    },
+    {
+      "file": "lib/katex.d.ts",
+      "status": "added",
+      "before": null,
+      "after": "414e806ad288e55ea215d097c5e8f4274161cc93ab5f88f9376aaf7394553c70"
+    },
+    {
+      "file": "lib/math-parts.ts",
+      "status": "added",
+      "before": null,
+      "after": "c4667e481c8ae9166eb6c6e3f89fc03f3eca55d4eed747534a865fd30ba00f64"
+    },
+    {
+      "file": "lib/point-language.ts",
+      "status": "added",
+      "before": null,
+      "after": "a07a26469500bc945532ac2e115565d08ba617cea188009abdde49b7cb851bae"
+    },
+    {
+      "file": "lib/problem-diagram.ts",
+      "status": "modified",
+      "before": "cd9a28e44c2d5fa5b377890ad4d359b245e60616d824d5dad845392f46821fe3",
+      "after": "298aaeb0cd1050e90db31cda867bc464c0f400c8c97d46b841c0b23078fe5ad6"
+    },
+    {
+      "file": "lib/ratio-language.ts",
+      "status": "added",
+      "before": null,
+      "after": "932b11752f8ce8f02298c81e1622552895322154ba00ae231ee35817fee71d39"
+    },
+    {
+      "file": "lib/theory.ts",
+      "status": "added",
+      "before": null,
+      "after": "5da9c84c811bcbca007ac4db93bf56571bde9e1a1dc0ef4a836fc434568e672a"
+    },
+    {
+      "file": "lib/worksheet-geometry.ts",
+      "status": "added",
+      "before": null,
+      "after": "ede6eab913610068fd5e81f497f7138f25d1037f0dfc47d82a6361fc4cb6beb0"
+    },
+    {
+      "file": "lib/worksheets.ts",
+      "status": "added",
+      "before": null,
+      "after": "d3b83cffb28e06b8020b85d66065b5776728f3c8948259b5689cb71280fb9b5e"
+    },
+    {
+      "file": "main.tsx",
+      "status": "modified",
+      "before": "2941dbaf9d46ccf99027d256bde6fec73b13edc12459b9e5370c7230dcbe33a6",
+      "after": "733f86ed4233abbfdaf502211e48977fdee2f9ee20884e7bb16a18254620aa84"
+    },
+    {
+      "file": "package-lock.json",
+      "status": "modified",
+      "before": "d3d2c063bc219824a7ef9171964b908ff9fadb6bc7440fd8ea65894de8dc9c0b",
+      "after": "ad326e0e298f9bd7ce57b850a5ff52772f456e8304e80b8a2953b2b805680665"
+    },
+    {
+      "file": "package.json",
+      "status": "modified",
+      "before": "56f33a014cf8820aa2490aa8d68dd8f75f592acc573f2d0df8a5a6a5dcd1be40",
+      "after": "39937fb093da2356787a08d36d4a29d0b3d3eb679f1a9f96ce618092a03ff448"
+    },
+    {
+      "file": "qa/preview.tsx",
+      "status": "added",
+      "before": null,
+      "after": "b76be74b147a169b86787e893e7903b0e272d0c46d952a9f8da3a20309012747"
+    },
+    {
+      "file": "scripts/audit-worksheets.mjs",
+      "status": "added",
+      "before": null,
+      "after": "63ee7054b3327b4068d66f9028c8a8ba88fa157378c9fd07d1a1d0b6ce6d98d2"
+    },
+    {
+      "file": "scripts/build-qa.mjs",
+      "status": "added",
+      "before": null,
+      "after": "2170814bafe3275fc5243cc3dfb65947455b174007ea8b1ea24b5361b4b823ad"
+    },
+    {
+      "file": "scripts/check-start.mjs",
+      "status": "added",
+      "before": null,
+      "after": "3127933aca3ccd74e6fd0eb704bac4048c55fe2dfb0b2f47442a504fb9cf8edd"
+    },
+    {
+      "file": "scripts/export-prompts.mjs",
+      "status": "added",
+      "before": null,
+      "after": "6218d400acef32faef8fcd558384b90126583a0c972f033489087c398d8836d7"
+    },
+    {
+      "file": "scripts/render-tikz-review.py",
+      "status": "added",
+      "before": null,
+      "after": "a57c64b6ce5299973f544d9acf191a3c7e1b8c2a70d2d582a37f19de4121c711"
+    },
+    {
+      "file": "scripts/test-report.mjs",
+      "status": "added",
+      "before": null,
+      "after": "97384884601b707d77ffb5ce0d3d2630bed27b53bfe34e335452976292fa550f"
+    },
+    {
+      "file": "scripts/verify-release.mjs",
+      "status": "added",
+      "before": null,
+      "after": "eae0b229f73e6729e6999fc11099dcc20f428cefed86062266d2b260aa360622"
+    },
+    {
+      "file": "server/gemini.mjs",
+      "status": "modified",
+      "before": "249bda5b198149c67593e5f511be3b78f42b28e9052bc41a82099c0c935e027a",
+      "after": "ef2d6c281567ac4901872907d8bca978485c347ae48809d8434abbbbd1b61877"
+    },
+    {
+      "file": "server/learner-guidance.mjs",
+      "status": "added",
+      "before": null,
+      "after": "57dca402845918849a32815599a5027cfe01657f016bf9c09d0039a24371aea7"
+    },
+    {
+      "file": "server/policy.mjs",
+      "status": "modified",
+      "before": "dfacb7d641482a8842d6a7a1c51ee48c2f47267d4a0b7f36600de5494497a1a1",
+      "after": "3dab759f84d771ff50ecff4a87cb4504122e425a112588861687936fb302753c"
+    },
+    {
+      "file": "server/research-pedagogy.mjs",
+      "status": "added",
+      "before": null,
+      "after": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b"
+    },
+    {
+      "file": "server/strict-tutor.mjs",
+      "status": "added",
+      "before": null,
+      "after": "b2a95e2438904bb512db66b74138d558fa189b26165a89ed9d656a20149e09c8"
+    },
+    {
+      "file": "tests/gemini.test.mjs",
+      "status": "modified",
+      "before": "1558e8a30c24f48a33c283cfb61112f1cc94b310245b7469617ba965c9dcf703",
+      "after": "ac012c81e7a1cb02a7890d0ceac8cc3cf6dde8acd5a023bd354abefb8bc99ed6"
+    },
+    {
+      "file": "tests/geometry.test.mjs",
+      "status": "modified",
+      "before": "ba49f2de803036c73b6bb469f9ce89b8eeb71e07a7ca55ce404681df3a686768",
+      "after": "4e88ab8cd377bd6478f924c85d46f12daed1e1538cc4b1e529d09090548061bd"
+    },
+    {
+      "file": "tests/learner-guidance.test.mjs",
+      "status": "added",
+      "before": null,
+      "after": "08f439806a0de01be5217692a5d09900a9950360b3497ea475d530dec5ff8419"
+    },
+    {
+      "file": "tests/math.test.mjs",
+      "status": "added",
+      "before": null,
+      "after": "b09f56a1f415b4b8fba1779c8dcad1c304d0fa721bd398c3c914e7fe959c1d84"
+    },
+    {
+      "file": "tests/pedagogy-cases.mjs",
+      "status": "modified",
+      "before": "1f400d16bb01f9fbd69ad34fb80b3b1ec227186add7a0fb314daa9320d97b0eb",
+      "after": "3ff7ee5d999cb1831cd4c978a397e85dbc2a13a4c5e06364ba6c9b7b1310698e"
+    },
+    {
+      "file": "tests/policy.test.mjs",
+      "status": "modified",
+      "before": "29903d69d31a9d9d07e84ce84325cf5d1b4a24da416ca67a3b9080cbc7ee902e",
+      "after": "c4822304e2d0ec8c6d0a203a03fbb1f469fc6ac6b587008ed21dd702bba457c2"
+    },
+    {
+      "file": "tests/preserved.test.mjs",
+      "status": "modified",
+      "before": "d5f3d00e627e54b2e9607c57554a62269b4830b3ae9832e809410bd93899d854",
+      "after": "bfd52fded9a64bab9e6c9954fe4d6d6787ae5b34ca264e9e1a4c2062ff9d52ee"
+    },
+    {
+      "file": "tests/ratios.test.mjs",
+      "status": "added",
+      "before": null,
+      "after": "40536b26f700a9bfe76caf40ceb1f0e1cad9f4d5ecc990bac1c1f1512db00541"
+    },
+    {
+      "file": "tests/socratic-fixture.mjs",
+      "status": "added",
+      "before": null,
+      "after": "50856a3ed7a920db175232663fa5eee0bf6e186892dc6bc74eec7919f7de54a6"
+    },
+    {
+      "file": "tests/strict-tutor.test.mjs",
+      "status": "added",
+      "before": null,
+      "after": "c6740de52a22fd2e2e6e58cb02bb518ba84c06ad9fef503dc8bef1a07d52a064"
+    },
+    {
+      "file": "tests/theory.test.mjs",
+      "status": "added",
+      "before": null,
+      "after": "5d81a7c41ffe3b8b89ef3c081b4ab23f11498d3776ad67e9420892328d2f9481"
+    },
+    {
+      "file": "tests/worksheets.test.mjs",
+      "status": "added",
+      "before": null,
+      "after": "8d24cbaa6f9d1b69de96d15ff184cf6c8dd8677bcf356dca2b1d27b5bfa12166"
+    }
+  ],
+  "deleted": [],
+  "protectedByteIdentical": [
+    ".env.example",
+    "netlify.toml",
+    "netlify/functions/chat.mjs",
+    "netlify/functions/feedback.mjs",
+    "server/feedback.mjs",
+    "lib/feedback.ts",
+    "lib/form-config.json",
+    "lib/tutor.ts",
+    "scripts/start.mjs",
+    "public/favicon.svg",
+    "app/globals.css",
+    "index.html"
+  ]
+}

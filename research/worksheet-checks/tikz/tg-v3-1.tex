@@ -1,0 +1,22 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=0.1222222,line cap=round,line join=round]
+\coordinate (p0) at (0,30);
+\coordinate (p1) at (-30,0);
+\coordinate (p2) at (0,-60);
+\coordinate (p3) at (30,0);
+\coordinate (p4) at (0,0);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p1) -- (p2);
+\draw[thick] (p2) -- (p3);
+\draw[thick] (p3) -- (p0);
+\draw[dashed] (p0) -- (p2);
+\draw[dashed] (p1) -- (p3);
+\fill (p0) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$A$};
+\fill (p1) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$B$};
+\fill (p2) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$C$};
+\fill (p3) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$D$};
+\fill (p4) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$O$};
+\end{tikzpicture}
+\end{document}

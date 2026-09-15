@@ -1,0 +1,42 @@
+[
+  {
+    "id": "npm-test",
+    "command": "npm test",
+    "startedAt": "2026-09-14T04:07:39.703Z",
+    "finishedAt": "2026-09-14T04:07:41.526Z",
+    "durationMs": 1822.876354,
+    "exitCode": 0,
+    "error": "",
+    "log": "npm-test.log"
+  },
+  {
+    "id": "typescript",
+    "command": "npx tsc --noEmit",
+    "startedAt": "2026-09-14T04:07:41.527Z",
+    "finishedAt": "2026-09-14T04:07:43.992Z",
+    "durationMs": 2465.023874,
+    "exitCode": 0,
+    "error": "",
+    "log": "typescript.log"
+  },
+  {
+    "id": "build",
+    "command": "npm run build",
+    "startedAt": "2026-09-14T04:07:43.992Z",
+    "finishedAt": "2026-09-14T04:07:45.384Z",
+    "durationMs": 1392.1686129999998,
+    "exitCode": 0,
+    "error": "",
+    "log": "build.log"
+  },
+  {
+    "id": "test-events",
+    "command": "node --test --test-reporter=./scripts/test-report.mjs tests/context-diagram.test.mjs tests/feedback.test.mjs tests/gemini.test.mjs tests/geometry.test.mjs tests/learner-guidance.test.mjs tests/learning.test.mjs tests/math.test.mjs tests/midpoint-language.test.mjs tests/pedagogy-live.test.mjs tests/policy.test.mjs tests/preserved.test.mjs tests/ratios.test.mjs tests/strict-tutor.test.mjs tests/theory.test.mjs tests/tutor.test.mjs tests/worksheets.test.mjs",
+    "startedAt": "2026-09-14T04:07:45.385Z",
+    "finishedAt": "2026-09-14T04:07:47.145Z",
+    "durationMs": 1760.5662430000002,
+    "exitCode": 0,
+    "error": "",
+    "log": "tests.jsonl"
+  }
+]

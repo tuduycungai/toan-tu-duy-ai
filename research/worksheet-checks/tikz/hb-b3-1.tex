@@ -1,0 +1,35 @@
+% Constructed and checked from the problem; not a geometric proof.
+\documentclass[tikz,border=8pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[scale=1,line cap=round,line join=round]
+\coordinate (p0) at (0,0);
+\coordinate (p1) at (6,0);
+\coordinate (p2) at (7.4,3.5);
+\coordinate (p3) at (1.4,3.5);
+\coordinate (p4) at (3.7,1.75);
+\coordinate (p5) at (0.7,1.75);
+\coordinate (p6) at (6.7,1.75);
+\coordinate (p7) at (2.22,0);
+\coordinate (p8) at (5.18,3.5);
+\coordinate (p9) at (3.7,1.75);
+\draw[thick] (p0) -- (p1);
+\draw[thick] (p1) -- (p2);
+\draw[thick] (p2) -- (p3);
+\draw[thick] (p0) -- (p3);
+\draw[dashed] (p0) -- (p2);
+\draw[dashed] (p1) -- (p3);
+\draw[dashed] (p4) -- (p5);
+\draw[dashed] (p4) -- (p6);
+\draw[dashed] (p7) -- (p8);
+\draw[dashed] (p5) -- (p6);
+\fill (p0) circle (1.1pt) node[fill=white,inner sep=1pt,below left] {$A$};
+\fill (p1) circle (1.1pt) node[fill=white,inner sep=1pt,below right] {$B$};
+\fill (p2) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$C$};
+\fill (p3) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$D$};
+\fill (p4) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$O,\,I$};
+\fill (p5) circle (1.1pt) node[fill=white,inner sep=1pt,above left] {$M$};
+\fill (p6) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$N$};
+\fill (p7) circle (1.1pt) node[fill=white,inner sep=1pt,below left] {$P$};
+\fill (p8) circle (1.1pt) node[fill=white,inner sep=1pt,above right] {$Q$};
+\end{tikzpicture}
+\end{document}

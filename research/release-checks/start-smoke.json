@@ -1,0 +1,13 @@
+{
+  "command": "npm start",
+  "startedAt": "2026-09-14T03:58:44.227Z",
+  "finishedAt": "2026-09-14T03:58:44.712Z",
+  "durationMs": 484.833178,
+  "ok": true,
+  "rootStatus": 200,
+  "rootHasApp": true,
+  "chatWithoutKeyStatus": 503,
+  "chatError": "Giáo viên cần kiểm tra GEMINI_API_KEY trong Netlify. Nếu tự đặt ACCESS_CODE, mã phải có ít nhất 10 ký tự. Sau đó triển khai lại.",
+  "feedbackGetStatus": 405,
+  "scope": "Khởi động cục bộ không có .env: HTTP giao diện và API. Không gọi Gemini thật; không gửi Google Forms."
+}

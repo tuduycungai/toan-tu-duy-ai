@@ -1,0 +1,24 @@
+{
+  "compiledAt": "2026-09-14T09:31:09.263039+00:00",
+  "inputs": [
+    {
+      "file": "40nguyen-thanh-hung-ngo-tung-nhan(2).pdf",
+      "bytes": 2189833,
+      "sha256": "65143242efc88f121c2893e82fa03d9ebe15ee7b2e44493f6345901c79a3a111",
+      "archivedAs": "inputs/NGHIEN_CUU_THAO_TAC_TU_DUY_2019.pdf"
+    },
+    {
+      "file": "phieu-bai-tap-toan-8-chu-de-tu-giac (3).pdf",
+      "bytes": 3332213,
+      "sha256": "9110bddb6e0df1c830b668dcc5bbf3e6557d612271d61a5a063445cbb20e3154",
+      "archivedAs": "inputs/PHIEU_BAI_TAP_TU_GIAC_GOC.pdf"
+    },
+    {
+      "file": "IMG_5901.jpeg",
+      "bytes": 467521,
+      "sha256": "abd71b5e5f0d27e06d5077e842d12d4e6e52c7ff09adcda21cd6ef142f44b00a",
+      "archivedAs": "inputs/HUONG_DAN_SU_DUNG_AI_IMG_5901.jpeg"
+    }
+  ],
+  "archivedAt": "2026-09-14T09:38:01.288383+00:00"
+}

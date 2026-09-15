@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {socratic} from './socratic-fixture.mjs';
 import assert from 'node:assert/strict';
 import {instructions,SYSTEM} from '../server/policy.mjs';
 import {handleChat} from '../server/gemini.mjs';
@@ -17,14 +18,15 @@ const clauses=[
  ['completion','không còn câu hỏi tự kiểm tra đang chờ']
 ];
 for(const [name,clause] of clauses)test('policy contract: '+name,()=>assert(SYSTEM.includes(clause)));
-for(const mode of ['guide','review','compare'])test('Gemini receives V3 policy and original history/contract: '+mode,async()=>{
+for(const mode of ['guide','review','compare'])test('Gemini receives strict policy and original history/contract: '+mode,async()=>{
  const history=cases.find(c=>c.id==='wrong').messages;
  let payload;const response=await handleChat(new Request('http://localhost/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({accessCode:'HOCGIOITOAN',mode,messages:history})}),{GEMINI_API_KEY:'unit-test-placeholder'},async(url,opts)=>{
  assert.match(url,/models\/gemini-2.5-flash:generateContent$/);payload=JSON.parse(opts.body);
- return Response.json({candidates:[{finishReason:'STOP',content:{parts:[{text:'mock-output-only'}]}}]});
+ return Response.json({candidates:[{finishReason:'STOP',content:{parts:[{text:socratic}]}}]});
  });
- assert.equal(payload.systemInstruction.parts[0].text,instructions(mode));
+ assert.equal(payload.systemInstruction.parts[0].text,instructions(mode,history));
  assert.deepEqual(payload.contents.map(x=>x.parts[0].text),history.map(x=>x.content));
  assert.deepEqual(payload.contents.map(x=>x.role),['user','model','user']);
- assert.deepEqual(await response.json(),{text:'mock-output-only',model:'gemini-2.5-flash'});
+ // V5.1 deliberately changes presentation, while retaining provider history and policy transport.
+ const output=await response.json();assert.equal(output.model,'gemini-2.5-flash');assert.equal(output.outputPolicy,'one-reviewed-task-v5.1');assert.equal((output.text.match(/\?/g)||[]).length,1);assert.equal(output.learning.assessment,null);
 });

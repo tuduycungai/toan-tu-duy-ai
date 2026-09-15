@@ -1,5 +1,7 @@
 # Cơ sở sư phạm cho gia sư AI rèn luyện tư duy hình học tứ giác
 
+**Cập nhật cho V4.4 ngày 14/09/2026:** Quy tắc hiện tại chỉ hướng dẫn bằng câu hỏi, không có ngoại lệ xin lời giải. Bản này đã đối chiếu toàn văn nghiên cứu 2019 do giáo viên cung cấp. Cách vận dụng cụ thể nằm trong `AP_DUNG_NGHIEN_CUU_2019.md`; nhật ký câu lệnh và đóng góp mã nguồn nằm trong `provenance`. Các ghi nhận phạm vi đọc ở danh mục cũ dưới đây là lịch sử của bản trước, không phải nhật ký đọc mới của V4.4.
+
 ## 1. Mục đích và phạm vi
 
 Ứng dụng được thiết kế cho học sinh đang học chương Tứ giác lớp 8, với mục đích hỗ trợ xây dựng lời chứng minh có căn cứ. Kết quả mong đợi là học sinh phân biệt được giả thiết với kết luận, biết chọn dấu hiệu phù hợp, giải thích được bước then chốt và kiểm tra lại một khẳng định. Cụm từ “phản xạ tư duy” trong tài liệu này chỉ thói quen đặt câu hỏi và kiểm chứng; không mang nghĩa học thuộc một chuỗi thao tác để áp dụng máy móc.
@@ -62,7 +64,7 @@ Sơ đồ là bản giải thích phục vụ học tập, không phải bản g
 
 **Phản hồi.** Nếu học sinh đúng, chỉ rõ căn cứ đã dùng đúng và chuyển sang bước kế. Nếu sai, chỉ lỗi đầu tiên có ý nghĩa; tránh sửa hết mọi dòng khiến người học không biết cần thay đổi gì. Nếu thiếu cơ sở, dùng “chưa đủ để kết luận” thay cho khẳng định bài làm hoàn toàn sai.
 
-**Tăng hỗ trợ.** Khi học sinh chưa biết bắt đầu, lần lượt nhắc dấu hiệu, chỉ cặp đối tượng cần xét, minh họa một bước rồi giao phần còn lại. Không lặp đi lặp lại một câu hỏi để ép học sinh đoán ý gia sư. Người học được xin lời giải có căn cứ; lời giải đi kèm câu tự kiểm tra.
+**Tăng hỗ trợ.** Khi học sinh chưa biết bắt đầu, lần lượt nhắc dấu hiệu, chỉ cặp đối tượng cần xét và thu nhỏ nhiệm vụ. Không lặp đi lặp lại một câu hỏi để ép học sinh đoán ý gia sư. Theo yêu cầu cập nhật, việc xin đáp án không mở quyền nhận lời giải hoàn chỉnh; gia sư tiếp tục hỏi một bước phù hợp và yêu cầu căn cứ.
 
 **Tự kiểm tra.** Sau khi hoàn thành chứng minh, học sinh giải thích bước then chốt hoặc xét một thay đổi giả thiết. “Đã đọc xong” không tự động đồng nghĩa “đã hiểu”. Nút đánh giá chủ động luôn cho phép kết thúc theo lựa chọn của học sinh, độc lập với đánh giá năng lực.
 
@@ -102,7 +104,7 @@ Phản hồi đề xuất: “Em đã đủ căn cứ kết luận EFGH là hìn
 
 ## 7. Ngân hàng bài mẫu và kiểm chứng
 
-Sáu bài mẫu của ứng dụng được biên soạn lại theo các cấu trúc cơ bản của chương, không sao chép nguyên văn từ các bài báo. Mỗi bài có đề, hướng mở đầu, lời giải kiểm tra và câu vận dụng tiếp trong `lib/learning.ts`. Đây là nội dung biên soạn cho sản phẩm, chưa gắn nhãn “đã được hội đồng chuyên môn duyệt”.
+Sáu bài mẫu nền tảng của ứng dụng được biên soạn theo các cấu trúc cơ bản của chương trong `lib/learning.ts`. V4.4 bổ sung 81 bài từ phiếu giáo viên cung cấp trong `lib/worksheets.ts`, kèm 93 hình; danh mục và các chỗ biên tập được lưu trong `worksheet-checks/DANH_MUC_81_BAI.md`. Lời giải tham chiếu trong tài liệu không được dùng làm ngoại lệ cung cấp đáp án cho học sinh. Nội dung chưa gắn nhãn “đã được hội đồng chuyên môn duyệt”.
 
 | Bài | Cấu trúc toán học | Điểm phải kiểm tra |
 |---|---|---|
@@ -157,4 +159,4 @@ Nên lưu ví dụ lỗi theo mã ẩn danh để sửa chỉ dẫn, nhưng ch�
 
 [9] Miao, F., & Holmes, W. **Guidance for generative AI in education and research**. UNESCO, 2023, 44 trang. Đã đọc trang giới thiệu và hồ sơ ấn phẩm; không dùng làm tài liệu chứng minh hiệu quả học tứ giác. DOI: [10.54675/EWZM9535](https://doi.org/10.54675/EWZM9535). [Trang giới thiệu](https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research?hub=88737).
 
-**Tài liệu trong nước cần đọc bổ sung khi có toàn văn:** Nguyễn Thanh Hưng & Ngô Tùng Nhân (2019), bài về rèn luyện các thao tác tư duy trong chương Tứ giác, Tạp chí Giáo dục, số đặc biệt tháng 4, trang 184–187. Đã xác minh thư mục qua hồ sơ tác giả tại Đại học Đà Nẵng; chưa truy cập toàn văn, không dùng để suy ra kết quả thực nghiệm. [Hồ sơ công bố của tác giả](https://scv.udn.vn/nguyenthanhhung/).
+**Nguồn trong nước đã cập nhật toàn văn ở V4.4:** Nguyễn Thanh Hưng & Ngô Tùng Nhân (2019), “Rèn luyện thao tác tư duy cho học sinh trong dạy học chương Tứ giác (Toán 8) ở trường trung học cơ sở”, Tạp chí Giáo dục, số đặc biệt tháng 4, trang 184–187. Đã xử lý toàn văn bốn trang trong `40nguyen-thanh-hung-ngo-tung-nhan(2).pdf` do giáo viên cung cấp. Mục 2.2.1–2.2.4 là căn cứ thiết kế câu hỏi; không dùng bài báo để tuyên bố hiệu quả thực nghiệm của phần mềm. Phạm vi áp dụng, hiệu chỉnh toán học và dấu vân tay nguồn nằm trong `AP_DUNG_NGHIEN_CUU_2019.md` và `provenance/research-evidence.json`.

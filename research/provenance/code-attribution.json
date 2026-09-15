@@ -1,0 +1,1348 @@
+{
+  "compiledAt": "2026-09-14T09:31:09.263039+00:00",
+  "baseline": "V4.3 snapshot retained in workspace",
+  "tool": "Codex trong ChatGPT của OpenAI",
+  "modelVersion": "Chưa có mã model cụ thể được xác nhận",
+  "scope": "Các tệp mã thêm hoặc sửa trong lần phát triển V4.4; không suy tác giả của mã kế thừa. SHA-256 nhận dạng nội dung, không tự chứng minh danh tính tác giả.",
+  "files": [
+    {
+      "id": "AI001",
+      "file": "app/enhancements.css",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–9",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 9
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "5b8b7fdf93c0e7dd72381c5a6f44d7d1dac658a28caea51294513437c6fb6864"
+    },
+    {
+      "id": "AI002",
+      "file": "app/page.tsx",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "6–8, 19, 38, 43, 56–57",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 6,
+          "afterEnd": 8
+        },
+        {
+          "type": "replace",
+          "beforeStart": 16,
+          "beforeEnd": 16,
+          "afterStart": 19,
+          "afterEnd": 19
+        },
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 38,
+          "afterEnd": 38
+        },
+        {
+          "type": "replace",
+          "beforeStart": 39,
+          "beforeEnd": 39,
+          "afterStart": 43,
+          "afterEnd": 43
+        },
+        {
+          "type": "replace",
+          "beforeStart": 52,
+          "beforeEnd": 53,
+          "afterStart": 56,
+          "afterEnd": 57
+        }
+      ],
+      "beforeSha256": "90036b09c60403c34ab0371bd3aa1f840f69678cd94147937a114da463e74691",
+      "afterSha256": "2b3e7fc768bfa78ec37d5725341a13b23fa1f8713b3afc4c752b9c1e7cade45d"
+    },
+    {
+      "id": "AI003",
+      "file": "components/learning-visuals.tsx",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "2, 10",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 2,
+          "afterEnd": 2
+        },
+        {
+          "type": "replace",
+          "beforeStart": 9,
+          "beforeEnd": 9,
+          "afterStart": 10,
+          "afterEnd": 10
+        }
+      ],
+      "beforeSha256": "8856de399c54f9ca1b55744b54b7a7437b0f31784b33407afd82883f23392401",
+      "afterSha256": "10c29e2a5dcc7a1e4859f4016b4eeb71c9e6ae557f68c077177be839f397e81d"
+    },
+    {
+      "id": "AI004",
+      "file": "components/math-text.tsx",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–13",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 13
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "3100f0170f9a42b5778d448d373883a3b3ff62b001ebdcacde7fccdbbda75506"
+    },
+    {
+      "id": "AI005",
+      "file": "components/problem-figure.tsx",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR05",
+        "PR06",
+        "PR07",
+        "PR08"
+      ],
+      "afterLines": "6–7, 10, 25, 28, 30",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 6,
+          "afterEnd": 7
+        },
+        {
+          "type": "replace",
+          "beforeStart": 8,
+          "beforeEnd": 8,
+          "afterStart": 10,
+          "afterEnd": 10
+        },
+        {
+          "type": "replace",
+          "beforeStart": 23,
+          "beforeEnd": 23,
+          "afterStart": 25,
+          "afterEnd": 25
+        },
+        {
+          "type": "replace",
+          "beforeStart": 26,
+          "beforeEnd": 26,
+          "afterStart": 28,
+          "afterEnd": 28
+        },
+        {
+          "type": "replace",
+          "beforeStart": 28,
+          "beforeEnd": 28,
+          "afterStart": 30,
+          "afterEnd": 30
+        }
+      ],
+      "beforeSha256": "a52f57141ff22357c848e126ade10adaecd9ba12e8b31dec4a8c81ed9436af06",
+      "afterSha256": "5e6148907e471aa7c496b85493bf5b0940fc70778d8f5f900703f66e3de5f3e2"
+    },
+    {
+      "id": "AI006",
+      "file": "components/theory-panel.tsx",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR09"
+      ],
+      "afterLines": "1–2",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 2
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "ec6b106225c40a49839bec2f127ce36afe5faee2f96e20fabafa686ad5203f0d"
+    },
+    {
+      "id": "AI007",
+      "file": "components/worksheet-bank.tsx",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR07"
+      ],
+      "afterLines": "1–8",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 8
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "9a0f876fd69b218ce3424be979f5e866e4e0e29ca64f102216ff07a2c6261c6c"
+    },
+    {
+      "id": "AI008",
+      "file": "lib/geometry.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR05",
+        "PR06",
+        "PR07",
+        "PR08"
+      ],
+      "afterLines": "10, 75",
+      "changes": [
+        {
+          "type": "replace",
+          "beforeStart": 10,
+          "beforeEnd": 10,
+          "afterStart": 10,
+          "afterEnd": 10
+        },
+        {
+          "type": "replace",
+          "beforeStart": 75,
+          "beforeEnd": 75,
+          "afterStart": 75,
+          "afterEnd": 75
+        }
+      ],
+      "beforeSha256": "ec82f57182f6a42d554ceb00b727226eb1c8789b3269e18b595279d92ebc032a",
+      "afterSha256": "7d95b5ebe30bcd8a25d3c05d1132dfab9ebb2ffce5922bfbc144785288a722e7"
+    },
+    {
+      "id": "AI009",
+      "file": "lib/katex.d.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–4",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 4
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "414e806ad288e55ea215d097c5e8f4274161cc93ab5f88f9376aaf7394553c70"
+    },
+    {
+      "id": "AI010",
+      "file": "lib/math-parts.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–16",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 16
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "c4667e481c8ae9166eb6c6e3f89fc03f3eca55d4eed747534a865fd30ba00f64"
+    },
+    {
+      "id": "AI011",
+      "file": "lib/point-language.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR05",
+        "PR06",
+        "PR07",
+        "PR08"
+      ],
+      "afterLines": "1–28",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 28
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "a07a26469500bc945532ac2e115565d08ba617cea188009abdde49b7cb851bae"
+    },
+    {
+      "id": "AI012",
+      "file": "lib/problem-diagram.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR05",
+        "PR06",
+        "PR07",
+        "PR08"
+      ],
+      "afterLines": "4–7, 10, 15, 24, 28, 59, 68, 75, 112–118, 120–130, 164, 173",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 4,
+          "afterEnd": 7
+        },
+        {
+          "type": "replace",
+          "beforeStart": 6,
+          "beforeEnd": 6,
+          "afterStart": 10,
+          "afterEnd": 10
+        },
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 15,
+          "afterEnd": 15
+        },
+        {
+          "type": "replace",
+          "beforeStart": 19,
+          "beforeEnd": 19,
+          "afterStart": 24,
+          "afterEnd": 24
+        },
+        {
+          "type": "replace",
+          "beforeStart": 23,
+          "beforeEnd": 23,
+          "afterStart": 28,
+          "afterEnd": 28
+        },
+        {
+          "type": "replace",
+          "beforeStart": 54,
+          "beforeEnd": 54,
+          "afterStart": 59,
+          "afterEnd": 59
+        },
+        {
+          "type": "replace",
+          "beforeStart": 63,
+          "beforeEnd": 63,
+          "afterStart": 68,
+          "afterEnd": 68
+        },
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 75,
+          "afterEnd": 75
+        },
+        {
+          "type": "replace",
+          "beforeStart": 106,
+          "beforeEnd": 107,
+          "afterStart": 112,
+          "afterEnd": 118
+        },
+        {
+          "type": "replace",
+          "beforeStart": 109,
+          "beforeEnd": 109,
+          "afterStart": 120,
+          "afterEnd": 130
+        },
+        {
+          "type": "replace",
+          "beforeStart": 143,
+          "beforeEnd": 143,
+          "afterStart": 164,
+          "afterEnd": 164
+        },
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 173,
+          "afterEnd": 173
+        }
+      ],
+      "beforeSha256": "cd9a28e44c2d5fa5b377890ad4d359b245e60616d824d5dad845392f46821fe3",
+      "afterSha256": "298aaeb0cd1050e90db31cda867bc464c0f400c8c97d46b841c0b23078fe5ad6"
+    },
+    {
+      "id": "AI013",
+      "file": "lib/ratio-language.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08"
+      ],
+      "afterLines": "1–15",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 15
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "932b11752f8ce8f02298c81e1622552895322154ba00ae231ee35817fee71d39"
+    },
+    {
+      "id": "AI014",
+      "file": "lib/theory.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR09"
+      ],
+      "afterLines": "1–36",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 36
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "5da9c84c811bcbca007ac4db93bf56571bde9e1a1dc0ef4a836fc434568e672a"
+    },
+    {
+      "id": "AI015",
+      "file": "lib/worksheet-geometry.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR07"
+      ],
+      "afterLines": "1–54",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 54
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "ede6eab913610068fd5e81f497f7138f25d1037f0dfc47d82a6361fc4cb6beb0"
+    },
+    {
+      "id": "AI016",
+      "file": "lib/worksheets.ts",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR07"
+      ],
+      "afterLines": "1–109",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 109
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "d3b83cffb28e06b8020b85d66065b5776728f3c8948259b5689cb71280fb9b5e"
+    },
+    {
+      "id": "AI017",
+      "file": "main.tsx",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "5",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 5,
+          "afterEnd": 5
+        }
+      ],
+      "beforeSha256": "2941dbaf9d46ccf99027d256bde6fec73b13edc12459b9e5370c7230dcbe33a6",
+      "afterSha256": "733f86ed4233abbfdaf502211e48977fdee2f9ee20884e7bb16a18254620aa84"
+    },
+    {
+      "id": "AI018",
+      "file": "qa/preview.tsx",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–14",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 14
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "b76be74b147a169b86787e893e7903b0e272d0c46d952a9f8da3a20309012747"
+    },
+    {
+      "id": "AI019",
+      "file": "scripts/audit-worksheets.mjs",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR07"
+      ],
+      "afterLines": "1–6",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 6
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "63ee7054b3327b4068d66f9028c8a8ba88fa157378c9fd07d1a1d0b6ce6d98d2"
+    },
+    {
+      "id": "AI020",
+      "file": "scripts/build-qa.mjs",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–10",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 10
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "2170814bafe3275fc5243cc3dfb65947455b174007ea8b1ea24b5361b4b823ad"
+    },
+    {
+      "id": "AI021",
+      "file": "scripts/check-start.mjs",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–15",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 15
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "3127933aca3ccd74e6fd0eb704bac4048c55fe2dfb0b2f47442a504fb9cf8edd"
+    },
+    {
+      "id": "AI022",
+      "file": "scripts/export-prompts.mjs",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR10"
+      ],
+      "afterLines": "1–17",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 17
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "6218d400acef32faef8fcd558384b90126583a0c972f033489087c398d8836d7"
+    },
+    {
+      "id": "AI023",
+      "file": "scripts/render-tikz-review.py",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR07"
+      ],
+      "afterLines": "1–23",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 23
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "a57c64b6ce5299973f544d9acf191a3c7e1b8c2a70d2d582a37f19de4121c711"
+    },
+    {
+      "id": "AI024",
+      "file": "scripts/test-report.mjs",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–11",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 11
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "97384884601b707d77ffb5ce0d3d2630bed27b53bfe34e335452976292fa550f"
+    },
+    {
+      "id": "AI025",
+      "file": "scripts/verify-release.mjs",
+      "role": "Công cụ kiểm chứng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–22",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 22
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "eae0b229f73e6729e6999fc11099dcc20f428cefed86062266d2b260aa360622"
+    },
+    {
+      "id": "AI026",
+      "file": "server/gemini.mjs",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR01",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "3, 27, 32, 39",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 3,
+          "afterEnd": 3
+        },
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 27,
+          "afterEnd": 27
+        },
+        {
+          "type": "replace",
+          "beforeStart": 30,
+          "beforeEnd": 30,
+          "afterStart": 32,
+          "afterEnd": 32
+        },
+        {
+          "type": "replace",
+          "beforeStart": 37,
+          "beforeEnd": 37,
+          "afterStart": 39,
+          "afterEnd": 39
+        }
+      ],
+      "beforeSha256": "249bda5b198149c67593e5f511be3b78f42b28e9052bc41a82099c0c935e027a",
+      "afterSha256": "ef2d6c281567ac4901872907d8bca978485c347ae48809d8434abbbbd1b61877"
+    },
+    {
+      "id": "AI027",
+      "file": "server/learner-guidance.mjs",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR09"
+      ],
+      "afterLines": "1–14",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 14
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "57dca402845918849a32815599a5027cfe01657f016bf9c09d0039a24371aea7"
+    },
+    {
+      "id": "AI028",
+      "file": "server/policy.mjs",
+      "role": "Mã ứng dụng",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR04",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "2–4, 13–14, 19, 25, 27, 49–50, 62–63, 73–75, 77",
+      "changes": [
+        {
+          "type": "replace",
+          "beforeStart": 2,
+          "beforeEnd": 2,
+          "afterStart": 2,
+          "afterEnd": 4
+        },
+        {
+          "type": "replace",
+          "beforeStart": 11,
+          "beforeEnd": 11,
+          "afterStart": 13,
+          "afterEnd": 14
+        },
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 19,
+          "afterEnd": 19
+        },
+        {
+          "type": "replace",
+          "beforeStart": 21,
+          "beforeEnd": 21,
+          "afterStart": 25,
+          "afterEnd": 25
+        },
+        {
+          "type": "replace",
+          "beforeStart": 23,
+          "beforeEnd": 23,
+          "afterStart": 27,
+          "afterEnd": 27
+        },
+        {
+          "type": "replace",
+          "beforeStart": 45,
+          "beforeEnd": 46,
+          "afterStart": 49,
+          "afterEnd": 50
+        },
+        {
+          "type": "replace",
+          "beforeStart": 58,
+          "beforeEnd": 59,
+          "afterStart": 62,
+          "afterEnd": 63
+        },
+        {
+          "type": "replace",
+          "beforeStart": 69,
+          "beforeEnd": 71,
+          "afterStart": 73,
+          "afterEnd": 75
+        },
+        {
+          "type": "replace",
+          "beforeStart": 73,
+          "beforeEnd": 73,
+          "afterStart": 77,
+          "afterEnd": 77
+        }
+      ],
+      "beforeSha256": "dfacb7d641482a8842d6a7a1c51ee48c2f47267d4a0b7f36600de5494497a1a1",
+      "afterSha256": "3dab759f84d771ff50ecff4a87cb4504122e425a112588861687936fb302753c"
+    },
+    {
+      "id": "AI029",
+      "file": "server/research-pedagogy.mjs",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR09"
+      ],
+      "afterLines": "1–18",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 18
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b"
+    },
+    {
+      "id": "AI030",
+      "file": "server/strict-tutor.mjs",
+      "role": "Mã ứng dụng",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR04",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–41",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 41
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "b2a95e2438904bb512db66b74138d558fa189b26165a89ed9d656a20149e09c8"
+    },
+    {
+      "id": "AI031",
+      "file": "tests/gemini.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "2, 8–9, 17",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 2,
+          "afterEnd": 2
+        },
+        {
+          "type": "replace",
+          "beforeStart": 7,
+          "beforeEnd": 8,
+          "afterStart": 8,
+          "afterEnd": 9
+        },
+        {
+          "type": "replace",
+          "beforeStart": 16,
+          "beforeEnd": 16,
+          "afterStart": 17,
+          "afterEnd": 17
+        }
+      ],
+      "beforeSha256": "1558e8a30c24f48a33c283cfb61112f1cc94b310245b7469617ba965c9dcf703",
+      "afterSha256": "ac012c81e7a1cb02a7890d0ceac8cc3cf6dde8acd5a023bd354abefb8bc99ed6"
+    },
+    {
+      "id": "AI032",
+      "file": "tests/geometry.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR05",
+        "PR06",
+        "PR07",
+        "PR08"
+      ],
+      "afterLines": "40",
+      "changes": [
+        {
+          "type": "replace",
+          "beforeStart": 40,
+          "beforeEnd": 41,
+          "afterStart": 40,
+          "afterEnd": 40
+        }
+      ],
+      "beforeSha256": "ba49f2de803036c73b6bb469f9ce89b8eeb71e07a7ca55ce404681df3a686768",
+      "afterSha256": "4e88ab8cd377bd6478f924c85d46f12daed1e1538cc4b1e529d09090548061bd"
+    },
+    {
+      "id": "AI033",
+      "file": "tests/learner-guidance.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR09"
+      ],
+      "afterLines": "1–6",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 6
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "08f439806a0de01be5217692a5d09900a9950360b3497ea475d530dec5ff8419"
+    },
+    {
+      "id": "AI034",
+      "file": "tests/math.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–7",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 7
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "b09f56a1f415b4b8fba1779c8dcad1c304d0fa721bd398c3c914e7fe959c1d84"
+    },
+    {
+      "id": "AI035",
+      "file": "tests/pedagogy-cases.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR04",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "20",
+      "changes": [
+        {
+          "type": "replace",
+          "beforeStart": 20,
+          "beforeEnd": 20,
+          "afterStart": 20,
+          "afterEnd": 20
+        }
+      ],
+      "beforeSha256": "1f400d16bb01f9fbd69ad34fb80b3b1ec227186add7a0fb314daa9320d97b0eb",
+      "afterSha256": "3ff7ee5d999cb1831cd4c978a397e85dbc2a13a4c5e06364ba6c9b7b1310698e"
+    },
+    {
+      "id": "AI036",
+      "file": "tests/policy.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR04",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "2, 21, 25, 27, 30",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 2,
+          "afterEnd": 2
+        },
+        {
+          "type": "replace",
+          "beforeStart": 20,
+          "beforeEnd": 20,
+          "afterStart": 21,
+          "afterEnd": 21
+        },
+        {
+          "type": "replace",
+          "beforeStart": 24,
+          "beforeEnd": 24,
+          "afterStart": 25,
+          "afterEnd": 25
+        },
+        {
+          "type": "replace",
+          "beforeStart": 26,
+          "beforeEnd": 26,
+          "afterStart": 27,
+          "afterEnd": 27
+        },
+        {
+          "type": "replace",
+          "beforeStart": 29,
+          "beforeEnd": 29,
+          "afterStart": 30,
+          "afterEnd": 30
+        }
+      ],
+      "beforeSha256": "29903d69d31a9d9d07e84ce84325cf5d1b4a24da416ca67a3b9080cbc7ee902e",
+      "afterSha256": "c4822304e2d0ec8c6d0a203a03fbb1f469fc6ac6b587008ed21dd702bba457c2"
+    },
+    {
+      "id": "AI037",
+      "file": "tests/preserved.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI sửa các đoạn được chỉ rõ; phần còn lại kế thừa",
+      "promptIds": [
+        "PR01",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "2, 4–5, 8–15",
+      "changes": [
+        {
+          "type": "replace",
+          "beforeStart": 2,
+          "beforeEnd": 2,
+          "afterStart": 2,
+          "afterEnd": 2
+        },
+        {
+          "type": "replace",
+          "beforeStart": 4,
+          "beforeEnd": 5,
+          "afterStart": 4,
+          "afterEnd": 5
+        },
+        {
+          "type": "replace",
+          "beforeStart": 8,
+          "beforeEnd": 10,
+          "afterStart": 8,
+          "afterEnd": 15
+        }
+      ],
+      "beforeSha256": "d5f3d00e627e54b2e9607c57554a62269b4830b3ae9832e809410bd93899d854",
+      "afterSha256": "bfd52fded9a64bab9e6c9954fe4d6d6787ae5b34ca264e9e1a4c2062ff9d52ee"
+    },
+    {
+      "id": "AI038",
+      "file": "tests/ratios.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR08"
+      ],
+      "afterLines": "1–15",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 15
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "40536b26f700a9bfe76caf40ceb1f0e1cad9f4d5ecc990bac1c1f1512db00541"
+    },
+    {
+      "id": "AI039",
+      "file": "tests/socratic-fixture.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR04",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–9",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 9
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "50856a3ed7a920db175232663fa5eee0bf6e186892dc6bc74eec7919f7de54a6"
+    },
+    {
+      "id": "AI040",
+      "file": "tests/strict-tutor.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR04",
+        "PR08",
+        "PR09"
+      ],
+      "afterLines": "1–12",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 12
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "c6740de52a22fd2e2e6e58cb02bb518ba84c06ad9fef503dc8bef1a07d52a064"
+    },
+    {
+      "id": "AI041",
+      "file": "tests/theory.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR09"
+      ],
+      "afterLines": "1–6",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 6
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "5d81a7c41ffe3b8b89ef3c081b4ab23f11498d3776ad67e9420892328d2f9481"
+    },
+    {
+      "id": "AI042",
+      "file": "tests/worksheets.test.mjs",
+      "role": "Mã kiểm thử",
+      "contribution": "AI tạo tệp mới",
+      "promptIds": [
+        "PR07"
+      ],
+      "afterLines": "1–12",
+      "changes": [
+        {
+          "type": "insert",
+          "beforeStart": null,
+          "beforeEnd": null,
+          "afterStart": 1,
+          "afterEnd": 12
+        }
+      ],
+      "beforeSha256": null,
+      "afterSha256": "8d24cbaa6f9d1b69de96d15ff184cf6c8dd8677bcf356dca2b1d27b5bfa12166"
+    }
+  ],
+  "inherited": [
+    {
+      "file": "app/globals.css",
+      "sha256": "ee59e3d75699bb524a768564cd6e9645fbaffd70e70ee4f38fb17e55f7ce92e5",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "components/ui/button.tsx",
+      "sha256": "cc36af0f8b5019c33cc039fbf03bb952a513072b15b55b53c592b78af3e5f4c4",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "components/ui/dialog.tsx",
+      "sha256": "dce39c6adc47d997bd2567f8b7a72f466b0134715105cd42f9194007b8ecdb14",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "lib/diagram-interpretation.ts",
+      "sha256": "707357da22793a4b961ca9e7f10d5a7823cf4fe034f2d76dd05ee6cd8477d3ce",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "lib/feedback.ts",
+      "sha256": "fb29bbbb36f58e1cf267dfc53ce1cd7f3dd9cc20e3870a8f9bf0e8dc1d8c45ce",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "lib/learning.ts",
+      "sha256": "9d3735d13a22a0ab49d5e70c5c9f302701935bd4528a4a948e7671d51e434b2e",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "lib/line-language.ts",
+      "sha256": "e5f5246840fb57b607e5693bdf18f8faaa608d206ba5f649adf23752fde56716",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "lib/midpoint-language.ts",
+      "sha256": "4499b11785f4fa1b1a2c80552250d3bdf3518fd1a57f5a662b16119acb0f47cf",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "lib/tutor.ts",
+      "sha256": "ccc70dfd094d1bb5a8c119931080bee1d7e7c587597418de8bc1c1ed311d4517",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "lib/utils.ts",
+      "sha256": "53f3d3d070f0a9082934da25b875f9499855c2b0693868dd28be8c23d8730f68",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "netlify/functions/chat.mjs",
+      "sha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "netlify/functions/feedback.mjs",
+      "sha256": "0e1146a4a35987f574a5dc2c4c9cf184fb25f9ac2f045ae14b4aea23565d4912",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "postcss.config.mjs",
+      "sha256": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "scripts/check-geometry-ui.mjs",
+      "sha256": "fb5d1cda311794a3e2e23844d870290eb73c36391ae0951d316d310ac08823c5",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "scripts/check-ui.mjs",
+      "sha256": "7a9a20c3d9948675c4a6ec93194dde79260d7c4153cf230ecabf1087ee3681d1",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "scripts/start.mjs",
+      "sha256": "0a218abdef14eaf01f1b986d47f098b53b79e2a8ffa85c4a8ec90ce8a3066ba5",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "server/diagram-policy.mjs",
+      "sha256": "aa71c44f1ca2b6b121321dbd914a9ecc74c280b910d43fcb7e663bf81b9772c8",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "server/feedback.mjs",
+      "sha256": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "tests/context-diagram.test.mjs",
+      "sha256": "4b7982d06c251ca3bde1d172fa0aeab9cf7f6361c02c85e654c1b0b5f55c25a5",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "tests/feedback.test.mjs",
+      "sha256": "546d8991cff79b8f340dd0dc2b07515d76b7816b814a59906f52316b5a83b76c",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "tests/learning.test.mjs",
+      "sha256": "8517a753fec23344def9454a06f4713ed014690f468bc3c0aac4a8a5d2f6b4c2",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "tests/load-ts.mjs",
+      "sha256": "59e4c479a510a3b3cb45e01596a492271c711d8b789c0544c0e85badb16594ae",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "tests/midpoint-language.test.mjs",
+      "sha256": "f5bbbc777f2f3ae304994dfdc5d8a886069d536062bb5a7ea2ff293562fcf04b",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "tests/pedagogy-live.test.mjs",
+      "sha256": "f5d5c575c736b58ec74cd9966967e8e22656968c3622950462a794e0bf43de0f",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "tests/tutor.test.mjs",
+      "sha256": "95d224249c82fb433780f77db5e7e90b632eec00de33841c05844dbaddb8cd42",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    },
+    {
+      "file": "vite.config.ts",
+      "sha256": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9",
+      "attribution": "Kế thừa không sửa trong lần này; chưa xác nhận tác giả ban đầu ở cấp dòng."
+    }
+  ]
+}
