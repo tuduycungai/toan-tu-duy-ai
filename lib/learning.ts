@@ -47,6 +47,6 @@ export function parseTutorResponse(raw:string){
  let plan:Plan|null=null;
  if(block){const field=(label:string)=>block[1].match(new RegExp('^'+label+':\\s*(.+)$','m'))?.[1].trim().slice(0,300)||'';const p={given:field('DU_KIEN'),goal:field('MUC_TIEU'),bridge:field('CAU_NOI'),next:field('BUOC_TIEP')};if(Object.values(p).every(Boolean))plan=p;}
  const complete=/\[KET_THUC_BUOI_HOC\]\s*$/.test(raw.trim());
- const text=raw.replace(/\[TU_DUY_V5\][\s\S]*?(?:\[\/TU_DUY_V5\]|$)/g,'').replace(/\[DE_HINH_HOC\][\s\S]*?(?:\[\/DE_HINH_HOC\]|$)/g,'').replace(/\[HINH_VE\][\s\S]*?(?:\[\/HINH_VE\]|$)/g,'').replace(/\[SO_DO\][\s\S]*?(?:\[\/SO_DO\]|$)/g,'').replace(/\[KET_THUC_BUOI_HOC\]/g,'').trim();
+ const text=raw.replace(/\[DE_HINH_HOC\][\s\S]*?(?:\[\/DE_HINH_HOC\]|$)/g,'').replace(/\[HINH_VE\][\s\S]*?(?:\[\/HINH_VE\]|$)/g,'').replace(/\[SO_DO\][\s\S]*?(?:\[\/SO_DO\]|$)/g,'').replace(/\[KET_THUC_BUOI_HOC\]/g,'').trim();
  return {text:text||'Em hãy gửi thêm dữ kiện để Thầy cùng kiểm tra bài toán.',plan,complete};
 }

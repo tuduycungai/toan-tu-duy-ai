@@ -13,7 +13,7 @@ export type Construction =
  | {name:string;op:'foot';from:string;of:Segment};
 export type Shape='quadrilateral'|'parallelogram'|'rectangle'|'rhombus'|'square'|'trapezoid'|'isosceles-trapezoid'|'triangle'|'right-triangle'|'isosceles-triangle';
 export type Recipe={title:string;kind:Shape;vertices:string[];coords?:XY[];points:Construction[];segments:Segment[];marks:Mark[];outline?:string[];guides?:DirectedLine[]};
-export type Drawing={title:string;points:Record<string,XY>;outline:string[];segments:Segment[];marks:Mark[];checks:string[];guides?:{name:string;a:XY;b:XY}[];interpretation?:'ai';circles?:{center:string;radius:number}[];rays?:{from:string;through:string}[];rightAngles?:{at:XY;a:XY;b:XY}[];angleMarks?:{at:XY;a:XY;b:XY;group:number}[]};
+export type Drawing={title:string;points:Record<string,XY>;outline:string[];segments:Segment[];marks:Mark[];checks:string[];guides?:{name:string;a:XY;b:XY}[];interpretation?:'ai'};
 export type DiagramResult={status:'ready';drawing:Drawing}|{status:'unsupported'|'invalid'|'none';note:string};
 export const EPS=1e-7;
 export const sub=(a:XY,b:XY):XY=>({x:a.x-b.x,y:a.y-b.y});
@@ -85,7 +85,7 @@ export function construct(recipe:Recipe):Drawing{
   // Clip the guide to the polygon. No artificial named point is introduced.
   for(const [u,v] of sides){try{const hit=intersection(a,b,p(u),p(v));if(onSegment(hit,p(u),p(v))&&!hits.some(h=>distance(h,hit)<EPS))hits.push(hit);}catch{/* parallel edge */}}
   for(const pt of Object.values(points))if(onLine(pt,line,points)&&!hits.some(h=>distance(h,pt)<EPS))hits.push(pt);
-  if(hits.length<2){hits.push(lerp(a,b,-.5),lerp(a,b,.5));}
+  if(hits.length<2)throw Error('Chưa xác định được phần đường thẳng cần vẽ.');
   hits.sort((x,y)=>dot(sub(x,a),sub(b,a))-dot(sub(y,a),sub(b,a)));
   return {name:line.name||'',a:hits[0],b:hits.at(-1)!};
  });
@@ -112,5 +112,5 @@ export function toTikZ(d:Drawing):string{
  const xs=entries.map(([,p])=>p.x),ys=entries.map(([,p])=>p.y),width=Math.max(...xs)-Math.min(...xs),height=Math.max(...ys)-Math.min(...ys),scale=Math.min(1,11/Math.max(width,height));
  const center={x:xs.reduce((a,b)=>a+b,0)/xs.length,y:ys.reduce((a,b)=>a+b,0)/ys.length};
  const isSide=([a,b]:Segment)=>d.outline.some((n,i)=>(n===a&&d.outline[(i+1)%d.outline.length]===b)||(n===b&&d.outline[(i+1)%d.outline.length]===a));
- return ['% Constructed and checked from the problem; not a geometric proof.','\\documentclass[tikz,border=8pt]{standalone}','\\begin{document}',`\\begin{tikzpicture}[scale=${f(scale)},line cap=round,line join=round]`,...entries.map(([n,p])=>`\\coordinate (${ids[n]}) at ${xy(p)};`),...(d.circles||[]).map(c=>`\\draw[thick] ${xy(d.points[c.center])} circle (${f(c.radius)});`),...(d.rays||[]).map(r=>`\\draw[->] ${xy(d.points[r.from])} -- ${xy(lerp(d.points[r.from],d.points[r.through],1.6))};`),...d.segments.map(s=>`\\draw[${isSide(s)?'thick':'dashed'}] (${ids[s[0]]}) -- (${ids[s[1]]});`),...markStrokes(d).map(s=>`\\draw ${xy(s.a)} -- ${xy(s.b)};`),...(d.guides||[]).map(g=>`\\draw[dashed] ${xy(g.a)} -- ${xy(g.b)}${g.name?' node[pos=0.88,above] {$'+label(g.name.toUpperCase()).toLowerCase()+'$}':''};`),...pointGroups(d).map(({names,point:p})=>`\\fill (${ids[names[0]]}) circle (1.1pt) node[fill=white,inner sep=1pt,${p.y>=center.y?'above':'below'} ${p.x>=center.x?'right':'left'}] {$${names.map(label).join(',\\,')}$};`),'\\end{tikzpicture}','\\end{document}',''].join('\n');
+ return ['% Constructed and checked from the problem; not a geometric proof.','\\documentclass[tikz,border=8pt]{standalone}','\\begin{document}',`\\begin{tikzpicture}[scale=${f(scale)},line cap=round,line join=round]`,...entries.map(([n,p])=>`\\coordinate (${ids[n]}) at ${xy(p)};`),...d.segments.map(s=>`\\draw[${isSide(s)?'thick':'dashed'}] (${ids[s[0]]}) -- (${ids[s[1]]});`),...markStrokes(d).map(s=>`\\draw ${xy(s.a)} -- ${xy(s.b)};`),...(d.guides||[]).map(g=>`\\draw[dashed] ${xy(g.a)} -- ${xy(g.b)}${g.name?' node[pos=0.88,above] {$'+label(g.name.toUpperCase()).toLowerCase()+'$}':''};`),...pointGroups(d).map(({names,point:p})=>`\\fill (${ids[names[0]]}) circle (1.1pt) node[fill=white,inner sep=1pt,${p.y>=center.y?'above':'below'} ${p.x>=center.x?'right':'left'}] {$${names.map(label).join(',\\,')}$};`),'\\end{tikzpicture}','\\end{document}',''].join('\n');
 }
