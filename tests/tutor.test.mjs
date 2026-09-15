@@ -1,9 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
-import ts from 'typescript';
-const compiled=ts.transpileModule(readFileSync(new URL('../lib/tutor.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
-const {context,requestMessages,emptyProfile,modes}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+import {loadTS} from './load-ts.mjs';
+const {context,requestMessages,emptyProfile,modes}=await loadTS('lib/tutor.ts');
 import {validMessages} from '../server/gemini.mjs';
 const profile={...emptyProfile,name:'PRIVATE_NAME',school:'PRIVATE_SCHOOL',className:'PRIVATE_CLASS',teacher:'PRIVATE_TEACHER',level:'Khá',difficulties:['Đại số']};
 test('personalization excludes identifying profile fields',()=>{const c=context(profile,'personal');for(const value of [profile.name,profile.school,profile.className,profile.teacher])assert(!c.includes(value));assert(c.includes('Khá'));assert(c.includes('Đại số'));});

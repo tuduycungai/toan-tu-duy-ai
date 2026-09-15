@@ -1,4 +1,15 @@
-# Tư duy Toán học — PRO V4.4
+# Tư duy Toán học — PRO V5
+
+Nâng cấp kế thừa trực tiếp V4.4, ngày 15/09/2026. Bắt đầu với [bàn giao V5](docs/v5/BAN_GIAO_V5.md), [thay đổi](docs/v5/THAY_DOI.md) và [báo cáo kiểm thử V5](docs/v5/BAO_CAO_KIEM_THU.md). Không dùng log/ảnh V4 làm minh chứng V5.
+
+Bổ sung mô hình đọc đề và tọa độ có kiểm tra, hình tạm minh bạch, PNG/SVG, hồ sơ năng lực tích lũy và lý thuyết động. Quy tắc không trả lời cả bài được chặn ở đầu ra trên cả API mới/cũ. Cuối trang ghi đúng tên người sáng tạo và giáo viên hướng dẫn theo yêu cầu.
+
+Kiểm thử lõi, TypeScript, build và render SVG đã chạy; **chưa nghiệm thu trình duyệt/Gemini thật và chưa bảo đảm mọi bài THCS**. Chi tiết giới hạn trong bàn giao. Chạy `node scripts/verify-v5.mjs` để tạo lại báo cáo V5. Cách cài đặt và triển khai cũ được giữ dưới đây.
+
+<details>
+<summary>Hướng dẫn và lịch sử V4.4 được bảo toàn</summary>
+
+## Tư duy Toán học — PRO V4.4
 
 Gia sư hỗ trợ rèn luyện lập luận hình học tứ giác lớp 8. Mỗi tứ giác là một câu chuyện tư duy — Mỗi lời giải là một hành trình khám phá.
 
@@ -77,3 +88,5 @@ Kiểm tra trình duyệt tùy chọn: scripts/check-ui.mjs cần Playwright và
 - research/legacy-v1 chứa hướng dẫn cũ, được thay thế bởi README này. ZIP gốc được giữ riêng, không chèn bản sao mã nguồn cũ vào bản phát hành.
 
 Chưa có khóa Gemini thật để nghiệm thu đầu cuối. Kiểm thử API dùng phản hồi mô phỏng; không gửi dữ liệu thử vào biểu mẫu thật. Phần mềm áp dụng tài liệu vào thiết kế và prompt, không huấn luyện lại Gemini và chưa có nghiên cứu thực nghiệm chứng minh hiệu quả của bản phát hành.
+
+</details>
