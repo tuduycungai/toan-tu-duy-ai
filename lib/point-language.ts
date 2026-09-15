@@ -18,8 +18,6 @@ export function readPointPlacements(source:string){
  source=source.replace(lists,(_m,s,n)=>save(n,s));
  const before=new RegExp(String.raw`${boundary}(?:lấy|chọn)\s+(?:(?:các|hai)\s+)?(?:điểm\s+)?(${point}(?:${sep}${point}){1,5})\s+${order}(?:trên|thuộc)\s+${noun}(${side}(?:${sep}${side}){1,5})${free}`,'giu');
  source=source.replace(before,(_m,n,s)=>save(n,s));
- const ordered=new RegExp(String.raw`${boundary}(?:(?:các|hai)\s+)?(?:điểm\s+)?(${point}(?:${sep}${point}){1,5})\s+${order}(?:nằm\s+trên|thuộc|trên)\s+${noun}(${side}(?:${sep}${side}){1,5})`,'giu');
- source=source.replace(ordered,(_m,n,s)=>save(n,s));
  const single=new RegExp(String.raw`${boundary}trên\s+${noun}(${side})\s+${order}(?:lấy|chọn)\s+(?:điểm\s+)?(${point})${free}`,'giu');
  source=source.replace(single,(_m,s,n)=>save(n,s));
  const pointFirst=new RegExp(String.raw`${boundary}(?:lấy|chọn)\s+(?:điểm\s+)?(${point})${free}\s+(?:trên|thuộc)\s+${noun}(${side})`,'giu');

@@ -27,6 +27,5 @@ for(const mode of ['guide','review','compare'])test('Gemini receives strict poli
  assert.equal(payload.systemInstruction.parts[0].text,instructions(mode,history));
  assert.deepEqual(payload.contents.map(x=>x.parts[0].text),history.map(x=>x.content));
  assert.deepEqual(payload.contents.map(x=>x.role),['user','model','user']);
- // V5.1 deliberately changes presentation, while retaining provider history and policy transport.
- const output=await response.json();assert.equal(output.model,'gemini-2.5-flash');assert.equal(output.outputPolicy,'one-reviewed-task-v5.1');assert.equal((output.text.match(/\?/g)||[]).length,1);assert.equal(output.learning.assessment,null);
+ assert.deepEqual(await response.json(),{text:socratic,model:'gemini-2.5-flash'});
 });
