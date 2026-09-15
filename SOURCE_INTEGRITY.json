@@ -1,0 +1,2524 @@
+{
+  "at": "2026-09-15T12:19:45.589Z",
+  "sourceZip": "AI-TUTOR-TU-GIAC-PRO-V4_4-HOAN-THIEN.zip",
+  "sourceZipSha256": "ddcac7a13c3e391f2566c76b54bea242aeb3a6eaab69c4ff1fc97dd0cd5c064a",
+  "originalFiles": 492,
+  "byteIdentical": 467,
+  "changed": [
+    {
+      "file": "README.md",
+      "originalSha256": "200017532f0e81eca07a0a9c8c0ec482cf0b82f0920b383aeeb2e0dfe6442d11",
+      "newSha256": "a6088baa3cd42f34b2273dd922efd90295d91c4f8982457787a8cd0d7318df01"
+    },
+    {
+      "file": "app/globals.css",
+      "originalSha256": "ee59e3d75699bb524a768564cd6e9645fbaffd70e70ee4f38fb17e55f7ce92e5",
+      "newSha256": "1c5b91ce2a2820649c4a5f8d756168ba4da7058ba852017c36db7e381ec3c2e1"
+    },
+    {
+      "file": "app/page.tsx",
+      "originalSha256": "2b3e7fc768bfa78ec37d5725341a13b23fa1f8713b3afc4c752b9c1e7cade45d",
+      "newSha256": "15f98704c547a68c1b3c4c38bff66a2ad6ab8d8cd358526ac8ebf1ef4004cd85"
+    },
+    {
+      "file": "components/problem-figure.tsx",
+      "originalSha256": "5e6148907e471aa7c496b85493bf5b0940fc70778d8f5f900703f66e3de5f3e2",
+      "newSha256": "a7c5b01e0723daac162a6c3b791e3817c10f6c15c40439a3b6f5d0a54a51d3f7"
+    },
+    {
+      "file": "components/theory-panel.tsx",
+      "originalSha256": "ec6b106225c40a49839bec2f127ce36afe5faee2f96e20fabafa686ad5203f0d",
+      "newSha256": "133ee9cd42f5038c3817f936c9ff92f2a6815ee4c92636829f73e3e51ad96995"
+    },
+    {
+      "file": "dist/index.html",
+      "originalSha256": "6f04f9bbabaa3b6db24c6c20e2aa52250b132d44f84e48740555620571f2a9dd",
+      "newSha256": "afb38c78dfd56598e5d36afea3761990fe7e91bd264dadc54f77232c55afd497"
+    },
+    {
+      "file": "lib/geometry.ts",
+      "originalSha256": "7d95b5ebe30bcd8a25d3c05d1132dfab9ebb2ffce5922bfbc144785288a722e7",
+      "newSha256": "58f4c98777fd9d694d7fa4ce1b2fe9ab45810374fe54b31b83fafa9f66d183b3"
+    },
+    {
+      "file": "lib/learning.ts",
+      "originalSha256": "9d3735d13a22a0ab49d5e70c5c9f302701935bd4528a4a948e7671d51e434b2e",
+      "newSha256": "2efb2d092b223de8191d15b6510e4b9262b13fc25576eecc999c0651b7773998"
+    },
+    {
+      "file": "lib/midpoint-language.ts",
+      "originalSha256": "4499b11785f4fa1b1a2c80552250d3bdf3518fd1a57f5a662b16119acb0f47cf",
+      "newSha256": "48c39d384473b466889e1260e6ab20cebc4b777433ec99fccf56583a894e5acc"
+    },
+    {
+      "file": "lib/point-language.ts",
+      "originalSha256": "a07a26469500bc945532ac2e115565d08ba617cea188009abdde49b7cb851bae",
+      "newSha256": "5c8a514982f6dbe486a442b2475cf31c8d483a0dba475b1880077f7d1d3f782c"
+    },
+    {
+      "file": "lib/problem-diagram.ts",
+      "originalSha256": "298aaeb0cd1050e90db31cda867bc464c0f400c8c97d46b841c0b23078fe5ad6",
+      "newSha256": "4515dc7552060dcffe127d957ce3b2e8d448df4eb16322b64788af57d13e59da"
+    },
+    {
+      "file": "lib/theory.ts",
+      "originalSha256": "5da9c84c811bcbca007ac4db93bf56571bde9e1a1dc0ef4a836fc434568e672a",
+      "newSha256": "04e6716cfed5d0441db680644104d97f4272271769b07005be8c4b7e82c8fa74"
+    },
+    {
+      "file": "lib/tutor.ts",
+      "originalSha256": "ccc70dfd094d1bb5a8c119931080bee1d7e7c587597418de8bc1c1ed311d4517",
+      "newSha256": "7bc3bedb1d873b91ff0c599bf4cfc1754d15f6dd6d5286738da696ed335d203a"
+    },
+    {
+      "file": "server/gemini.mjs",
+      "originalSha256": "ef2d6c281567ac4901872907d8bca978485c347ae48809d8434abbbbd1b61877",
+      "newSha256": "cc4f00801fcbd8950027180c350b9bac7420cb3f568177da1e122bca06e01312"
+    },
+    {
+      "file": "server/learner-guidance.mjs",
+      "originalSha256": "57dca402845918849a32815599a5027cfe01657f016bf9c09d0039a24371aea7",
+      "newSha256": "79c7f2eac16a8c615c0cbff0f14ddeeb2289561468b0f9c76b9a627a1099357f"
+    },
+    {
+      "file": "server/policy.mjs",
+      "originalSha256": "3dab759f84d771ff50ecff4a87cb4504122e425a112588861687936fb302753c",
+      "newSha256": "6bbf82d2a57f4f55481524d800d52dbab4b211dabf3a9c3518bc0b504a332361"
+    },
+    {
+      "file": "tests/gemini.test.mjs",
+      "originalSha256": "ac012c81e7a1cb02a7890d0ceac8cc3cf6dde8acd5a023bd354abefb8bc99ed6",
+      "newSha256": "a51e2c1fd44d553fd8db78f661954c67fd00da3be025c2d58beddea504d4d0c8"
+    },
+    {
+      "file": "tests/policy.test.mjs",
+      "originalSha256": "c4822304e2d0ec8c6d0a203a03fbb1f469fc6ac6b587008ed21dd702bba457c2",
+      "newSha256": "8d8b23838f2050f5b4b52cb17d440c338f61a18bfc76615a2019d69b6e7180c7"
+    },
+    {
+      "file": "tests/preserved.test.mjs",
+      "originalSha256": "bfd52fded9a64bab9e6c9954fe4d6d6787ae5b34ca264e9e1a4c2062ff9d52ee",
+      "newSha256": "f40f1fccd9299c5976c9683c557e050aca97f4114393ce81fb8ff510800ba2c7"
+    },
+    {
+      "file": "tests/tutor.test.mjs",
+      "originalSha256": "95d224249c82fb433780f77db5e7e90b632eec00de33841c05844dbaddb8cd42",
+      "newSha256": "c8210c8c2edcd8f2edde149b6b04149f8443dff05e67a063fec5998d0ffb867f"
+    }
+  ],
+  "missing": [
+    "dist/assets/index-BhBqBube.js",
+    "dist/assets/index-C_63s8wv.css",
+    "dist/assets/index-Ci8KQB3N.js",
+    "dist/assets/index-CvpLfJT_.js",
+    "dist/assets/index-QucevDJi.css"
+  ],
+  "newFiles": [
+    "components/learner-panel.tsx",
+    "dist/assets/index-BtXaaGd1.js",
+    "dist/assets/index-Cz3RqI9A.css",
+    "docs/v5/BAN_GIAO_V5.md",
+    "docs/v5/BAO_CAO_KIEM_THU.md",
+    "docs/v5/DOC_DE_VA_DUNG_HINH.md",
+    "docs/v5/GOI_MO_TU_DUY.md",
+    "docs/v5/LY_THUYET_DONG.md",
+    "docs/v5/NHAT_KY_PROMPT_MODEL.md",
+    "docs/v5/PHAN_LOAI_HOC_SINH.md",
+    "docs/v5/THAY_DOI.md",
+    "lib/geometry-constraints.ts",
+    "lib/geometry-model.ts",
+    "lib/learner-model.ts",
+    "research/v5-checks/01-parallelogram.html",
+    "research/v5-checks/01-parallelogram.png",
+    "research/v5-checks/01-parallelogram.svg",
+    "research/v5-checks/02-rectangle.html",
+    "research/v5-checks/02-rectangle.png",
+    "research/v5-checks/02-rectangle.svg",
+    "research/v5-checks/03-rhombus.html",
+    "research/v5-checks/03-rhombus.png",
+    "research/v5-checks/03-rhombus.svg",
+    "research/v5-checks/04-trapezoid.html",
+    "research/v5-checks/04-trapezoid.png",
+    "research/v5-checks/04-trapezoid.svg",
+    "research/v5-checks/05-triangle.html",
+    "research/v5-checks/05-triangle.png",
+    "research/v5-checks/05-triangle.svg",
+    "research/v5-checks/06-circle.html",
+    "research/v5-checks/06-circle.png",
+    "research/v5-checks/06-circle.svg",
+    "research/v5-checks/07-novel.html",
+    "research/v5-checks/07-novel.png",
+    "research/v5-checks/07-novel.svg",
+    "research/v5-checks/08-latex.html",
+    "research/v5-checks/08-latex.png",
+    "research/v5-checks/08-latex.svg",
+    "research/v5-checks/09-ordered.html",
+    "research/v5-checks/09-ordered.png",
+    "research/v5-checks/09-ordered.svg",
+    "research/v5-checks/10-missing.html",
+    "research/v5-checks/10-missing.png",
+    "research/v5-checks/10-missing.svg",
+    "research/v5-checks/browser-attempt.log",
+    "research/v5-checks/build.log",
+    "research/v5-checks/mandatory-cases.json",
+    "research/v5-checks/npm-test.log",
+    "research/v5-checks/primary-model.json",
+    "research/v5-checks/render.log",
+    "research/v5-checks/summary.json",
+    "research/v5-checks/tests.jsonl",
+    "research/v5-checks/tsc.log",
+    "scripts/check-v5-render.mjs",
+    "scripts/export-practice-bank.mjs",
+    "scripts/source-integrity-v5.mjs",
+    "scripts/verify-v5.mjs",
+    "server/adaptive-api.mjs",
+    "server/adaptive-protocol.mjs",
+    "server/output-boundary.mjs",
+    "server/practice-bank.json",
+    "tests/v5-api.test.mjs",
+    "tests/v5-boundary.test.mjs",
+    "tests/v5-geometry.test.mjs",
+    "tests/v5-learner.test.mjs"
+  ],
+  "byteIdenticalFiles": [
+    {
+      "file": ".env.example",
+      "originalSha256": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e",
+      "newSha256": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e"
+    },
+    {
+      "file": ".gitignore",
+      "originalSha256": "3bb2e375135001fa4ac518147277e5f6b6b881527ad574fb3e5632c074acf304",
+      "newSha256": "3bb2e375135001fa4ac518147277e5f6b6b881527ad574fb3e5632c074acf304"
+    },
+    {
+      "file": "API_INTEGRITY.json",
+      "originalSha256": "0c99c79b0d92644f4f7080d4503a9da2c9a2fe7e0910408bfdbc27a5561b9a55",
+      "newSha256": "0c99c79b0d92644f4f7080d4503a9da2c9a2fe7e0910408bfdbc27a5561b9a55"
+    },
+    {
+      "file": "BAO_CAO_NANG_CAP.md",
+      "originalSha256": "77e2f796cd4deff7a7c3ce16422ba328dc5149b6db37ce083fc3fb3f9c051945",
+      "newSha256": "77e2f796cd4deff7a7c3ce16422ba328dc5149b6db37ce083fc3fb3f9c051945"
+    },
+    {
+      "file": "BAO_CAO_V3.json",
+      "originalSha256": "59d4cb11f45bee642add052fd61fe211329b1b14c96c6392d1da26f97c05c80b",
+      "newSha256": "59d4cb11f45bee642add052fd61fe211329b1b14c96c6392d1da26f97c05c80b"
+    },
+    {
+      "file": "CAP_NHAT_MA_LOP.md",
+      "originalSha256": "0071ce57c7fad142b776b8dcca29ccf0a16275bd1f6ee9f59c53b9e6fc286ce3",
+      "newSha256": "0071ce57c7fad142b776b8dcca29ccf0a16275bd1f6ee9f59c53b9e6fc286ce3"
+    },
+    {
+      "file": "CAP_NHAT_V2_1.md",
+      "originalSha256": "fe88bd664b4a91260edbfc478834bc06c344accd83544227c900b6fedb3e7efd",
+      "newSha256": "fe88bd664b4a91260edbfc478834bc06c344accd83544227c900b6fedb3e7efd"
+    },
+    {
+      "file": "DOC_TRUOC_KHI_TRIEN_KHAI_V4_3.md",
+      "originalSha256": "bf67a75ae7499b3c660af2f6a42a2306c41175629a9a291b9cc5e1d7ac7e3057",
+      "newSha256": "bf67a75ae7499b3c660af2f6a42a2306c41175629a9a291b9cc5e1d7ac7e3057"
+    },
+    {
+      "file": "HUONG_DAN.md",
+      "originalSha256": "75bf6cc645bbe7ac98385dabde60a8668f8fdd9b53fe05b0307a01d330ff080f",
+      "newSha256": "75bf6cc645bbe7ac98385dabde60a8668f8fdd9b53fe05b0307a01d330ff080f"
+    },
+    {
+      "file": "HUONG_DAN_V3.md",
+      "originalSha256": "33c09682b6fe4837dcaa3914b2b8bd3dda9087fab61c558f754614d220ce01da",
+      "newSha256": "33c09682b6fe4837dcaa3914b2b8bd3dda9087fab61c558f754614d220ce01da"
+    },
+    {
+      "file": "PHAT_HANH_V4_4.md",
+      "originalSha256": "8ff46c5601b5b211fc7250900d4f9107dc4a7f1d8b9a8ec9af63ee97966c405e",
+      "newSha256": "8ff46c5601b5b211fc7250900d4f9107dc4a7f1d8b9a8ec9af63ee97966c405e"
+    },
+    {
+      "file": "SUA_LOI_HINH_VE_V4_2.md",
+      "originalSha256": "f73f66cdc8f2b6828fbc11cc94ead46f7c04c5a8b025568701d275650e87a45e",
+      "newSha256": "f73f66cdc8f2b6828fbc11cc94ead46f7c04c5a8b025568701d275650e87a45e"
+    },
+    {
+      "file": "app/enhancements.css",
+      "originalSha256": "5b8b7fdf93c0e7dd72381c5a6f44d7d1dac658a28caea51294513437c6fb6864",
+      "newSha256": "5b8b7fdf93c0e7dd72381c5a6f44d7d1dac658a28caea51294513437c6fb6864"
+    },
+    {
+      "file": "components/learning-visuals.tsx",
+      "originalSha256": "10c29e2a5dcc7a1e4859f4016b4eeb71c9e6ae557f68c077177be839f397e81d",
+      "newSha256": "10c29e2a5dcc7a1e4859f4016b4eeb71c9e6ae557f68c077177be839f397e81d"
+    },
+    {
+      "file": "components/math-text.tsx",
+      "originalSha256": "3100f0170f9a42b5778d448d373883a3b3ff62b001ebdcacde7fccdbbda75506",
+      "newSha256": "3100f0170f9a42b5778d448d373883a3b3ff62b001ebdcacde7fccdbbda75506"
+    },
+    {
+      "file": "components/ui/button.tsx",
+      "originalSha256": "cc36af0f8b5019c33cc039fbf03bb952a513072b15b55b53c592b78af3e5f4c4",
+      "newSha256": "cc36af0f8b5019c33cc039fbf03bb952a513072b15b55b53c592b78af3e5f4c4"
+    },
+    {
+      "file": "components/ui/dialog.tsx",
+      "originalSha256": "dce39c6adc47d997bd2567f8b7a72f466b0134715105cd42f9194007b8ecdb14",
+      "newSha256": "dce39c6adc47d997bd2567f8b7a72f466b0134715105cd42f9194007b8ecdb14"
+    },
+    {
+      "file": "components/worksheet-bank.tsx",
+      "originalSha256": "9a0f876fd69b218ce3424be979f5e866e4e0e29ca64f102216ff07a2c6261c6c",
+      "newSha256": "9a0f876fd69b218ce3424be979f5e866e4e0e29ca64f102216ff07a2c6261c6c"
+    },
+    {
+      "file": "dist/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+      "originalSha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+      "newSha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308"
+    },
+    {
+      "file": "dist/assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+      "originalSha256": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251",
+      "newSha256": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251"
+    },
+    {
+      "file": "dist/assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+      "originalSha256": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13",
+      "newSha256": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13"
+    },
+    {
+      "file": "dist/assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+      "originalSha256": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268",
+      "newSha256": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268"
+    },
+    {
+      "file": "dist/assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+      "originalSha256": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed",
+      "newSha256": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed"
+    },
+    {
+      "file": "dist/assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "originalSha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+      "newSha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c"
+    },
+    {
+      "file": "dist/assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+      "originalSha256": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c",
+      "newSha256": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c"
+    },
+    {
+      "file": "dist/assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "originalSha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+      "newSha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b"
+    },
+    {
+      "file": "dist/assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+      "originalSha256": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7",
+      "newSha256": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7"
+    },
+    {
+      "file": "dist/assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+      "originalSha256": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1",
+      "newSha256": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1"
+    },
+    {
+      "file": "dist/assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+      "originalSha256": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb",
+      "newSha256": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb"
+    },
+    {
+      "file": "dist/assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "originalSha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+      "newSha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f"
+    },
+    {
+      "file": "dist/assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+      "originalSha256": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3",
+      "newSha256": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3"
+    },
+    {
+      "file": "dist/assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "originalSha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+      "newSha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc"
+    },
+    {
+      "file": "dist/assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+      "originalSha256": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463",
+      "newSha256": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "originalSha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+      "newSha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+      "originalSha256": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822",
+      "newSha256": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+      "originalSha256": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8",
+      "newSha256": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "originalSha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+      "newSha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+      "originalSha256": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f",
+      "newSha256": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+      "originalSha256": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c",
+      "newSha256": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+      "originalSha256": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a",
+      "newSha256": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Italic-BMLOBm91.woff",
+      "originalSha256": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf",
+      "newSha256": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "originalSha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+      "newSha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "originalSha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+      "newSha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+      "originalSha256": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc",
+      "newSha256": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc"
+    },
+    {
+      "file": "dist/assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+      "originalSha256": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830",
+      "newSha256": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830"
+    },
+    {
+      "file": "dist/assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+      "originalSha256": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5",
+      "newSha256": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5"
+    },
+    {
+      "file": "dist/assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "originalSha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+      "newSha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1"
+    },
+    {
+      "file": "dist/assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+      "originalSha256": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e",
+      "newSha256": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e"
+    },
+    {
+      "file": "dist/assets/KaTeX_Math-Italic-DA0__PXp.woff",
+      "originalSha256": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571",
+      "newSha256": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571"
+    },
+    {
+      "file": "dist/assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+      "originalSha256": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a",
+      "newSha256": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a"
+    },
+    {
+      "file": "dist/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "originalSha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+      "newSha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+      "originalSha256": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0",
+      "newSha256": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "originalSha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+      "newSha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+      "originalSha256": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba",
+      "newSha256": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "originalSha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+      "newSha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+      "originalSha256": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2",
+      "newSha256": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+      "originalSha256": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083",
+      "newSha256": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+      "originalSha256": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad",
+      "newSha256": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+      "originalSha256": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605",
+      "newSha256": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605"
+    },
+    {
+      "file": "dist/assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "originalSha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+      "newSha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342"
+    },
+    {
+      "file": "dist/assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+      "originalSha256": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67",
+      "newSha256": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67"
+    },
+    {
+      "file": "dist/assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "originalSha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+      "newSha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b"
+    },
+    {
+      "file": "dist/assets/KaTeX_Script-Regular-D5yQViql.woff",
+      "originalSha256": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a",
+      "newSha256": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size1-Regular-C195tn64.woff",
+      "originalSha256": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9",
+      "newSha256": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+      "originalSha256": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b",
+      "newSha256": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "originalSha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+      "newSha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+      "originalSha256": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b",
+      "newSha256": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "originalSha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+      "newSha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+      "originalSha256": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d",
+      "newSha256": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+      "originalSha256": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949",
+      "newSha256": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+      "originalSha256": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082",
+      "newSha256": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+      "originalSha256": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58",
+      "newSha256": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+      "originalSha256": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877",
+      "newSha256": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877"
+    },
+    {
+      "file": "dist/assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "originalSha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+      "newSha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0"
+    },
+    {
+      "file": "dist/assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+      "originalSha256": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7",
+      "newSha256": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7"
+    },
+    {
+      "file": "dist/assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "originalSha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+      "newSha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b"
+    },
+    {
+      "file": "dist/assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf",
+      "originalSha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa",
+      "newSha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
+    },
+    {
+      "file": "dist/co-so-su-pham.html",
+      "originalSha256": "0fad47b5aa718adda7c483e4adb5d8dbc504cde17416ec104fa83287a27be094",
+      "newSha256": "0fad47b5aa718adda7c483e4adb5d8dbc504cde17416ec104fa83287a27be094"
+    },
+    {
+      "file": "dist/favicon.svg",
+      "originalSha256": "3ca610b364fe74d41eeb961b6d44476fd009e53bfc99f887b97aa9c4575fbf77",
+      "newSha256": "3ca610b364fe74d41eeb961b6d44476fd009e53bfc99f887b97aa9c4575fbf77"
+    },
+    {
+      "file": "index.html",
+      "originalSha256": "68f041b0debdf489d6065b7919ef299bc47889216b755e5f48c72184a92c74eb",
+      "newSha256": "68f041b0debdf489d6065b7919ef299bc47889216b755e5f48c72184a92c74eb"
+    },
+    {
+      "file": "lib/diagram-interpretation.ts",
+      "originalSha256": "707357da22793a4b961ca9e7f10d5a7823cf4fe034f2d76dd05ee6cd8477d3ce",
+      "newSha256": "707357da22793a4b961ca9e7f10d5a7823cf4fe034f2d76dd05ee6cd8477d3ce"
+    },
+    {
+      "file": "lib/feedback.ts",
+      "originalSha256": "fb29bbbb36f58e1cf267dfc53ce1cd7f3dd9cc20e3870a8f9bf0e8dc1d8c45ce",
+      "newSha256": "fb29bbbb36f58e1cf267dfc53ce1cd7f3dd9cc20e3870a8f9bf0e8dc1d8c45ce"
+    },
+    {
+      "file": "lib/form-config.json",
+      "originalSha256": "ab79a36d1684de279cdf8ffe81fe1d8317ec3ee3edf55f466b208614515e94bd",
+      "newSha256": "ab79a36d1684de279cdf8ffe81fe1d8317ec3ee3edf55f466b208614515e94bd"
+    },
+    {
+      "file": "lib/katex.d.ts",
+      "originalSha256": "414e806ad288e55ea215d097c5e8f4274161cc93ab5f88f9376aaf7394553c70",
+      "newSha256": "414e806ad288e55ea215d097c5e8f4274161cc93ab5f88f9376aaf7394553c70"
+    },
+    {
+      "file": "lib/line-language.ts",
+      "originalSha256": "e5f5246840fb57b607e5693bdf18f8faaa608d206ba5f649adf23752fde56716",
+      "newSha256": "e5f5246840fb57b607e5693bdf18f8faaa608d206ba5f649adf23752fde56716"
+    },
+    {
+      "file": "lib/math-parts.ts",
+      "originalSha256": "c4667e481c8ae9166eb6c6e3f89fc03f3eca55d4eed747534a865fd30ba00f64",
+      "newSha256": "c4667e481c8ae9166eb6c6e3f89fc03f3eca55d4eed747534a865fd30ba00f64"
+    },
+    {
+      "file": "lib/ratio-language.ts",
+      "originalSha256": "932b11752f8ce8f02298c81e1622552895322154ba00ae231ee35817fee71d39",
+      "newSha256": "932b11752f8ce8f02298c81e1622552895322154ba00ae231ee35817fee71d39"
+    },
+    {
+      "file": "lib/utils.ts",
+      "originalSha256": "53f3d3d070f0a9082934da25b875f9499855c2b0693868dd28be8c23d8730f68",
+      "newSha256": "53f3d3d070f0a9082934da25b875f9499855c2b0693868dd28be8c23d8730f68"
+    },
+    {
+      "file": "lib/worksheet-geometry.ts",
+      "originalSha256": "ede6eab913610068fd5e81f497f7138f25d1037f0dfc47d82a6361fc4cb6beb0",
+      "newSha256": "ede6eab913610068fd5e81f497f7138f25d1037f0dfc47d82a6361fc4cb6beb0"
+    },
+    {
+      "file": "lib/worksheets.ts",
+      "originalSha256": "d3b83cffb28e06b8020b85d66065b5776728f3c8948259b5689cb71280fb9b5e",
+      "newSha256": "d3b83cffb28e06b8020b85d66065b5776728f3c8948259b5689cb71280fb9b5e"
+    },
+    {
+      "file": "main.tsx",
+      "originalSha256": "733f86ed4233abbfdaf502211e48977fdee2f9ee20884e7bb16a18254620aa84",
+      "newSha256": "733f86ed4233abbfdaf502211e48977fdee2f9ee20884e7bb16a18254620aa84"
+    },
+    {
+      "file": "netlify/functions/chat.mjs",
+      "originalSha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
+      "newSha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e"
+    },
+    {
+      "file": "netlify/functions/feedback.mjs",
+      "originalSha256": "0e1146a4a35987f574a5dc2c4c9cf184fb25f9ac2f045ae14b4aea23565d4912",
+      "newSha256": "0e1146a4a35987f574a5dc2c4c9cf184fb25f9ac2f045ae14b4aea23565d4912"
+    },
+    {
+      "file": "netlify.toml",
+      "originalSha256": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6",
+      "newSha256": "e69665540b543147c6b3e82b2227d49bedadf8ff45cdbfe8e28ac10572c767e6"
+    },
+    {
+      "file": "package-lock.json",
+      "originalSha256": "ad326e0e298f9bd7ce57b850a5ff52772f456e8304e80b8a2953b2b805680665",
+      "newSha256": "ad326e0e298f9bd7ce57b850a5ff52772f456e8304e80b8a2953b2b805680665"
+    },
+    {
+      "file": "package.json",
+      "originalSha256": "39937fb093da2356787a08d36d4a29d0b3d3eb679f1a9f96ce618092a03ff448",
+      "newSha256": "39937fb093da2356787a08d36d4a29d0b3d3eb679f1a9f96ce618092a03ff448"
+    },
+    {
+      "file": "postcss.config.mjs",
+      "originalSha256": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde",
+      "newSha256": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde"
+    },
+    {
+      "file": "public/co-so-su-pham.html",
+      "originalSha256": "0fad47b5aa718adda7c483e4adb5d8dbc504cde17416ec104fa83287a27be094",
+      "newSha256": "0fad47b5aa718adda7c483e4adb5d8dbc504cde17416ec104fa83287a27be094"
+    },
+    {
+      "file": "public/favicon.svg",
+      "originalSha256": "3ca610b364fe74d41eeb961b6d44476fd009e53bfc99f887b97aa9c4575fbf77",
+      "newSha256": "3ca610b364fe74d41eeb961b6d44476fd009e53bfc99f887b97aa9c4575fbf77"
+    },
+    {
+      "file": "qa/output/mobile.html",
+      "originalSha256": "d65c2419854a4e08d13fdd450bd0cafbef00df7fc4e1dd5919a019685e6f9396",
+      "newSha256": "d65c2419854a4e08d13fdd450bd0cafbef00df7fc4e1dd5919a019685e6f9396"
+    },
+    {
+      "file": "qa/output/preview.html",
+      "originalSha256": "3c826fd07104647ed6cc4064cb7e81b81f745db2f44f8f6bb446f3b8e887a1f9",
+      "newSha256": "3c826fd07104647ed6cc4064cb7e81b81f745db2f44f8f6bb446f3b8e887a1f9"
+    },
+    {
+      "file": "qa/preview.tsx",
+      "originalSha256": "b76be74b147a169b86787e893e7903b0e272d0c46d952a9f8da3a20309012747",
+      "newSha256": "b76be74b147a169b86787e893e7903b0e272d0c46d952a9f8da3a20309012747"
+    },
+    {
+      "file": "research/AP_DUNG_NGHIEN_CUU_2019.md",
+      "originalSha256": "c7a7d6764bcaeff99436c4032c3199357747769bc47f7f132ffac0d4e2701a72",
+      "newSha256": "c7a7d6764bcaeff99436c4032c3199357747769bc47f7f132ffac0d4e2701a72"
+    },
+    {
+      "file": "research/BAI_MAU_VA_DAP_AN.md",
+      "originalSha256": "a496ead2c324eff1d2919d5ace8fbaa808631d3149a71f735fdeb445f3dab48b",
+      "newSha256": "a496ead2c324eff1d2919d5ace8fbaa808631d3149a71f735fdeb445f3dab48b"
+    },
+    {
+      "file": "research/CO_SO_SU_PHAM.md",
+      "originalSha256": "462142b4c2729f607e201f8b4a5e7d8e56b3d0b51fe69b22af2dbe4ada0d1ce5",
+      "newSha256": "462142b4c2729f607e201f8b4a5e7d8e56b3d0b51fe69b22af2dbe4ada0d1ce5"
+    },
+    {
+      "file": "research/KET_QUA_KIEM_THU.json",
+      "originalSha256": "c55b49ad506f3d30ddd3b52f7ed7c08523cea9282c2ba4f3acc2d940342ead04",
+      "newSha256": "c55b49ad506f3d30ddd3b52f7ed7c08523cea9282c2ba4f3acc2d940342ead04"
+    },
+    {
+      "file": "research/KICH_BAN_KIEM_THU_SU_PHAM.md",
+      "originalSha256": "c8ec6080d704ecc35f7941945a8fcedfa705e60912007a8d712b21bfba0ee17a",
+      "newSha256": "c8ec6080d704ecc35f7941945a8fcedfa705e60912007a8d712b21bfba0ee17a"
+    },
+    {
+      "file": "research/context-checks/ai-normalization.png",
+      "originalSha256": "8303563d9987fecb3890e44adcc7710669f04d91e33a5acdf257679118b7c79f",
+      "newSha256": "8303563d9987fecb3890e44adcc7710669f04d91e33a5acdf257679118b7c79f"
+    },
+    {
+      "file": "research/context-checks/ak-ci-dark.png",
+      "originalSha256": "730a5f037074a04028430f30d8589f44702a481f01182c622339870e73289940",
+      "newSha256": "730a5f037074a04028430f30d8589f44702a481f01182c622339870e73289940"
+    },
+    {
+      "file": "research/context-checks/ak-ci-light.png",
+      "originalSha256": "b566b3851b565c88e18e236e513c2b21ff907670d91bdc051ee8e0878226a8e5",
+      "newSha256": "b566b3851b565c88e18e236e513c2b21ff907670d91bdc051ee8e0878226a8e5"
+    },
+    {
+      "file": "research/context-checks/ak-ci-mobile.png",
+      "originalSha256": "10ad4acb7270425e64ff43719c22b4ec38800c818a3581a8afd59a9f40053c7f",
+      "newSha256": "10ad4acb7270425e64ff43719c22b4ec38800c818a3581a8afd59a9f40053c7f"
+    },
+    {
+      "file": "research/context-checks/browser-result.json",
+      "originalSha256": "57a8a84b7774ba20de95c9faa7f2c2a48fbc1c72c7c55ef1e860d7d7fc668831",
+      "newSha256": "57a8a84b7774ba20de95c9faa7f2c2a48fbc1c72c7c55ef1e860d7d7fc668831"
+    },
+    {
+      "file": "research/context-checks/build.log",
+      "originalSha256": "e00e46d28a0f30eb05d14f4ae17662b124435c537f229bb7ab19ce0128bbedbb",
+      "newSha256": "e00e46d28a0f30eb05d14f4ae17662b124435c537f229bb7ab19ce0128bbedbb"
+    },
+    {
+      "file": "research/context-checks/midpoint-wording-dark.png",
+      "originalSha256": "31c7d1a5c4de343fd741465f7b5213d2424a9d86ce8264883fb4676771795a34",
+      "newSha256": "31c7d1a5c4de343fd741465f7b5213d2424a9d86ce8264883fb4676771795a34"
+    },
+    {
+      "file": "research/context-checks/midpoint-wording-light.png",
+      "originalSha256": "1abbd2af086c8c755b996a8fb492bb636fc12e7a1f020f10496715a306f5c18f",
+      "newSha256": "1abbd2af086c8c755b996a8fb492bb636fc12e7a1f020f10496715a306f5c18f"
+    },
+    {
+      "file": "research/context-checks/midpoint-wording-mobile.png",
+      "originalSha256": "343af9a0a619ea7fca727d650e86be1d0ab8b12e1e36a30e48ad326ad93382ee",
+      "newSha256": "343af9a0a619ea7fca727d650e86be1d0ab8b12e1e36a30e48ad326ad93382ee"
+    },
+    {
+      "file": "research/context-checks/midpoint-wording.log",
+      "originalSha256": "0e133d215c347577a7b50183edaef0f35e42d14c52d5b53a7ebde2eb00a83216",
+      "newSha256": "0e133d215c347577a7b50183edaef0f35e42d14c52d5b53a7ebde2eb00a83216"
+    },
+    {
+      "file": "research/context-checks/midpoint-wording.pdf",
+      "originalSha256": "ea30be6dea4ac9affc98b59f1aae6cc0dbc5bf086c298cb46b7db3f43b6f7958",
+      "newSha256": "ea30be6dea4ac9affc98b59f1aae6cc0dbc5bf086c298cb46b7db3f43b6f7958"
+    },
+    {
+      "file": "research/context-checks/midpoint-wording.tex",
+      "originalSha256": "d3f5c065a0c7c3a8c9cb202a69bea4d8e98b5c932db5c5b24cc0344ccf73c47a",
+      "newSha256": "d3f5c065a0c7c3a8c9cb202a69bea4d8e98b5c932db5c5b24cc0344ccf73c47a"
+    },
+    {
+      "file": "research/context-checks/named-line-dark.png",
+      "originalSha256": "a618b2401df5ec7d1348eb3cb024411d5d1586b19bbcc28a1c9ff869e1ffced1",
+      "newSha256": "a618b2401df5ec7d1348eb3cb024411d5d1586b19bbcc28a1c9ff869e1ffced1"
+    },
+    {
+      "file": "research/context-checks/named-line-light.png",
+      "originalSha256": "fd34a8a82818597aa989fec94b7e105306710f344fa212c8b7dc57930dfab029",
+      "newSha256": "fd34a8a82818597aa989fec94b7e105306710f344fa212c8b7dc57930dfab029"
+    },
+    {
+      "file": "research/context-checks/named-line-mobile.png",
+      "originalSha256": "c4db1aa7d7ac1a47504163b03e2d566919a2a41e741772087bec9d5cb8eb3897",
+      "newSha256": "c4db1aa7d7ac1a47504163b03e2d566919a2a41e741772087bec9d5cb8eb3897"
+    },
+    {
+      "file": "research/context-checks/named-line.log",
+      "originalSha256": "f8a5f92b9ec97269f3f7537f2de48a1d1af0bcd9ec63a647be5a4dc410248294",
+      "newSha256": "f8a5f92b9ec97269f3f7537f2de48a1d1af0bcd9ec63a647be5a4dc410248294"
+    },
+    {
+      "file": "research/context-checks/named-line.pdf",
+      "originalSha256": "0ef304d661fab6583000f8fcbfc205039899be211c3ceeb457e4acc57ba9e582",
+      "newSha256": "0ef304d661fab6583000f8fcbfc205039899be211c3ceeb457e4acc57ba9e582"
+    },
+    {
+      "file": "research/context-checks/named-line.tex",
+      "originalSha256": "6d2ca2405266f4a219228cff463eaec8cfdec1a9fcfdb20ecf083ce28824ae67",
+      "newSha256": "6d2ca2405266f4a219228cff463eaec8cfdec1a9fcfdb20ecf083ce28824ae67"
+    },
+    {
+      "file": "research/context-checks/npm-test.log",
+      "originalSha256": "fa7aa86b823ac92731e2a10a1d53f282aedf62838e2e7b06330ec7f60a64de6b",
+      "newSha256": "fa7aa86b823ac92731e2a10a1d53f282aedf62838e2e7b06330ec7f60a64de6b"
+    },
+    {
+      "file": "research/context-checks/sample-concurrency.png",
+      "originalSha256": "3646b43a6719c7e7dc4bcaf065f09d74f8cc1a9adde41088f0b9c0ad29d07ccc",
+      "newSha256": "3646b43a6719c7e7dc4bcaf065f09d74f8cc1a9adde41088f0b9c0ad29d07ccc"
+    },
+    {
+      "file": "research/context-checks/sample-counterexample.png",
+      "originalSha256": "3aa19fe5bd12e455ff15efa836b820b339c5b6e4228b8432ca1a2ce8f48da07d",
+      "newSha256": "3aa19fe5bd12e455ff15efa836b820b339c5b6e4228b8432ca1a2ce8f48da07d"
+    },
+    {
+      "file": "research/context-checks/sample-midpoints.png",
+      "originalSha256": "c368091c5f37fd8f4a5cca8bf9c10adccf1ca278369082b28716796a63245c16",
+      "newSha256": "c368091c5f37fd8f4a5cca8bf9c10adccf1ca278369082b28716796a63245c16"
+    },
+    {
+      "file": "research/context-checks/sample-reflection.png",
+      "originalSha256": "348ef4bd05a6abfa143f3e065596a6abf0c16e363946f43c55d6cdc091944b57",
+      "newSha256": "348ef4bd05a6abfa143f3e065596a6abf0c16e363946f43c55d6cdc091944b57"
+    },
+    {
+      "file": "research/context-checks/sample-square.png",
+      "originalSha256": "d5be48fb7da654932b8f3f1d4dd62d12e0fa74db8124e942c11cd7cd9173f186",
+      "newSha256": "d5be48fb7da654932b8f3f1d4dd62d12e0fa74db8124e942c11cd7cd9173f186"
+    },
+    {
+      "file": "research/context-checks/sample-trapezoid.png",
+      "originalSha256": "c136228940a50560a3fc7bfe29f6cb65eb876f37e6f25f57557a7907831e7325",
+      "newSha256": "c136228940a50560a3fc7bfe29f6cb65eb876f37e6f25f57557a7907831e7325"
+    },
+    {
+      "file": "research/context-checks/screenshot-problem.log",
+      "originalSha256": "1c8dd2f538b68fb58aba3cac2994c04c3ee9111b4aaf8c36f236cdaa56f9e5e1",
+      "newSha256": "1c8dd2f538b68fb58aba3cac2994c04c3ee9111b4aaf8c36f236cdaa56f9e5e1"
+    },
+    {
+      "file": "research/context-checks/screenshot-problem.pdf",
+      "originalSha256": "fd6bd918aee50284cc0c51b74073729ace6fa09a99a80fb35c1c7889a24cfbd8",
+      "newSha256": "fd6bd918aee50284cc0c51b74073729ace6fa09a99a80fb35c1c7889a24cfbd8"
+    },
+    {
+      "file": "research/context-checks/screenshot-problem.tex",
+      "originalSha256": "3f679b4bf613b89938dcfe6a2f9dd1ed0ccf9bb31b478a1fa6afffefcaa2cb2e",
+      "newSha256": "3f679b4bf613b89938dcfe6a2f9dd1ed0ccf9bb31b478a1fa6afffefcaa2cb2e"
+    },
+    {
+      "file": "research/context-checks/source-integrity.json",
+      "originalSha256": "df0a2601006ef3e64bd06e40020fd0cb38e3f71974ef50f19a53a1bfee612811",
+      "newSha256": "df0a2601006ef3e64bd06e40020fd0cb38e3f71974ef50f19a53a1bfee612811"
+    },
+    {
+      "file": "research/context-checks/tikz-results.json",
+      "originalSha256": "be18f9e37b207ee0cc00c4ce503f848703cea36aeb7ab8241d2d25dd5b390d23",
+      "newSha256": "be18f9e37b207ee0cc00c4ce503f848703cea36aeb7ab8241d2d25dd5b390d23"
+    },
+    {
+      "file": "research/context-checks/typescript.log",
+      "originalSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f",
+      "newSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f"
+    },
+    {
+      "file": "research/context-checks/verification.json",
+      "originalSha256": "2fb009803ac52bf52f5eff1d462bf9c1064824b7ac529e336f96470f2f8d3f4b",
+      "newSha256": "2fb009803ac52bf52f5eff1d462bf9c1064824b7ac529e336f96470f2f8d3f4b"
+    },
+    {
+      "file": "research/geometry-checks/ak-ci-dark.png",
+      "originalSha256": "5b2f4f45c5e4a208f934fb2c3e1ed2dffae379b71f79543870155310a8e2fd7a",
+      "newSha256": "5b2f4f45c5e4a208f934fb2c3e1ed2dffae379b71f79543870155310a8e2fd7a"
+    },
+    {
+      "file": "research/geometry-checks/ak-ci-light.png",
+      "originalSha256": "e1dc704893d17734d6aca244457db836d262c477bd62c75a22b7fca08349ceb7",
+      "newSha256": "e1dc704893d17734d6aca244457db836d262c477bd62c75a22b7fca08349ceb7"
+    },
+    {
+      "file": "research/geometry-checks/ak-ci-mobile.png",
+      "originalSha256": "10ad4acb7270425e64ff43719c22b4ec38800c818a3581a8afd59a9f40053c7f",
+      "newSha256": "10ad4acb7270425e64ff43719c22b4ec38800c818a3581a8afd59a9f40053c7f"
+    },
+    {
+      "file": "research/geometry-checks/browser-result.json",
+      "originalSha256": "89c63aea4eaba56bd43b9d0f41b880e2ca35f7b2dc9053dda56011cb4eb310cf",
+      "newSha256": "89c63aea4eaba56bd43b9d0f41b880e2ca35f7b2dc9053dda56011cb4eb310cf"
+    },
+    {
+      "file": "research/geometry-checks/build.log",
+      "originalSha256": "fdc2a89894c2405f300357f08b901f1b0d3c38e4e6789298b6a2f42807ef34c0",
+      "newSha256": "fdc2a89894c2405f300357f08b901f1b0d3c38e4e6789298b6a2f42807ef34c0"
+    },
+    {
+      "file": "research/geometry-checks/npm-test.log",
+      "originalSha256": "9a99dbfd8c2a9d7f48751f7762a04e71cc1e72b8eadcb9ad71f4153a67c0e364",
+      "newSha256": "9a99dbfd8c2a9d7f48751f7762a04e71cc1e72b8eadcb9ad71f4153a67c0e364"
+    },
+    {
+      "file": "research/geometry-checks/sample-concurrency.png",
+      "originalSha256": "281ed3dd0641932b455a649fb39257d1f43c6ed60cc2d3e5ca820aba586bbd3d",
+      "newSha256": "281ed3dd0641932b455a649fb39257d1f43c6ed60cc2d3e5ca820aba586bbd3d"
+    },
+    {
+      "file": "research/geometry-checks/sample-counterexample.png",
+      "originalSha256": "9e8b6386d692be43f85a2a84761246976e10038db210a8888ebc6e1645d692b9",
+      "newSha256": "9e8b6386d692be43f85a2a84761246976e10038db210a8888ebc6e1645d692b9"
+    },
+    {
+      "file": "research/geometry-checks/sample-midpoints.png",
+      "originalSha256": "e4e8831009e627bba3a817a2ae0318e8685b4e0449447c4fb43862cae493f813",
+      "newSha256": "e4e8831009e627bba3a817a2ae0318e8685b4e0449447c4fb43862cae493f813"
+    },
+    {
+      "file": "research/geometry-checks/sample-reflection.png",
+      "originalSha256": "3153d738164c72dc5ee1137fa37d39d05ff54f28f5d54a05db84e438c5b6b5a6",
+      "newSha256": "3153d738164c72dc5ee1137fa37d39d05ff54f28f5d54a05db84e438c5b6b5a6"
+    },
+    {
+      "file": "research/geometry-checks/sample-square.png",
+      "originalSha256": "805854c4ed5d1aefd65b51aaac0a79d1922a4cc301b9e95525e5d9c4b00d5a20",
+      "newSha256": "805854c4ed5d1aefd65b51aaac0a79d1922a4cc301b9e95525e5d9c4b00d5a20"
+    },
+    {
+      "file": "research/geometry-checks/sample-trapezoid.png",
+      "originalSha256": "c99a6d338444d1e83f30d83e7302cce868012b62d966939861c433eb7559cb1d",
+      "newSha256": "c99a6d338444d1e83f30d83e7302cce868012b62d966939861c433eb7559cb1d"
+    },
+    {
+      "file": "research/geometry-checks/screenshot-problem.tex",
+      "originalSha256": "8653662ab734bf87a26c26493697c1f6027f6f46a22d167920984929b09ed9e5",
+      "newSha256": "8653662ab734bf87a26c26493697c1f6027f6f46a22d167920984929b09ed9e5"
+    },
+    {
+      "file": "research/geometry-checks/source-integrity.json",
+      "originalSha256": "5a0c25ce910c2a12a2321b6d60113bbf232d8768e4593ccda41c4fd33a64d7b2",
+      "newSha256": "5a0c25ce910c2a12a2321b6d60113bbf232d8768e4593ccda41c4fd33a64d7b2"
+    },
+    {
+      "file": "research/geometry-checks/typescript.log",
+      "originalSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f",
+      "newSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f"
+    },
+    {
+      "file": "research/geometry-checks/verification.json",
+      "originalSha256": "493c9cbf301eb57059351bdf50231710e0de5c74ee50ef5f55ec8c569d0799d6",
+      "newSha256": "493c9cbf301eb57059351bdf50231710e0de5c74ee50ef5f55ec8c569d0799d6"
+    },
+    {
+      "file": "research/legacy-v1/BAO_CAO_NANG_CAP.md",
+      "originalSha256": "d3bdba738af48f8de6bae3ecab44591713151502fb39d8625fbeb7f2cba68296",
+      "newSha256": "d3bdba738af48f8de6bae3ecab44591713151502fb39d8625fbeb7f2cba68296"
+    },
+    {
+      "file": "research/legacy-v1/HUONG_DAN.md",
+      "originalSha256": "9a4b801d72398198cf63b0367116ce17f61de96a813485fbff3e911821fc8cb0",
+      "newSha256": "9a4b801d72398198cf63b0367116ce17f61de96a813485fbff3e911821fc8cb0"
+    },
+    {
+      "file": "research/legacy-v1/README.md",
+      "originalSha256": "854223f42eec23120c34942955f46b5d118ecaef8f546f6dda58477632836c00",
+      "newSha256": "854223f42eec23120c34942955f46b5d118ecaef8f546f6dda58477632836c00"
+    },
+    {
+      "file": "research/midpoint-checks/ak-ci-dark.png",
+      "originalSha256": "5b2f4f45c5e4a208f934fb2c3e1ed2dffae379b71f79543870155310a8e2fd7a",
+      "newSha256": "5b2f4f45c5e4a208f934fb2c3e1ed2dffae379b71f79543870155310a8e2fd7a"
+    },
+    {
+      "file": "research/midpoint-checks/ak-ci-light.png",
+      "originalSha256": "e1dc704893d17734d6aca244457db836d262c477bd62c75a22b7fca08349ceb7",
+      "newSha256": "e1dc704893d17734d6aca244457db836d262c477bd62c75a22b7fca08349ceb7"
+    },
+    {
+      "file": "research/midpoint-checks/ak-ci-mobile.png",
+      "originalSha256": "10ad4acb7270425e64ff43719c22b4ec38800c818a3581a8afd59a9f40053c7f",
+      "newSha256": "10ad4acb7270425e64ff43719c22b4ec38800c818a3581a8afd59a9f40053c7f"
+    },
+    {
+      "file": "research/midpoint-checks/browser-result.json",
+      "originalSha256": "34213e4ce772a8b242abd5d0d96a7de0d7a31a1db498dde0bd930e1d34002fea",
+      "newSha256": "34213e4ce772a8b242abd5d0d96a7de0d7a31a1db498dde0bd930e1d34002fea"
+    },
+    {
+      "file": "research/midpoint-checks/midpoint-wording-dark.png",
+      "originalSha256": "033ec2ebfe71ddc962649c474111be393326e4a7debdf3ab0d2b90f614fa214d",
+      "newSha256": "033ec2ebfe71ddc962649c474111be393326e4a7debdf3ab0d2b90f614fa214d"
+    },
+    {
+      "file": "research/midpoint-checks/midpoint-wording-light.png",
+      "originalSha256": "c08d94708799b74fd12b0a701cade94a4953e11449dc2c71ecafa68c9a2a25bd",
+      "newSha256": "c08d94708799b74fd12b0a701cade94a4953e11449dc2c71ecafa68c9a2a25bd"
+    },
+    {
+      "file": "research/midpoint-checks/midpoint-wording-mobile.png",
+      "originalSha256": "343af9a0a619ea7fca727d650e86be1d0ab8b12e1e36a30e48ad326ad93382ee",
+      "newSha256": "343af9a0a619ea7fca727d650e86be1d0ab8b12e1e36a30e48ad326ad93382ee"
+    },
+    {
+      "file": "research/midpoint-checks/midpoint-wording.log",
+      "originalSha256": "890ac6e5b540bc64a35abca1c54afa82956a66dc71a24365e587b31025c02a4b",
+      "newSha256": "890ac6e5b540bc64a35abca1c54afa82956a66dc71a24365e587b31025c02a4b"
+    },
+    {
+      "file": "research/midpoint-checks/midpoint-wording.pdf",
+      "originalSha256": "eecd64f8da6cfb281de019a792da4feb494f401ca20fa3d489ecc912ddaedceb",
+      "newSha256": "eecd64f8da6cfb281de019a792da4feb494f401ca20fa3d489ecc912ddaedceb"
+    },
+    {
+      "file": "research/midpoint-checks/midpoint-wording.tex",
+      "originalSha256": "d8c3924f633db7809693fcef2804a087797f291d7d2743bfc29b0297d7833679",
+      "newSha256": "d8c3924f633db7809693fcef2804a087797f291d7d2743bfc29b0297d7833679"
+    },
+    {
+      "file": "research/midpoint-checks/sample-concurrency.png",
+      "originalSha256": "281ed3dd0641932b455a649fb39257d1f43c6ed60cc2d3e5ca820aba586bbd3d",
+      "newSha256": "281ed3dd0641932b455a649fb39257d1f43c6ed60cc2d3e5ca820aba586bbd3d"
+    },
+    {
+      "file": "research/midpoint-checks/sample-counterexample.png",
+      "originalSha256": "9e8b6386d692be43f85a2a84761246976e10038db210a8888ebc6e1645d692b9",
+      "newSha256": "9e8b6386d692be43f85a2a84761246976e10038db210a8888ebc6e1645d692b9"
+    },
+    {
+      "file": "research/midpoint-checks/sample-midpoints.png",
+      "originalSha256": "e4e8831009e627bba3a817a2ae0318e8685b4e0449447c4fb43862cae493f813",
+      "newSha256": "e4e8831009e627bba3a817a2ae0318e8685b4e0449447c4fb43862cae493f813"
+    },
+    {
+      "file": "research/midpoint-checks/sample-reflection.png",
+      "originalSha256": "3153d738164c72dc5ee1137fa37d39d05ff54f28f5d54a05db84e438c5b6b5a6",
+      "newSha256": "3153d738164c72dc5ee1137fa37d39d05ff54f28f5d54a05db84e438c5b6b5a6"
+    },
+    {
+      "file": "research/midpoint-checks/sample-square.png",
+      "originalSha256": "805854c4ed5d1aefd65b51aaac0a79d1922a4cc301b9e95525e5d9c4b00d5a20",
+      "newSha256": "805854c4ed5d1aefd65b51aaac0a79d1922a4cc301b9e95525e5d9c4b00d5a20"
+    },
+    {
+      "file": "research/midpoint-checks/sample-trapezoid.png",
+      "originalSha256": "c99a6d338444d1e83f30d83e7302cce868012b62d966939861c433eb7559cb1d",
+      "newSha256": "c99a6d338444d1e83f30d83e7302cce868012b62d966939861c433eb7559cb1d"
+    },
+    {
+      "file": "research/midpoint-checks/screenshot-problem.tex",
+      "originalSha256": "8653662ab734bf87a26c26493697c1f6027f6f46a22d167920984929b09ed9e5",
+      "newSha256": "8653662ab734bf87a26c26493697c1f6027f6f46a22d167920984929b09ed9e5"
+    },
+    {
+      "file": "research/provenance/AI_CODE_CHANGES.patch",
+      "originalSha256": "0eba0c05d7c3e0f3a22ec15245c1211367dd48554322a53693066ab593df8333",
+      "newSha256": "0eba0c05d7c3e0f3a22ec15245c1211367dd48554322a53693066ab593df8333"
+    },
+    {
+      "file": "research/provenance/DANH_MUC_MA_AI.md",
+      "originalSha256": "3b2315882021d2f52a6c2948fe353b5433c9beca840acbb7e86cb5c58b306b01",
+      "newSha256": "3b2315882021d2f52a6c2948fe353b5433c9beca840acbb7e86cb5c58b306b01"
+    },
+    {
+      "file": "research/provenance/NHAT_KY_CAU_LENH.md",
+      "originalSha256": "c41588c50b8949dc14c0f11b8bd091b56eb38ba648ad6010070e417e4e7bc059",
+      "newSha256": "c41588c50b8949dc14c0f11b8bd091b56eb38ba648ad6010070e417e4e7bc059"
+    },
+    {
+      "file": "research/provenance/README.md",
+      "originalSha256": "84b92f782fcab5b9f3271f3d75efc4d753374ab8713ea700b7ba822436ac473e",
+      "newSha256": "84b92f782fcab5b9f3271f3d75efc4d753374ab8713ea700b7ba822436ac473e"
+    },
+    {
+      "file": "research/provenance/SO_TAY_MINH_CHUNG_AI_V4_4.docx",
+      "originalSha256": "2f93e9a2edecf36313fbe4366324b169fe5174eec3d591a977e8baea1cba457c",
+      "newSha256": "2f93e9a2edecf36313fbe4366324b169fe5174eec3d591a977e8baea1cba457c"
+    },
+    {
+      "file": "research/provenance/code-attribution.json",
+      "originalSha256": "58eab753fd5c183f1d0db99c18289bac8f221d56744aee441171297645ce096f",
+      "newSha256": "58eab753fd5c183f1d0db99c18289bac8f221d56744aee441171297645ce096f"
+    },
+    {
+      "file": "research/provenance/inputs/HUONG_DAN_SU_DUNG_AI_IMG_5901.jpeg",
+      "originalSha256": "abd71b5e5f0d27e06d5077e842d12d4e6e52c7ff09adcda21cd6ef142f44b00a",
+      "newSha256": "abd71b5e5f0d27e06d5077e842d12d4e6e52c7ff09adcda21cd6ef142f44b00a"
+    },
+    {
+      "file": "research/provenance/inputs/NGHIEN_CUU_THAO_TAC_TU_DUY_2019.pdf",
+      "originalSha256": "65143242efc88f121c2893e82fa03d9ebe15ee7b2e44493f6345901c79a3a111",
+      "newSha256": "65143242efc88f121c2893e82fa03d9ebe15ee7b2e44493f6345901c79a3a111"
+    },
+    {
+      "file": "research/provenance/inputs/PHIEU_BAI_TAP_TU_GIAC_GOC.pdf",
+      "originalSha256": "9110bddb6e0df1c830b668dcc5bbf3e6557d612271d61a5a063445cbb20e3154",
+      "newSha256": "9110bddb6e0df1c830b668dcc5bbf3e6557d612271d61a5a063445cbb20e3154"
+    },
+    {
+      "file": "research/provenance/prompt-log.json",
+      "originalSha256": "8913fb3156c05cb5fe4d827e099c4108e8c31a1c3b144804623837e07e3946ca",
+      "newSha256": "8913fb3156c05cb5fe4d827e099c4108e8c31a1c3b144804623837e07e3946ca"
+    },
+    {
+      "file": "research/provenance/prompt-records.json",
+      "originalSha256": "2eea628588a0ca4ca6e24f0730da7c247fdf3b5615214479dd8f1915b3f3c482",
+      "newSha256": "2eea628588a0ca4ca6e24f0730da7c247fdf3b5615214479dd8f1915b3f3c482"
+    },
+    {
+      "file": "research/provenance/prompts/compare-level-2.txt",
+      "originalSha256": "2ca027c9e59f3bd994be161d99df7167a1bc4915577aae2f35d80dfbfe0e0771",
+      "newSha256": "2ca027c9e59f3bd994be161d99df7167a1bc4915577aae2f35d80dfbfe0e0771"
+    },
+    {
+      "file": "research/provenance/prompts/guide-level-1.txt",
+      "originalSha256": "16aaf43f70a839376cdbbc5a9f3ae43ae18a63fc695d58376a75351df3c27846",
+      "newSha256": "16aaf43f70a839376cdbbc5a9f3ae43ae18a63fc695d58376a75351df3c27846"
+    },
+    {
+      "file": "research/provenance/prompts/guide-level-2.txt",
+      "originalSha256": "6efdc62d0b9bbc2e80d7163e5a822d3a2a4194c59995695591ec4f4cbb3dccce",
+      "newSha256": "6efdc62d0b9bbc2e80d7163e5a822d3a2a4194c59995695591ec4f4cbb3dccce"
+    },
+    {
+      "file": "research/provenance/prompts/guide-level-3.txt",
+      "originalSha256": "ee7692899a32e09de62615e8bca786499ad6e1a23a16c2366ccc2418736dc5cd",
+      "newSha256": "ee7692899a32e09de62615e8bca786499ad6e1a23a16c2366ccc2418736dc5cd"
+    },
+    {
+      "file": "research/provenance/prompts/guide-level-4.txt",
+      "originalSha256": "8126762cfe905e50657920b1c68a67cce614c068bdce535b9ddbe9a0ca2e97eb",
+      "newSha256": "8126762cfe905e50657920b1c68a67cce614c068bdce535b9ddbe9a0ca2e97eb"
+    },
+    {
+      "file": "research/provenance/prompts/guide-level-5.txt",
+      "originalSha256": "54c2d20c4a5a161dc16fae3943da4517897a750bf14e5650f6006009ccf324f9",
+      "newSha256": "54c2d20c4a5a161dc16fae3943da4517897a750bf14e5650f6006009ccf324f9"
+    },
+    {
+      "file": "research/provenance/prompts/manifest.json",
+      "originalSha256": "2d7315fd2ded94ab1fc158c566a9f90238c9cc4270f17990dd27973a1e54971d",
+      "newSha256": "2d7315fd2ded94ab1fc158c566a9f90238c9cc4270f17990dd27973a1e54971d"
+    },
+    {
+      "file": "research/provenance/prompts/review-level-2.txt",
+      "originalSha256": "37fca7c1dafd806b4da5c15797172e24b44bc31e57539a342ba7379c2e289c60",
+      "newSha256": "37fca7c1dafd806b4da5c15797172e24b44bc31e57539a342ba7379c2e289c60"
+    },
+    {
+      "file": "research/provenance/research-evidence.json",
+      "originalSha256": "9d3ad82179c97ae56c136965dada8b2eba2d2715fddf859f919f4f358efc92c4",
+      "newSha256": "9d3ad82179c97ae56c136965dada8b2eba2d2715fddf859f919f4f358efc92c4"
+    },
+    {
+      "file": "research/provenance/source-inputs.json",
+      "originalSha256": "c61ec0a671b7d3b7ff05411c6df1b185260064d7e87c6330572ddd3958a49293",
+      "newSha256": "c61ec0a671b7d3b7ff05411c6df1b185260064d7e87c6330572ddd3958a49293"
+    },
+    {
+      "file": "research/release-checks/KIEM_THU_AI_TUTOR_V4_4.xlsx",
+      "originalSha256": "3ffec54906c9a5d36a56cc9cd55e2d2ed2911dd9376648403573142ae0a4c7cd",
+      "newSha256": "3ffec54906c9a5d36a56cc9cd55e2d2ed2911dd9376648403573142ae0a4c7cd"
+    },
+    {
+      "file": "research/release-checks/build-stderr.log",
+      "originalSha256": "f97a3e7c7d1a5fbe14acbdfa8bae8bcb510b12cfa0454f6aec301ba19b64467f",
+      "newSha256": "f97a3e7c7d1a5fbe14acbdfa8bae8bcb510b12cfa0454f6aec301ba19b64467f"
+    },
+    {
+      "file": "research/release-checks/build.log",
+      "originalSha256": "5eaf15e003eb000eda74b88e49d8a7a2d4bdb397e2a2e73d52c0636506b6dade",
+      "newSha256": "5eaf15e003eb000eda74b88e49d8a7a2d4bdb397e2a2e73d52c0636506b6dade"
+    },
+    {
+      "file": "research/release-checks/commands.json",
+      "originalSha256": "d93b2b99adab6071c1518f7580cc208e1a58f29ec447a9a1796840356c9fd487",
+      "newSha256": "d93b2b99adab6071c1518f7580cc208e1a58f29ec447a9a1796840356c9fd487"
+    },
+    {
+      "file": "research/release-checks/inventory.json",
+      "originalSha256": "e37affab6dd4a142b1deb89c4c1e12b6114c8397021718ef0c1972eaa0fff289",
+      "newSha256": "e37affab6dd4a142b1deb89c4c1e12b6114c8397021718ef0c1972eaa0fff289"
+    },
+    {
+      "file": "research/release-checks/npm-start.log",
+      "originalSha256": "3d0a738c021e39f1fdd7fed88fc40524c15ee25f2b1214a05d6a948f7805926f",
+      "newSha256": "3d0a738c021e39f1fdd7fed88fc40524c15ee25f2b1214a05d6a948f7805926f"
+    },
+    {
+      "file": "research/release-checks/npm-test-stderr.log",
+      "originalSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f",
+      "newSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f"
+    },
+    {
+      "file": "research/release-checks/npm-test.log",
+      "originalSha256": "be81d9a15c7ccbea8c6710d99c44d73645ced93c52393fc392ad5b0fc46f9125",
+      "newSha256": "be81d9a15c7ccbea8c6710d99c44d73645ced93c52393fc392ad5b0fc46f9125"
+    },
+    {
+      "file": "research/release-checks/package-audit.json",
+      "originalSha256": "dac241dfbdd54c2f2b9712ab3b6f5e65a49d507ac15dadce7baf7832886bfcdb",
+      "newSha256": "dac241dfbdd54c2f2b9712ab3b6f5e65a49d507ac15dadce7baf7832886bfcdb"
+    },
+    {
+      "file": "research/release-checks/pedagogy-scenarios.json",
+      "originalSha256": "f114f571df914289a1d19c86690274312d0f23078eb8081901856f9d60e177f2",
+      "newSha256": "f114f571df914289a1d19c86690274312d0f23078eb8081901856f9d60e177f2"
+    },
+    {
+      "file": "research/release-checks/source-diff.json",
+      "originalSha256": "cd37bc1253828d7ad7c2eb02a0f623ba16c2683461ab0fea902a04e2b421c319",
+      "newSha256": "cd37bc1253828d7ad7c2eb02a0f623ba16c2683461ab0fea902a04e2b421c319"
+    },
+    {
+      "file": "research/release-checks/source-manifest.json",
+      "originalSha256": "eb0a1810494b6253ef6ba2b1d898ae0d1caf112af95f762a46beb2959e1e79bd",
+      "newSha256": "eb0a1810494b6253ef6ba2b1d898ae0d1caf112af95f762a46beb2959e1e79bd"
+    },
+    {
+      "file": "research/release-checks/start-smoke.json",
+      "originalSha256": "21c62a7a98ab133f294f89dd6b65278089be3cb93a29c13b816d7843b2a0409b",
+      "newSha256": "21c62a7a98ab133f294f89dd6b65278089be3cb93a29c13b816d7843b2a0409b"
+    },
+    {
+      "file": "research/release-checks/summary.json",
+      "originalSha256": "579c05f34fbd6c928f49f468f1a13bddb67428c7d4503191e1ddea69181b5ece",
+      "newSha256": "579c05f34fbd6c928f49f468f1a13bddb67428c7d4503191e1ddea69181b5ece"
+    },
+    {
+      "file": "research/release-checks/tests.jsonl",
+      "originalSha256": "1d3a371bf204950913e5278fdce190a49cf6dba012c6ad68915077f716688e11",
+      "newSha256": "1d3a371bf204950913e5278fdce190a49cf6dba012c6ad68915077f716688e11"
+    },
+    {
+      "file": "research/release-checks/typescript-stderr.log",
+      "originalSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f",
+      "newSha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f"
+    },
+    {
+      "file": "research/release-checks/typescript.log",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "newSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "research/screenshots/01-home-desktop.png",
+      "originalSha256": "2abec45785715d923dbbd13921cc7887440e9cff292c66224d6b2fe343378ccb",
+      "newSha256": "2abec45785715d923dbbd13921cc7887440e9cff292c66224d6b2fe343378ccb"
+    },
+    {
+      "file": "research/screenshots/02-profile-after-connection.png",
+      "originalSha256": "1598be7ea23510f825b092034dbc97fa539b7b93e3186eb045edba5d18ba6ac5",
+      "newSha256": "1598be7ea23510f825b092034dbc97fa539b7b93e3186eb045edba5d18ba6ac5"
+    },
+    {
+      "file": "research/screenshots/03-chat-diagram.png",
+      "originalSha256": "61505eb10cf90184fccd7cae19a54ccb26de50b674f6cb098636fa5268927fd6",
+      "newSha256": "61505eb10cf90184fccd7cae19a54ccb26de50b674f6cb098636fa5268927fd6"
+    },
+    {
+      "file": "research/screenshots/04-feedback.png",
+      "originalSha256": "ee1adc6fb98c25a557345d1b2014ab611a25750cce37bd5ceb7b4552631a9e37",
+      "newSha256": "ee1adc6fb98c25a557345d1b2014ab611a25750cce37bd5ceb7b4552631a9e37"
+    },
+    {
+      "file": "research/screenshots/05-home-mobile.png",
+      "originalSha256": "56a5656aa58683eb04e70eba05cdbfaa1cb6986bc7bac7b5e995ee1af99be80c",
+      "newSha256": "56a5656aa58683eb04e70eba05cdbfaa1cb6986bc7bac7b5e995ee1af99be80c"
+    },
+    {
+      "file": "research/screenshots/06-dark-mobile.png",
+      "originalSha256": "1a4219e04b4208513ae224d27cc2c8c1357c79353a1e636dda647f4d4082d27b",
+      "newSha256": "1a4219e04b4208513ae224d27cc2c8c1357c79353a1e636dda647f4d4082d27b"
+    },
+    {
+      "file": "research/screenshots/07-chat-mobile.png",
+      "originalSha256": "b0a9e483645dbdabfd7f1f2d71c4cf220348665f4aeea350403be2f42f747c99",
+      "newSha256": "b0a9e483645dbdabfd7f1f2d71c4cf220348665f4aeea350403be2f42f747c99"
+    },
+    {
+      "file": "research/tikz-checks/ak-ci.pdf",
+      "originalSha256": "f5a4a8cc69c3221181c573bf06330b781cf078ab391fcf4f81bdc4297e3be131",
+      "newSha256": "f5a4a8cc69c3221181c573bf06330b781cf078ab391fcf4f81bdc4297e3be131"
+    },
+    {
+      "file": "research/tikz-checks/ak-ci.tex",
+      "originalSha256": "8653662ab734bf87a26c26493697c1f6027f6f46a22d167920984929b09ed9e5",
+      "newSha256": "8653662ab734bf87a26c26493697c1f6027f6f46a22d167920984929b09ed9e5"
+    },
+    {
+      "file": "research/tikz-checks/concurrency.pdf",
+      "originalSha256": "81aa3c30ed6a933d5aaa64291bd23b08cce43a63af073425141d2daa56ebaeb2",
+      "newSha256": "81aa3c30ed6a933d5aaa64291bd23b08cce43a63af073425141d2daa56ebaeb2"
+    },
+    {
+      "file": "research/tikz-checks/concurrency.tex",
+      "originalSha256": "59a639539df9bd77ca75b06b27720d5fd5cffde6a0a19dc4e2e6a17736e6b4cb",
+      "newSha256": "59a639539df9bd77ca75b06b27720d5fd5cffde6a0a19dc4e2e6a17736e6b4cb"
+    },
+    {
+      "file": "research/tikz-checks/counterexample.pdf",
+      "originalSha256": "292176ce1db430ec87ef288ca87f800a378fb1704fa141bf87420aa633af2582",
+      "newSha256": "292176ce1db430ec87ef288ca87f800a378fb1704fa141bf87420aa633af2582"
+    },
+    {
+      "file": "research/tikz-checks/counterexample.tex",
+      "originalSha256": "478803f9c16a65842b6f04e6f059810feca3ff5affc045b3503f8dfbcc8da324",
+      "newSha256": "478803f9c16a65842b6f04e6f059810feca3ff5affc045b3503f8dfbcc8da324"
+    },
+    {
+      "file": "research/tikz-checks/midpoints.pdf",
+      "originalSha256": "166940b9682a21745f3a3edf5528715bee32513be844c29a7e3887472101309b",
+      "newSha256": "166940b9682a21745f3a3edf5528715bee32513be844c29a7e3887472101309b"
+    },
+    {
+      "file": "research/tikz-checks/midpoints.tex",
+      "originalSha256": "08e97dc2f4b9e2847521863b88932fa7affef020d1f0827dc6c31dceaeaf9664",
+      "newSha256": "08e97dc2f4b9e2847521863b88932fa7affef020d1f0827dc6c31dceaeaf9664"
+    },
+    {
+      "file": "research/tikz-checks/reflection.pdf",
+      "originalSha256": "6c2528b8537ed911a5b9dbd49d4a85a07a13dd0c3faf99ef6b5e2de44e00cd19",
+      "newSha256": "6c2528b8537ed911a5b9dbd49d4a85a07a13dd0c3faf99ef6b5e2de44e00cd19"
+    },
+    {
+      "file": "research/tikz-checks/reflection.tex",
+      "originalSha256": "4c9afc99cda9fae622afb2bf26c69d47df958d98305a32180175bc0282d9972c",
+      "newSha256": "4c9afc99cda9fae622afb2bf26c69d47df958d98305a32180175bc0282d9972c"
+    },
+    {
+      "file": "research/tikz-checks/results.json",
+      "originalSha256": "48a3e2f12d6af7d0e8caae6cecb799a4b350bf825d94d38d2e696802729ac7ea",
+      "newSha256": "48a3e2f12d6af7d0e8caae6cecb799a4b350bf825d94d38d2e696802729ac7ea"
+    },
+    {
+      "file": "research/tikz-checks/square.pdf",
+      "originalSha256": "15a3938a732d1ee0f66281177b65259107abbece49a940f7e4f3c15da47ceed6",
+      "newSha256": "15a3938a732d1ee0f66281177b65259107abbece49a940f7e4f3c15da47ceed6"
+    },
+    {
+      "file": "research/tikz-checks/square.tex",
+      "originalSha256": "6b6826ef07c654c9bc3802feda7b08ba095ecf28f63c768830477420f7d17c6d",
+      "newSha256": "6b6826ef07c654c9bc3802feda7b08ba095ecf28f63c768830477420f7d17c6d"
+    },
+    {
+      "file": "research/tikz-checks/trapezoid.pdf",
+      "originalSha256": "0eadb57febe545c1e0b456fce281210d7aef997afbd089d44b8fc4c4952f21ce",
+      "newSha256": "0eadb57febe545c1e0b456fce281210d7aef997afbd089d44b8fc4c4952f21ce"
+    },
+    {
+      "file": "research/tikz-checks/trapezoid.tex",
+      "originalSha256": "adb223fa1c83c1ec82f480bf9248814ba5c5cb46c581471797179623153f8ff9",
+      "newSha256": "adb223fa1c83c1ec82f480bf9248814ba5c5cb46c581471797179623153f8ff9"
+    },
+    {
+      "file": "research/worksheet-checks/DANH_MUC_81_BAI.md",
+      "originalSha256": "2fbe84d0f56d5bc6379da8603672dafa8e26eb32bde24621ed950466f4c0e520",
+      "newSha256": "2fbe84d0f56d5bc6379da8603672dafa8e26eb32bde24621ed950466f4c0e520"
+    },
+    {
+      "file": "research/worksheet-checks/audit.json",
+      "originalSha256": "981cc3c4a1c00a062ebb552d2e980d57281ece767c0cad54aba0767e27da6f57",
+      "newSha256": "981cc3c4a1c00a062ebb552d2e980d57281ece767c0cad54aba0767e27da6f57"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-01.png",
+      "originalSha256": "7ed25c4aefd437bad1c919f3c47e10bf7c2877a8b61940c05fd1949bbd6f9cc2",
+      "newSha256": "7ed25c4aefd437bad1c919f3c47e10bf7c2877a8b61940c05fd1949bbd6f9cc2"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-02.png",
+      "originalSha256": "f7a31147fc3abee03d9ae456aee32d9edad794b1da9b1dcdcc721e1be93d18de",
+      "newSha256": "f7a31147fc3abee03d9ae456aee32d9edad794b1da9b1dcdcc721e1be93d18de"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-03.png",
+      "originalSha256": "ce98035b9cfdca423e0712fc492d1d4a187df4149048f430078c2c766ee516c1",
+      "newSha256": "ce98035b9cfdca423e0712fc492d1d4a187df4149048f430078c2c766ee516c1"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-04.png",
+      "originalSha256": "a9170cb4c89017badfe9f4a8cceb939f422d3b778e8c293cfe20b5475c41caa3",
+      "newSha256": "a9170cb4c89017badfe9f4a8cceb939f422d3b778e8c293cfe20b5475c41caa3"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-05.png",
+      "originalSha256": "a76fc29e7a2bc6b21b59ec76854a82fe43c7f71633761e956ec7d0c2f999bfe3",
+      "newSha256": "a76fc29e7a2bc6b21b59ec76854a82fe43c7f71633761e956ec7d0c2f999bfe3"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-06.png",
+      "originalSha256": "cab092a4093c0d8624ea12e9e56200c6c3627beecbd683e2e2ef3bbeb62c3b13",
+      "newSha256": "cab092a4093c0d8624ea12e9e56200c6c3627beecbd683e2e2ef3bbeb62c3b13"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-07.png",
+      "originalSha256": "c4d805f99a3ad26c0b2cd02b12ea05207ba82af946178b0cc5e87a981f972ea4",
+      "newSha256": "c4d805f99a3ad26c0b2cd02b12ea05207ba82af946178b0cc5e87a981f972ea4"
+    },
+    {
+      "file": "research/worksheet-checks/contact-sheets/sheet-08.png",
+      "originalSha256": "7097223f4dae264e2f4cfcbc4e05f69dad725c21222978121c091493724c7843",
+      "newSha256": "7097223f4dae264e2f4cfcbc4e05f69dad725c21222978121c091493724c7843"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b1-1.pdf",
+      "originalSha256": "75ce5cd2b5f0c7d10adf85dc0add10342b6ecc8c9c40e49fc71a6c2fcc83e94b",
+      "newSha256": "75ce5cd2b5f0c7d10adf85dc0add10342b6ecc8c9c40e49fc71a6c2fcc83e94b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b1-1.tex",
+      "originalSha256": "3b8919105cb108a9f514d537a991a4bae509051c3c6c2e21a20f2bbecaf892dc",
+      "newSha256": "3b8919105cb108a9f514d537a991a4bae509051c3c6c2e21a20f2bbecaf892dc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b2-1.pdf",
+      "originalSha256": "5d317398086b14fece740c1bbbd1d4288295e5877507ca30ca6c9a2dcfe7fdca",
+      "newSha256": "5d317398086b14fece740c1bbbd1d4288295e5877507ca30ca6c9a2dcfe7fdca"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b2-1.tex",
+      "originalSha256": "1e52dff9c57d2b2a5cdc393cdb6912db31e13ee08400468c9006e1dfda89a27b",
+      "newSha256": "1e52dff9c57d2b2a5cdc393cdb6912db31e13ee08400468c9006e1dfda89a27b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b3-1.pdf",
+      "originalSha256": "29660c7de088d3e61d60a9a5515444bdf421fffd11546c229944d9bad3ce5d16",
+      "newSha256": "29660c7de088d3e61d60a9a5515444bdf421fffd11546c229944d9bad3ce5d16"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b3-1.tex",
+      "originalSha256": "e40e1f857bb2144b6a5d9b1a7192ee6794114a3a92f1626ea015037ce2e0f8b7",
+      "newSha256": "e40e1f857bb2144b6a5d9b1a7192ee6794114a3a92f1626ea015037ce2e0f8b7"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b4-1.pdf",
+      "originalSha256": "e5748408f199526e83059998985b66ef873c92efda0d719341fb04242e5f0a5a",
+      "newSha256": "e5748408f199526e83059998985b66ef873c92efda0d719341fb04242e5f0a5a"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-b4-1.tex",
+      "originalSha256": "e4aab3a35cddb5e7ccade0be35720a19ae1ec37db7403c041118597efb120e2d",
+      "newSha256": "e4aab3a35cddb5e7ccade0be35720a19ae1ec37db7403c041118597efb120e2d"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-v1-1.pdf",
+      "originalSha256": "85f2c5df6cda7713d565e91e7058aa899ce9897b578698b3dc8f779eb5cc9f99",
+      "newSha256": "85f2c5df6cda7713d565e91e7058aa899ce9897b578698b3dc8f779eb5cc9f99"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-v1-1.tex",
+      "originalSha256": "a1878abb464c0ffe386973f106e12f17442c07720176ec8311d9c10a6fe25eed",
+      "newSha256": "a1878abb464c0ffe386973f106e12f17442c07720176ec8311d9c10a6fe25eed"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-v2-1.pdf",
+      "originalSha256": "ca6252dfdb9e9b7dc310cc5d0302c60635f698b5d6dd0192d6d8bc171bb5cb7f",
+      "newSha256": "ca6252dfdb9e9b7dc310cc5d0302c60635f698b5d6dd0192d6d8bc171bb5cb7f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-v2-1.tex",
+      "originalSha256": "c794d5884016352907b76bf59f2e528e43e866607ebe58f95d46bbd37517a192",
+      "newSha256": "c794d5884016352907b76bf59f2e528e43e866607ebe58f95d46bbd37517a192"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-v3-1.pdf",
+      "originalSha256": "e8fcb7fe4902b33ad90a0db8a19b2a6ce71fff2011694302258ca938c88b4ba4",
+      "newSha256": "e8fcb7fe4902b33ad90a0db8a19b2a6ce71fff2011694302258ca938c88b4ba4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/cn-v3-1.tex",
+      "originalSha256": "5375849e4cde240e8b988da13b99c128de85051ea0efa6281aae06b011ea5510",
+      "newSha256": "5375849e4cde240e8b988da13b99c128de85051ea0efa6281aae06b011ea5510"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b1-1.pdf",
+      "originalSha256": "579bc23fafa39b4a9369ca4d6752bfe28ccd8b29ae1ce494a29e881df27e7414",
+      "newSha256": "579bc23fafa39b4a9369ca4d6752bfe28ccd8b29ae1ce494a29e881df27e7414"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b1-1.tex",
+      "originalSha256": "c428885fdf941afc5cef72c79a97ef26d7089ad10f82c6053b791f781011a05e",
+      "newSha256": "c428885fdf941afc5cef72c79a97ef26d7089ad10f82c6053b791f781011a05e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b2-1.pdf",
+      "originalSha256": "d01259427d02e8b2bc520400c529175f137458c3e1821794af1d6ed5fd2619c4",
+      "newSha256": "d01259427d02e8b2bc520400c529175f137458c3e1821794af1d6ed5fd2619c4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b2-1.tex",
+      "originalSha256": "dc06af0366f1f6a6e09dcc7e08bc34602f1969dd3237634c41ade15f8044c37a",
+      "newSha256": "dc06af0366f1f6a6e09dcc7e08bc34602f1969dd3237634c41ade15f8044c37a"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b3-1.pdf",
+      "originalSha256": "c525d35372fb136e179dae95ee235d927b4c44ab08c92f521c99739e0e1ce632",
+      "newSha256": "c525d35372fb136e179dae95ee235d927b4c44ab08c92f521c99739e0e1ce632"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b3-1.tex",
+      "originalSha256": "7872600c7f79a9f3607885c7724eeca6cb31d7156a12bc129775c0e85c39a0bc",
+      "newSha256": "7872600c7f79a9f3607885c7724eeca6cb31d7156a12bc129775c0e85c39a0bc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b4-1.pdf",
+      "originalSha256": "0ed67002a0a4ca36d8600c0b0ad7adb5c3982625fbddfbc79be45ad526671036",
+      "newSha256": "0ed67002a0a4ca36d8600c0b0ad7adb5c3982625fbddfbc79be45ad526671036"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b4-1.tex",
+      "originalSha256": "37e9c25d46f36cdb79b7b04c46b7a20350b060f5cd290b37e5d850bb38e9bab6",
+      "newSha256": "37e9c25d46f36cdb79b7b04c46b7a20350b060f5cd290b37e5d850bb38e9bab6"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b5-1.pdf",
+      "originalSha256": "d13bd7f6101c29cf5a6b62c963dc0c1af7eab45fd68efc066a240a5c9d7bb97a",
+      "newSha256": "d13bd7f6101c29cf5a6b62c963dc0c1af7eab45fd68efc066a240a5c9d7bb97a"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b5-1.tex",
+      "originalSha256": "12e59a2d32d440a20b04cfb933aaa475ef24fbf3aba1b477d83809b900bdb9ed",
+      "newSha256": "12e59a2d32d440a20b04cfb933aaa475ef24fbf3aba1b477d83809b900bdb9ed"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b6-1.pdf",
+      "originalSha256": "fb9f8cf4c44728f171c655a8ec49affe990727ff071d4ad649b8f86f9583907f",
+      "newSha256": "fb9f8cf4c44728f171c655a8ec49affe990727ff071d4ad649b8f86f9583907f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-b6-1.tex",
+      "originalSha256": "16da5559362fb2c47dea1873c31022269affe0ac89d31801f09ff705847f8f15",
+      "newSha256": "16da5559362fb2c47dea1873c31022269affe0ac89d31801f09ff705847f8f15"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v1-1.pdf",
+      "originalSha256": "ee255e7c0d763eb8708cc883ffa3d249aca803733a8347118c9f13067688c833",
+      "newSha256": "ee255e7c0d763eb8708cc883ffa3d249aca803733a8347118c9f13067688c833"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v1-1.tex",
+      "originalSha256": "2c28bb06d3554181b7278c7a573bb195b147f0b56f1925aebc365d3edf6604d8",
+      "newSha256": "2c28bb06d3554181b7278c7a573bb195b147f0b56f1925aebc365d3edf6604d8"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v2-1.pdf",
+      "originalSha256": "0613c07de916e7b5de8762748706a136e764f1e8038e3e76b83785c23dc4592f",
+      "newSha256": "0613c07de916e7b5de8762748706a136e764f1e8038e3e76b83785c23dc4592f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v2-1.tex",
+      "originalSha256": "3358f6a697a1915f8f12951a05fcb3264ba7483052db0ac672ce71a0edc4b7ae",
+      "newSha256": "3358f6a697a1915f8f12951a05fcb3264ba7483052db0ac672ce71a0edc4b7ae"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v3-1.pdf",
+      "originalSha256": "3d9e59a6e873d38bd275a9bf52a1cbb0f517cba06d075a60a8d0b00e15b007ed",
+      "newSha256": "3d9e59a6e873d38bd275a9bf52a1cbb0f517cba06d075a60a8d0b00e15b007ed"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v3-1.tex",
+      "originalSha256": "76c758c9919637ff586d23ac3dfa06bfab0c080ee0994651f816bb8eafcc3ede",
+      "newSha256": "76c758c9919637ff586d23ac3dfa06bfab0c080ee0994651f816bb8eafcc3ede"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v4-1.pdf",
+      "originalSha256": "53c7c73f509417efb76c2efd34d298fb004819ab298263eb0e528be0a97a9431",
+      "newSha256": "53c7c73f509417efb76c2efd34d298fb004819ab298263eb0e528be0a97a9431"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hb-v4-1.tex",
+      "originalSha256": "1ce7bd8ce8162a43316900b43e243a3463b354a6fa34b8759edd9e76eb50ab5d",
+      "newSha256": "1ce7bd8ce8162a43316900b43e243a3463b354a6fa34b8759edd9e76eb50ab5d"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b1-1.pdf",
+      "originalSha256": "c7d43e8e9bb377a0f5712408fb45545da12b5d2c40719d5a1cd6745732f6fa0b",
+      "newSha256": "c7d43e8e9bb377a0f5712408fb45545da12b5d2c40719d5a1cd6745732f6fa0b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b1-1.tex",
+      "originalSha256": "0e13a17edd4d43d5996be429234242c7feb688c5fd6d92ea7595f420c164fdee",
+      "newSha256": "0e13a17edd4d43d5996be429234242c7feb688c5fd6d92ea7595f420c164fdee"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b2-1.pdf",
+      "originalSha256": "32dd3c1e52ed0f4d693d448aa89203b61a05e1cf7f540fe67a698a24064772f2",
+      "newSha256": "32dd3c1e52ed0f4d693d448aa89203b61a05e1cf7f540fe67a698a24064772f2"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b2-1.tex",
+      "originalSha256": "6d9f75f8ef3474f08b88386325f5549207b2dc76a30f399c89922ced424ec169",
+      "newSha256": "6d9f75f8ef3474f08b88386325f5549207b2dc76a30f399c89922ced424ec169"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b3-1.pdf",
+      "originalSha256": "a0b2abea7d4313a4cd73aaf7f8bf1f58348bb0104e90f645b91bbf05f174a3e0",
+      "newSha256": "a0b2abea7d4313a4cd73aaf7f8bf1f58348bb0104e90f645b91bbf05f174a3e0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b3-1.tex",
+      "originalSha256": "50fd98db8ffaf4f298c1faa6e4c85f2b6409d4c2dec8eebb3bbf4a8363c022b2",
+      "newSha256": "50fd98db8ffaf4f298c1faa6e4c85f2b6409d4c2dec8eebb3bbf4a8363c022b2"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b4-1.pdf",
+      "originalSha256": "58c44b39b39b73e63f28dbe85a4b60ab141872084d90d6e4af3c977fc8e07b0c",
+      "newSha256": "58c44b39b39b73e63f28dbe85a4b60ab141872084d90d6e4af3c977fc8e07b0c"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b4-1.tex",
+      "originalSha256": "7d8b69e68a313b961c73ce23c64dfc78d0ff50227442044c289c88b47ca3fca4",
+      "newSha256": "7d8b69e68a313b961c73ce23c64dfc78d0ff50227442044c289c88b47ca3fca4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b5-1.pdf",
+      "originalSha256": "9f3696be4f53ead4aa03caf4f3e148a3ce09974562e2184619eebcbf6f791ae5",
+      "newSha256": "9f3696be4f53ead4aa03caf4f3e148a3ce09974562e2184619eebcbf6f791ae5"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b5-1.tex",
+      "originalSha256": "8d8d333fbcfd9910f7001d799b14962aec26567babbd89d7882e4e7bf241bbc5",
+      "newSha256": "8d8d333fbcfd9910f7001d799b14962aec26567babbd89d7882e4e7bf241bbc5"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b6-1.pdf",
+      "originalSha256": "2adb4db795aaaf3e05a2aa6025b9208ad35d1bacfa659a2e1bcb7f9009ff225a",
+      "newSha256": "2adb4db795aaaf3e05a2aa6025b9208ad35d1bacfa659a2e1bcb7f9009ff225a"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b6-1.tex",
+      "originalSha256": "7fd9d937a72e6ab2ba68972d754c54496da6d55b35326b8787cf9aed02bb15f8",
+      "newSha256": "7fd9d937a72e6ab2ba68972d754c54496da6d55b35326b8787cf9aed02bb15f8"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b7-1.pdf",
+      "originalSha256": "7901b6c791d2b896416c8665315fe5cc2689b87d0939e3f3132851dcfadb6b64",
+      "newSha256": "7901b6c791d2b896416c8665315fe5cc2689b87d0939e3f3132851dcfadb6b64"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b7-1.tex",
+      "originalSha256": "0434d69f6171c03cf953a7d68ff4117304bda24693cc34e8095afcae1be98b64",
+      "newSha256": "0434d69f6171c03cf953a7d68ff4117304bda24693cc34e8095afcae1be98b64"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b8-1.pdf",
+      "originalSha256": "744f2ad89673a48039242bc369c352d3817a3a4e720c15b9f51422f0e5a5d3bc",
+      "newSha256": "744f2ad89673a48039242bc369c352d3817a3a4e720c15b9f51422f0e5a5d3bc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-b8-1.tex",
+      "originalSha256": "201a702e7b9c13d71fdf71c797f2963a11740b6d8ca9151852cbaf50bb2d3983",
+      "newSha256": "201a702e7b9c13d71fdf71c797f2963a11740b6d8ca9151852cbaf50bb2d3983"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v1-1.pdf",
+      "originalSha256": "466ffaafa8c1ca7f15334ccb4023decbce1ff5a0c8e2e8e0941f83f48629898e",
+      "newSha256": "466ffaafa8c1ca7f15334ccb4023decbce1ff5a0c8e2e8e0941f83f48629898e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v1-1.tex",
+      "originalSha256": "6dda35a4be327888139d554871a1811758f6813a1897d8cc1e10a563373f5bf8",
+      "newSha256": "6dda35a4be327888139d554871a1811758f6813a1897d8cc1e10a563373f5bf8"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v2-1.pdf",
+      "originalSha256": "503aa0edffa18354a4850d14960841abdf9ff332c99a64f5e3e87b8fe8c7a1e1",
+      "newSha256": "503aa0edffa18354a4850d14960841abdf9ff332c99a64f5e3e87b8fe8c7a1e1"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v2-1.tex",
+      "originalSha256": "86ca6595472313b1d67149ee4f597ea2392a08ad6c07f6b08c606dcf42e6ae22",
+      "newSha256": "86ca6595472313b1d67149ee4f597ea2392a08ad6c07f6b08c606dcf42e6ae22"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v3-1.pdf",
+      "originalSha256": "8ca4c1ae900c72d1c3437d761ded82e204c14ca29e0a1959ebc50eb6bfb8bc9f",
+      "newSha256": "8ca4c1ae900c72d1c3437d761ded82e204c14ca29e0a1959ebc50eb6bfb8bc9f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v3-1.tex",
+      "originalSha256": "a20f676b8cc0a89157a9a506f6c97919ea3dd0b88f6efc88d690a8c1117b7641",
+      "newSha256": "a20f676b8cc0a89157a9a506f6c97919ea3dd0b88f6efc88d690a8c1117b7641"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v4-1.pdf",
+      "originalSha256": "36c40f47cc70b9bdf428f20960fba5754bbe5a423f7563c61f167a76458dae20",
+      "newSha256": "36c40f47cc70b9bdf428f20960fba5754bbe5a423f7563c61f167a76458dae20"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/ht-v4-1.tex",
+      "originalSha256": "3d17d4a8e1869d9fee3024386c31bc92712d2fbd4ece464819881a9939e8cc42",
+      "newSha256": "3d17d4a8e1869d9fee3024386c31bc92712d2fbd4ece464819881a9939e8cc42"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b1-1.pdf",
+      "originalSha256": "a69d22e3612ab5c01e314e532d2e4dd04a4a8ff65792327a8d99fa24dd14b351",
+      "newSha256": "a69d22e3612ab5c01e314e532d2e4dd04a4a8ff65792327a8d99fa24dd14b351"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b1-1.tex",
+      "originalSha256": "f004ee9f13b3e4c70bd5cc006f15720d580c89ac095fd106cc5bc0011948a7f0",
+      "newSha256": "f004ee9f13b3e4c70bd5cc006f15720d580c89ac095fd106cc5bc0011948a7f0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b2-1.pdf",
+      "originalSha256": "a89b9d7ca1ecacc7f69af0dcc4c439ccf7a6ac0b3911ff7ec359b2190e4b999a",
+      "newSha256": "a89b9d7ca1ecacc7f69af0dcc4c439ccf7a6ac0b3911ff7ec359b2190e4b999a"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b2-1.tex",
+      "originalSha256": "41d229b6ba5aa1485156cf5d6769c6f95e16818aca1bb170a5cadef83982b5d3",
+      "newSha256": "41d229b6ba5aa1485156cf5d6769c6f95e16818aca1bb170a5cadef83982b5d3"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b3-1.pdf",
+      "originalSha256": "e7b8e5bffbce2ad3cf8c77284922b5636b07d73b7ad7028f596ef2de4e175c39",
+      "newSha256": "e7b8e5bffbce2ad3cf8c77284922b5636b07d73b7ad7028f596ef2de4e175c39"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b3-1.tex",
+      "originalSha256": "f42f01df95e46966879545c29b4b1ec08aff512a75f36993d17b2a558db86ab0",
+      "newSha256": "f42f01df95e46966879545c29b4b1ec08aff512a75f36993d17b2a558db86ab0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b4-1.pdf",
+      "originalSha256": "b28fffa000345728db600f32f1c6d0af582fe3146b892c0e8da23fe080c8de23",
+      "newSha256": "b28fffa000345728db600f32f1c6d0af582fe3146b892c0e8da23fe080c8de23"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-b4-1.tex",
+      "originalSha256": "686bc8f42de5638b0861df5d97f13a7fc1a07dc3faf82af78fe51acec2231ea2",
+      "newSha256": "686bc8f42de5638b0861df5d97f13a7fc1a07dc3faf82af78fe51acec2231ea2"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-v1-1.pdf",
+      "originalSha256": "d316e12c86b69274902a1cc7c7dbaafa48983cffce2e907cb07e653627f2b8ef",
+      "newSha256": "d316e12c86b69274902a1cc7c7dbaafa48983cffce2e907cb07e653627f2b8ef"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-v1-1.tex",
+      "originalSha256": "0c166941a867ec2d02b76c69454d596e411fc0832e1fbfe638e2bd69e0a8cea7",
+      "newSha256": "0c166941a867ec2d02b76c69454d596e411fc0832e1fbfe638e2bd69e0a8cea7"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-v2-1.pdf",
+      "originalSha256": "c6dd82363eb84c1b36ba7598da56d5d98d6ba339caa15f24ec79c04e98dc9b28",
+      "newSha256": "c6dd82363eb84c1b36ba7598da56d5d98d6ba339caa15f24ec79c04e98dc9b28"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-v2-1.tex",
+      "originalSha256": "1de063bf787be031f582bad63d55d8046435755386edbd055e412411229dbdcc",
+      "newSha256": "1de063bf787be031f582bad63d55d8046435755386edbd055e412411229dbdcc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-v3-1.pdf",
+      "originalSha256": "b09b4d26292857cfe6450a8791a0b37fc3be35c3b942466c75a26310000ba4b0",
+      "newSha256": "b09b4d26292857cfe6450a8791a0b37fc3be35c3b942466c75a26310000ba4b0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/hv-v3-1.tex",
+      "originalSha256": "50f654a9224ada5928f9e6b8de29b60a553a22eee3c499a53d657523c35b3f2b",
+      "newSha256": "50f654a9224ada5928f9e6b8de29b60a553a22eee3c499a53d657523c35b3f2b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b1-1.pdf",
+      "originalSha256": "b62cd358ea61592bf3be187bb547b9dcedfc42981d4e33441f1beab31a25ba0e",
+      "newSha256": "b62cd358ea61592bf3be187bb547b9dcedfc42981d4e33441f1beab31a25ba0e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b1-1.tex",
+      "originalSha256": "69ee66d7ac84cc29689a0fae934d3bd63e5ac8495c86de2be08ff8625497a3c5",
+      "newSha256": "69ee66d7ac84cc29689a0fae934d3bd63e5ac8495c86de2be08ff8625497a3c5"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b2-1.pdf",
+      "originalSha256": "8ebbee2a124202802ccbe904becf92fe3d89cd939045b72aad68b50353698a8d",
+      "newSha256": "8ebbee2a124202802ccbe904becf92fe3d89cd939045b72aad68b50353698a8d"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b2-1.tex",
+      "originalSha256": "e7ab30f7d4461b750c25ef680e8fb484270049c55e97da36ccffe32ae2d41cae",
+      "newSha256": "e7ab30f7d4461b750c25ef680e8fb484270049c55e97da36ccffe32ae2d41cae"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b3-1.pdf",
+      "originalSha256": "1a19c448a4ac532d6e0ac700d8062027104c360646fe2f157bd271ea0b81cda0",
+      "newSha256": "1a19c448a4ac532d6e0ac700d8062027104c360646fe2f157bd271ea0b81cda0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b3-1.tex",
+      "originalSha256": "91490d10bca09a11f21a450942bc8e46a2e262d5d045de715d9e8c5d30e89899",
+      "newSha256": "91490d10bca09a11f21a450942bc8e46a2e262d5d045de715d9e8c5d30e89899"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b4-1.pdf",
+      "originalSha256": "fee96e0068da9eb36732d33c8108a6662cda460579e1843bf579442ce353d8c8",
+      "newSha256": "fee96e0068da9eb36732d33c8108a6662cda460579e1843bf579442ce353d8c8"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b4-1.tex",
+      "originalSha256": "555d3318ca889e55c72570af89db92c905c3399c2e80d36ff5c89d22fd2160cb",
+      "newSha256": "555d3318ca889e55c72570af89db92c905c3399c2e80d36ff5c89d22fd2160cb"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b5-1.pdf",
+      "originalSha256": "0afa9d3b097d8976d24577043fcf0245bc848cf18544e6b2b7dcd215fe1b629b",
+      "newSha256": "0afa9d3b097d8976d24577043fcf0245bc848cf18544e6b2b7dcd215fe1b629b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b5-1.tex",
+      "originalSha256": "c9f032ffad82cd6d8ada3e4cb39230775cc7ad366e44721d1743adc11c938fb2",
+      "newSha256": "c9f032ffad82cd6d8ada3e4cb39230775cc7ad366e44721d1743adc11c938fb2"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-1.pdf",
+      "originalSha256": "dda01f12206a4be0e01245994fd4ea3305e6cc55201b5bb757b105954fda3725",
+      "newSha256": "dda01f12206a4be0e01245994fd4ea3305e6cc55201b5bb757b105954fda3725"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-1.tex",
+      "originalSha256": "e4d04f3d9da89dbd40770ef19a1aeaf88e183ea0fc28ca6b19aaa55c0b2d72be",
+      "newSha256": "e4d04f3d9da89dbd40770ef19a1aeaf88e183ea0fc28ca6b19aaa55c0b2d72be"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-2.pdf",
+      "originalSha256": "bad75b9857f4ce29dbf06e2274b8e5093c9acb751a321557fa04be70733fc76e",
+      "newSha256": "bad75b9857f4ce29dbf06e2274b8e5093c9acb751a321557fa04be70733fc76e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-2.tex",
+      "originalSha256": "f425ca5ad37253c32874066bb772534005d6c9da89ea9aa70b1a971141fb8750",
+      "newSha256": "f425ca5ad37253c32874066bb772534005d6c9da89ea9aa70b1a971141fb8750"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-3.pdf",
+      "originalSha256": "af12137ab1cd6fcea92347df13eb44a47f695e9aebb154a807efb9f786892a31",
+      "newSha256": "af12137ab1cd6fcea92347df13eb44a47f695e9aebb154a807efb9f786892a31"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-3.tex",
+      "originalSha256": "5117b956fc722ee8932899888a00bc6472ae1d00e968f5718f7ea44057876a45",
+      "newSha256": "5117b956fc722ee8932899888a00bc6472ae1d00e968f5718f7ea44057876a45"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-4.pdf",
+      "originalSha256": "2aeec858a7293c2e1ac2f7f850a935db879b159bb184b9fda54421cdf3267c6b",
+      "newSha256": "2aeec858a7293c2e1ac2f7f850a935db879b159bb184b9fda54421cdf3267c6b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b6-4.tex",
+      "originalSha256": "16dc561da49814c405c8f40741e2e3235cc7a3caa923d9aef676d1aecf7f6c19",
+      "newSha256": "16dc561da49814c405c8f40741e2e3235cc7a3caa923d9aef676d1aecf7f6c19"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b7-1.pdf",
+      "originalSha256": "ea87d86195a731cacd24c0cc52108e9847907fd09c1967bd636d7f96ff4edb26",
+      "newSha256": "ea87d86195a731cacd24c0cc52108e9847907fd09c1967bd636d7f96ff4edb26"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b7-1.tex",
+      "originalSha256": "a3e126c3a77b7943c06e50d9226c923dde1f85639953e74a824b6014a3dfc0c7",
+      "newSha256": "a3e126c3a77b7943c06e50d9226c923dde1f85639953e74a824b6014a3dfc0c7"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b8-1.pdf",
+      "originalSha256": "d397f4508e9325d1c7ac23cca7200135f5d3069a50cad18c0b468d7e31138f89",
+      "newSha256": "d397f4508e9325d1c7ac23cca7200135f5d3069a50cad18c0b468d7e31138f89"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-b8-1.tex",
+      "originalSha256": "e40a94ef3cd9436f4f4a410b6a1d59d8d183485bed589d0edfc5bd3608c4d551",
+      "newSha256": "e40a94ef3cd9436f4f4a410b6a1d59d8d183485bed589d0edfc5bd3608c4d551"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-1.pdf",
+      "originalSha256": "595ef86a5ddf6c33af13081b067047f1eb25467a2bbf9e7d2e9c7355f41504e4",
+      "newSha256": "595ef86a5ddf6c33af13081b067047f1eb25467a2bbf9e7d2e9c7355f41504e4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-1.tex",
+      "originalSha256": "6f07d75737678520340d24b479e08b84e8df4293e353892190142d8295f278af",
+      "newSha256": "6f07d75737678520340d24b479e08b84e8df4293e353892190142d8295f278af"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-2.pdf",
+      "originalSha256": "2dbbb89f6ea2512c13495d47bc5c82bd7b08d27d1ec476c86cc3451b65e50b1c",
+      "newSha256": "2dbbb89f6ea2512c13495d47bc5c82bd7b08d27d1ec476c86cc3451b65e50b1c"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-2.tex",
+      "originalSha256": "0697300d205ee46d8c0741dfdddb56b06ffb9035106152f78dbfe55bce565ff8",
+      "newSha256": "0697300d205ee46d8c0741dfdddb56b06ffb9035106152f78dbfe55bce565ff8"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-3.pdf",
+      "originalSha256": "6bd08afd6e304fa1d787e6ae6de08b6bb8689b7350c876ce1ccf66e00035e6d3",
+      "newSha256": "6bd08afd6e304fa1d787e6ae6de08b6bb8689b7350c876ce1ccf66e00035e6d3"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-3.tex",
+      "originalSha256": "e89dfcae7a980eb6c135292a9f42e51f82128613bc733173674e829a85b782a0",
+      "newSha256": "e89dfcae7a980eb6c135292a9f42e51f82128613bc733173674e829a85b782a0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-4.pdf",
+      "originalSha256": "12a0826b89d2a5606aac3b3b5381fd1bc45d251f264c8624fd563b8f1f000db4",
+      "newSha256": "12a0826b89d2a5606aac3b3b5381fd1bc45d251f264c8624fd563b8f1f000db4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-4.tex",
+      "originalSha256": "8d5abade93a5ffddde2e18ef8d1c789f243ea92e48d318b8c17abd3be44fcccc",
+      "newSha256": "8d5abade93a5ffddde2e18ef8d1c789f243ea92e48d318b8c17abd3be44fcccc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-5.pdf",
+      "originalSha256": "5aa4b5601ccfd6f2325f162c4bcd3fd141ff18e2f979bf31b906c79f1c48be56",
+      "newSha256": "5aa4b5601ccfd6f2325f162c4bcd3fd141ff18e2f979bf31b906c79f1c48be56"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v1-5.tex",
+      "originalSha256": "967c09a6c04b09d4389d7f65a91c2adb9291c6fd73e6807c298320e5723990f3",
+      "newSha256": "967c09a6c04b09d4389d7f65a91c2adb9291c6fd73e6807c298320e5723990f3"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v2-1.pdf",
+      "originalSha256": "d157df0a01d7e60951b15b8ba22752c5500768dd06bb53fcbba75e4100357c6d",
+      "newSha256": "d157df0a01d7e60951b15b8ba22752c5500768dd06bb53fcbba75e4100357c6d"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v2-1.tex",
+      "originalSha256": "4859e9ef4be7a408ca37bba7086aad13b72a46d9f79ba71b44b4fe2c7177a464",
+      "newSha256": "4859e9ef4be7a408ca37bba7086aad13b72a46d9f79ba71b44b4fe2c7177a464"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v2-2.pdf",
+      "originalSha256": "41fccfcf4e829baa18eb4fcac166685131b596b1eb945a3056657ec17cc149dc",
+      "newSha256": "41fccfcf4e829baa18eb4fcac166685131b596b1eb945a3056657ec17cc149dc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v2-2.tex",
+      "originalSha256": "7b7ea4685a72ae2690d85919469e42b45e89a2318d2ba9119d1772e18e3f6987",
+      "newSha256": "7b7ea4685a72ae2690d85919469e42b45e89a2318d2ba9119d1772e18e3f6987"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v3-1.pdf",
+      "originalSha256": "2cce255044e05ad5300fda09fa097c64df5b217a0102eda39ab9c7a4b1d25478",
+      "newSha256": "2cce255044e05ad5300fda09fa097c64df5b217a0102eda39ab9c7a4b1d25478"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v3-1.tex",
+      "originalSha256": "ae5386d345770d09cb3293a1923e54c46cd97bb9b35e100046f221a6a4656d47",
+      "newSha256": "ae5386d345770d09cb3293a1923e54c46cd97bb9b35e100046f221a6a4656d47"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v4-1.pdf",
+      "originalSha256": "2500a343cadeb41159859ff2e4ae24c4c2e17ccb8698a3fb758d9d0270375b42",
+      "newSha256": "2500a343cadeb41159859ff2e4ae24c4c2e17ccb8698a3fb758d9d0270375b42"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v4-1.tex",
+      "originalSha256": "c08934953f43eba8def9b7fe10271520427b4172852a9949ff06371280159ef0",
+      "newSha256": "c08934953f43eba8def9b7fe10271520427b4172852a9949ff06371280159ef0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v5-1.pdf",
+      "originalSha256": "606a5aa4ddb66aa7f74465a8f5e09e1d54d6d221e85901061043b6c2ed18b838",
+      "newSha256": "606a5aa4ddb66aa7f74465a8f5e09e1d54d6d221e85901061043b6c2ed18b838"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tg-v5-1.tex",
+      "originalSha256": "e40a94ef3cd9436f4f4a410b6a1d59d8d183485bed589d0edfc5bd3608c4d551",
+      "newSha256": "e40a94ef3cd9436f4f4a410b6a1d59d8d183485bed589d0edfc5bd3608c4d551"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b1-1.pdf",
+      "originalSha256": "a076c5288fb419c48e583f5e4ac9da4ad8a90ade871dd5bbefcf0e0125858125",
+      "newSha256": "a076c5288fb419c48e583f5e4ac9da4ad8a90ade871dd5bbefcf0e0125858125"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b1-1.tex",
+      "originalSha256": "b6c3432d89820e231cf2456e3df9b3a123c1720a38ed4ee6b26b012097dd10b0",
+      "newSha256": "b6c3432d89820e231cf2456e3df9b3a123c1720a38ed4ee6b26b012097dd10b0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b2-1.pdf",
+      "originalSha256": "61a395b9113073883d8f2a6d067a04fc0800ae5cfb7dba3162260b0f3fe59353",
+      "newSha256": "61a395b9113073883d8f2a6d067a04fc0800ae5cfb7dba3162260b0f3fe59353"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b2-1.tex",
+      "originalSha256": "010342e430bece94549c98d27d1f33363b918c59413e7c6b27703573deda6978",
+      "newSha256": "010342e430bece94549c98d27d1f33363b918c59413e7c6b27703573deda6978"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b2-2.pdf",
+      "originalSha256": "4230d7b353c036b78b92fa9c2e5b5599dcb20fd21e65c5646c7fd0ad3216c0f9",
+      "newSha256": "4230d7b353c036b78b92fa9c2e5b5599dcb20fd21e65c5646c7fd0ad3216c0f9"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b2-2.tex",
+      "originalSha256": "febeee1e7ac1b9d1e61729025669497a8da9866946581d87b859330e26c2a4a7",
+      "newSha256": "febeee1e7ac1b9d1e61729025669497a8da9866946581d87b859330e26c2a4a7"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b3-1.pdf",
+      "originalSha256": "932b5c6d3cc2741fece9afac5ed42c59a08352492d912001ce0497f4d8a6c912",
+      "newSha256": "932b5c6d3cc2741fece9afac5ed42c59a08352492d912001ce0497f4d8a6c912"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b3-1.tex",
+      "originalSha256": "a4f4e9d7d8aae81451578eef3e32476a105c3418cb05b73a96c66591c1ca97e6",
+      "newSha256": "a4f4e9d7d8aae81451578eef3e32476a105c3418cb05b73a96c66591c1ca97e6"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b4-1.pdf",
+      "originalSha256": "34962f6fd540b72f80854ae5095369f55fe47e0f3e6716c2ca94291fe385eefc",
+      "newSha256": "34962f6fd540b72f80854ae5095369f55fe47e0f3e6716c2ca94291fe385eefc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b4-1.tex",
+      "originalSha256": "659cde818e3b9d8acd9e822f370939f3653038d3115966b5e1f79b288e0b4015",
+      "newSha256": "659cde818e3b9d8acd9e822f370939f3653038d3115966b5e1f79b288e0b4015"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b5-1.pdf",
+      "originalSha256": "5a14c5772abd0c2d2304557124f21e5e51659e0bb13055d50fbe53a4f5fc49df",
+      "newSha256": "5a14c5772abd0c2d2304557124f21e5e51659e0bb13055d50fbe53a4f5fc49df"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b5-1.tex",
+      "originalSha256": "4b6ed90dc0d73563c053abffe1485982c066570efc3778d348baf3dc5a725cd4",
+      "newSha256": "4b6ed90dc0d73563c053abffe1485982c066570efc3778d348baf3dc5a725cd4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b6-1.pdf",
+      "originalSha256": "baa6ac6c40c28bca16fb04fa59e50a404ab4144bc83db0b9a1c3c71b460c7e98",
+      "newSha256": "baa6ac6c40c28bca16fb04fa59e50a404ab4144bc83db0b9a1c3c71b460c7e98"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-b6-1.tex",
+      "originalSha256": "0a52944c3a338866829811c451921e3d29505b99449465af3e60921aed4d9d0f",
+      "newSha256": "0a52944c3a338866829811c451921e3d29505b99449465af3e60921aed4d9d0f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v1-1.pdf",
+      "originalSha256": "65e5c26dcae1ef69adc26eebb3a36284871b3cd04a5d9663eb515416178a12f0",
+      "newSha256": "65e5c26dcae1ef69adc26eebb3a36284871b3cd04a5d9663eb515416178a12f0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v1-1.tex",
+      "originalSha256": "9829272e5eb9888644b40bff5e0c7b93f35b70c7f8abf9864ead845b4ae83bf4",
+      "newSha256": "9829272e5eb9888644b40bff5e0c7b93f35b70c7f8abf9864ead845b4ae83bf4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v2-1.pdf",
+      "originalSha256": "edf5fb1ebb27ff4dd6c40fd89032936744fbaccdcd40d6a6ae5cbec0a57a4ec8",
+      "newSha256": "edf5fb1ebb27ff4dd6c40fd89032936744fbaccdcd40d6a6ae5cbec0a57a4ec8"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v2-1.tex",
+      "originalSha256": "295f2b500357f11a168c1627d23100013d3cb026ff746a600ef3b4d8dea56d8c",
+      "newSha256": "295f2b500357f11a168c1627d23100013d3cb026ff746a600ef3b4d8dea56d8c"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v3-1.pdf",
+      "originalSha256": "9ef8ee624e34b3b74e59ef1a9c32fadef3412cec2931ceb93b90521c7d94d17b",
+      "newSha256": "9ef8ee624e34b3b74e59ef1a9c32fadef3412cec2931ceb93b90521c7d94d17b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v3-1.tex",
+      "originalSha256": "167e7552ae57ab14fc0a6ea5daa5f2d072e1bddf00b15b9d420a40b1e065abe1",
+      "newSha256": "167e7552ae57ab14fc0a6ea5daa5f2d072e1bddf00b15b9d420a40b1e065abe1"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v4-1.pdf",
+      "originalSha256": "33f21242ee24abf59f20b3b440c20500a1896e519a1af06bb354342a0e788f59",
+      "newSha256": "33f21242ee24abf59f20b3b440c20500a1896e519a1af06bb354342a0e788f59"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/th-v4-1.tex",
+      "originalSha256": "8cc070a5378641368bab9bdeca970d51ab48a579a52dadacbefbb552362daf5e",
+      "newSha256": "8cc070a5378641368bab9bdeca970d51ab48a579a52dadacbefbb552362daf5e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-1.pdf",
+      "originalSha256": "ea9e61129a9a6e1405a6b6424e2364a30c074b39a8b19eff7bf840aec1d93e02",
+      "newSha256": "ea9e61129a9a6e1405a6b6424e2364a30c074b39a8b19eff7bf840aec1d93e02"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-1.tex",
+      "originalSha256": "fd54780f49e64b5c014b468b80c64f69168ec923732024099b7909fefbb04617",
+      "newSha256": "fd54780f49e64b5c014b468b80c64f69168ec923732024099b7909fefbb04617"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-2.pdf",
+      "originalSha256": "0d237a76b619509d3ff018b6ce67831a88750a091555d3cd4d9585fff6f2328d",
+      "newSha256": "0d237a76b619509d3ff018b6ce67831a88750a091555d3cd4d9585fff6f2328d"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-2.tex",
+      "originalSha256": "dcd27c9472fd3547773c6ed00f3e620e0aa2497b607e10db34194b6b450688f4",
+      "newSha256": "dcd27c9472fd3547773c6ed00f3e620e0aa2497b607e10db34194b6b450688f4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-3.pdf",
+      "originalSha256": "2da0bf2d3ff9c749236d82ef247ba29d43c75a9dee7335d5d3bd0350b0084f05",
+      "newSha256": "2da0bf2d3ff9c749236d82ef247ba29d43c75a9dee7335d5d3bd0350b0084f05"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-3.tex",
+      "originalSha256": "c655b2c8c032270a3c6fac485546c7b6ff5e0f912034bad45d1a98992771e2c4",
+      "newSha256": "c655b2c8c032270a3c6fac485546c7b6ff5e0f912034bad45d1a98992771e2c4"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-4.pdf",
+      "originalSha256": "7ddbcf3fa5b30a04cbab715d88f6d2a34d4767c41b0ca2429ac5c15418ea2e3f",
+      "newSha256": "7ddbcf3fa5b30a04cbab715d88f6d2a34d4767c41b0ca2429ac5c15418ea2e3f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b1-4.tex",
+      "originalSha256": "0a489c7baa9ce7f28ac66a5b5d1e4f2380efd72fa0261b6f2e48230e4410740d",
+      "newSha256": "0a489c7baa9ce7f28ac66a5b5d1e4f2380efd72fa0261b6f2e48230e4410740d"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b10-1.pdf",
+      "originalSha256": "f0dd209880ade25c28e47c399ad6e00f59106dcc51ebf3a6668f7d69a1ba623e",
+      "newSha256": "f0dd209880ade25c28e47c399ad6e00f59106dcc51ebf3a6668f7d69a1ba623e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b10-1.tex",
+      "originalSha256": "ab45b10a5084384221ab535ccd7c4781d3e16d17cf1c63d4d7ca554028cb4676",
+      "newSha256": "ab45b10a5084384221ab535ccd7c4781d3e16d17cf1c63d4d7ca554028cb4676"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b11a-1.pdf",
+      "originalSha256": "ad84c2e5b0ed8a56088e6d23700646f062642e15de5f048b4f9d5b4240abe7d0",
+      "newSha256": "ad84c2e5b0ed8a56088e6d23700646f062642e15de5f048b4f9d5b4240abe7d0"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b11a-1.tex",
+      "originalSha256": "821b24218c6f984d72c16ce72c1b0b7b7e96337a55d27d322c0cecc828000848",
+      "newSha256": "821b24218c6f984d72c16ce72c1b0b7b7e96337a55d27d322c0cecc828000848"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b11b-1.pdf",
+      "originalSha256": "1dfb4b8a9e0d2983495f30fd03482f7af47deb08cc8a72ac63572df2dda685fc",
+      "newSha256": "1dfb4b8a9e0d2983495f30fd03482f7af47deb08cc8a72ac63572df2dda685fc"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b11b-1.tex",
+      "originalSha256": "cb09d9142b397a68b9ad00095312e6ebd10d60f6ab80841c7b894baf862b9a4e",
+      "newSha256": "cb09d9142b397a68b9ad00095312e6ebd10d60f6ab80841c7b894baf862b9a4e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b12-1.pdf",
+      "originalSha256": "c5de5a908a9201f54988a2b5a13c3feee3a34b83d387c7f84685fcd74a947fd8",
+      "newSha256": "c5de5a908a9201f54988a2b5a13c3feee3a34b83d387c7f84685fcd74a947fd8"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b12-1.tex",
+      "originalSha256": "89002a6e7c03999b002bf791bc3b99de03723d8e876b3c910cfb6ff6f363a487",
+      "newSha256": "89002a6e7c03999b002bf791bc3b99de03723d8e876b3c910cfb6ff6f363a487"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b13-1.pdf",
+      "originalSha256": "c9088b27c5f8b5f9b489fae4257730c006d90a6972795db4acffe7cc18202478",
+      "newSha256": "c9088b27c5f8b5f9b489fae4257730c006d90a6972795db4acffe7cc18202478"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b13-1.tex",
+      "originalSha256": "59c2a8c67b26626584cf3b57a2f03a9c8c62508049fe94963c4029cbafd9e84f",
+      "newSha256": "59c2a8c67b26626584cf3b57a2f03a9c8c62508049fe94963c4029cbafd9e84f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b14-1.pdf",
+      "originalSha256": "7580d78b35c5c8a222c80d4321ab9862cf8117a553a190e5f6ea5e99cd08a3e9",
+      "newSha256": "7580d78b35c5c8a222c80d4321ab9862cf8117a553a190e5f6ea5e99cd08a3e9"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b14-1.tex",
+      "originalSha256": "9bb4d65f002ac7eb03daf7b816667b0f7da9e5edeacd6b90d341e2fc2601c3d9",
+      "newSha256": "9bb4d65f002ac7eb03daf7b816667b0f7da9e5edeacd6b90d341e2fc2601c3d9"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b15-1.pdf",
+      "originalSha256": "2eafdcd62de1b1754e86c4993218c8aec2e11f0b3847ee5ccf55bd5fad1bb1a5",
+      "newSha256": "2eafdcd62de1b1754e86c4993218c8aec2e11f0b3847ee5ccf55bd5fad1bb1a5"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b15-1.tex",
+      "originalSha256": "c1af3f979a468ccc1946ac1360b415f76eab92f8d00f1679c33a2526f3743777",
+      "newSha256": "c1af3f979a468ccc1946ac1360b415f76eab92f8d00f1679c33a2526f3743777"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b16-1.pdf",
+      "originalSha256": "5909aca3ad254586b38a3d4066ad5a3052eb05c2684f61ae0829d164cb07ef72",
+      "newSha256": "5909aca3ad254586b38a3d4066ad5a3052eb05c2684f61ae0829d164cb07ef72"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b16-1.tex",
+      "originalSha256": "5c2b26613bb21935267350a2e5fb1a553f88f133c2076235188e2d582e3a2b3f",
+      "newSha256": "5c2b26613bb21935267350a2e5fb1a553f88f133c2076235188e2d582e3a2b3f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b17-1.pdf",
+      "originalSha256": "49da1ae851c1c00a02aae9acc4350fb7265aa9fb5c7f35b970de40e3363bd218",
+      "newSha256": "49da1ae851c1c00a02aae9acc4350fb7265aa9fb5c7f35b970de40e3363bd218"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b17-1.tex",
+      "originalSha256": "f1f5dc700cdd0eaccd64d6d28112bdb9d5967c2255fdb80536db6a986d8ee64a",
+      "newSha256": "f1f5dc700cdd0eaccd64d6d28112bdb9d5967c2255fdb80536db6a986d8ee64a"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b18-1.pdf",
+      "originalSha256": "6afad4d404e2b9bba416265ac2de3874e3fbef774fcc59b5821c8cfd4598fac6",
+      "newSha256": "6afad4d404e2b9bba416265ac2de3874e3fbef774fcc59b5821c8cfd4598fac6"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b18-1.tex",
+      "originalSha256": "2f0977575db7c07d95f4d53f80af15a4a4a2b6205ad7569a40e6a2e98d93d188",
+      "newSha256": "2f0977575db7c07d95f4d53f80af15a4a4a2b6205ad7569a40e6a2e98d93d188"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b19-1.pdf",
+      "originalSha256": "6d26e8bcc49bf8bec639162cef986fc08e40e26486a72a49dd2079bbba82bc91",
+      "newSha256": "6d26e8bcc49bf8bec639162cef986fc08e40e26486a72a49dd2079bbba82bc91"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b19-1.tex",
+      "originalSha256": "f0f7ca952b5489510654d285123f26c06527242970edbd2cbb950ffa9f25960b",
+      "newSha256": "f0f7ca952b5489510654d285123f26c06527242970edbd2cbb950ffa9f25960b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b2-1.pdf",
+      "originalSha256": "a92d83bb0d34c9edf604966e54a4ddaf96841cfefb73c0856d6bb81c2ab5e98d",
+      "newSha256": "a92d83bb0d34c9edf604966e54a4ddaf96841cfefb73c0856d6bb81c2ab5e98d"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b2-1.tex",
+      "originalSha256": "0cc4afc7b2b30f8935164294c3c4a5505ed4c3c938b9df30cbf76e1270467c8a",
+      "newSha256": "0cc4afc7b2b30f8935164294c3c4a5505ed4c3c938b9df30cbf76e1270467c8a"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b20-1.pdf",
+      "originalSha256": "d9729c8731da2bc3e6b7b689c44e8503b6497b17f73ce426c326b6b97426f26e",
+      "newSha256": "d9729c8731da2bc3e6b7b689c44e8503b6497b17f73ce426c326b6b97426f26e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b20-1.tex",
+      "originalSha256": "305f6b33c758b609ade23769a4b318d46028d8a46bcc05ee6c6ef7be2ae04f13",
+      "newSha256": "305f6b33c758b609ade23769a4b318d46028d8a46bcc05ee6c6ef7be2ae04f13"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b21-1.pdf",
+      "originalSha256": "85a7a705779fcae0e5ab0539d9f40c52ac3fe5a7270259650d3519b0feb31ca9",
+      "newSha256": "85a7a705779fcae0e5ab0539d9f40c52ac3fe5a7270259650d3519b0feb31ca9"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b21-1.tex",
+      "originalSha256": "f64af612b513aa3858f34bb3772edea66cc6c04d0bc83975604041a8293e3eb5",
+      "newSha256": "f64af612b513aa3858f34bb3772edea66cc6c04d0bc83975604041a8293e3eb5"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b3-1.pdf",
+      "originalSha256": "ff0b5c90c5a5d4002c797422c247939d8482d819b1955a2d679c044c47089ffa",
+      "newSha256": "ff0b5c90c5a5d4002c797422c247939d8482d819b1955a2d679c044c47089ffa"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b3-1.tex",
+      "originalSha256": "b8a6d09f99c269a3d0e98401fd7ca175cd733a25ed1ff042988127380f731294",
+      "newSha256": "b8a6d09f99c269a3d0e98401fd7ca175cd733a25ed1ff042988127380f731294"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b4-1.pdf",
+      "originalSha256": "d4ed46c161e9a1bf5dbfb5412f52a9aaac3bcabb79ccb3a6bea72bc24797ced7",
+      "newSha256": "d4ed46c161e9a1bf5dbfb5412f52a9aaac3bcabb79ccb3a6bea72bc24797ced7"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b4-1.tex",
+      "originalSha256": "d7046c0e72652f73c35b8fc8197702209641ad3b17afefb048d612c7b7c3af0b",
+      "newSha256": "d7046c0e72652f73c35b8fc8197702209641ad3b17afefb048d612c7b7c3af0b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b5-1.pdf",
+      "originalSha256": "6638768b783d3451e4a64db227bf20d0717b2c92159bdd21f0489a5909dd27e3",
+      "newSha256": "6638768b783d3451e4a64db227bf20d0717b2c92159bdd21f0489a5909dd27e3"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b5-1.tex",
+      "originalSha256": "e5d33fbe2b6f6b3b2fb09951ddf58676f508929340f6cee68b0c33726d07017e",
+      "newSha256": "e5d33fbe2b6f6b3b2fb09951ddf58676f508929340f6cee68b0c33726d07017e"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b6-1.pdf",
+      "originalSha256": "d072fa0cefb42bd74994585655ce181c555bd54b3b2e74aad2f4e9c6312c945b",
+      "newSha256": "d072fa0cefb42bd74994585655ce181c555bd54b3b2e74aad2f4e9c6312c945b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b6-1.tex",
+      "originalSha256": "f1bb587ef680ad37b3368fe79f0f05573f2aabdd18f32253eab091fec3e56e5f",
+      "newSha256": "f1bb587ef680ad37b3368fe79f0f05573f2aabdd18f32253eab091fec3e56e5f"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b7-1.pdf",
+      "originalSha256": "797e19fba4ac01fa505f6ed7a503196d39e77428f32099e4e180506914098a85",
+      "newSha256": "797e19fba4ac01fa505f6ed7a503196d39e77428f32099e4e180506914098a85"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b7-1.tex",
+      "originalSha256": "ec261da68de26765b146dc5a1cf7337ff3f66a6108eceaaf133891e57044eb3b",
+      "newSha256": "ec261da68de26765b146dc5a1cf7337ff3f66a6108eceaaf133891e57044eb3b"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b8-1.pdf",
+      "originalSha256": "04e4356799a12c778ad76040a3801b667f584d881c8b56418976cadd7962b34c",
+      "newSha256": "04e4356799a12c778ad76040a3801b667f584d881c8b56418976cadd7962b34c"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b8-1.tex",
+      "originalSha256": "3ffe0a9167386acf811645539377c9d49e245682439f974a0b37fde21367e079",
+      "newSha256": "3ffe0a9167386acf811645539377c9d49e245682439f974a0b37fde21367e079"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b9-1.pdf",
+      "originalSha256": "a035724adee3ae18e996e621fc906c2bd97d99588277a7c0140cc001b5b0f1ba",
+      "newSha256": "a035724adee3ae18e996e621fc906c2bd97d99588277a7c0140cc001b5b0f1ba"
+    },
+    {
+      "file": "research/worksheet-checks/tikz/tt-b9-1.tex",
+      "originalSha256": "42c9be4b01ed518c77419ebb5310d3ecb4f44f53f3ad1673fb2f6f1c39e1d82c",
+      "newSha256": "42c9be4b01ed518c77419ebb5310d3ecb4f44f53f3ad1673fb2f6f1c39e1d82c"
+    },
+    {
+      "file": "scripts/audit-worksheets.mjs",
+      "originalSha256": "63ee7054b3327b4068d66f9028c8a8ba88fa157378c9fd07d1a1d0b6ce6d98d2",
+      "newSha256": "63ee7054b3327b4068d66f9028c8a8ba88fa157378c9fd07d1a1d0b6ce6d98d2"
+    },
+    {
+      "file": "scripts/build-qa.mjs",
+      "originalSha256": "2170814bafe3275fc5243cc3dfb65947455b174007ea8b1ea24b5361b4b823ad",
+      "newSha256": "2170814bafe3275fc5243cc3dfb65947455b174007ea8b1ea24b5361b4b823ad"
+    },
+    {
+      "file": "scripts/check-geometry-ui.mjs",
+      "originalSha256": "fb5d1cda311794a3e2e23844d870290eb73c36391ae0951d316d310ac08823c5",
+      "newSha256": "fb5d1cda311794a3e2e23844d870290eb73c36391ae0951d316d310ac08823c5"
+    },
+    {
+      "file": "scripts/check-start.mjs",
+      "originalSha256": "3127933aca3ccd74e6fd0eb704bac4048c55fe2dfb0b2f47442a504fb9cf8edd",
+      "newSha256": "3127933aca3ccd74e6fd0eb704bac4048c55fe2dfb0b2f47442a504fb9cf8edd"
+    },
+    {
+      "file": "scripts/check-ui.mjs",
+      "originalSha256": "7a9a20c3d9948675c4a6ec93194dde79260d7c4153cf230ecabf1087ee3681d1",
+      "newSha256": "7a9a20c3d9948675c4a6ec93194dde79260d7c4153cf230ecabf1087ee3681d1"
+    },
+    {
+      "file": "scripts/export-prompts.mjs",
+      "originalSha256": "6218d400acef32faef8fcd558384b90126583a0c972f033489087c398d8836d7",
+      "newSha256": "6218d400acef32faef8fcd558384b90126583a0c972f033489087c398d8836d7"
+    },
+    {
+      "file": "scripts/render-tikz-review.py",
+      "originalSha256": "a57c64b6ce5299973f544d9acf191a3c7e1b8c2a70d2d582a37f19de4121c711",
+      "newSha256": "a57c64b6ce5299973f544d9acf191a3c7e1b8c2a70d2d582a37f19de4121c711"
+    },
+    {
+      "file": "scripts/start.mjs",
+      "originalSha256": "0a218abdef14eaf01f1b986d47f098b53b79e2a8ffa85c4a8ec90ce8a3066ba5",
+      "newSha256": "0a218abdef14eaf01f1b986d47f098b53b79e2a8ffa85c4a8ec90ce8a3066ba5"
+    },
+    {
+      "file": "scripts/test-report.mjs",
+      "originalSha256": "97384884601b707d77ffb5ce0d3d2630bed27b53bfe34e335452976292fa550f",
+      "newSha256": "97384884601b707d77ffb5ce0d3d2630bed27b53bfe34e335452976292fa550f"
+    },
+    {
+      "file": "scripts/verify-release.mjs",
+      "originalSha256": "eae0b229f73e6729e6999fc11099dcc20f428cefed86062266d2b260aa360622",
+      "newSha256": "eae0b229f73e6729e6999fc11099dcc20f428cefed86062266d2b260aa360622"
+    },
+    {
+      "file": "server/diagram-policy.mjs",
+      "originalSha256": "aa71c44f1ca2b6b121321dbd914a9ecc74c280b910d43fcb7e663bf81b9772c8",
+      "newSha256": "aa71c44f1ca2b6b121321dbd914a9ecc74c280b910d43fcb7e663bf81b9772c8"
+    },
+    {
+      "file": "server/feedback.mjs",
+      "originalSha256": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c",
+      "newSha256": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c"
+    },
+    {
+      "file": "server/research-pedagogy.mjs",
+      "originalSha256": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b",
+      "newSha256": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b"
+    },
+    {
+      "file": "server/strict-tutor.mjs",
+      "originalSha256": "b2a95e2438904bb512db66b74138d558fa189b26165a89ed9d656a20149e09c8",
+      "newSha256": "b2a95e2438904bb512db66b74138d558fa189b26165a89ed9d656a20149e09c8"
+    },
+    {
+      "file": "tests/context-diagram.test.mjs",
+      "originalSha256": "4b7982d06c251ca3bde1d172fa0aeab9cf7f6361c02c85e654c1b0b5f55c25a5",
+      "newSha256": "4b7982d06c251ca3bde1d172fa0aeab9cf7f6361c02c85e654c1b0b5f55c25a5"
+    },
+    {
+      "file": "tests/feedback.test.mjs",
+      "originalSha256": "546d8991cff79b8f340dd0dc2b07515d76b7816b814a59906f52316b5a83b76c",
+      "newSha256": "546d8991cff79b8f340dd0dc2b07515d76b7816b814a59906f52316b5a83b76c"
+    },
+    {
+      "file": "tests/geometry.test.mjs",
+      "originalSha256": "4e88ab8cd377bd6478f924c85d46f12daed1e1538cc4b1e529d09090548061bd",
+      "newSha256": "4e88ab8cd377bd6478f924c85d46f12daed1e1538cc4b1e529d09090548061bd"
+    },
+    {
+      "file": "tests/learner-guidance.test.mjs",
+      "originalSha256": "08f439806a0de01be5217692a5d09900a9950360b3497ea475d530dec5ff8419",
+      "newSha256": "08f439806a0de01be5217692a5d09900a9950360b3497ea475d530dec5ff8419"
+    },
+    {
+      "file": "tests/learning.test.mjs",
+      "originalSha256": "8517a753fec23344def9454a06f4713ed014690f468bc3c0aac4a8a5d2f6b4c2",
+      "newSha256": "8517a753fec23344def9454a06f4713ed014690f468bc3c0aac4a8a5d2f6b4c2"
+    },
+    {
+      "file": "tests/load-ts.mjs",
+      "originalSha256": "59e4c479a510a3b3cb45e01596a492271c711d8b789c0544c0e85badb16594ae",
+      "newSha256": "59e4c479a510a3b3cb45e01596a492271c711d8b789c0544c0e85badb16594ae"
+    },
+    {
+      "file": "tests/math.test.mjs",
+      "originalSha256": "b09f56a1f415b4b8fba1779c8dcad1c304d0fa721bd398c3c914e7fe959c1d84",
+      "newSha256": "b09f56a1f415b4b8fba1779c8dcad1c304d0fa721bd398c3c914e7fe959c1d84"
+    },
+    {
+      "file": "tests/midpoint-language.test.mjs",
+      "originalSha256": "f5bbbc777f2f3ae304994dfdc5d8a886069d536062bb5a7ea2ff293562fcf04b",
+      "newSha256": "f5bbbc777f2f3ae304994dfdc5d8a886069d536062bb5a7ea2ff293562fcf04b"
+    },
+    {
+      "file": "tests/pedagogy-cases.mjs",
+      "originalSha256": "3ff7ee5d999cb1831cd4c978a397e85dbc2a13a4c5e06364ba6c9b7b1310698e",
+      "newSha256": "3ff7ee5d999cb1831cd4c978a397e85dbc2a13a4c5e06364ba6c9b7b1310698e"
+    },
+    {
+      "file": "tests/pedagogy-live.test.mjs",
+      "originalSha256": "f5d5c575c736b58ec74cd9966967e8e22656968c3622950462a794e0bf43de0f",
+      "newSha256": "f5d5c575c736b58ec74cd9966967e8e22656968c3622950462a794e0bf43de0f"
+    },
+    {
+      "file": "tests/ratios.test.mjs",
+      "originalSha256": "40536b26f700a9bfe76caf40ceb1f0e1cad9f4d5ecc990bac1c1f1512db00541",
+      "newSha256": "40536b26f700a9bfe76caf40ceb1f0e1cad9f4d5ecc990bac1c1f1512db00541"
+    },
+    {
+      "file": "tests/socratic-fixture.mjs",
+      "originalSha256": "50856a3ed7a920db175232663fa5eee0bf6e186892dc6bc74eec7919f7de54a6",
+      "newSha256": "50856a3ed7a920db175232663fa5eee0bf6e186892dc6bc74eec7919f7de54a6"
+    },
+    {
+      "file": "tests/strict-tutor.test.mjs",
+      "originalSha256": "c6740de52a22fd2e2e6e58cb02bb518ba84c06ad9fef503dc8bef1a07d52a064",
+      "newSha256": "c6740de52a22fd2e2e6e58cb02bb518ba84c06ad9fef503dc8bef1a07d52a064"
+    },
+    {
+      "file": "tests/theory.test.mjs",
+      "originalSha256": "5d81a7c41ffe3b8b89ef3c081b4ab23f11498d3776ad67e9420892328d2f9481",
+      "newSha256": "5d81a7c41ffe3b8b89ef3c081b4ab23f11498d3776ad67e9420892328d2f9481"
+    },
+    {
+      "file": "tests/v2-preserved.json",
+      "originalSha256": "b77e48504e4876be9100a89512c2f8f685070ec980900e56698df6cfc3671a77",
+      "newSha256": "b77e48504e4876be9100a89512c2f8f685070ec980900e56698df6cfc3671a77"
+    },
+    {
+      "file": "tests/v3-policy-integrity.json",
+      "originalSha256": "e757d798885b7252ad23d9bb4a403c06439a82405f786bc1c2bbc4a61dd63ef9",
+      "newSha256": "e757d798885b7252ad23d9bb4a403c06439a82405f786bc1c2bbc4a61dd63ef9"
+    },
+    {
+      "file": "tests/worksheets.test.mjs",
+      "originalSha256": "8d24cbaa6f9d1b69de96d15ff184cf6c8dd8677bcf356dca2b1d27b5bfa12166",
+      "newSha256": "8d24cbaa6f9d1b69de96d15ff184cf6c8dd8677bcf356dca2b1d27b5bfa12166"
+    },
+    {
+      "file": "tsconfig.json",
+      "originalSha256": "97970f7b5af765a0a1da33f51b8061be51198070c341449c3cefd71a57720e52",
+      "newSha256": "97970f7b5af765a0a1da33f51b8061be51198070c341449c3cefd71a57720e52"
+    },
+    {
+      "file": "vendor/katex.LICENSE.txt",
+      "originalSha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3",
+      "newSha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3"
+    },
+    {
+      "file": "vendor/shadcn-tailwind-4.13.0.LICENSE.md",
+      "originalSha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f",
+      "newSha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    },
+    {
+      "file": "vendor/shadcn-tailwind-4.13.0.css",
+      "originalSha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a",
+      "newSha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
+    },
+    {
+      "file": "vite.config.ts",
+      "originalSha256": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9",
+      "newSha256": "88bfb10fa055f29bb147d862579c48d1dd5a1fbf886fabc9cbd9b230a4f1abf9"
+    }
+  ],
+  "notes": [
+    "dist assets with old content hashes are regenerated by the original Vite build.",
+    "No source deletion is authorized or expected; missing source files cause failure."
+  ]
+}
