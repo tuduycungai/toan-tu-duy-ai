@@ -7,7 +7,7 @@ import {mathParts} from './math-parts';
 import {findWorksheet,worksheetDrawings} from './worksheets';
 import {describeLine,resolveLine,linePoints,type LineRef,type DirectedLine,construct,defaults,distance,intersection,lerp,near,onSegment,parallel,perpendicular,type Recipe,type Drawing,type Segment,type Construction,type DiagramResult,type Shape,type XY} from './geometry';
 
-export const normalizeProblem=(s:string)=>mathParts(s.normalize('NFC')).map(p=>p.value).join('').replace(/\\(?:dfrac|tfrac|frac)\{([A-Z]{2})\}\{(\d+(?:[.,]\d+)?)\}/g,'$1/$2').replace(/\\(?:dfrac|tfrac|frac)\{(\d+)\}\{(\d+)\}/g,'($1/$2)').replace(/\\(?:cdot|times)\b/g,'×').replace(/\\(?:perp)\b/g,'⟂').replace(/\\(?:parallel)\b/g,'∥').replace(/\\(?:cap)\b/g,'∩').replace(/\\(?:in)\b/g,'∈').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/\s+/g,' ').trim();
+export const normalizeProblem=(s:string)=>mathParts(s.normalize('NFC').replace(/\\(?:overline|overrightarrow|mathrm|mathbf|text)\{([^{}]*)\}/g,'$1').replace(/\\(?:triangle|Delta)\s*/g,'tam giác ')).map(p=>p.value).join('').replace(/\\(?:dfrac|tfrac|frac)\{([A-Z]{2})\}\{(\d+(?:[.,]\d+)?)\}/g,'$1/$2').replace(/\\(?:dfrac|tfrac|frac)\{(\d+)\}\{(\d+)\}/g,'($1/$2)').replace(/\\(?:cdot|times)\b/g,'×').replace(/\\(?:perp)\b/g,'⟂').replace(/\\(?:parallel)\b/g,'∥').replace(/\\(?:cap)\b/g,'∩').replace(/\\(?:in)\b/g,'∈').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/[∥‖]|\/\//g,'∥').replace(/⊥/g,'⟂').replace(/\s+/g,' ').trim();
 const fingerprint=(s:string)=>normalizeProblem(s).replace(/[“”"]/g,'').replace(/\s*([,;:.!?])\s*/g,'$1').toLocaleLowerCase('vi');
 const pair=(s:string):Segment=>[s.replace(/\s/g,'')[0].toUpperCase(),s.replace(/\s/g,'')[1].toUpperCase()];
 const P=(s:string)=>s.toUpperCase();
@@ -58,6 +58,12 @@ export function parseProblem(problem:string):ParsedProblem|null{
  if(vertices.length===3){consume(/vuông\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0)throw Error('Đỉnh góc vuông chưa có.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='right-triangle';});consume(/cân\s+tại\s+([A-Z])\b/giu,n=>{const i=vertices.indexOf(P(n));if(i<0||recipe.kind==='right-triangle')throw Error('Chưa hỗ trợ cấu hình này.');recipe.vertices=[...vertices.slice(i),...vertices.slice(0,i)];recipe.kind='isosceles-triangle';});}
  consume(/([A-Z])\s*(?:=|là giao điểm(?: của)?)\s*(?:(?:hai|các)\s+)?(?:đường\s+thẳng\s+)?([A-Z]{2})\s*(?:∩|và|,)\s*(?:đường\s+thẳng\s+)?([A-Z]{2})/giu,(n,a,b)=>inter(n,pair(a),pair(b)));
  consume(/([A-Z])\s+là giao điểm(?: của)?\s+hai đường chéo(?:\s+([A-Z]{2})\s+và\s+([A-Z]{2}))?/giu,(n,a,b)=>{if(vertices.length!==4)throw Error('Thiếu đường chéo.');inter(n,a?pair(a):[vertices[0],vertices[2]],b?pair(b):[vertices[1],vertices[3]]);});
+ // A center belongs to both diagonals; this is a given, never inferred from the goal.
+ consume(/(?<![\p{L}])(?:có\s+)?tâm\s+([A-Z])(?![\p{L}])/giu,n=>{if(!['parallelogram','rectangle','rhombus','square'].includes(recipe.kind))throw Error('Cần làm rõ loại tâm của hình.');inter(n,[vertices[0],vertices[2]],[vertices[1],vertices[3]]);});
+ consume(/(?:vẽ|nối|kẻ)\s+(?:hai\s+)?đường\s+chéo\s+([A-Z]{2})\s+và\s+([A-Z]{2})/giu,(a,b)=>recipe.segments.push(pair(a),pair(b)));
+ consume(/nối\s+([A-Z])\s+(?:với\s+)?([A-Z])(?![\p{L}])/giu,(a,b)=>recipe.segments.push([P(a),P(b)]));
+ consume(/nối\s+([A-Z]{2})(?![\p{L}])/giu,a=>recipe.segments.push(pair(a)));
+ consume(/([A-Z])\s+là\s+(?:chân\s+đường\s+vuông\s+góc|hình\s+chiếu)(?:\s+vuông\s+góc)?\s+(?:kẻ\s+từ|của)\s+([A-Z])\s+(?:lên|xuống)\s+([A-Z]{2})/giu,(n,a,b)=>{add({name:P(n),op:'foot',from:P(a),of:pair(b)});constraints.push({type:'perpendicular',a:[P(a),P(n)],b:pair(b)});recipe.segments.push([P(a),P(n)],pair(b));});
  const lineReading=readLineDescriptions(rest);rest=lineReading.text;recipe.guides=lineReading.guides;
  for(const line of lineReading.guides)constraints.push({type:'directedLine',line});
  for(const item of lineReading.points){add(item);if(item.op==='intersection'){constraints.push({type:'intersection',point:item.name,lines:item.lines});for(const ref of item.lines)if(Array.isArray(ref))recipe.segments.push(ref);}}
@@ -94,7 +100,7 @@ export function parseProblem(problem:string):ParsedProblem|null{
  return {recipe,constraints,remainder:extraConditions?rest+' Phần sau còn điều kiện mới; em hãy gửi riêng từng ý.':rest,given};
 }
 const unordered=(s:Segment)=>[...s].sort().join('');
-function satisfy(parsed:ParsedProblem):Drawing{
+export function satisfy(parsed:ParsedProblem):Drawing{
  const r:Recipe=structuredClone(parsed.recipe),cs=parsed.constraints,v=r.vertices;
  const isDiag=(s:Segment)=>v.length===4&&[v[0]+v[2],v[1]+v[3]].some(x=>unordered(pair(x))===unordered(s));
  const diagPerp=cs.some(c=>c.type==='perpendicular'&&isDiag(c.a)&&isDiag(c.b)&&unordered(c.a)!==unordered(c.b));
@@ -171,6 +177,8 @@ export function resolveProblemDiagram(problem:string):DiagramResult{
 export function problemForTurn(text:string,previous=''):string{
  const t=normalizeProblem(text);
  if(findWorksheet(t))return t;
+ if(/(?:cho|xét|vẽ|dựng).{0,40}đường tròn|^đường tròn/iu.test(t))return t;
+ if(previous&&/^(?:nối|qua\s+[A-Z]|kẻ|vẽ|dựng|gọi\s+[A-Z])/.test(t)&&!/(?:cho|hình|tam giác|tứ giác)\s+[A-Z]{3,4}/iu.test(t)){const split=previous.search(/chứng minh|cmr|tính/iu);return split<0?previous+'. '+t:previous.slice(0,split)+'. '+t+'. '+previous.slice(split);}
  if(previous&&/^(?:vì|do|em nhận thấy|em nghĩ|suy ra|ta có|vậy|từ đó|nên)(?![\p{L}])/iu.test(t))return previous;
  if(/(?:sửa đề|đính chính|đổi giả thiết|thay giả thiết)/iu.test(t)&&!/(?:cho|hình|tứ giác|tam giác)\s/iu.test(t))return t;
  if(/(?:bài tương tự|sinh\s+\d|tạo\s+(?:bài|\d)|luyện tập|bài khác)/iu.test(t))return '';

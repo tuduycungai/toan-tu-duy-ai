@@ -1,0 +1,77 @@
+{
+  "date": "2026-09-16T01:51:19.054Z",
+  "browser": "153.0.8010.0",
+  "ai": "mocked; no live Gemini request",
+  "results": [
+    {
+      "name": "Read and construct screenshot problem without API",
+      "status": "pass"
+    },
+    {
+      "name": "Seven point labels do not overlap",
+      "status": "pass"
+    },
+    {
+      "name": "PNG export is a real 1680 × 1215 image",
+      "status": "pass"
+    },
+    {
+      "name": "SVG export contains geometry, labels and embedded styles",
+      "status": "pass"
+    },
+    {
+      "name": "Zoom and redraw controls work",
+      "status": "pass"
+    },
+    {
+      "name": "Theory is visible, expandable and collapsed by default",
+      "status": "pass"
+    },
+    {
+      "name": "Incomplete problem shows assumptions and can be corrected without API",
+      "status": "pass"
+    },
+    {
+      "name": "Circle and tangent render",
+      "status": "pass"
+    },
+    {
+      "name": "Existing chat API contract retained; learner context contains no identity fields",
+      "status": "pass",
+      "api": "mocked"
+    },
+    {
+      "name": "Four diagnostics classify gradually; manual adjustment works",
+      "status": "pass"
+    },
+    {
+      "name": "Follow-up updates evidence and collapses older messages",
+      "status": "pass",
+      "api": "mocked"
+    },
+    {
+      "name": "Creator footer has all exact required names",
+      "status": "pass"
+    },
+    {
+      "name": "Responsive layout at 360 px",
+      "status": "pass"
+    },
+    {
+      "name": "Responsive layout at 390 px",
+      "status": "pass"
+    },
+    {
+      "name": "Responsive layout at 768 px",
+      "status": "pass"
+    },
+    {
+      "name": "No JavaScript errors in browser",
+      "status": "pass"
+    },
+    {
+      "name": "Opt-in learner persistence survives reload",
+      "status": "pass"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 const plain=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[đĐ]/g,'d').toLowerCase();
 export function studentRequest(messages){
  const source=messages.at(-1)?.content||'';
- return source.split(/\[Yêu cầu (?:của em|học sinh)\]/).at(-1).split(/\[CHUAN_HOA_HINH\]|\[Lưu ý biên tập/)[0];
+ return source.split(/\[Yêu cầu (?:của em|học sinh)\]/).at(-1).split(/\[CHUAN_HOA_HINH\]|\[HO_SO_TU_DUY_V5\]|\[Lưu ý biên tập/)[0];
 }
 export function asksForAnswer(messages){
  let s=plain(studentRequest(messages));

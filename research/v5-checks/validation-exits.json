@@ -1,0 +1,22 @@
+[
+  {
+    "check": "build",
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  {
+    "check": "typecheck",
+    "command": "npx tsc --noEmit",
+    "exitCode": 0
+  },
+  {
+    "check": "unit",
+    "command": "npm test",
+    "exitCode": 0
+  },
+  {
+    "check": "v5",
+    "command": "npm run test:v5",
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,93 @@
+{
+  "promptVersion": "tugiac-v5.0-2026-09-16",
+  "date": "2026-09-16",
+  "modelDefault": "gemini-2.5-flash",
+  "modelChanged": false,
+  "liveAPI": false,
+  "snapshots": [
+    {
+      "file": "guide-support-3.txt",
+      "mode": "guide",
+      "level": "Mất căn bản",
+      "supportLevel": 3,
+      "sha256": "8e171bef71b5f434a26490255d0c6459b38bf6ee972d91e77fe6c9c8972fb932"
+    },
+    {
+      "file": "review-support-3.txt",
+      "mode": "review",
+      "level": "Mất căn bản",
+      "supportLevel": 3,
+      "sha256": "b3c591b1c129bd762bd40b56f2d27c47856fbd02fdb7e0c015f0fa8976125cff"
+    },
+    {
+      "file": "compare-support-3.txt",
+      "mode": "compare",
+      "level": "Mất căn bản",
+      "supportLevel": 3,
+      "sha256": "341bd025fce9502e14c93d36e9e4295ca50c921cf7d6f0471c09c7d588eb4b43"
+    },
+    {
+      "file": "guide-support-2.txt",
+      "mode": "guide",
+      "level": "Cơ bản",
+      "supportLevel": 2,
+      "sha256": "c3000cfd7624cebb1f01fbb72d3b1786afa724d2795dfbedbee8b33a509a26c1"
+    },
+    {
+      "file": "review-support-2.txt",
+      "mode": "review",
+      "level": "Cơ bản",
+      "supportLevel": 2,
+      "sha256": "790f79f493d2207b649f08ca719b14b762e2cd5e71b8b7f5860816db805de1f7"
+    },
+    {
+      "file": "compare-support-2.txt",
+      "mode": "compare",
+      "level": "Cơ bản",
+      "supportLevel": 2,
+      "sha256": "bbf893ab5a83bdab58e220ff69a60e8bc76eab02e49514c50cd5d2eb555d4677"
+    },
+    {
+      "file": "guide-support-1.txt",
+      "mode": "guide",
+      "level": "Khá",
+      "supportLevel": 1,
+      "sha256": "58970978df4608ab8f7f47f0bd57c362b12aacea528f53c8631f96200cb64d6b"
+    },
+    {
+      "file": "review-support-1.txt",
+      "mode": "review",
+      "level": "Khá",
+      "supportLevel": 1,
+      "sha256": "549712e31b8abd955652463df2952434202856d8fe9176a973f7013887555109"
+    },
+    {
+      "file": "compare-support-1.txt",
+      "mode": "compare",
+      "level": "Khá",
+      "supportLevel": 1,
+      "sha256": "848b3ddee25b8a48f15e7abb9d43b1201b7a1f86aae3b18bc59dd85528a75ec0"
+    },
+    {
+      "file": "guide-support-0.txt",
+      "mode": "guide",
+      "level": "Giỏi",
+      "supportLevel": 0,
+      "sha256": "c5d0873357f0ce46f63b19d7320685d4a260f54aa6755f2ce14bc7a48806d2ea"
+    },
+    {
+      "file": "review-support-0.txt",
+      "mode": "review",
+      "level": "Giỏi",
+      "supportLevel": 0,
+      "sha256": "d5e384e1b1863914bf99816dd840990a6b40b1311ecdea015a7e9aabaf4e1262"
+    },
+    {
+      "file": "compare-support-0.txt",
+      "mode": "compare",
+      "level": "Giỏi",
+      "supportLevel": 0,
+      "sha256": "d8a8fadd47af2cf747fbddd0f20e9e749a81c26cedaee484bc0a4ec7685d3cfb"
+    }
+  ]
+}

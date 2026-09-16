@@ -5,6 +5,7 @@ const levels={
  'Giỏi':{focus:'Lập luận độc lập và kiểm tra điều kiện',hint:1,task:'Không chỉ sẵn cặp tam giác hay đoạn phụ nếu em chưa cần. Hỏi một quyết định về điều kiện đủ hoặc cách kiểm tra một mệnh đề đảo. Khi bài đã hoàn thành, dùng so sánh, đặc biệt hóa hoặc phản ví dụ trong chương trình lớp 8.'},
  'Học sinh năng khiếu':{focus:'Khái quát có điều kiện và chuyển giao',hint:1,task:'Để em tự đề xuất hướng, kiểm tra tính cần/đủ và phạm vi áp dụng. Sau lời chứng minh do em hoàn thành, đặt một nhiệm vụ khái quát hóa có điều kiện hoặc tìm phản ví dụ. Không đẩy sang tọa độ, vectơ hay kiến thức chưa học.'}
 };
+levels['Mất căn bản']=levels['Mất gốc'];
 export function learnerProfile(messages=[]){
  const latest=[...messages].reverse().find(m=>m.role==='user')?.content||'';
  const raw=latest.match(/^\[Bối cảnh học tập tự khai\]\s*(\{[^\n]{1,6000}\})\s*\n/);let p={};try{p=raw?JSON.parse(raw[1]):{};}catch{}

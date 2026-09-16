@@ -1,3 +1,29 @@
+# AI TUTOR TỨ GIÁC PRO V5
+
+Bản nâng cấp kế thừa trực tiếp mã nguồn ZIP được cung cấp, ngày 16/09/2026. Xem **BAO_CAO_BAN_GIAO_V5.md**, **docs/V5_TEST_REPORT.md** và các tài liệu V5 trong `docs/` để biết thay đổi, kiểm thử và giới hạn.
+
+```bash
+npm ci
+npm run build
+npx tsc --noEmit
+npm test
+npm run test:v5
+npx playwright install chromium
+npm run test:ui
+npm run test:ui:legacy
+npm start
+```
+
+Node.js >= 22.13.0. Cấu trúc Netlify và các biến `GEMINI_API_KEY`, `GEMINI_MODEL`, `ACCESS_CODE` giữ nguyên. Dùng nguồn đầy đủ để Netlify chạy build/functions; không chỉ kéo thư mục `dist` lên rồi kỳ vọng có backend. Các kiểm thử UI tự chạy server cục bộ và giả lập AI/Forms.
+
+Trong phần gợi mở, nhập đề rồi bấm **Xem hình & lý thuyết** để dựng ngay. Nút **Gửi** vẫn dùng kết nối AI/mã lớp như trước. Hình tạm có mục sửa dữ kiện. Tải PNG trực tiếp; SVG/TikZ ở **Tùy chọn hình**. Hồ sơ học tập có bốn câu chẩn đoán và chỉnh mức thủ công.
+
+Bản này không bảo đảm đọc và dựng chính xác mọi cách diễn đạt hình học THCS; dữ kiện ngoài phạm vi được đánh dấu rõ. Chưa kiểm thử Gemini thật trong môi trường bàn giao.
+
+---
+
+## Tài liệu gốc được giữ lại
+
 # Tư duy Toán học — PRO V4.4
 
 Gia sư hỗ trợ rèn luyện lập luận hình học tứ giác lớp 8. Mỗi tứ giác là một câu chuyện tư duy — Mỗi lời giải là một hành trình khám phá.
