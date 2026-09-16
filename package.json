@@ -1,6 +1,6 @@
 {
   "name": "toan-tu-duy-gemini-netlify",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -13,10 +13,16 @@
     "start": "node --env-file-if-exists=.env scripts/start.mjs",
     "typecheck": "tsc --noEmit",
     "test:v5": "node --test tests/v5-*.test.mjs",
-    "test:ui": "node scripts/check-v5-ui.mjs",
-    "test:ui:legacy": "node scripts/check-ui.mjs"
+    "test:ui": "node scripts/check-v6-ui.mjs",
+    "test:ui:legacy": "node scripts/check-ui.mjs",
+    "prebuild": "node scripts/prepare-tikz.mjs",
+    "prestart": "node scripts/prepare-tikz.mjs",
+    "predev": "node scripts/prepare-tikz.mjs",
+    "test:ui:v5": "node scripts/check-v5-ui.mjs",
+    "test:tikz": "node scripts/check-tikz-runtime.mjs"
   },
   "dependencies": {
+    "@rod2ik/tikzjax": "1.6.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "katex": "^0.16.22",

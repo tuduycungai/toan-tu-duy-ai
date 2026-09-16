@@ -18,13 +18,18 @@ function publicPlan(text){const blocks=[...text.matchAll(/\[SO_DO\]([\s\S]*?)\[\
 export function guidedFallback(messages){
  const previous=[...messages].reverse().find(m=>m.role==='assistant');
  const p=previous?publicPlan(previous.content):null;
- const question=previous?.content.match(/Gợi mở:\s*([^\n]+[?？])/u)?.[1];
- const reuse=question&&question.length<=280&&(question.match(/[?？]/g)||[]).length===1&&!/đáp án|lời giải (?:là|đầy đủ)|vậy .* là hình/u.test(question);
- return `[SO_DO]\nDU_KIEN: ${p?.DU_KIEN||'Cần xác định giả thiết em đang sử dụng; không suy thêm từ hình.'}\nMUC_TIEU: ${p?.MUC_TIEU||'Xác định một yêu cầu cần chứng minh của bài.'}\nCAU_NOI: Chọn đúng giả thiết và một định nghĩa hoặc dấu hiệu liên quan.\nBUOC_TIEP: ${reuse?'Tự trả lời nhiệm vụ đang chờ, kèm căn cứ.':'Nêu đúng kết luận cần chứng minh của ý đầu tiên.'}\n[/SO_DO]\nThao tác tư duy: Phân tích — chia bài toán thành một nhiệm vụ nhỏ.\nThầy không cung cấp đáp án hoặc lời giải hoàn chỉnh. Thầy sẽ giúp em tự thực hiện từng bước.\nGợi mở: ${reuse?question:'Kết luận cần chứng minh trong ý đầu tiên của đề là gì?'}`;
+ const hint=/goi y|chua hieu|khong biet|kho qua/.test(plain(studentRequest(messages)));
+ const count=messages.filter(m=>m.role==='user'&&/goi y|chua hieu|khong biet/.test(plain(studentRequest([m])))).length;
+ const target=p?.MUC_TIEU||'kết luận đầu tiên của đề';
+ const bridge=p?.CAU_NOI||'định nghĩa hoặc dấu hiệu liên quan';
+ const question=hint?(count>1?`Trong “${bridge}”, điều kiện nào em đã có và điều kiện nào còn cần tìm?`:`Để tiến tới “${target}”, em thử dùng “${bridge}”: giả thiết nào có thể giúp mình?`):`Em đang vướng ở điều kiện nào khi muốn chứng minh “${target}”?`;
+ return `[SO_DO]\nDU_KIEN: ${p?.DU_KIEN||'Sử dụng các giả thiết trong đề bài.'}\nMUC_TIEU: ${target}\nCAU_NOI: ${bridge}\nBUOC_TIEP: Đối chiếu một điều kiện của dấu hiệu với giả thiết đang có.\n[/SO_DO]\nThao tác tư duy: Phân tích — tách một điều kiện để kiểm tra.\n${hint?'À, mình chia nhỏ chỗ này nhé!':'Thầy cùng em gỡ từng bước nhé.'}\nGợi mở: ${question}`;
+
 }
 export function guardTutorOutput(text,messages){
  if(asksForAnswer(messages))return guidedFallback(messages);
- const visible=text.replace(/\[DE_HINH_HOC\][\s\S]*?(?:\[\/DE_HINH_HOC\]|$)/g,'');
+ let visible=text.replace(/\[DE_HINH_HOC\][\s\S]*?(?:\[\/DE_HINH_HOC\]|$)/g,'');
+ if(!/^Gợi mở:/mu.test(visible)&&/[?？]\s*$/.test(visible)){visible=visible.replace(/(^|\n)([^\n]*[?？])\s*$/u,'$1Gợi mở: $2');text=visible;}
  const plan=publicPlan(visible);const mathTurn=/\[SO_DO\]/.test(visible)||messages.some(m=>/hình|tứ giác|tam giác|chứng minh|trung điểm|song song|vuông góc|\b[A-Z]{2}\b/.test(m.content));
  const questions=(visible.match(/[?？]/g)||[]).length;
  const completed=/\[KET_THUC_BUOI_HOC\]\s*$/.test(visible);
@@ -36,6 +41,6 @@ export function guardTutorOutput(text,messages){
  // Exercise sets may contain question marks in the statements, but just one final tutor question.
  const exerciseSet=/(?:tạo|sinh)\s+(?:đúng\s+)?(?:[5-9]|10)\s+câu/iu.test(student)&&!/(?:lời giải|đáp án)\s*:/iu.test(visible);
  const prompts=[...visible.matchAll(/^Gợi mở:\s*([^\n]+)$/gmu)];
- if(!plan||!visible.includes('Thao tác tư duy:')||(!exerciseSet&&visible.split(/\s+/).length>250)||(!completed&&(prompts.length!==1||(prompts[0][1].match(/[?？]/g)||[]).length!==1||(!exerciseSet&&questions!==1)))||(completed&&(!reasoned||questions!==0)))return guidedFallback(messages);
+ if((!exerciseSet&&visible.split(/\s+/).length>250)||(!completed&&(prompts.length!==1||(prompts[0][1].match(/[?？]/g)||[]).length!==1||(!exerciseSet&&questions!==1)))||(completed&&(!reasoned||questions!==0)))return guidedFallback(messages);
  return text;
 }

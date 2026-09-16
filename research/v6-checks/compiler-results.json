@@ -1,0 +1,29 @@
+{
+  "source": "authored TikZ fixtures; not live Gemini output",
+  "results": [
+    {
+      "name": "right-isosceles",
+      "status": "pass"
+    },
+    {
+      "name": "parallelogram-midpoints",
+      "status": "pass"
+    },
+    {
+      "name": "circle-tangent",
+      "status": "pass"
+    },
+    {
+      "name": "perpendicular-foot",
+      "status": "pass"
+    },
+    {
+      "name": "plot",
+      "status": "pass"
+    },
+    {
+      "name": "solid-projection",
+      "status": "pass"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {DIAGRAM_PROMPT,parseDiagram} from './diagram-policy.mjs';
 import { timingSafeEqual } from 'node:crypto';
 import { instructions } from './policy.mjs';
 import { asksForAnswer, guidedFallback, guardTutorOutput } from './strict-tutor.mjs';
@@ -21,21 +22,24 @@ export async function handleChat(request,env,fetcher=fetch){
  const a=Buffer.from(provided),b=Buffer.from(access);
  if(a.length!==b.length||!timingSafeEqual(a,b))return reply({error:'Mã truy cập chưa đúng. Hãy hỏi giáo viên để nhận mã.'},401);
  const check=body.check===true;
- if(!check&&(!validMessages(body.messages)||!['guide','review','compare'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);
+ const diagram=body.mode==='diagram';
+ if(!check&&(!(diagram?Array.isArray(body.messages)&&body.messages.length===1&&body.messages[0]?.role==='user'&&typeof body.messages[0].content==='string'&&body.messages[0].content.length>0&&body.messages[0].content.length<=26000:validMessages(body.messages))||!['guide','review','compare','diagram'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);
  const model=env.GEMINI_MODEL?.trim()||'gemini-2.5-flash';
  if(!/^gemini-[a-zA-Z0-9.-]+$/.test(model))return reply({error:'GEMINI_MODEL chưa hợp lệ. Giáo viên cần kiểm tra cấu hình.'},503);
- if(!check&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});
+ if(!check&&!diagram&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});
  const contents=check?[{role:'user',parts:[{text:'Reply with OK only.'}]}]:body.messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
- const generationConfig={maxOutputTokens:check?128:2400};
+ const generationConfig={maxOutputTokens:check?128:diagram?6000:2400};
+ if(diagram)generationConfig.responseMimeType='application/json';
  if(model==='gemini-2.5-flash')generationConfig.thinkingConfig={thinkingBudget:check?0:512};
  try{
- const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({systemInstruction:{parts:[{text:check?'Reply with OK only.':instructions(body.mode,body.messages)}]},contents,generationConfig}),signal:AbortSignal.timeout(22000)});
+ const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({systemInstruction:{parts:[{text:check?'Reply with OK only.':diagram?DIAGRAM_PROMPT:instructions(body.mode,body.messages)}]},contents,generationConfig}),signal:AbortSignal.timeout(22000)});
  if(!response.ok){const s=response.status;await response.body?.cancel();return reply({error:s===429?'Gemini đã đạt giới hạn lượt gọi hoặc hạn mức. Hãy đợi và thử lại; giáo viên kiểm tra hạn mức trong Google AI Studio.':s===400||s===401||s===403?'Gemini không chấp nhận khóa API hoặc cấu hình. Giáo viên kiểm tra khóa, quyền truy cập và mô hình.':s===404?'Không tìm thấy mô hình. Giáo viên cần đổi GEMINI_MODEL sang mã đang được Google cung cấp.':'Gemini tạm thời chưa phản hồi. Hãy thử lại.'},s===429?429:502);}
  const data=await response.json();const candidate=data.candidates?.[0];
  if(data.promptFeedback?.blockReason||candidate?.finishReason==='SAFETY')return reply({error:'Gemini chưa thể phản hồi nội dung này. Hãy diễn đạt lại đề toán và bỏ thông tin cá nhân.'},422);
  if(candidate?.finishReason!=='STOP')return reply({error:'Gemini chưa trả lời trọn vẹn. Hãy gửi nội dung ngắn hơn hoặc thử lại.'},502);
  const text=(candidate.content?.parts??[]).filter(p=>typeof p.text==='string'&&!p.thought).map(p=>p.text).join('\n');
  if(!text.trim())return reply({error:'Gemini chưa trả về văn bản. Hãy thử lại.'},502);
+ if(diagram){try{return reply({...parseDiagram(text),model});}catch{return reply({error:'Chưa nhận được mã hình hợp lệ. Em thử vẽ lại nhé.'},502);}}
  return reply(check?{ok:true,model}:{text:guardTutorOutput(text,body.messages),model});
  }catch{return reply({error:'Kết nối Gemini gián đoạn hoặc quá thời gian chờ. Nội dung được giữ lại để em thử gửi lần nữa.'},504);}
 }
