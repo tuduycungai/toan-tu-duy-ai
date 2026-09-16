@@ -29,7 +29,7 @@ export async function handleChat(request,env,fetcher=fetch){
  if(!check&&!diagram&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});
  const contents=check?[{role:'user',parts:[{text:'Reply with OK only.'}]}]:body.messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
  const generationConfig={maxOutputTokens:check?128:diagram?6000:2400};
- if(diagram)generationConfig.responseMimeType='application/json';
+ if(diagram){generationConfig.responseMimeType='application/json';generationConfig.responseSchema={type:'OBJECT',properties:{latex:{type:'STRING'},question:{type:'STRING'}},required:['latex','question']};}
  if(model==='gemini-2.5-flash')generationConfig.thinkingConfig={thinkingBudget:check?0:512};
  try{
  const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({systemInstruction:{parts:[{text:check?'Reply with OK only.':diagram?DIAGRAM_PROMPT:instructions(body.mode,body.messages)}]},contents,generationConfig}),signal:AbortSignal.timeout(22000)});
@@ -39,7 +39,7 @@ export async function handleChat(request,env,fetcher=fetch){
  if(candidate?.finishReason!=='STOP')return reply({error:'Gemini chưa trả lời trọn vẹn. Hãy gửi nội dung ngắn hơn hoặc thử lại.'},502);
  const text=(candidate.content?.parts??[]).filter(p=>typeof p.text==='string'&&!p.thought).map(p=>p.text).join('\n');
  if(!text.trim())return reply({error:'Gemini chưa trả về văn bản. Hãy thử lại.'},502);
- if(diagram){try{return reply({...parseDiagram(text),model});}catch{return reply({error:'Chưa nhận được mã hình hợp lệ. Em thử vẽ lại nhé.'},502);}}
+ if(diagram){try{return reply({...parseDiagram(text),model});}catch(e){return reply({error:'Chưa nhận được mã hình hợp lệ. Em thử vẽ lại nhé.',code:'DIAGRAM_FORMAT',repairable:true,detail:e.message},502);}}
  return reply(check?{ok:true,model}:{text:guardTutorOutput(text,body.messages),model});
  }catch{return reply({error:'Kết nối Gemini gián đoạn hoặc quá thời gian chờ. Nội dung được giữ lại để em thử gửi lần nữa.'},504);}
 }
