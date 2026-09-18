@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readSession,saveSession,SESSION_KEY} from '../lib/session-recovery.ts';
+let raw;globalThis.sessionStorage={getItem:()=>raw,setItem:(k,v)=>{assert.equal(k,SESSION_KEY);raw=v;}};
+const snapshot={messages:[{role:'user',content:'Đề cũ'}],wire:[],input:'Câu hỏi đang chờ',problem:'ABCD là hình bình hành',mode:'guide'};
+test('recover pending draft and completed transcript after reload',()=>{saveSession(snapshot);assert.deepEqual(readSession(),snapshot);assert(!raw.includes('accessCode'));});
+test('expire private session after 12 hours',()=>{saveSession(snapshot);raw=JSON.stringify({...JSON.parse(raw),savedAt:Date.now()-13*3600000});assert.equal(readSession().input,'');});
+test('reject malformed content and timestamps',()=>{for(const value of ['{',JSON.stringify({version:1,messages:[],wire:[]}),JSON.stringify({version:1,savedAt:Date.now(),messages:[{role:'system',content:'x'}],wire:[]})]){raw=value;assert.equal(readSession().messages.length,0);}});
+test('bounded history preserves recent turns',()=>{saveSession({...snapshot,messages:Array.from({length:100},(_,i)=>({role:'user',content:String(i)}))});assert.equal(readSession().messages.length,40);assert.equal(readSession().messages[0].content,'60');});
+test('blocked storage cannot crash the lesson',()=>{globalThis.sessionStorage={getItem(){throw Error('blocked')},setItem(){throw Error('quota')}};assert.doesNotThrow(()=>saveSession(snapshot));assert.equal(readSession().input,'');});

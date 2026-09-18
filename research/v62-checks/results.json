@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "scope": "Chromium mobile emulation, mocked AI; not physical iPhone/Android",
+  "result": [
+    "Mobile: no automatic diagram API or TeX iframe after chat",
+    "Reload while pending restores draft and prior answer without stuck spinner",
+    "390px poster: four panels, no horizontal overflow",
+    "No browser JavaScript errors"
+  ]
+}

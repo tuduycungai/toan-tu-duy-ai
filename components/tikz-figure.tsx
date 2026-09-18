@@ -8,7 +8,9 @@ type Saved={latex:string;svg:string};
 const cache=new Map<string,Saved>();
 type Job={id:string;latex:string};
 type Pending={id:string;resolve:(svg:string)=>void;reject:(e:Error)=>void};
-export function ProblemFigure({problem,accessCode,redrawToken=0,level='Cơ bản',onProblemChange,onConnect}:{problem:string;accessCode:string;redrawToken?:number;reply?:string;level?:string;onProblemChange?:(s:string)=>void;onConnect?:()=>void}){
+export function ProblemFigure({problem,accessCode,redrawToken=0,suspended=false,level='Cơ bản',onProblemChange,onConnect}:{problem:string;accessCode:string;redrawToken?:number;suspended?:boolean;reply?:string;level?:string;onProblemChange?:(s:string)=>void;onConnect?:()=>void}){
+ const [manual,setManual]=useState(false);
+ const [mobile]=useState(()=>matchMedia('(pointer: coarse)').matches||/iPhone|iPad|Android/i.test(navigator.userAgent));
  const [result,setResult]=useState<DiagramResult|null>(null),[svg,setSvg]=useState(''),[error,setError]=useState(''),[status,setStatus]=useState(''),[revision,setRevision]=useState(0),[job,setJob]=useState<Job|null>(null),[answer,setAnswer]=useState(''),[zoom,setZoom]=useState(false);
  const frame=useRef<HTMLIFrameElement>(null),pending=useRef<Pending|null>(null),currentJob=useRef<Job|null>(null),controller=useRef<AbortController|null>(null);
  const submitJob=()=>{const j=currentJob.current;if(j)frame.current?.contentWindow?.postMessage({type:'compile',jobId:j.id,latex:j.latex},location.origin);};
@@ -32,7 +34,7 @@ export function ProblemFigure({problem,accessCode,redrawToken=0,level='Cơ bản
    if(c.signal.aborted)abort();else setJob(j);
   });}
   async function run(){
-   if(!accessCode){setStatus('');return;}
+   if(!accessCode||suspended||(mobile&&!manual)){setStatus('');return;}
    const saved=revision===0&&redrawToken===0?cache.get(problem):null;
    if(saved){setResult({latex:saved.latex,question:''});setSvg(saved.svg);setStatus('');return;}
    let previous='',failure='';
@@ -44,7 +46,7 @@ export function ProblemFigure({problem,accessCode,redrawToken=0,level='Cơ bản
      if(c.signal.aborted)return;setResult(r);
      if(r.question){setStatus('');return;}
      previous=r.latex;phase='compile';setStatus('Đang vẽ hình…');const output=await compile(r.latex);
-     if(c.signal.aborted)return;cache.set(problem,{latex:r.latex,svg:output});if(cache.size>20)cache.delete(cache.keys().next().value!);
+     if(c.signal.aborted)return;cache.set(problem,{latex:r.latex,svg:output});if(cache.size>3)cache.delete(cache.keys().next().value!);
      setSvg(output);setStatus('');return;
     }catch(e){if(c.signal.aborted)return;const err=e as Error;
      const repairable=phase==='compile'||e instanceof DiagramRequestError&&e.repairable;
@@ -54,16 +56,18 @@ export function ProblemFigure({problem,accessCode,redrawToken=0,level='Cơ bản
    }
   }
   void run();return()=>{c.abort();};
- },[problem,accessCode,revision,redrawToken]);
- const redraw=()=>{cache.delete(problem);setRevision(v=>v+1);};
+ },[problem,accessCode,revision,redrawToken,suspended,manual,mobile]);
+ const redraw=()=>{setManual(true);cache.delete(problem);setRevision(v=>v+1);};
  async function download(kind:'svg'|'png'){try{downloadBlob(kind==='svg'?new Blob([svg],{type:'image/svg+xml'}):await exportPNG(svg),'hinh-hoc-v6.1.'+kind);}catch{setError('Chưa tải được ảnh. Em có thể tải mã TikZ.');}}
  return <><section className="problem-figure" aria-label="Hình vẽ theo đề bài"><div className="problem-figure-head"><strong>Hình minh họa</strong>{svg&&<button onClick={()=>setZoom(!zoom)}>{zoom?'Thu gọn':'Phóng to'}</button>}</div>
  {!accessCode&&<div className="figure-caption"><p>Kết nối AI để Thầy dựng hình từ đề bài.</p><button onClick={onConnect}>Kết nối & vẽ hình</button></div>}
+ {mobile&&!manual&&!svg&&<p className="figure-caption">Để giảm tải cho điện thoại, em nhấn Vẽ hình khi muốn xem hình minh họa.</p>}
+ {suspended&&<p className="figure-caption">Đợi Thầy trả lời xong rồi mình dựng hình nhé.</p>}
  {status&&<p role="status" className="figure-caption">{status}</p>}
  {error&&<p role="alert" className="error">{error}</p>}
  {result?.question&&<form className="figure-caption" onSubmit={e=>{e.preventDefault();if(answer.trim())onProblemChange?.(problem+'\n'+answer.trim());}}><p>{result.question}</p><label>Bổ sung cho hình<input value={answer} onChange={e=>setAnswer(e.target.value)} maxLength={1000}/></label><button disabled={!answer.trim()}>Cập nhật hình</button></form>}
  {job&&<iframe key={job.id} ref={frame} onLoad={submitJob} src="/tikz-frame.html?v=6.1" title="Bộ dựng hình" style={{position:'absolute',width:1,height:1,opacity:0,pointerEvents:'none',border:0}} aria-hidden="true" tabIndex={-1}/>}
  {svg&&<img className="tikz-result" style={{maxHeight:zoom?'none':430}} src={'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)} alt={'Hình minh họa cho đề: '+problem}/>}
- <div className="problem-figure-tools"><button disabled={!!status||!accessCode} onClick={redraw}>Vẽ lại hình</button>{status&&<button onClick={()=>{controller.current?.abort();pending.current=null;currentJob.current=null;setJob(null);setStatus('');setError('Đã dừng dựng hình. Em có thể vẽ lại.');}}>Dừng vẽ</button>}{svg&&<><button onClick={()=>void download('png')}>Tải PNG</button><button onClick={()=>void download('svg')}>Tải SVG</button></>}{result?.latex&&<button onClick={()=>downloadBlob(new Blob([result.latex],{type:'text/x-tex;charset=utf-8'}),'hinh-hoc-v6.1.tex')}>Tải TikZ</button>}</div>
+ <div className="problem-figure-tools"><button disabled={suspended||!!status||!accessCode} onClick={redraw}>{mobile&&!manual?'Vẽ hình':'Vẽ lại hình'}</button>{status&&<button onClick={()=>{controller.current?.abort();pending.current=null;currentJob.current=null;setJob(null);setStatus('');setError('Đã dừng dựng hình. Em có thể vẽ lại.');}}>Dừng vẽ</button>}{svg&&<><button onClick={()=>void download('png')}>Tải PNG</button><button onClick={()=>void download('svg')}>Tải SVG</button></>}{result?.latex&&<button onClick={()=>downloadBlob(new Blob([result.latex],{type:'text/x-tex;charset=utf-8'}),'hinh-hoc-v6.1.tex')}>Tải TikZ</button>}</div>
  <p className="figure-caption">Hình giúp quan sát; kết luận cần có lập luận chứng minh.</p></section><TheoryPanel problem={problem} model={compileGeometry(problem)} level={level}/></>;
 }
