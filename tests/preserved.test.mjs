@@ -3,6 +3,9 @@ test('Unaffected auth, Forms, original assets and deploy files remain byte-ident
  const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
  // Explicitly authorized integrations are separately tested, not declared byte-identical.
  const drawingIntegration=new Set(['netlify.toml','lib/tutor.ts','app/page.tsx','app/globals.css','lib/learning.ts','components/learning-visuals.tsx','main.tsx','package.json','package-lock.json','server/gemini.mjs','tests/gemini.test.mjs','README.md']);
+ // Survey labels and the continue-after-survey flow changed by request. The
+ // updated UI script is not byte-identical; survey-component.test.mjs covers it.
+ drawingIntegration.add('scripts/check-ui.mjs');
  for(const [file,hash] of Object.entries(expected)){if(drawingIntegration.has(file))continue;assert.equal(createHash('sha256').update(await readFile(new URL('../'+file,import.meta.url))).digest('hex'),hash,file);}
 });
 test('Gemini authentication and transport remain unchanged after reversing documented V6.1 integrations',async()=>{

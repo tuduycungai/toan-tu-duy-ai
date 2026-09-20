@@ -1,0 +1,7 @@
+{
+  "command": "npm start",
+  "started_at_utc": "2026-09-19T15:56:35.785817+00:00",
+  "ready": true,
+  "shutdown": "Test stopped its own process group after readiness; no Gemini or Google Forms request.",
+  "duration_seconds": 0.512
+}

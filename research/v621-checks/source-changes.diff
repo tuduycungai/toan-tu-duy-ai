@@ -1,0 +1,812 @@
+--- baseline/README.md
++++ updated/README.md
+@@ -1,4 +1,13 @@
+-# AI TUTOR TỨ GIÁC PRO V6.1
++# Tư duy Toán học — Gia sư hình học tứ giác
++
++Bản cập nhật khảo sát: xem `CAP_NHAT_KHAO_SAT.md` để biết thay đổi, kết quả kiểm thử và phạm vi kiểm tra. Số phiên bản kỹ thuật trong `package.json` không hiển thị ở chân trang.
++
++Hai chế độ **Kiểm tra lời giải** và **So sánh cách giải** có nhãn **(Đang phát triển)** trong danh mục và tiêu đề. Mỗi chế độ có hướng dẫn sư phạm riêng: kiểm tra lỗi đầu tiên và căn cứ, hoặc đối chiếu đúng một tiêu chí giữa các ý tưởng của học sinh. Chưa có bài làm/ý tưởng thì hỏi phần cần bổ sung; không viết hộ lời giải. Prompt của chế độ Gợi mở từng bước và nội dung bài mẫu giữ nguyên so với bản nền.
++
++- Liên kết “Poster khoa học online” mở đúng địa chỉ Netlify do người quản lý cung cấp. Đây là trang quản trị dự án, có thể yêu cầu đăng nhập.
++- Hồ sơ để trống lớp (kể cả chỉ nhập khoảng trắng) được nhận diện là **Giáo viên**. Vai trò hoặc lớp luôn nằm trong nội dung khảo sát gửi Google Forms, kể cả khi không gửi tóm tắt học tập.
++- Nút **Khảo sát đánh giá ứng dụng** mở khảo sát và không kết thúc cuộc trò chuyện. Lời mời nhắc mỗi **180 giây**, bắt đầu sau khi kết nối AI và hoàn tất hồ sơ. Nếu đang trả lời, mở hộp thoại khác hoặc ở tab nền, lời mời chờ đến khi sẵn sàng; không chồng hộp thoại.
++- Đóng khảo sát chưa gửi vẫn giữ bản nháp. Sau một lần gửi đã được xác nhận, lần khảo sát mới dùng mã gửi mới, yêu cầu chọn sao và đồng ý lại. Kết quả chưa xác nhận được giữ nguyên, không tự gửi lại. Không có yêu cầu gửi Google Forms nào chỉ do đồng hồ kích hoạt.
+ 
+ Bản sửa 6.1: xem `SUA_LOI_V6_1.md` để biết lỗi đã sửa và kết quả kiểm tra trực tiếp trên website.
+ 
+--- baseline/app/enhancements.css
++++ updated/app/enhancements.css
+@@ -16,3 +16,6 @@
+ .skip-link:not(:focus){width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.skip-link:focus{width:auto;height:auto;clip-path:none;white-space:normal}.preview-hint{font-size:13px;color:var(--muted);line-height:1.7;margin:10px 0}.diagram-viewport .problem-svg{max-height:calc(370px * var(--figure-zoom,1))}.problem-figure{max-width:100%}
+ @media(max-width:520px){.diagram-viewport .problem-svg{max-height:calc(280px * var(--figure-zoom,1))}}
+ .tikz-result{display:block;width:100%;object-fit:contain;background:#fff;padding:24px;min-height:220px}.problem-figure .figure-caption input{display:block;width:100%;margin:8px 0;padding:10px}
++.creators-footer > a{display:inline-flex;align-items:center;gap:6px;max-width:100%;min-height:44px;line-height:1.5}
++@media(max-width:640px){.creators-footer > a{margin-bottom:12px}.profile-dialog .form-grid > label{min-width:0;overflow-wrap:break-word}}
++.mode-status{display:block;margin-top:3px;font-size:11px;line-height:1.4;font-weight:500;color:var(--muted)}
+--- baseline/app/page.tsx
++++ updated/app/page.tsx
+@@ -3,7 +3,7 @@
+ import {useEffect,useRef,useState} from 'react';
+ import {LearnerPanel} from '@/components/learner-panel';
+ import {readLearnerState,createLearnerState,observeAnswer,planThinkingQuestion,questionFromReply,learnerContext,type ThinkingQuestion} from '@/lib/adaptive-learning';
+-import {ArrowUp,ArrowUpRight,BookOpen,Check,CheckCheck,ChevronRight,Compass,GitCompareArrows,GraduationCap,Home as HomeIcon,KeyRound,Lightbulb,LoaderCircle,MessageCircle, Moon,PanelLeftClose,PenLine,Plus,ShieldCheck,Star,Sun,Target,UserRound,X} from 'lucide-react';
++import {ArrowUp,ArrowUpRight,BookOpen,Check,CheckCheck,ChevronRight,Compass,GitCompareArrows,GraduationCap,Home as HomeIcon,KeyRound,Lightbulb,LoaderCircle,MessageCircle, Moon,PanelLeftClose,PenLine,Plus,Star,Sun,Target,UserRound,X} from 'lucide-react';
+ import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
+ import {diagramPrompt,diagramBlock} from '@/lib/diagram-interpretation';
+ import {MathText} from '@/components/math-text';
+@@ -16,6 +16,8 @@
+ import {emptyProfile,levels,readProfile,requestMessages,type Profile,type Message} from '@/lib/tutor';
+ import {lessons,learningModes,defaultPlan,parseTutorResponse,type Lesson,type Plan} from '@/lib/learning';
+ import {submitFeedback,formLink,type FeedbackData} from '@/lib/feedback';
++import {participantLabel,surveyComment} from '@/lib/survey';
++import {useSurveyReminder} from '@/lib/use-survey-reminder';
+ type DisplayMessage=Message & {problem?:string;diagramReply?:string;thinking?:ThinkingQuestion};
+ const icons={light:Lightbulb,check:CheckCheck,compare:GitCompareArrows,pen:PenLine,target:Target};
+ const topicList=['Tất cả','Hình thang cân','Hình bình hành','Hình chữ nhật','Hình thoi','Hình vuông'];
+@@ -28,11 +30,13 @@
+  const [profile,setProfile]=useState<Profile|null>(readProfile),[draft,setDraft]=useState<Profile>(()=>readProfile()||{...emptyProfile,email:''}),[profileOpen,setProfileOpen]=useState(false),[remember,setRemember]=useState(!!readProfile());
+  const [theme,setTheme]=useState(()=>{try{return localStorage.getItem('ai-tutor-theme')||'light';}catch{return 'light';}}),[settings,setSettings]=useState(false),[code,setCode]=useState(''),[draftCode,setDraftCode]=useState(''),[checking,setChecking]=useState(false),[connectionError,setConnectionError]=useState('');
+  const [messages,setMessages]=useState<DisplayMessage[]>(recovered.messages),[wire,setWire]=useState<Message[]>(recovered.wire),[input,setInput]=useState(recovered.input),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
+- const [lesson,setLesson]=useState<Lesson|null>(null),[map,setMap]=useState<Plan|null>(null),[mapSource,setMapSource]=useState('Khung định hướng chung'),[ended,setEnded]=useState(false),[help,setHelp]=useState(false),[sampleOpen,setSampleOpen]=useState(false);
++ const [lesson,setLesson]=useState<Lesson|null>(null),[map,setMap]=useState<Plan|null>(null),[mapSource,setMapSource]=useState('Khung định hướng chung'),[help,setHelp]=useState(false),[sampleOpen,setSampleOpen]=useState(false);
+  const [filter,setFilter]=useState('Tất cả'),[topic,setTopic]=useState('Hình bình hành'),[count,setCount]=useState('5'),[difficulty,setDifficulty]=useState('Vận dụng');
+  const [feedbackOpen,setFeedbackOpen]=useState(false),[rating,setRating]=useState(0),[comment,setComment]=useState(''),[consent,setConsent]=useState(false),[includeSummary,setIncludeSummary]=useState(true),[sendingFeedback,setSendingFeedback]=useState(false),[feedbackStatus,setFeedbackStatus]=useState<'idle'|'confirmed'|'unconfirmed'|'error'>('idle'),[feedbackMessage,setFeedbackMessage]=useState('');
+  const [submissionId,setSubmissionId]=useState(()=>crypto.randomUUID()),[checkpoints,setCheckpoints]=useState<string[]>([]);
+  const brandRef=useRef<HTMLButtonElement>(null);
++ const submittedFeedback=useRef<FeedbackData|null>(null),submittedParticipant=useRef('');
++ useSurveyReminder({enabled:!!code&&!!profile?.email,open:feedbackOpen,blocked:busy||checking||settings||profileOpen||help||sampleOpen||mobileNav||sendingFeedback,onRemind:openSurvey});
+  const abort=useRef<AbortController|null>(null),lock=useRef(false),feedbackLock=useRef(false),autoPrompted=useRef(false),inputRef=useRef<HTMLTextAreaElement>(null),scrollRef=useRef<HTMLDivElement>(null);
+  useEffect(()=>{if(busy)return;const persist=()=>saveSession({messages,wire,input,problem:previewProblem,mode});persist();addEventListener('pagehide',persist);return()=>removeEventListener('pagehide',persist);},[messages,wire,input,previewProblem,mode,busy]);
+  const selected=learningModes.find(m=>m.id===mode)!;
+@@ -40,14 +44,14 @@
+  useEffect(()=>{const el=scrollRef.current;if(el)el.scrollTo({top:el.scrollHeight,behavior:'smooth'});},[messages,busy]);
+  useEffect(()=>()=>abort.current?.abort(),[]);
+  useEffect(()=>{try{if(remember)localStorage.setItem('ai-tutor-learner-v5',JSON.stringify(learner));else localStorage.removeItem('ai-tutor-learner-v5');}catch{}},[learner,remember]);
+- function newChat(){if(busy)return;setPreviewProblem('');setMessages([]);setWire([]);setInput('');setError('');setNotice('');setMap(null);setMapSource('Khung định hướng chung');setLesson(null);setEnded(false);setRating(0);setComment('');setConsent(false);setFeedbackStatus('idle');setFeedbackMessage('');setCheckpoints([]);setSubmissionId(crypto.randomUUID());autoPrompted.current=false;}
++ function newChat(){if(busy)return;setPreviewProblem('');setMessages([]);setWire([]);setInput('');setError('');setNotice('');setMap(null);setMapSource('Khung định hướng chung');setLesson(null);submittedFeedback.current=null;submittedParticipant.current='';setFeedbackOpen(false);setRating(0);setComment('');setConsent(false);setFeedbackStatus('idle');setFeedbackMessage('');setCheckpoints([]);setSubmissionId(crypto.randomUUID());autoPrompted.current=false;}
+  function choose(nextMode:string){if(busy)return;newChat();setMode(nextMode);setView(['practice','test'].includes(nextMode)?'practice':'chat');setMobileNav(false);}
+  function prepareLesson(item:Lesson){if(busy)return;newChat();setLesson(item);setMap(item.plan);setMapSource('Định hướng bài mẫu');setInput(item.problem);setPreviewProblem(item.problem);setMode(item.id==='counterexample'?'review':'guide');setView('chat');setMobileNav(false);}
+  function prepareWorksheet(item:Worksheet){if(busy)return;newChat();setInput(item.problem);setPreviewProblem(item.problem);setMode('guide');setView('chat');setMobileNav(false);setNotice(item.note?'Lưu ý đề đã rà soát: '+item.note:'Đề đã chuẩn hóa từ PDF, có hình dựng kiểm tra trước.');}
+  async function connect(){if(checking)return;setChecking(true);setConnectionError('');try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessCode:draftCode.trim(),check:true})});if(!r.headers.get('content-type')?.includes('application/json'))throw Error('Dịch vụ AI chưa sẵn sàng. Giáo viên vui lòng kiểm tra triển khai.');const d=await r.json();if(!r.ok||d.ok!==true)throw Error(d.error||'Chưa kết nối được.');setCode(draftCode.trim());setDraftCode('');setSettings(false);setDraft(profile||{...emptyProfile,email:''});setProfileOpen(true);}catch(e){setConnectionError(e instanceof Error?e.message:'Kết nối gián đoạn.');}finally{setChecking(false);}}
+  function editProfile(){if(busy)return;if(!code){setSettings(true);return;}setDraft(profile||{...emptyProfile,email:''});setProfileOpen(true);}
+- function saveProfile(e:React.FormEvent){e.preventDefault();const next={...draft,name:draft.name.trim(),school:draft.school.trim(),email:draft.email.trim(),className:draft.className.trim(),grade:'8',subject:'Hình học tứ giác'};if(!next.name||!next.school||!next.email)return;if(profile?.email!==next.email)setLearner(createLearnerState(next.level));else if(profile?.level!==next.level)setLearner({...learner,level:next.level==='Mất gốc'?'Mất căn bản':next.level==='Học sinh năng khiếu'?'Giỏi':next.level as typeof learner.level,manualLevel:true});setProfile(next);setDraft(next);try{if(remember)localStorage.setItem('ai-tutor-profile-v1',JSON.stringify(next));else localStorage.removeItem('ai-tutor-profile-v1');}catch{setError('Không lưu được trên thiết bị. Thông tin vẫn được giữ trong buổi học này.');}setProfileOpen(false);setNotice('Đã sẵn sàng. Em chọn bài mẫu hoặc gửi bài đang cần tìm hiểu nhé.');}
+- async function send(text=input,fresh=false){text=text.trim();const proposed=problemForTurn(text,previewProblem);if(proposed)setPreviewProblem(proposed);if(!text||lock.current||ended&&!fresh)return;if(!code){setInput(text);setSettings(true);return;}if(!profile?.email){setInput(text);setProfileOpen(true);return;}
++ function saveProfile(e:React.FormEvent){e.preventDefault();const next={...draft,name:draft.name.trim(),school:draft.school.trim(),email:draft.email.trim(),className:draft.className.trim(),grade:'8',subject:'Hình học tứ giác'};if(!next.name||!next.school||!next.email)return;if(profile?.email!==next.email)setLearner(createLearnerState(next.level));else if(profile?.level!==next.level)setLearner({...learner,level:next.level==='Mất gốc'?'Mất căn bản':next.level==='Học sinh năng khiếu'?'Giỏi':next.level as typeof learner.level,manualLevel:true});setProfile(next);setDraft(next);try{if(remember)localStorage.setItem('ai-tutor-profile-v1',JSON.stringify(next));else localStorage.removeItem('ai-tutor-profile-v1');}catch{setError('Không lưu được trên thiết bị. Thông tin vẫn được giữ trong buổi học này.');}setProfileOpen(false);setNotice(next.className?'Đã sẵn sàng. Em chọn bài mẫu hoặc gửi bài đang cần tìm hiểu nhé.':'Đã ghi nhận vai trò Giáo viên. Thầy/cô có thể trải nghiệm ứng dụng và gửi khảo sát.');}
++ async function send(text=input,fresh=false){text=text.trim();const proposed=problemForTurn(text,previewProblem);if(proposed)setPreviewProblem(proposed);if(!text||lock.current)return;if(!code){setInput(text);setSettings(true);return;}if(!profile?.email){setInput(text);setProfileOpen(true);return;}
+  const previous=fresh?[]:messages;const oldProblem=previous.filter(m=>m.role==='assistant').at(-1)?.problem||'';const problem=problemForTurn(text,previewProblem||oldProblem);const updatedLearner=observeAnswer(learner,text,!oldProblem||problem!==oldProblem);const planned=planThinkingQuestion(problem||text,updatedLearner,!oldProblem||problem!==oldProblem);let next:Message[];try{const grounded=lesson&&!fresh&&wire.length===0?`[Tư liệu bài mẫu do ứng dụng biên soạn; dùng để kiểm tra, không cung cấp đáp án hoặc lời giải hoàn chỉnh]\nGợi ý: ${lesson.hint}\nLời giải đối chiếu: ${lesson.solution}\nCâu tự kiểm tra: ${lesson.transfer}\n[Yêu cầu của em]\n${text}`:text;next=requestMessages(fresh?[]:wire,grounded+(findWorksheet(problem)?.note?'\n[Lưu ý biên tập đề, không phải bài làm của em] '+findWorksheet(problem)!.note:'')+learnerContext(updatedLearner,planned),{...profile,level:updatedLearner.level,grade:updatedLearner.grade},selected.title);}catch(e){setError((e as Error).message);return;}
+  saveSession({messages:previous,wire:fresh?[]:wire,input:text,problem,mode});
+  lock.current=true;setBusy(true);setError('');setNotice('');setView('chat');setMessages([...previous,{role:'user',content:text}]);setInput('');if(!map){setMap(defaultPlan);setMapSource('Khung định hướng chung');}
+@@ -56,21 +60,50 @@
+  if(parsed.complete&&previous.some(m=>m.role==='assistant')&&text.length>=12&&!autoPrompted.current){autoPrompted.current=true;setFeedbackOpen(true);}
+  }catch(e){setMessages(previous);setInput(text);setError(e instanceof Error&&e.name==='AbortError'?'Đã dừng yêu cầu. Nội dung của em vẫn còn để tiếp tục khi cần.':e instanceof Error?e.message:'Kết nối gián đoạn.');}finally{clearTimeout(timer);lock.current=false;abort.current=null;setBusy(false);}}
+  function generate(){if(busy)return;newChat();const text=`Tạo đúng ${count} câu ${mode==='test'?'tự kiểm tra':'luyện tập'} NGẮN về ${topic}, hình học tứ giác lớp 8, mức độ ${difficulty}. Chỉ ra đề, chưa kèm lời giải. Ưu tiên bài liên quan trung điểm, đường chéo, nhận biết tứ giác và tìm lỗi suy luận; đủ dữ kiện và không suy biến. Tổng bộ đề khoảng 250 từ. Hỏi em muốn bắt đầu câu nào; không đánh dấu hoàn thành.`;void send(text,true);}
+- function finish(){if(!code){setSettings(true);return;}if(!profile?.email){setProfileOpen(true);return;}abort.current?.abort();setFeedbackOpen(true);}
+- function feedbackData():FeedbackData{const summary=includeSummary?`\n\n[Thông tin buổi học]\nLớp: ${profile?.className||'Chưa ghi'}; khối 8; mức độ tự khai: ${profile?.level}.\nChủ đề: ${lesson?.topic||topic}; chế độ: ${selected.title}.\nMục tiêu: ${profile?.goal}.\nTự kiểm tra: ${checkpoints.length?checkpoints.join('; '):'Chưa đánh dấu'}.`:'';return {name:profile?.name||'',school:profile?.school||'',email:profile?.email||'',rating,comment:comment.trim()+summary,consent,submissionId};}
+- async function sendRating(e:React.FormEvent){e.preventDefault();if(feedbackLock.current||!rating||!consent||feedbackStatus==='confirmed'||feedbackStatus==='unconfirmed')return;feedbackLock.current=true;setSendingFeedback(true);setFeedbackMessage('');try{const d=await submitFeedback(feedbackData(),code);setFeedbackStatus(d.delivery);setFeedbackMessage(d.message);if(d.ok&&d.delivery==='confirmed'){setEnded(true);setNotice('Buổi học đã kết thúc. Cảm ơn em đã chia sẻ đánh giá!');}}catch(e){setFeedbackStatus('unconfirmed');setFeedbackMessage(e instanceof Error&&e.name==='AbortError'?'Chưa xác nhận được đánh giá đã lưu. Em có thể kiểm tra hoặc gửi qua biểu mẫu trực tiếp.':e instanceof Error?e.message:'Chưa xác nhận được kết quả gửi.');}finally{feedbackLock.current=false;setSendingFeedback(false);}}
++ function openSurvey(){
++  if(!code){setSettings(true);return;}
++  if(!profile?.email){setProfileOpen(true);return;}
++  if(feedbackOpen||feedbackLock.current)return;
++  // A confirmed response can be followed by a new, explicitly consented survey.
++  // An unconfirmed response keeps its payload and ID to avoid blind retries.
++  if(feedbackStatus==='confirmed'){
++   setRating(0);setComment('');setConsent(false);setFeedbackStatus('idle');setFeedbackMessage('');
++   setSubmissionId(crypto.randomUUID());submittedFeedback.current=null;submittedParticipant.current='';
++  }
++  setFeedbackOpen(true);
++ }
++ function feedbackData():FeedbackData{
++  if(submittedFeedback.current)return submittedFeedback.current;
++  return {name:profile?.name||'',school:profile?.school||'',email:profile?.email||'',rating,
++   comment:profile?surveyComment({profile,comment,includeSummary,topic:lesson?.topic||topic,mode:selected.title,checkpoints}):comment.trim(),
++   consent,submissionId};
++ }
++ async function sendRating(e:React.FormEvent){
++  e.preventDefault();
++  if(feedbackLock.current||!rating||!consent||feedbackStatus==='confirmed'||feedbackStatus==='unconfirmed')return;
++  feedbackLock.current=true;setSendingFeedback(true);setFeedbackMessage('');
++  submittedFeedback.current=feedbackData();submittedParticipant.current=participantLabel(profile);
++  try{
++   const d=await submitFeedback(submittedFeedback.current,code);
++   setFeedbackStatus(d.delivery);setFeedbackMessage(d.message);
++   if(d.ok&&d.delivery==='confirmed')setNotice('Đã ghi nhận khảo sát. Cảm ơn bạn đã góp ý; bạn có thể tiếp tục sử dụng ứng dụng.');
++  }catch(e){
++   setFeedbackStatus('unconfirmed');
++   setFeedbackMessage(e instanceof Error&&e.name==='AbortError'?'Chưa xác nhận được khảo sát đã lưu. Bạn có thể kiểm tra hoặc gửi qua biểu mẫu trực tiếp.':e instanceof Error?e.message:'Chưa xác nhận được kết quả gửi.');
++  }finally{feedbackLock.current=false;setSendingFeedback(false);}
++ }
+  function previewGeometry(){const text=problemForTurn(input,previewProblem)||input;setPreviewProblem(text);const geometry=compileGeometry(text),question=planThinkingQuestion(text,learner,true);setMap({given:geometry.givens.join('; ').slice(0,400)||'Vị trí điểm và quan hệ cần xác nhận.',goal:geometry.goal||'Cần bổ sung yêu cầu bài toán.',bridge:'Đối chiếu điều kiện của lý thuyết dự kiến với từng dữ kiện.',next:question.question});setMapSource('Định hướng từ đề đang xem');setView('chat');}
+  const activeProblem=previewProblem||messages.filter(m=>m.role==='assistant').at(-1)?.problem||'';
+  const activeReply=messages.filter(m=>m.role==='assistant'&&m.problem===activeProblem).at(-1)?.diagramReply||'';
+  const displayPlan=map||lesson?.plan||defaultPlan;
+  return <div className="app-shell"><a className="skip-link" href="#main">Đến nội dung chính</a>
+  <header className="topbar"><button ref={brandRef} className="brand" onClick={()=>setView('home')} aria-label="Trang chủ Tư duy Toán học"><span className="brand-mark"><Compass size={27}/></span><span className="brand-copy">Tư duy <b>Toán học</b><small><span>Mỗi tứ giác là một câu chuyện tư duy</span><span className="brand-divider" aria-hidden="true"> — </span><span>Mỗi lời giải là một hành trình khám phá</span></small></span></button><div className="top-actions"><span className="scope-badge">Hình học 8</span><button className="icon-button" onClick={()=>setTheme(theme==='dark'?'light':'dark')} aria-label={theme==='dark'?'Chuyển giao diện sáng':'Chuyển giao diện tối'}>{theme==='dark'?<Sun size={20}/>:<Moon size={20}/>}</button><button className="header-help" onClick={()=>setHelp(true)}><BookOpen size={17}/>Hướng dẫn</button><button className={code?'connection connected':'connection'} onClick={()=>setSettings(true)}><span className="status-dot"/>{code?'AI đã kết nối':'Kết nối AI'}</button><button className="icon-button profile-button" disabled={busy} onClick={editProfile} aria-label="Thông tin người học"><UserRound size={20}/></button><button className="icon-button mobile-menu" onClick={()=>setMobileNav(!mobileNav)} aria-label="Mở các chế độ học" aria-expanded={mobileNav}><PanelLeftClose size={20}/></button></div></header>
+- <div className="workspace"><aside className={`learning-panel ${mobileNav?'nav-open':''}`}><div className="side-heading"><span className="eyebrow">GÓC HỌC TẬP</span><button className="mobile-menu icon-button" onClick={()=>setMobileNav(false)} aria-label="Đóng danh mục"><X size={17}/></button></div><button className={`nav-item ${view==='home'?'active':''}`} onClick={()=>{setView('home');setMobileNav(false);}}><HomeIcon size={19}/>Không gian học tập</button><p className="eyebrow nav-label">EM MUỐN LÀM GÌ?</p><nav>{learningModes.map(m=>{const Icon=icons[m.icon as keyof typeof icons];return <button key={m.id} className={`mode ${mode===m.id&&view!=='home'&&view!=='bank'?'active':''}`} disabled={busy} onClick={()=>choose(m.id)} aria-pressed={mode===m.id&&view==='chat'}><Icon size={20}/><span><strong>{m.title}</strong><small>{m.desc}</small></span>{mode===m.id&&view==='chat'&&<span className="selected-dot"/>}</button>;})}</nav><button className={`nav-item bank-link ${view==='bank'?'active':''}`} onClick={()=>{setView('bank');setMobileNav(false);}}><BookOpen size={19}/>Ngân hàng bài tập<span>{lessons.length+worksheets.length}</span></button><div className="thinking-note"><span className="eyebrow">THÓI QUEN TƯ DUY</span><h3>Hiểu vì sao,<br/>rồi mới kết luận.</h3><p>Mỗi bước chứng minh cần một căn cứ. Mỗi phỏng đoán cần được kiểm tra.</p><div className="tiny-shapes" aria-hidden="true"><i/><i/><i/></div></div><button className="sample-link" onClick={()=>setSampleOpen(true)}><MessageCircle size={17}/>Xem một phiên học mẫu</button><a className="research-link" href="/co-so-su-pham.html" target="_blank" rel="noreferrer">Cơ sở sư phạm & tài liệu <ArrowUpRight size={15}/></a><div className="side-profile"><span className="user-mini"><GraduationCap size={21}/></span><div><strong>{code&&profile?profile.name:'Sẵn sàng khám phá?'}</strong><small>{code&&profile?`${profile.className||'Lớp '+learner.grade} · ${learner.level}`:'Bắt đầu bằng một câu hỏi tốt'}</small></div></div></aside>
+- <main id="main" className="main-panel">{view==='home'?<section className="home-page fade"><div className="home-hero"><div className="hero-copy"><span className="eyebrow">KHÁM PHÁ HÌNH HỌC · RÈN LUYỆN TƯ DUY</span><h1>Cùng tìm ra<br/><em>cách nghĩ</em> cho<br/> mỗi bài hình.</h1><p>Đọc đúng giả thiết. Kết nối kiến thức.<br/>Tự xây dựng lời giải với một người bạn đồng hành.</p><div className="hero-actions"><button className="primary" onClick={()=>choose('guide')}>Bắt đầu khám phá <ArrowUpRight size={18}/></button><button className="quiet" onClick={()=>setView('bank')}>Xem bài tập mẫu <ChevronRight size={17}/></button></div><div className="hero-proof"><span><Check size={14}/>Gợi mở từng bước</span><span><Check size={14}/>Có sơ đồ định hướng</span></div></div><div className="hero-visual" aria-label="Hình học qua các đường kết nối"><div className="visual-caption"><span className="mini-dot"/>MỘT HÌNH VẼ, NHIỀU KẾT NỐI</div><GeometryFigure figure={lessons[0].figure} title="Tứ giác và bốn trung điểm" large/><span className="floating-label label-top">Giả thiết → Kết nối</span><span className="floating-label label-bottom"><Lightbulb size={16}/>Điều gì làm nên một lời giải?</span><div className="visual-foot"><span>ABCD</span><span>EFGH</span><span>Phân tích · Tổng hợp</span></div></div></div><div className="learning-route"><div><span>01</span><p><strong>Nhìn rõ bài toán</strong><small>Tách giả thiết và mục tiêu</small></p></div><ChevronRight size={18}/><div><span>02</span><p><strong>Tìm mối liên hệ</strong><small>Chọn dấu hiệu có căn cứ</small></p></div><ChevronRight size={18}/><div><span>03</span><p><strong>Tự kiểm tra</strong><small>Giải thích và vận dụng lại</small></p></div></div><div className="section-heading"><div><span className="eyebrow">BẮT ĐẦU TỪ MỘT THỬ THÁCH</span><h2>Những bài hình đáng để suy ngẫm</h2></div><button className="text-button" onClick={()=>setView('bank')}>Tất cả bài tập <ArrowUpRight size={17}/></button></div><div className="lesson-grid">{lessons.slice(0,3).map((l,i)=><button className="lesson-card" key={l.id} disabled={busy} onClick={()=>prepareLesson(l)}><div className={`card-figure tint-${i}`}><GeometryFigure figure={l.figure} title={l.title}/><span className="level-label">{l.level}</span></div><div className="card-body"><small>{l.topic} · {l.minutes} phút gợi ý</small><h3>{l.title}</h3><p>{l.operation}</p><span className="card-link">Cùng Thầy khám phá <ArrowUpRight size={17}/></span></div></button>)}</div></section>:view==='bank'?<section className="bank-page fade"><div className="section-heading"><div><span className="eyebrow">NGÂN HÀNG BÀI TẬP</span><h1>Quen dạng bài.<br/>Sâu cách nghĩ.</h1></div><span className="page-number">{lessons.length+worksheets.length} <small>bài gợi mở</small></span></div><p className="lead">Trung điểm, đường chéo, dấu hiệu nhận biết và những kết luận cần kiểm tra.</p><div className="topic-filters" aria-label="Lọc theo chủ đề">{topicList.map(t=><button key={t} aria-pressed={filter===t} className={filter===t?'selected':''} onClick={()=>setFilter(t)}>{t}</button>)}</div><div className="lesson-grid bank-grid">{lessons.filter(l=>filter==='Tất cả'||l.topic===filter).map((l,i)=><button className="lesson-card" key={l.id} disabled={busy} onClick={()=>prepareLesson(l)}><div className={`card-figure tint-${i%3}`}><GeometryFigure figure={l.figure} title={l.title}/><span className="level-label">{l.level}</span></div><div className="card-body"><small>{l.topic} · {l.minutes} phút gợi ý</small><h3>{l.title}</h3><p>{l.operation}</p><span className="card-link">Khám phá bài toán <ArrowUpRight size={17}/></span></div></button>)}</div><WorksheetBank disabled={busy} onChoose={prepareWorksheet}/></section>:view==='practice'?<section className="practice-page fade"><span className="eyebrow">RÈN LUYỆN HÌNH HỌC TỨ GIÁC</span><h1>{mode==='test'?'Tự làm. Tự kiểm tra.':'Một chút luyện tập, mỗi ngày.'}</h1><p className="lead">Chọn một chủ đề và mức độ phù hợp. Mình sẽ bắt đầu bằng đề bài, rồi cùng kiểm tra cách làm.</p><div className="practice-layout"><form className="practice-card" onSubmit={e=>{e.preventDefault();generate();}}><div className="form-grid"><label>Chủ đề<select value={topic} onChange={e=>setTopic(e.target.value)}>{topicList.slice(1).map(t=><option key={t}>{t}</option>)}</select></label><label>Mức độ<select value={difficulty} onChange={e=>setDifficulty(e.target.value)}>{['Củng cố','Vận dụng','Vận dụng cao'].map(t=><option key={t}>{t}</option>)}</select></label><label>Số câu<select value={count} onChange={e=>setCount(e.target.value)}>{[5,6,7,8,9,10].map(n=><option key={n}>{n}</option>)}</select></label><label>Nội dung<input value="Tứ giác · Hình học 8" readOnly/></label></div><button className="primary" disabled={busy}>Tạo {count} câu {mode==='test'?'tự kiểm tra':'luyện tập'} <ArrowUpRight size={18}/></button><p className="caption">Bài do AI tạo cần được kiểm tra. Thầy hỏi gợi mở từng bước; không cung cấp đáp án hay lời giải hoàn chỉnh.</p></form><div className="practice-note"><Target size={28}/><h3>Mục tiêu là hiểu cách làm.</h3><p>Sau mỗi câu, hãy thử trả lời: “Vì sao em chọn dấu hiệu này?” rồi tự làm một bài tương tự.</p></div></div></section>:<section className="chat-page fade"><div className="chat-heading"><div><span className="eyebrow">KHÔNG GIAN SUY NGHĨ</span><h1>{selected.title}</h1></div><div className="lesson-actions"><button disabled={busy} onClick={newChat}><Plus size={16}/>Bài mới</button><button className="finish-button" onClick={finish} disabled={ended}><CheckCheck size={17}/><span>Em đã biết làm, cảm ơn Thầy</span></button></div></div><div className="study-layout"><div className="chat-column">{activeProblem&&<section className="current-problem">{messages.filter(m=>m.role==='assistant').at(-1)?.thinking&&<div className="current-question"><span className="eyebrow">BƯỚC EM TỰ LÀM</span><p>{messages.filter(m=>m.role==='assistant').at(-1)?.thinking?.question}</p></div>}<details className="current-statement" open><summary>Đề bài đang học</summary><p>{activeProblem}</p></details><ProblemFigure key={activeProblem} redrawToken={figureRevision} suspended={busy} onConnect={()=>setSettings(true)} problem={activeProblem} accessCode={code} reply={activeReply} level={learner.level} onProblemChange={q=>{setPreviewProblem(q);setInput(q);}}/></section>}<div className="conversation" ref={scrollRef} aria-label="Cuộc trò chuyện">{messages.length===0&&activeProblem?<p className="preview-hint">Em có thể đối chiếu hình và lý thuyết, rồi gửi bước em muốn cùng Thầy tìm hiểu.</p>:messages.length===0?<div className="chat-welcome"><TutorAvatar large/><span className="eyebrow">GIA SƯ HÌNH HỌC AI</span><h2>{lesson?lesson.title:mode==='review'?'Cùng xem lại từng lập luận.':'Bắt đầu từ điều em đang băn khoăn.'}</h2><p>{lesson?lesson.problem:'Em gửi đề bài và phần đã thử. Thầy sẽ cùng em đọc giả thiết, chọn hướng giải và kiểm tra từng bước.'}</p>{lesson&&<div className="inline-figure"><GeometryFigure figure={lesson.figure} title={lesson.title}/><small>Hình minh họa, không dùng thay cho giả thiết.</small></div>}<div className="start-hint"><Lightbulb size={18}/><span>{lesson?'Sơ đồ bên cạnh giúp em định hướng. Nhấn Gửi để bắt đầu.':'Thầy hỗ trợ hình học THCS, trọng tâm là tứ giác lớp 8.'}</span></div></div>:messages.map((m,i)=>{const parsed=m.role==='assistant'?parseTutorResponse(m.content):null;return <article className={`message ${m.role}`} key={i}>{m.role==='assistant'?<TutorAvatar/>:<span className="student-avatar">Em</span>}<div className="message-body"><span className="message-author">{m.role==='assistant'?'Gia sư hình học · AI':'Em'}</span>{parsed?.plan&&<details className="message-map"><summary>Sơ đồ định hướng của lượt này</summary><LearningMap plan={parsed.plan} source="Theo nội dung bài"/></details>}<div className="message-content">{i<messages.length-2?<details className="past-message"><summary>Xem lượt trao đổi trước</summary>{parsed?<MathText text={parsed.text}/>:m.content}</details>:parsed&&i===messages.length-1?<Typed text={parsed.text}/>:parsed?<MathText text={parsed.text}/>:m.content}</div></div></article>;})}{busy&&<div className="working" role="status"><TutorAvatar/><div><span className="thinking-dots"><i/><i/><i/></span><p>Thầy đang kiểm tra dữ kiện và hướng giải…</p></div><button onClick={()=>abort.current?.abort()}>Dừng</button></div>}</div>{error&&<p className="error" role="alert">{error}</p>}{messages.length>0&&!ended&&<div className="followups"><button disabled={busy||ended} onClick={()=>{setFigureRevision(v=>v+1);document.querySelector('.current-problem')?.scrollIntoView({behavior:'smooth',block:'start'});}} >Vẽ lại hình</button><button disabled={busy} onClick={()=>void send('Em cần một gợi ý nhỏ cho bước đang làm, chưa cần toàn bộ lời giải.')}>Gợi ý thêm</button><button disabled={busy} onClick={()=>void send('Thầy hãy giúp em kiểm tra đúng một bước em vừa làm; chưa đưa đáp án hoặc lời giải hoàn chỉnh.')}>Kiểm tra bước em làm</button><button disabled={busy} onClick={()=>void send('Hãy cho em một bài tương tự trong chủ đề tứ giác, chưa kèm đáp án.')}>Bài tương tự</button></div>}{ended?<div className="session-ended"><ShieldCheck size={23}/><div><strong>Buổi học đã kết thúc</strong><p>Em có thể xem lại hội thoại hoặc bắt đầu một bài mới.</p></div><button onClick={newChat}>Bài mới</button></div>:<form className="composer" onSubmit={e=>{e.preventDefault();void send();}}><label className="sr-only" htmlFor="problem">Nhập đề bài hoặc bài làm</label><textarea id="problem" ref={inputRef} value={input} rows={3} maxLength={6000} disabled={busy} placeholder={mode==='review'?'Nhập đề bài và từng bước trong lời giải của em…':'Nhập đề bài hoặc chia sẻ bước em đang vướng…'} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.nativeEvent.isComposing){e.preventDefault();void send();}}}/><div className="composer-bottom"><button type="button" className="preview-geometry-button" disabled={!input.trim()||busy} onClick={previewGeometry}>Xem hình & lý thuyết</button><span>{input.length}/6000 <small>· Shift + Enter để xuống dòng</small></span><button className="primary send-button" type="submit" disabled={busy||!input.trim()}>{busy?<LoaderCircle size={18} className="spin"/>:<ArrowUp size={18}/>}Gửi</button></div></form>}<p className="chat-foot">Em làm chủ nhịp học. Có thể dừng và đánh giá bất cứ lúc nào.</p></div><aside className="reasoning-panel"><LearningMap plan={displayPlan} source={mapSource}/><div className="self-check"><h3><CheckCheck size={18}/>Em tự kiểm tra</h3>{['Em nêu được giả thiết và kết luận','Em giải thích được bước then chốt','Em có thể tự làm lại'].map(s=><label key={s}><input type="checkbox" checked={checkpoints.includes(s)} onChange={e=>setCheckpoints(e.target.checked?[...checkpoints,s]:checkpoints.filter(v=>v!==s))}/><span>{s}</span></label>)}<p>Đánh dấu theo cảm nhận của em, không phải điểm do AI chấm.</p></div><LearnerPanel state={learner} onChange={setLearner}/><div className="side-tip"><span>NHỚ MỘT ĐIỀU</span><p>Hình vẽ gợi ý cho ta phỏng đoán.<br/>Lập luận mới giúp ta kết luận.</p></div></aside></div></section>}{notice&&<p className="notice" role="status">{notice}</p>}{view!=='chat'&&error&&<p className="error" role="alert">{error}</p>}<footer className="creators-footer"><a href="/poster.html">Poster khoa học online</a><small>Phiên bản 6.2</small><div><h2>NGƯỜI SÁNG TẠO</h2><p className="creator-names"><span>Phan Trí Dũng</span><span>Phạm Nam Hải</span></p><p>Giáo viên hướng dẫn: <strong>GV. Trần Ngọc Phú Sang</strong></p></div><p className="footer-purpose">Hiểu vì sao, rồi mới kết luận.<small>Phân tích · Tổng hợp · So sánh · Khái quát hóa</small></p></footer></main></div>
++ <div className="workspace"><aside className={`learning-panel ${mobileNav?'nav-open':''}`}><div className="side-heading"><span className="eyebrow">GÓC HỌC TẬP</span><button className="mobile-menu icon-button" onClick={()=>setMobileNav(false)} aria-label="Đóng danh mục"><X size={17}/></button></div><button className={`nav-item ${view==='home'?'active':''}`} onClick={()=>{setView('home');setMobileNav(false);}}><HomeIcon size={19}/>Không gian học tập</button><p className="eyebrow nav-label">EM MUỐN LÀM GÌ?</p><nav>{learningModes.map(m=>{const Icon=icons[m.icon as keyof typeof icons];return <button key={m.id} className={`mode ${mode===m.id&&view!=='home'&&view!=='bank'?'active':''}`} disabled={busy} onClick={()=>choose(m.id)} aria-pressed={mode===m.id&&view==='chat'}><Icon size={20}/><span><strong>{m.title}{m.status&&<span className="mode-status"> ({m.status})</span>}</strong><small>{m.desc}</small></span>{mode===m.id&&view==='chat'&&<span className="selected-dot"/>}</button>;})}</nav><button className={`nav-item bank-link ${view==='bank'?'active':''}`} onClick={()=>{setView('bank');setMobileNav(false);}}><BookOpen size={19}/>Ngân hàng bài tập<span>{lessons.length+worksheets.length}</span></button><div className="thinking-note"><span className="eyebrow">THÓI QUEN TƯ DUY</span><h3>Hiểu vì sao,<br/>rồi mới kết luận.</h3><p>Mỗi bước chứng minh cần một căn cứ. Mỗi phỏng đoán cần được kiểm tra.</p><div className="tiny-shapes" aria-hidden="true"><i/><i/><i/></div></div><button className="sample-link" onClick={()=>setSampleOpen(true)}><MessageCircle size={17}/>Xem một phiên học mẫu</button><a className="research-link" href="/co-so-su-pham.html" target="_blank" rel="noreferrer">Cơ sở sư phạm & tài liệu <ArrowUpRight size={15}/></a><div className="side-profile"><span className="user-mini"><GraduationCap size={21}/></span><div><strong>{code&&profile?profile.name:'Sẵn sàng khám phá?'}</strong><small>{code&&profile?(profile.className.trim()?`${participantLabel(profile)} · ${learner.level}`:'Giáo viên'):'Bắt đầu bằng một câu hỏi tốt'}</small></div></div></aside>
++ <main id="main" className="main-panel">{view==='home'?<section className="home-page fade"><div className="home-hero"><div className="hero-copy"><span className="eyebrow">KHÁM PHÁ HÌNH HỌC · RÈN LUYỆN TƯ DUY</span><h1>Cùng tìm ra<br/><em>cách nghĩ</em> cho<br/> mỗi bài hình.</h1><p>Đọc đúng giả thiết. Kết nối kiến thức.<br/>Tự xây dựng lời giải với một người bạn đồng hành.</p><div className="hero-actions"><button className="primary" onClick={()=>choose('guide')}>Bắt đầu khám phá <ArrowUpRight size={18}/></button><button className="quiet" onClick={()=>setView('bank')}>Xem bài tập mẫu <ChevronRight size={17}/></button></div><div className="hero-proof"><span><Check size={14}/>Gợi mở từng bước</span><span><Check size={14}/>Có sơ đồ định hướng</span></div></div><div className="hero-visual" aria-label="Hình học qua các đường kết nối"><div className="visual-caption"><span className="mini-dot"/>MỘT HÌNH VẼ, NHIỀU KẾT NỐI</div><GeometryFigure figure={lessons[0].figure} title="Tứ giác và bốn trung điểm" large/><span className="floating-label label-top">Giả thiết → Kết nối</span><span className="floating-label label-bottom"><Lightbulb size={16}/>Điều gì làm nên một lời giải?</span><div className="visual-foot"><span>ABCD</span><span>EFGH</span><span>Phân tích · Tổng hợp</span></div></div></div><div className="learning-route"><div><span>01</span><p><strong>Nhìn rõ bài toán</strong><small>Tách giả thiết và mục tiêu</small></p></div><ChevronRight size={18}/><div><span>02</span><p><strong>Tìm mối liên hệ</strong><small>Chọn dấu hiệu có căn cứ</small></p></div><ChevronRight size={18}/><div><span>03</span><p><strong>Tự kiểm tra</strong><small>Giải thích và vận dụng lại</small></p></div></div><div className="section-heading"><div><span className="eyebrow">BẮT ĐẦU TỪ MỘT THỬ THÁCH</span><h2>Những bài hình đáng để suy ngẫm</h2></div><button className="text-button" onClick={()=>setView('bank')}>Tất cả bài tập <ArrowUpRight size={17}/></button></div><div className="lesson-grid">{lessons.slice(0,3).map((l,i)=><button className="lesson-card" key={l.id} disabled={busy} onClick={()=>prepareLesson(l)}><div className={`card-figure tint-${i}`}><GeometryFigure figure={l.figure} title={l.title}/><span className="level-label">{l.level}</span></div><div className="card-body"><small>{l.topic} · {l.minutes} phút gợi ý</small><h3>{l.title}</h3><p>{l.operation}</p><span className="card-link">Cùng Thầy khám phá <ArrowUpRight size={17}/></span></div></button>)}</div></section>:view==='bank'?<section className="bank-page fade"><div className="section-heading"><div><span className="eyebrow">NGÂN HÀNG BÀI TẬP</span><h1>Quen dạng bài.<br/>Sâu cách nghĩ.</h1></div><span className="page-number">{lessons.length+worksheets.length} <small>bài gợi mở</small></span></div><p className="lead">Trung điểm, đường chéo, dấu hiệu nhận biết và những kết luận cần kiểm tra.</p><div className="topic-filters" aria-label="Lọc theo chủ đề">{topicList.map(t=><button key={t} aria-pressed={filter===t} className={filter===t?'selected':''} onClick={()=>setFilter(t)}>{t}</button>)}</div><div className="lesson-grid bank-grid">{lessons.filter(l=>filter==='Tất cả'||l.topic===filter).map((l,i)=><button className="lesson-card" key={l.id} disabled={busy} onClick={()=>prepareLesson(l)}><div className={`card-figure tint-${i%3}`}><GeometryFigure figure={l.figure} title={l.title}/><span className="level-label">{l.level}</span></div><div className="card-body"><small>{l.topic} · {l.minutes} phút gợi ý</small><h3>{l.title}</h3><p>{l.operation}</p><span className="card-link">Khám phá bài toán <ArrowUpRight size={17}/></span></div></button>)}</div><WorksheetBank disabled={busy} onChoose={prepareWorksheet}/></section>:view==='practice'?<section className="practice-page fade"><span className="eyebrow">RÈN LUYỆN HÌNH HỌC TỨ GIÁC</span><h1>{mode==='test'?'Tự làm. Tự kiểm tra.':'Một chút luyện tập, mỗi ngày.'}</h1><p className="lead">Chọn một chủ đề và mức độ phù hợp. Mình sẽ bắt đầu bằng đề bài, rồi cùng kiểm tra cách làm.</p><div className="practice-layout"><form className="practice-card" onSubmit={e=>{e.preventDefault();generate();}}><div className="form-grid"><label>Chủ đề<select value={topic} onChange={e=>setTopic(e.target.value)}>{topicList.slice(1).map(t=><option key={t}>{t}</option>)}</select></label><label>Mức độ<select value={difficulty} onChange={e=>setDifficulty(e.target.value)}>{['Củng cố','Vận dụng','Vận dụng cao'].map(t=><option key={t}>{t}</option>)}</select></label><label>Số câu<select value={count} onChange={e=>setCount(e.target.value)}>{[5,6,7,8,9,10].map(n=><option key={n}>{n}</option>)}</select></label><label>Nội dung<input value="Tứ giác · Hình học 8" readOnly/></label></div><button className="primary" disabled={busy}>Tạo {count} câu {mode==='test'?'tự kiểm tra':'luyện tập'} <ArrowUpRight size={18}/></button><p className="caption">Bài do AI tạo cần được kiểm tra. Thầy hỏi gợi mở từng bước; không cung cấp đáp án hay lời giải hoàn chỉnh.</p></form><div className="practice-note"><Target size={28}/><h3>Mục tiêu là hiểu cách làm.</h3><p>Sau mỗi câu, hãy thử trả lời: “Vì sao em chọn dấu hiệu này?” rồi tự làm một bài tương tự.</p></div></div></section>:<section className="chat-page fade"><div className="chat-heading"><div><span className="eyebrow">KHÔNG GIAN SUY NGHĨ</span><h1>{selected.title}{selected.status&&<span className="mode-status"> ({selected.status})</span>}</h1></div><div className="lesson-actions"><button disabled={busy} onClick={newChat}><Plus size={16}/>Bài mới</button><button className="finish-button" onClick={openSurvey}><CheckCheck size={17}/><span>Khảo sát đánh giá ứng dụng</span></button></div></div><div className="study-layout"><div className="chat-column">{activeProblem&&<section className="current-problem">{messages.filter(m=>m.role==='assistant').at(-1)?.thinking&&<div className="current-question"><span className="eyebrow">BƯỚC EM TỰ LÀM</span><p>{messages.filter(m=>m.role==='assistant').at(-1)?.thinking?.question}</p></div>}<details className="current-statement" open><summary>Đề bài đang học</summary><p>{activeProblem}</p></details><ProblemFigure key={activeProblem} redrawToken={figureRevision} suspended={busy} onConnect={()=>setSettings(true)} problem={activeProblem} accessCode={code} reply={activeReply} level={learner.level} onProblemChange={q=>{setPreviewProblem(q);setInput(q);}}/></section>}<div className="conversation" ref={scrollRef} aria-label="Cuộc trò chuyện">{messages.length===0&&activeProblem?<p className="preview-hint">Em có thể đối chiếu hình và lý thuyết, rồi gửi bước em muốn cùng Thầy tìm hiểu.</p>:messages.length===0?<div className="chat-welcome"><TutorAvatar large/><span className="eyebrow">GIA SƯ HÌNH HỌC AI</span><h2>{lesson?lesson.title:mode==='review'?'Cùng xem lại từng lập luận.':mode==='compare'?'Cùng đối chiếu hai ý tưởng.':'Bắt đầu từ điều em đang băn khoăn.'}</h2><p>{lesson?lesson.problem:mode==='review'?'Em gửi đề bài và bước em đã viết. Thầy sẽ cùng em kiểm tra căn cứ, bắt đầu từ chỗ đầu tiên cần làm rõ.':mode==='compare'?'Em gửi đề bài và hai ý tưởng muốn đối chiếu. Nếu mới có một hướng, mình sẽ bắt đầu từ ý tưởng đó và cùng tìm điểm để so sánh.':'Em gửi đề bài và phần đã thử. Thầy sẽ cùng em đọc giả thiết, chọn hướng giải và kiểm tra từng bước.'}</p>{lesson&&<div className="inline-figure"><GeometryFigure figure={lesson.figure} title={lesson.title}/><small>Hình minh họa, không dùng thay cho giả thiết.</small></div>}<div className="start-hint"><Lightbulb size={18}/><span>{lesson?'Sơ đồ bên cạnh giúp em định hướng. Nhấn Gửi để bắt đầu.':'Thầy hỗ trợ hình học THCS, trọng tâm là tứ giác lớp 8.'}</span></div></div>:messages.map((m,i)=>{const parsed=m.role==='assistant'?parseTutorResponse(m.content):null;return <article className={`message ${m.role}`} key={i}>{m.role==='assistant'?<TutorAvatar/>:<span className="student-avatar">Em</span>}<div className="message-body"><span className="message-author">{m.role==='assistant'?'Gia sư hình học · AI':'Em'}</span>{parsed?.plan&&<details className="message-map"><summary>Sơ đồ định hướng của lượt này</summary><LearningMap plan={parsed.plan} source="Theo nội dung bài"/></details>}<div className="message-content">{i<messages.length-2?<details className="past-message"><summary>Xem lượt trao đổi trước</summary>{parsed?<MathText text={parsed.text}/>:m.content}</details>:parsed&&i===messages.length-1?<Typed text={parsed.text}/>:parsed?<MathText text={parsed.text}/>:m.content}</div></div></article>;})}{busy&&<div className="working" role="status"><TutorAvatar/><div><span className="thinking-dots"><i/><i/><i/></span><p>Thầy đang kiểm tra dữ kiện và hướng giải…</p></div><button onClick={()=>abort.current?.abort()}>Dừng</button></div>}</div>{error&&<p className="error" role="alert">{error}</p>}{messages.length>0&&<div className="followups"><button disabled={busy} onClick={()=>{setFigureRevision(v=>v+1);document.querySelector('.current-problem')?.scrollIntoView({behavior:'smooth',block:'start'});}} >Vẽ lại hình</button><button disabled={busy} onClick={()=>void send('Em cần một gợi ý nhỏ cho bước đang làm, chưa cần toàn bộ lời giải.')}>Gợi ý thêm</button><button disabled={busy} onClick={()=>void send('Thầy hãy giúp em kiểm tra đúng một bước em vừa làm; chưa đưa đáp án hoặc lời giải hoàn chỉnh.')}>Kiểm tra bước em làm</button><button disabled={busy} onClick={()=>void send('Hãy cho em một bài tương tự trong chủ đề tứ giác, chưa kèm đáp án.')}>Bài tương tự</button></div>}<form className="composer" onSubmit={e=>{e.preventDefault();void send();}}><label className="sr-only" htmlFor="problem">Nhập đề bài hoặc bài làm</label><textarea id="problem" ref={inputRef} value={input} rows={3} maxLength={6000} disabled={busy} placeholder={mode==='review'?'Nhập đề bài và từng bước trong lời giải của em…':mode==='compare'?'Nhập đề bài và các ý tưởng em muốn đối chiếu…':'Nhập đề bài hoặc chia sẻ bước em đang vướng…'} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.nativeEvent.isComposing){e.preventDefault();void send();}}}/><div className="composer-bottom"><button type="button" className="preview-geometry-button" disabled={!input.trim()||busy} onClick={previewGeometry}>Xem hình & lý thuyết</button><span>{input.length}/6000 <small>· Shift + Enter để xuống dòng</small></span><button className="primary send-button" type="submit" disabled={busy||!input.trim()}>{busy?<LoaderCircle size={18} className="spin"/>:<ArrowUp size={18}/>}Gửi</button></div></form><p className="chat-foot">Bạn có thể khảo sát đánh giá ứng dụng bất cứ lúc nào. Lời mời khảo sát được nhắc lại mỗi 3 phút.</p></div><aside className="reasoning-panel"><LearningMap plan={displayPlan} source={mapSource}/><div className="self-check"><h3><CheckCheck size={18}/>Em tự kiểm tra</h3>{['Em nêu được giả thiết và kết luận','Em giải thích được bước then chốt','Em có thể tự làm lại'].map(s=><label key={s}><input type="checkbox" checked={checkpoints.includes(s)} onChange={e=>setCheckpoints(e.target.checked?[...checkpoints,s]:checkpoints.filter(v=>v!==s))}/><span>{s}</span></label>)}<p>Đánh dấu theo cảm nhận của em, không phải điểm do AI chấm.</p></div><LearnerPanel state={learner} onChange={setLearner}/><div className="side-tip"><span>NHỚ MỘT ĐIỀU</span><p>Hình vẽ gợi ý cho ta phỏng đoán.<br/>Lập luận mới giúp ta kết luận.</p></div></aside></div></section>}{notice&&<p className="notice" role="status">{notice}</p>}{view!=='chat'&&error&&<p className="error" role="alert">{error}</p>}<footer className="creators-footer"><a href="https://app.netlify.com/projects/poster-online-khkt/overview" target="_blank" rel="noopener noreferrer">Poster khoa học online <ArrowUpRight size={15}/></a><div><h2>NGƯỜI SÁNG TẠO</h2><p className="creator-names"><span>Phan Trí Dũng</span><span>Phạm Nam Hải</span></p><p>Giáo viên hướng dẫn: <strong>GV. Trần Ngọc Phú Sang</strong></p></div><p className="footer-purpose">Hiểu vì sao, rồi mới kết luận.<small>Phân tích · Tổng hợp · So sánh · Khái quát hóa</small></p></footer></main></div>
+  <Dialog open={settings} onOpenChange={v=>{if(!checking){setSettings(v);if(!v)setDraftCode('');}}}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}} className="connection-dialog"><DialogHeader><span className="dialog-symbol"><KeyRound size={25}/></span><DialogTitle>Kết nối với gia sư AI</DialogTitle><DialogDescription>Nhập mã truy cập do giáo viên cung cấp. Sau khi kết nối, em sẽ điền thông tin để bắt đầu buổi học.</DialogDescription></DialogHeader><form onSubmit={e=>{e.preventDefault();void connect();}}><label>Mã truy cập<input type="password" value={draftCode} autoComplete="off" onChange={e=>setDraftCode(e.target.value)} placeholder="Nhập mã truy cập của lớp"/></label><p className="caption">Đây là mã vào lớp, không phải khóa Gemini API. Mã chỉ được giữ trong phiên đang mở.</p>{connectionError&&<p className="error" role="alert">{connectionError}</p>}<button className="primary full-width" disabled={checking||draftCode.trim().normalize('NFC').length<10}>{checking?<LoaderCircle className="spin" size={18}/>:<KeyRound size={18}/>} {checking?'Đang kiểm tra kết nối…':'Kiểm tra & kết nối'}</button>{code&&<button className="quiet full-width" type="button" disabled={busy||checking} onClick={()=>{setCode('');setSettings(false);}}>Ngắt kết nối</button>}</form></DialogContent></Dialog>
+- <Dialog open={profileOpen&&!!code} onOpenChange={setProfileOpen}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}} className="profile-dialog"><DialogHeader><span className="step-label">ĐÃ KẾT NỐI AI · BƯỚC 2</span><DialogTitle>Thầy hiểu em hơn,<br/>mình học phù hợp hơn.</DialogTitle><DialogDescription>Thông tin người học sẽ được gửi cùng đánh giá cuối buổi đến biểu mẫu của giáo viên khi em đồng ý gửi.</DialogDescription></DialogHeader><form onSubmit={saveProfile}><div className="form-grid"><label>Họ và tên <span>*</span><input required maxLength={120} value={draft.name} onChange={e=>setDraft({...draft,name:e.target.value})} autoComplete="name" placeholder="Họ và tên của em"/></label><label>Trường đang học <span>*</span><input required maxLength={120} value={draft.school} onChange={e=>setDraft({...draft,school:e.target.value})} placeholder="Tên trường"/></label><label>Email <span>*</span><input required type="email" maxLength={180} value={draft.email||''} onChange={e=>setDraft({...draft,email:e.target.value})} autoComplete="email" placeholder="Email liên hệ"/></label><label>Lớp<input maxLength={40} value={draft.className} onChange={e=>setDraft({...draft,className:e.target.value})} placeholder="Ví dụ: 8A1"/></label><label>Mức độ tự nhận xét<select value={draft.level} onChange={e=>setDraft({...draft,level:e.target.value})}>{levels.map(l=><option key={l}>{l}</option>)}</select></label><label>Mục tiêu học tập<select value={draft.goal} onChange={e=>setDraft({...draft,goal:e.target.value})}>{['Cải thiện điểm số','Thi học kỳ','Thi vào 10','HSG'].map(g=><option key={g}>{g}</option>)}</select></label></div><details className="profile-extra"><summary>Bổ sung thông tin học tập (không bắt buộc)</summary><div className="form-grid"><label>Điểm trung bình Toán<input type="number" min="0" max="10" step="0.1" value={draft.average} onChange={e=>setDraft({...draft,average:e.target.value})}/></label><label>Giáo viên phụ trách<input maxLength={120} value={draft.teacher} onChange={e=>setDraft({...draft,teacher:e.target.value})}/></label></div><fieldset><legend>Nội dung em đang gặp khó</legend><div className="checkbox-chips">{topicList.slice(1).map(t=><label key={t}><input type="checkbox" checked={draft.difficulties.includes(t)} onChange={e=>setDraft({...draft,difficulties:e.target.checked?[...draft.difficulties,t]:draft.difficulties.filter(v=>v!==t)})}/>{t}</label>)}</div></fieldset></details><label className="check-row"><input type="checkbox" checked={remember} onChange={e=>setRemember(e.target.checked)}/>Ghi nhớ hồ sơ trên thiết bị này</label><p className="caption">Tên, trường và email không tự động gửi đến Gemini. Chỉ mức độ, mục tiêu và khó khăn học tập được dùng để cá nhân hóa lời hướng dẫn. Trên máy dùng chung, nên bỏ chọn ghi nhớ.</p><button className="primary full-width" type="submit">Hoàn tất thông tin & bắt đầu học <ArrowUpRight size={18}/></button>{profile&&<button className="text-button full-width" type="button" onClick={()=>{if(!confirm('Xóa hồ sơ đã lưu trên thiết bị và kết thúc phiên hiện tại?'))return;try{localStorage.removeItem('ai-tutor-profile-v1');localStorage.removeItem('ai-tutor-learner-v5');setLearner(createLearnerState());setRemember(false);}catch{setError('Không thể xóa dữ liệu trên thiết bị.');return;}setProfile(null);setDraft({...emptyProfile,email:''});setCode('');setProfileOpen(false);newChat();}}>Xóa hồ sơ trên thiết bị</button>}</form></DialogContent></Dialog>
+- <Dialog open={feedbackOpen} onOpenChange={v=>{if(!sendingFeedback)setFeedbackOpen(v);}}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}} className="feedback-dialog"><DialogHeader><span className="dialog-symbol feedback-symbol"><Star size={27}/></span><DialogTitle>Em thấy buổi học thế nào?</DialogTitle><DialogDescription>{autoPrompted.current?'Mình đã đi qua phần hướng dẫn và tự kiểm tra. Em có thể chia sẻ trải nghiệm hoặc tiếp tục học.':'Cảm ơn em đã cùng Thầy tìm hiểu bài toán. Chia sẻ của em giúp giáo viên cải thiện trải nghiệm học tập.'}</DialogDescription></DialogHeader><form onSubmit={sendRating}><fieldset disabled={sendingFeedback||feedbackStatus==='confirmed'||feedbackStatus==='unconfirmed'}><legend className="rating-legend">Mức độ hài lòng</legend><div className="star-rating" role="radiogroup" aria-label="Mức độ hài lòng">{[1,2,3,4,5].map(n=><label key={n} className={`star-option ${n<=rating?'filled':''}`}><input type="radio" name="rating" value={n} checked={rating===n} onChange={()=>setRating(n)} aria-label={`${n} sao — ${ratingLabels[n]}`} required/><Star size={38}/></label>)}</div><p className="rating-label" aria-live="polite">{rating?`${rating}/5 · ${ratingLabels[rating]}`:'Em chọn từ 1 đến 5 sao nhé'}</p><label>Điều gì giúp em hiểu bài hơn?<textarea rows={3} maxLength={1800} value={comment} onChange={e=>setComment(e.target.value)} placeholder="Em có thể góp ý về cách giải thích, sơ đồ hoặc điều còn khó hiểu…"/></label><label className="check-row"><input type="checkbox" checked={includeSummary} onChange={e=>setIncludeSummary(e.target.checked)}/>Kèm tóm tắt chủ đề, mục tiêu và tự nhận xét của em</label><div className="feedback-profile"><strong>{profile?.name}</strong><span>{profile?.school} · {profile?.email}</span><small>Không gửi toàn bộ hội thoại hoặc mã truy cập vào Google Form.</small></div><label className="check-row consent"><input type="checkbox" required checked={consent} onChange={e=>setConsent(e.target.checked)}/>Em đồng ý gửi thông tin trên và đánh giá đến biểu mẫu của giáo viên.</label></fieldset>{feedbackMessage&&<p role="status" className={feedbackStatus==='confirmed'?'success-note':'error'}>{feedbackMessage}</p>}{feedbackStatus==='idle'||feedbackStatus==='error'?<button className="primary full-width" disabled={!rating||!consent||sendingFeedback}>{sendingFeedback?<LoaderCircle size={18} className="spin"/>:<CheckCheck size={18}/>} {sendingFeedback?'Đang gửi đánh giá…':'Gửi đánh giá & kết thúc buổi học'}</button>:feedbackStatus==='confirmed'?<button type="button" className="primary full-width" onClick={()=>setFeedbackOpen(false)}>Cảm ơn Thầy, hẹn buổi học tiếp theo</button>:<><a className="primary full-width" target="_blank" rel="noreferrer" href={formLink(feedbackData())}>Mở Google Form đã điền sẵn <ArrowUpRight size={18}/></a><p className="caption">Biểu mẫu mở ở tab mới. Hãy kiểm tra trước khi nhấn Gửi để tránh gửi trùng.</p><button type="button" className="quiet full-width" onClick={()=>{setEnded(true);setFeedbackOpen(false);setNotice('Đã kết thúc buổi học. Trạng thái gửi đánh giá vẫn chưa được xác nhận.');}}>Kết thúc buổi học</button></>}{feedbackStatus!=='confirmed'&&<button type="button" className="quiet full-width" disabled={sendingFeedback} onClick={()=>setFeedbackOpen(false)}>Em muốn tiếp tục học</button>}</form></DialogContent></Dialog>
++ <Dialog open={profileOpen&&!!code} onOpenChange={setProfileOpen}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}} className="profile-dialog"><DialogHeader><span className="step-label">ĐÃ KẾT NỐI AI · BƯỚC 2</span><DialogTitle>Thầy hiểu em hơn,<br/>mình học phù hợp hơn.</DialogTitle><DialogDescription>Thông tin chỉ được gửi cùng khảo sát đến biểu mẫu thu thập khi bạn đồng ý gửi. Nếu để trống lớp, ứng dụng ghi nhận vai trò Giáo viên.</DialogDescription></DialogHeader><form onSubmit={saveProfile}><div className="form-grid"><label>Họ và tên <span>*</span><input required maxLength={120} value={draft.name} onChange={e=>setDraft({...draft,name:e.target.value})} autoComplete="name" placeholder="Họ và tên của em"/></label><label>Trường đang học (nơi công tác) <span>*</span><input required maxLength={120} value={draft.school} onChange={e=>setDraft({...draft,school:e.target.value})} placeholder="Tên trường"/></label><label>Email <span>*</span><input required type="email" maxLength={180} value={draft.email||''} onChange={e=>setDraft({...draft,email:e.target.value})} autoComplete="email" placeholder="Email liên hệ"/></label><label>Lớp đang học (Nếu bạn là GV thì để trống)<input maxLength={40} value={draft.className} onChange={e=>setDraft({...draft,className:e.target.value})} placeholder="Ví dụ: 8A1"/></label><label>Mức độ tự nhận xét<select value={draft.level} onChange={e=>setDraft({...draft,level:e.target.value})}>{levels.map(l=><option key={l}>{l}</option>)}</select></label><label>Mục tiêu học tập<select value={draft.goal} onChange={e=>setDraft({...draft,goal:e.target.value})}>{['Cải thiện điểm số','Thi học kỳ','Thi vào 10','HSG'].map(g=><option key={g}>{g}</option>)}</select></label></div><details className="profile-extra"><summary>Bổ sung thông tin học tập (không bắt buộc)</summary><div className="form-grid"><label>Điểm trung bình Toán<input type="number" min="0" max="10" step="0.1" value={draft.average} onChange={e=>setDraft({...draft,average:e.target.value})}/></label><label>Giáo viên phụ trách<input maxLength={120} value={draft.teacher} onChange={e=>setDraft({...draft,teacher:e.target.value})}/></label></div><fieldset><legend>Nội dung em đang gặp khó</legend><div className="checkbox-chips">{topicList.slice(1).map(t=><label key={t}><input type="checkbox" checked={draft.difficulties.includes(t)} onChange={e=>setDraft({...draft,difficulties:e.target.checked?[...draft.difficulties,t]:draft.difficulties.filter(v=>v!==t)})}/>{t}</label>)}</div></fieldset></details><label className="check-row"><input type="checkbox" checked={remember} onChange={e=>setRemember(e.target.checked)}/>Ghi nhớ hồ sơ trên thiết bị này</label><p className="caption">Tên, trường và email không tự động gửi đến Gemini. Chỉ mức độ, mục tiêu và khó khăn học tập được dùng để cá nhân hóa lời hướng dẫn. Trên máy dùng chung, nên bỏ chọn ghi nhớ.</p><button className="primary full-width" type="submit">Hoàn tất thông tin & bắt đầu học <ArrowUpRight size={18}/></button>{profile&&<button className="text-button full-width" type="button" onClick={()=>{if(!confirm('Xóa hồ sơ đã lưu trên thiết bị và kết thúc phiên hiện tại?'))return;try{localStorage.removeItem('ai-tutor-profile-v1');localStorage.removeItem('ai-tutor-learner-v5');setLearner(createLearnerState());setRemember(false);}catch{setError('Không thể xóa dữ liệu trên thiết bị.');return;}setProfile(null);setDraft({...emptyProfile,email:''});setCode('');setProfileOpen(false);newChat();}}>Xóa hồ sơ trên thiết bị</button>}</form></DialogContent></Dialog>
++ <Dialog open={feedbackOpen} onOpenChange={v=>{if(!sendingFeedback)setFeedbackOpen(v);}}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}} className="feedback-dialog"><DialogHeader><span className="dialog-symbol feedback-symbol"><Star size={27}/></span><DialogTitle>Khảo sát đánh giá ứng dụng</DialogTitle><DialogDescription>Lời mời khảo sát được nhắc lại mỗi 3 phút sau khi hoàn tất hồ sơ. Bạn có thể đóng để tiếp tục sử dụng; dữ liệu chỉ được gửi khi bạn đồng ý và nhấn Gửi khảo sát.</DialogDescription></DialogHeader><form onSubmit={sendRating}><fieldset disabled={sendingFeedback||feedbackStatus==='confirmed'||feedbackStatus==='unconfirmed'}><legend className="rating-legend">Mức độ hài lòng</legend><div className="star-rating" role="radiogroup" aria-label="Mức độ hài lòng">{[1,2,3,4,5].map(n=><label key={n} className={`star-option ${n<=rating?'filled':''}`}><input type="radio" name="rating" value={n} checked={rating===n} onChange={()=>setRating(n)} aria-label={`${n} sao — ${ratingLabels[n]}`} required/><Star size={38}/></label>)}</div><p className="rating-label" aria-live="polite">{rating?`${rating}/5 · ${ratingLabels[rating]}`:'Bạn hãy chọn từ 1 đến 5 sao'}</p><label>Bạn đánh giá trải nghiệm sử dụng như thế nào?<textarea rows={3} maxLength={1800} value={comment} onChange={e=>setComment(e.target.value)} placeholder="Bạn có thể góp ý về cách hướng dẫn, hình vẽ, sơ đồ hoặc thao tác sử dụng…"/></label><label className="check-row"><input type="checkbox" checked={includeSummary} onChange={e=>setIncludeSummary(e.target.checked)}/>Kèm tóm tắt chủ đề và hoạt động học tập</label><div className="feedback-profile"><strong>{submittedFeedback.current?.name??profile?.name}</strong><span>{submittedFeedback.current?.school??profile?.school} · {submittedFeedback.current?.email??profile?.email}</span><span>{submittedParticipant.current||participantLabel(profile)}</span><small>Vai trò hoặc lớp được gửi cùng khảo sát. Không gửi toàn bộ hội thoại hoặc mã truy cập vào Google Form.</small></div><label className="check-row consent"><input type="checkbox" required checked={consent} onChange={e=>setConsent(e.target.checked)}/>Tôi đồng ý gửi thông tin trên và đánh giá đến biểu mẫu thu thập.</label></fieldset>{feedbackMessage&&<p role="status" className={feedbackStatus==='confirmed'?'success-note':'error'}>{feedbackMessage}</p>}{feedbackStatus==='idle'||feedbackStatus==='error'?<button className="primary full-width" disabled={!rating||!consent||sendingFeedback}>{sendingFeedback?<LoaderCircle size={18} className="spin"/>:<CheckCheck size={18}/>} {sendingFeedback?'Đang gửi đánh giá…':'Gửi khảo sát'}</button>:feedbackStatus==='confirmed'?<button type="button" className="primary full-width" onClick={()=>setFeedbackOpen(false)}>Tiếp tục sử dụng</button>:<><a className="primary full-width" target="_blank" rel="noreferrer" href={formLink(feedbackData())}>Mở Google Form đã điền sẵn <ArrowUpRight size={18}/></a><p className="caption">Biểu mẫu mở ở tab mới. Hãy kiểm tra trước khi nhấn Gửi để tránh gửi trùng.</p></>}{feedbackStatus!=='confirmed'&&<button type="button" className="quiet full-width" disabled={sendingFeedback} onClick={()=>setFeedbackOpen(false)}>Để sau, tiếp tục sử dụng</button>}</form></DialogContent></Dialog>
+  <Dialog open={sampleOpen} onOpenChange={setSampleOpen}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}} className="sample-dialog"><DialogHeader><DialogTitle>Một phiên học mẫu</DialogTitle><DialogDescription>Minh họa soạn sẵn cho bài “Từ tam giác vuông đến hình chữ nhật”.</DialogDescription></DialogHeader><LearningMap plan={lessons[1].plan} source="Bài mẫu"/><div className="sample-turn"><strong>Em</strong><p>MB = MC và MA = MD, nên hai đường chéo cắt nhau tại trung điểm mỗi đường.</p></div><div className="sample-turn"><strong>Gia sư AI</strong><p>Đúng, em đã dùng đủ hai cặp đoạn bằng nhau. Nhờ đó ABDC là hình bình hành. Bây giờ, góc BAC cho em thêm điều gì để kết luận là hình chữ nhật?</p></div><div className="sample-turn"><strong>Em</strong><p>Góc BAC = 90°. Hình bình hành có một góc vuông là hình chữ nhật.</p></div><div className="sample-turn"><strong>Gia sư AI</strong><p>Em đã nối giả thiết với dấu hiệu nhận biết đúng cách. Nếu bỏ giả thiết tam giác ABC vuông tại A, kết luận nào vẫn còn đúng?</p></div><button className="primary" onClick={()=>{setSampleOpen(false);prepareLesson(lessons[1]);}}>Em muốn thử bài này <ArrowUpRight size={18}/></button></DialogContent></Dialog>
+- <Dialog open={help} onOpenChange={setHelp}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}}><DialogHeader><DialogTitle>Học cùng gia sư hình học</DialogTitle><DialogDescription>Một câu hỏi tốt, một bước tiến mới.</DialogDescription></DialogHeader><ol className="help-list"><li>Kết nối AI bằng mã truy cập giáo viên cung cấp.</li><li>Điền họ tên, trường, email và thông tin học tập.</li><li>Chọn bài mẫu hoặc gửi đề bài tứ giác và phần em đã làm.</li><li>Xem sơ đồ định hướng, tự làm bước nhỏ rồi giải thích căn cứ.</li><li>Khi đã hiểu, nhấn “Em đã biết làm, cảm ơn Thầy”. Em cũng được mời đánh giá khi hoàn tất phần tự kiểm tra.</li></ol><p>Chỉ học hình học tứ giác lớp 8 và kiến thức liên quan. Chưa hỗ trợ gửi ảnh. Hội thoại chỉ giữ trong phiên đang mở. Đánh giá hài lòng không thay thế đánh giá kết quả học tập.</p><a href="/co-so-su-pham.html" target="_blank" rel="noreferrer" className="text-button">Xem cơ sở sư phạm và tài liệu tham khảo <ArrowUpRight size={16}/></a></DialogContent></Dialog>
++ <Dialog open={help} onOpenChange={setHelp}><DialogContent onCloseAutoFocus={e=>{e.preventDefault();(inputRef.current||brandRef.current)?.focus({preventScroll:true});}}><DialogHeader><DialogTitle>Học cùng gia sư hình học</DialogTitle><DialogDescription>Một câu hỏi tốt, một bước tiến mới.</DialogDescription></DialogHeader><ol className="help-list"><li>Kết nối AI bằng mã truy cập giáo viên cung cấp.</li><li>Điền họ tên, trường, email và thông tin học tập.</li><li>Chọn bài mẫu hoặc gửi đề bài tứ giác và phần em đã làm.</li><li>Xem sơ đồ định hướng, tự làm bước nhỏ rồi giải thích căn cứ.</li><li>Nhấn “Khảo sát đánh giá ứng dụng” để góp ý. Khảo sát được nhắc mỗi 3 phút sau khi hoàn tất hồ sơ và khi hoàn tất phần tự kiểm tra. Có thể đóng để tiếp tục học; ứng dụng không tự gửi thông tin.</li></ol><p>Chỉ học hình học tứ giác lớp 8 và kiến thức liên quan. Chưa hỗ trợ gửi ảnh. Hội thoại chỉ giữ trong phiên đang mở. Đánh giá hài lòng không thay thế đánh giá kết quả học tập.</p><a href="/co-so-su-pham.html" target="_blank" rel="noreferrer" className="text-button">Xem cơ sở sư phạm và tài liệu tham khảo <ArrowUpRight size={16}/></a></DialogContent></Dialog>
+  </div>;
+ }
+--- baseline/lib/learning.ts
++++ updated/lib/learning.ts
+@@ -4,8 +4,8 @@
+ export type Lesson={id:string;title:string;topic:string;level:string;operation:string;minutes:number;problem:string;plan:Plan;figure:Figure;hint:string;solution:string;transfer:string};
+ export const learningModes=[
+  {id:'guide',api:'guide',title:'Gợi mở từng bước',desc:'Tự tìm đường đến lời giải',icon:'light'},
+- {id:'review',api:'review',title:'Kiểm tra lời giải',desc:'Hiểu lỗi sai, sửa có căn cứ',icon:'check'},
+- {id:'compare',api:'compare',title:'So sánh cách giải',desc:'Một bài toán, nhiều góc nhìn',icon:'compare'},
++ {id:'review',api:'review',title:'Kiểm tra lời giải',status:'Đang phát triển',desc:'Xem từng bước, sửa đúng căn cứ',icon:'check'},
++ {id:'compare',api:'compare',title:'So sánh cách giải',status:'Đang phát triển',desc:'Đối chiếu ý tưởng, chọn có lí do',icon:'compare'},
+  {id:'practice',api:'guide',title:'Luyện tập mỗi ngày',desc:'Vận dụng và kết nối kiến thức',icon:'pen'},
+  {id:'test',api:'guide',title:'Tự kiểm tra',desc:'Tự làm trước, nhận xét sau',icon:'target'}
+ ];
+--- baseline/lib/survey.ts
++++ updated/lib/survey.ts
+@@ -0,0 +1,27 @@
++import type {Profile} from './tutor';
++
++export function participantLabel(profile: Pick<Profile, 'className'> | null): string {
++  if (!profile) return 'Chưa có thông tin';
++  const className = profile.className.trim();
++  return className ? `Lớp: ${className}` : 'Giáo viên';
++}
++
++export function surveyComment({profile, comment, includeSummary, topic, mode, checkpoints}: {
++  profile: Profile;
++  comment: string;
++  includeSummary: boolean;
++  topic: string;
++  mode: string;
++  checkpoints: string[];
++}): string {
++  // The existing Google Form has five fields. Participant information belongs
++  // in its comment field, even when the optional learning summary is omitted.
++  const parts = [comment.trim(), `[Người tham gia]\n${participantLabel(profile)}`].filter(Boolean);
++  if (includeSummary) {
++    const learning = profile.className.trim()
++      ? `Khối 8; mức độ tự khai: ${profile.level}.\nMục tiêu: ${profile.goal}.\nTự kiểm tra: ${checkpoints.join('; ') || 'Chưa đánh dấu'}.`
++      : 'Nội dung tham khảo: Hình học tứ giác lớp 8.';
++    parts.push(`[Thông tin sử dụng]\nChủ đề: ${topic}; chế độ: ${mode}.\n${learning}`);
++  }
++  return parts.join('\n\n');
++}
+--- baseline/lib/use-survey-reminder.ts
++++ updated/lib/use-survey-reminder.ts
+@@ -0,0 +1,38 @@
++import {useEffect, useRef, useState} from 'react';
++
++export const SURVEY_INTERVAL_MS = 180_000;
++
++/** Remind on a fixed cadence; never submit or reset a survey draft. */
++export function useSurveyReminder({enabled, open, blocked, onRemind}: {
++  enabled: boolean;
++  open: boolean;
++  blocked: boolean;
++  onRemind: () => void;
++}) {
++  const [due, setDue] = useState(false);
++  const [visible, setVisible] = useState(() => typeof document !== 'undefined' && !document.hidden);
++  const callback = useRef(onRemind);
++  useEffect(() => { callback.current = onRemind; }, [onRemind]);
++
++  useEffect(() => {
++    if (!enabled) { setDue(false); return; }
++    const timer = setInterval(() => setDue(true), SURVEY_INTERVAL_MS);
++    return () => clearInterval(timer);
++  }, [enabled]);
++
++  useEffect(() => {
++    const update = () => setVisible(!document.hidden);
++    document.addEventListener('visibilitychange', update);
++    return () => document.removeEventListener('visibilitychange', update);
++  }, []);
++
++  useEffect(() => {
++    if (!enabled || !due) return;
++    // An already open survey counts as this reminder; closing it must not
++    // immediately open another one. Multiple overdue ticks merge into one.
++    if (open) { setDue(false); return; }
++    if (!visible || blocked) return;
++    setDue(false);
++    callback.current();
++  }, [enabled, due, visible, open, blocked]);
++}
+--- baseline/package-lock.json
++++ updated/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "toan-tu-duy-gemini-netlify",
+-  "version": "6.2.0",
++  "version": "6.2.1",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "toan-tu-duy-gemini-netlify",
+-      "version": "6.2.0",
++      "version": "6.2.1",
+       "dependencies": {
+         "@rod2ik/tikzjax": "1.6.0",
+         "class-variance-authority": "0.7.1",
+--- baseline/package.json
++++ updated/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "toan-tu-duy-gemini-netlify",
+-  "version": "6.2.0",
++  "version": "6.2.1",
+   "private": true,
+   "engines": {
+     "node": ">=22.13.0"
+--- baseline/scripts/check-ui.mjs
++++ updated/scripts/check-ui.mjs
+@@ -9,10 +9,10 @@
+  await page.route('**/.netlify/functions/feedback',async r=>{feedbackCalls.push(r.request().postDataJSON());await r.fulfill({json:confirmed?{ok:true,delivery:'confirmed',message:'Google Forms đã xác nhận ghi nhận đánh giá. Cảm ơn em!'}:{ok:false,delivery:'unconfirmed',message:'Chưa nhận được xác nhận từ Google Forms.'}});});await page.route('https://docs.google.com/**',r=>r.abort());
+  const shot=async name=>page.screenshot({path:output+'/'+name+'.png',fullPage:true});const button=name=>page.getByRole('button',{name,exact:true});const send=async text=>{if(text)await page.getByLabel('Nhập đề bài hoặc bài làm').fill(text);await button('Gửi').click();};
+  await page.goto(`http://localhost:${port}`);assert.equal(await page.getByRole('dialog').count(),0);await shot('01-home-desktop');await button('Kết nối AI').click();await page.getByLabel('Mã truy cập',{exact:true}).fill('HOCGIOITOAN');await button('Kiểm tra & kết nối').click();
+- await page.getByLabel('Họ và tên',{exact:false}).fill('Nguyễn An');await page.getByLabel('Trường đang học',{exact:false}).fill('Trường kiểm thử');await page.getByLabel('Email',{exact:false}).fill('student@example.com');await page.getByLabel('Lớp',{exact:true}).fill('8A1');await page.getByLabel('Ghi nhớ hồ sơ trên thiết bị này').check();await shot('02-profile-after-connection');await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();assert.equal(feedbackCalls.length,0);
++ await page.getByLabel('Họ và tên',{exact:false}).fill('Nguyễn An');await page.getByLabel('Trường đang học',{exact:false}).fill('Trường kiểm thử');await page.getByLabel('Email',{exact:false}).fill('student@example.com');await page.getByLabel('Lớp đang học (Nếu bạn là GV thì để trống)',{exact:true}).fill('8A1');await page.getByLabel('Ghi nhớ hồ sơ trên thiết bị này').check();await shot('02-profile-after-connection');await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();assert.equal(feedbackCalls.length,0);
+  await page.getByRole('button',{name:/Từ tam giác vuông đến hình chữ nhật/}).click();await send();await page.locator('.message.assistant').waitFor();assert.equal(await page.getByRole('dialog').count(),0);assert(!JSON.stringify(calls).includes('student@example.com'));assert(!JSON.stringify(calls).includes('Nguyễn An'));assert.equal(calls.at(-1).mode,'guide');await shot('03-chat-diagram');
+- await button('Em đã biết làm, cảm ơn Thầy').click();assert.equal(await page.getByRole('radio',{checked:true}).count(),0);await page.getByRole('radio',{name:'4 sao — Hài lòng',exact:true}).check();await page.getByLabel('Điều gì giúp em hiểu bài hơn?').fill('Sơ đồ giúp em chọn dấu hiệu.');await page.getByLabel('Em đồng ý gửi thông tin trên',{exact:false}).check();await shot('04-feedback');await button('Gửi đánh giá & kết thúc buổi học').click();await page.getByText('Google Forms đã xác nhận ghi nhận đánh giá. Cảm ơn em!').waitFor();assert.equal(feedbackCalls.length,1);assert.equal(feedbackCalls[0].rating,4);await button('Cảm ơn Thầy, hẹn buổi học tiếp theo').click();await page.getByText('Buổi học đã kết thúc',{exact:true}).waitFor();
+- await button('Bài mới').first().click();await send('Cho hình bình hành ABCD có một góc vuông.');await page.locator('.message.assistant').waitFor();complete=true;await send('Hình bình hành có một góc vuông là hình chữ nhật vì các góc còn lại đều vuông.');await page.getByRole('dialog').waitFor();confirmed=false;await page.getByRole('radio',{name:'5 sao — Rất hài lòng',exact:true}).check();await page.getByLabel('Em đồng ý gửi thông tin trên',{exact:false}).check();await button('Gửi đánh giá & kết thúc buổi học').click();const link=page.getByRole('link',{name:'Mở Google Form đã điền sẵn',exact:false});await link.waitFor();const url=new URL(await link.getAttribute('href'));assert.equal(url.searchParams.get('entry.1301171588'),'student@example.com');assert.equal(url.searchParams.get('entry.54850382'),'5');assert.equal(feedbackCalls.length,2);await button('Em muốn tiếp tục học').click();
++ await button('Khảo sát đánh giá ứng dụng').click();assert.equal(await page.getByRole('radio',{checked:true}).count(),0);await page.getByRole('radio',{name:'4 sao — Hài lòng',exact:true}).check();await page.getByLabel('Bạn đánh giá trải nghiệm sử dụng như thế nào?').fill('Sơ đồ giúp em chọn dấu hiệu.');await page.getByLabel('Tôi đồng ý gửi thông tin trên',{exact:false}).check();await shot('04-feedback');await button('Gửi khảo sát').click();await page.getByText('Google Forms đã xác nhận ghi nhận đánh giá. Cảm ơn em!').waitFor();assert.equal(feedbackCalls.length,1);assert.equal(feedbackCalls[0].rating,4);await button('Tiếp tục sử dụng').click();assert.equal(await page.locator('.session-ended').count(),0);await page.getByLabel('Nhập đề bài hoặc bài làm').waitFor();
++ await button('Bài mới').first().click();await send('Cho hình bình hành ABCD có một góc vuông.');await page.locator('.message.assistant').waitFor();complete=true;await send('Hình bình hành có một góc vuông là hình chữ nhật vì các góc còn lại đều vuông.');await page.getByRole('dialog').waitFor();confirmed=false;await page.getByRole('radio',{name:'5 sao — Rất hài lòng',exact:true}).check();await page.getByLabel('Tôi đồng ý gửi thông tin trên',{exact:false}).check();await button('Gửi khảo sát').click();const link=page.getByRole('link',{name:'Mở Google Form đã điền sẵn',exact:false});await link.waitFor();const url=new URL(await link.getAttribute('href'));assert.equal(url.searchParams.get('entry.1301171588'),'student@example.com');assert.equal(url.searchParams.get('entry.54850382'),'5');assert.equal(feedbackCalls.length,2);await button('Để sau, tiếp tục sử dụng').click();
+  complete=false;fail=true;await send('Em cần kiểm tra lại dấu hiệu hình chữ nhật.');await page.getByText('Giới hạn thử nghiệm. Hãy gửi lại.').waitFor();assert.equal(await page.getByLabel('Nhập đề bài hoặc bài làm').inputValue(),'Em cần kiểm tra lại dấu hiệu hình chữ nhật.');await page.getByRole('button',{name:/Luyện tập mỗi ngày/}).click();await page.getByRole('button',{name:'Tạo 5 câu luyện tập',exact:false}).click();await page.locator('.message.assistant').waitFor();assert.equal(calls.at(-1).messages.length,1);
+  await page.setViewportSize({width:390,height:844});await button('Trang chủ Tư duy Toán học').click();await shot('05-home-mobile');assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await button('Chuyển giao diện tối').click();await shot('06-dark-mobile');await button('Mở các chế độ học').click();await page.getByRole('button',{name:/Gợi mở từng bước/}).click();await shot('07-chat-mobile');assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.reload();assert.equal(await page.getByRole('dialog').count(),0);assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('ai-tutor-profile-v1')).name),'Nguyễn An');assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'dark');assert.deepEqual(errors,[]);
+  console.log('PASS UI: connection-first profile, manual/automatic feedback, Form fallback, recovery, fresh history, privacy, persistence, mobile/light/dark, no browser errors. AI and feedback mocked.');
+--- baseline/scripts/check-v5-ui.mjs
++++ updated/scripts/check-v5-ui.mjs
+@@ -28,7 +28,7 @@
+  const theory=page.getByRole('region',{name:'Lý thuyết dự kiến dùng'});assert.equal(await theory.count(),1);assert.equal(await theory.locator('details').first().getAttribute('open'),null);await theory.locator('summary').first().click();await theory.locator('.theory-card summary').first().click();assert(await theory.innerText().then(s=>s.includes('Điều kiện:')));report('Theory is visible, expandable and collapsed by default');
+  await preview('Cho hình bình hành ABCD. E và F theo thứ tự là trung điểm của OD và OB. Chứng minh AE // CF.');assert.equal(await page.locator('[data-geometry-status]').getAttribute('data-geometry-status'),'provisional');await page.locator('.geometry-assumptions summary').click();await page.locator('.current-problem').screenshot({path:out+'/06-provisional.png'});await page.getByLabel('Chỉnh đề và giả định dựng hình').fill(target);await page.getByRole('button',{name:'Áp dụng dữ kiện & vẽ lại'}).click();assert.equal(await page.locator('[data-geometry-status]').getAttribute('data-geometry-status'),'verified');report('Incomplete problem shows assumptions and can be corrected without API');
+  await preview('Cho đường tròn (O) bán kính OA = 3 cm. Kẻ tiếp tuyến d tại A. Chứng minh d vuông góc OA.');assert.equal(await page.locator('.problem-circle').count(),1);await page.locator('.current-problem').screenshot({path:out+'/07-circle.png'});report('Circle and tangent render');
+- await preview(target);await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.getByLabel('Mã truy cập',{exact:true}).fill('HOCGIOITOAN');await page.getByRole('button',{name:'Kiểm tra & kết nối'}).click();await page.getByLabel('Họ và tên',{exact:false}).fill('Học sinh kiểm thử');await page.getByLabel('Trường đang học',{exact:false}).fill('Trường kiểm thử');await page.getByLabel('Email',{exact:false}).fill('test@example.test');await page.getByLabel('Lớp',{exact:true}).fill('8A');await page.getByLabel('Ghi nhớ hồ sơ trên thiết bị này').check();await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.locator('.message.assistant').waitFor();assert(chatCalls.at(-1).messages.at(-1).content.includes('[HO_SO_TU_DUY_V5]'));assert(!JSON.stringify(chatCalls).includes('test@example.test'));report('Existing chat API contract retained; learner context contains no identity fields',{api:'mocked'});
++ await preview(target);await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.getByLabel('Mã truy cập',{exact:true}).fill('HOCGIOITOAN');await page.getByRole('button',{name:'Kiểm tra & kết nối'}).click();await page.getByLabel('Họ và tên',{exact:false}).fill('Học sinh kiểm thử');await page.getByLabel('Trường đang học',{exact:false}).fill('Trường kiểm thử');await page.getByLabel('Email',{exact:false}).fill('test@example.test');await page.getByLabel('Lớp đang học (Nếu bạn là GV thì để trống)',{exact:true}).fill('8A');await page.getByLabel('Ghi nhớ hồ sơ trên thiết bị này').check();await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.locator('.message.assistant').waitFor();assert(chatCalls.at(-1).messages.at(-1).content.includes('[HO_SO_TU_DUY_V5]'));assert(!JSON.stringify(chatCalls).includes('test@example.test'));report('Existing chat API contract retained; learner context contains no identity fields',{api:'mocked'});
+  await page.locator('.learner-panel>summary').click();await page.locator('.diagnostic-panel>summary').click();const answers=[0,1,2,1];
+  for(let i=0;i<4;i++){await page.locator('.diagnostic-option input').nth(answers[i]).check();await page.getByLabel('Vì sao em chọn như vậy?').fill('Em đối chiếu định nghĩa với dữ kiện và điều kiện.');await page.getByRole('button',{name:'Ghi nhận & câu tiếp theo'}).click();if(i===0)assert.equal(await page.getByLabel('Điều chỉnh mức học').inputValue(),'Cơ bản');}
+  assert.equal(await page.getByLabel('Điều chỉnh mức học').inputValue(),'Giỏi');await page.getByLabel('Điều chỉnh mức học').selectOption('Khá');await page.locator('.learner-panel').screenshot({path:out+'/08-learner-profile.png'});assert.equal(await page.getByLabel('Điều chỉnh mức học').inputValue(),'Khá');report('Four diagnostics classify gradually; manual adjustment works');
+--- baseline/scripts/check-v6-ui.mjs
++++ updated/scripts/check-v6-ui.mjs
+@@ -9,7 +9,7 @@
+  await page.route('**/api/chat',async route=>{const b=route.request().postDataJSON();let json;if(b.check)json={ok:true};else if(b.mode==='diagram'){diagramCalls++;json=missing?{latex:'',question:'Điểm M nằm trên đường nào, em nhỉ?'}:{latex:fail&&diagramCalls===1?code.replace('\\draw (A)','\\UndefinedCommand (A)'):code,question:''};}else json={text:'[SO_DO]\nDU_KIEN: Tam giác ABC vuông cân tại C; PM song song BC.\nMUC_TIEU: Chứng minh PM=CQ.\nCAU_NOI: Tính chất góc tạo bởi hai đường song song.\nBUOC_TIEP: Đối chiếu hai góc trong tam giác APM.\n[/SO_DO]\nThao tác tư duy: Phân tích — tìm hai góc bằng nhau.\nÀ, mình nhìn tam giác nhỏ APM nhé!\nGợi mở: Nhờ PM song song BC, góc APM bằng góc nào của tam giác ABC?'};await route.fulfill({json});});
+  await page.goto('http://127.0.0.1:4177');await page.getByRole('button',{name:'Bắt đầu khám phá',exact:false}).click();
+  const input=page.getByLabel('Nhập đề bài hoặc bài làm');await input.fill(problem);await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.getByLabel('Mã truy cập',{exact:true}).fill('HOCGIOITOAN');await page.getByRole('button',{name:'Kiểm tra & kết nối'}).click();
+- await page.getByLabel('Họ và tên',{exact:false}).fill('Học sinh thử nghiệm');await page.getByLabel('Trường đang học',{exact:false}).fill('Trường THCS');await page.getByLabel('Email',{exact:false}).fill('test@example.test');await page.getByLabel('Lớp',{exact:true}).fill('8A');await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();
++ await page.getByLabel('Họ và tên',{exact:false}).fill('Học sinh thử nghiệm');await page.getByLabel('Trường đang học',{exact:false}).fill('Trường THCS');await page.getByLabel('Email',{exact:false}).fill('test@example.test');await page.getByLabel('Lớp đang học (Nếu bạn là GV thì để trống)',{exact:true}).fill('8A');await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();
+  await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.locator('.tikz-result').waitFor({timeout:45000});
+  const svg=await page.locator('.tikz-result').getAttribute('src');assert(svg.includes('font%2Fwoff2'));assert(!svg.includes('tikzjax-loader'));results.push('Gemini fixture → real TeX/WASM → SVG with embedded fonts');
+  assert.equal(await page.locator('.geometry-assumptions').count(),0);results.push('Removed assumptions panel');
+--- baseline/scripts/check-v62-mobile.mjs
++++ updated/scripts/check-v62-mobile.mjs
+@@ -4,7 +4,7 @@
+ const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});let held=false,calls=0;const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/api/chat',async route=>{const b=route.request().postDataJSON();if(b.check)return route.fulfill({json:{ok:true}});if(b.mode==='diagram'){calls++;return route.fulfill({json:{latex:'',question:'Điểm M thuộc đoạn nào?'}})}if(held)return;await route.fulfill({json:{text:'Thao tác tư duy: Phân tích.\nEm hãy tìm hai tam giác có chung đường chéo nhé!'}});});
+ await page.goto('http://127.0.0.1:4178');await page.getByRole('button',{name:'Bắt đầu khám phá',exact:false}).click();const input=page.getByLabel('Nhập đề bài hoặc bài làm');await input.fill('Cho hình bình hành ABCD. Chứng minh AB = CD.');await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.getByLabel('Mã truy cập',{exact:true}).fill('TESTCODE1234');await page.getByRole('button',{name:'Kiểm tra & kết nối'}).click();
+-await page.getByLabel('Họ và tên',{exact:false}).fill('Học sinh thử nghiệm');await page.getByLabel('Trường đang học',{exact:false}).fill('THCS thử nghiệm');await page.getByLabel('Email',{exact:false}).fill('qa@example.test');await page.getByLabel('Lớp',{exact:true}).fill('8A');await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.locator('.message.assistant').waitFor();assert.equal(calls,0);assert.equal(await page.locator('iframe').count(),0);result.push('Mobile: no automatic diagram API or TeX iframe after chat');
++await page.getByLabel('Họ và tên',{exact:false}).fill('Học sinh thử nghiệm');await page.getByLabel('Trường đang học',{exact:false}).fill('THCS thử nghiệm');await page.getByLabel('Email',{exact:false}).fill('qa@example.test');await page.getByLabel('Lớp đang học (Nếu bạn là GV thì để trống)',{exact:true}).fill('8A');await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.locator('.message.assistant').waitFor();assert.equal(calls,0);assert.equal(await page.locator('iframe').count(),0);result.push('Mobile: no automatic diagram API or TeX iframe after chat');
+ held=true;await input.fill('Em cần thêm gợi ý.');await page.getByRole('button',{name:'Gửi',exact:true}).click();await page.getByRole('button',{name:'Dừng',exact:true}).waitFor();assert.equal(await page.locator('iframe').count(),0);await page.reload();await input.waitFor();assert.equal(await input.inputValue(),'Em cần thêm gợi ý.');assert.equal(await page.locator('.message.assistant').count(),1);assert.equal(await page.getByRole('button',{name:'Dừng',exact:true}).count(),0);result.push('Reload while pending restores draft and prior answer without stuck spinner');
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.goto('http://127.0.0.1:4178/poster.html');assert.equal(await page.locator('main section').count(),4);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.screenshot({path:'../qa-v6.2/poster-mobile.png',fullPage:true});result.push('390px poster: four panels, no horizontal overflow');assert.deepEqual(errors,[]);result.push('No browser JavaScript errors');
+ mkdirSync('research/v62-checks',{recursive:true});writeFileSync('research/v62-checks/results.json',JSON.stringify({status:'pass',scope:'Chromium mobile emulation, mocked AI; not physical iPhone/Android',result},null,2));console.log(result);
+--- baseline/server/policy.mjs
++++ updated/server/policy.mjs
+@@ -2,6 +2,7 @@
+ import { DIAGRAM_POLICY } from './diagram-policy.mjs';
+ import {learnerGuidance} from './learner-guidance.mjs';
+ import {RESEARCH_PEDAGOGY} from './research-pedagogy.mjs';
++import {reviewCompareGuidance} from './review-compare-policy.mjs';
+ /** V4.4: strict Socratic instruction; the transport and API schema remain unchanged. */
+ export const SYSTEM=`Bạn là Gia sư hình học AI cho học sinh Việt Nam học HÌNH HỌC THCS, TRỌNG TÂM TỨ GIÁC LỚP 8. Xưng “Thầy”, gọi “em”, dùng tiếng Việt chuẩn, gần gũi, không phán xét. Không giả danh giáo viên thật, không tuyên bố đã huấn luyện riêng hay đã kiểm định hiệu quả.
+ 
+@@ -75,7 +76,7 @@
+  review:'Đọc bài làm để xác định bước hợp lệ gần nhất. Chỉ xử lý lỗi đầu tiên; nếu chưa có bài làm, hỏi em gửi bước đã thử. Không tự viết lại lời giải hoặc cung cấp đáp án.',
+  compare:'So sánh dấu hiệu và điều kiện, mỗi lượt một tiêu chí. Em tự viết và đối chiếu hai hướng; Thầy không trình bày hai lời giải trọn vẹn và không bịa hướng thứ hai.'
+ };
+-export function instructions(mode,messages=[]){return SYSTEM+'\nChế độ: '+descriptions[mode]+learnerGuidance(messages)+RESEARCH_PEDAGOGY+WARM_TUTOR+adaptiveGuidance(messages);}
++export function instructions(mode,messages=[]){return SYSTEM+'\nChế độ: '+descriptions[mode]+learnerGuidance(messages)+RESEARCH_PEDAGOGY+WARM_TUTOR+adaptiveGuidance(messages)+reviewCompareGuidance(mode);}
+ 
+ const WARM_TUTOR=`
+ CÁCH TRÒ CHUYỆN: Xưng Thầy–em, gần gũi và tự nhiên. Có thể nói “À, mình thử nhìn chỗ này nhé!”, “Đúng hướng rồi!” khi phù hợp, không khen sai, không lạm dụng cảm thán. Khi em xin gợi ý thêm: đọc câu hỏi gần nhất và các gợi ý đã cho; KHÔNG lặp lại câu hỏi đó. Thu nhỏ nhiệm vụ, chỉ rõ hai đoạn/góc hoặc dấu hiệu cần đối chiếu. Lần tiếp theo cung cấp một mối liên hệ trung gian và để em hoàn tất bước còn lại. Không quay về hỏi kết luận đề bài nếu đã biết. Có thể viết 1–3 câu tự nhiên trước câu Gợi mở. Không kể chính sách “Thầy không cung cấp đáp án” mỗi lượt. Hình do dịch vụ riêng dựng; không yêu cầu học sinh viết lại toàn bộ đề để phù hợp bộ đọc hình. Chỉ hỏi đúng một dữ kiện thật sự thiếu, chẳng hạn điểm M nằm trên đường nào. Không xuất khối DE_HINH_HOC.
+--- baseline/server/review-compare-policy.mjs
++++ updated/server/review-compare-policy.mjs
+@@ -0,0 +1,32 @@
++/** Mode-specific teaching instructions; this does not change the API contract. */
++export const REVIEW_GUIDANCE = `
++CHẾ ĐỘ CHUYÊN BIỆT: KIỂM TRA LỜI GIẢI
++Mục đích: giúp em tự kiểm tra tính đúng và căn cứ của bài làm đã có, không giải hộ.
++- Đọc cả đề, bài làm và lịch sử trước khi phản hồi. Tách lời em đã viết khỏi lời giải tham chiếu, lời Thầy và điều phải chứng minh. Không coi kết luận của đề là giả thiết.
++- Nếu chưa có bài làm: hỏi em gửi đúng bước em muốn kiểm tra, kèm căn cứ nếu đã có; không bắt viết trọn lời giải. Nếu thiếu đề khiến chưa thể xét một bước, chỉ hỏi dữ kiện đang thiếu.
++- Đọc theo thứ tự suy luận: đối tượng và thứ tự đỉnh; điều kiện của định nghĩa/định lí; phép suy luận và kết luận. Chọn lỗi đầu tiên làm mất căn cứ của bước sau. Không liệt kê mọi lỗi hoặc sửa hộ toàn bộ.
++- Phân biệt bốn tình huống: chưa đủ dữ kiện để nhận xét; kết quả có thể đúng nhưng thiếu căn cứ; suy luận sai; bước hợp lệ và đã nêu đủ căn cứ. Chỉ nói “bước này hợp lệ” khi đã đối chiếu đủ điều kiện. Không chấm điểm hay khẳng định cả lời giải đúng từ một bước đúng.
++- Khi có lỗi, trích rất ngắn đúng câu hoặc quan hệ em đã viết, chỉ rõ điều kiện chưa được bảo đảm, rồi đặt một câu để em tự sửa. Không phán xét em; không nêu sẵn kết quả cần tìm. Nếu có nhiều lỗi, dừng ở lỗi đầu tiên và chờ bài sửa.
++- Khi em sửa đúng có căn cứ, ghi nhận điều em vừa bổ sung rồi chuyển sang mắt xích kế tiếp với mức hỗ trợ thấp hơn. Khi vẫn vướng, đổi điểm tựa và chia nhỏ nhiệm vụ, không lặp nguyên câu.
++- Khi bài làm hoàn chỉnh, yêu cầu em giải thích một mắt xích then chốt hoặc kiểm tra điều kiện áp dụng. Không viết lại lời giải thành một bản đáp án. Chỉ kết thúc theo bằng chứng tự kiểm tra trong quy tắc chung.
++Phản hồi vẫn có đúng một SO_DO, một thao tác tư duy phù hợp, tối đa một câu “Nhận xét:” ngắn và đúng một câu “Gợi mở:”. MUC_TIEU là kiểm tra/sửa một bước; CAU_NOI chỉ nêu điều kiện cần đối chiếu, không giải thay. Với em cần củng cố, chỉ rõ một đối tượng và giải thích thuật ngữ ngắn; với em khá/giỏi, để em tự nhận ra điều kiện bị thiếu hoặc tự kiểm tra chiều đảo. Mọi mức vẫn yêu cầu căn cứ, không cung cấp đáp án hoặc lời giải hoàn chỉnh.
++Ví dụ chỉ dùng nếu đúng ngữ cảnh: em viết “Tứ giác có hai đường chéo bằng nhau nên là hình chữ nhật” nhưng chưa chứng minh loại tứ giác. Nhận xét rằng điều kiện áp dụng dấu hiệu trong bước đó chưa được bảo đảm. Hỏi: “Trong dấu hiệu em đang dùng, tứ giác cần có điều kiện nào trước khi xét hai đường chéo?” Không tự bổ sung loại tứ giác cho em.
++`;
++
++export const COMPARE_GUIDANCE = `
++CHẾ ĐỘ CHUYÊN BIỆT: SO SÁNH CÁCH GIẢI
++Mục đích: giúp em chọn và lí giải chiến lược từ các ý tưởng em đã nêu, không trình bày hai lời giải mẫu.
++- Xác định hai hướng em muốn đối chiếu, cùng một đề và cùng kết luận. Giữ đúng tên điểm và ghi rõ hướng nào do em nêu. Không bịa hướng thứ hai hoặc nhận các lời giải tham chiếu là bài làm của em.
++- Chưa có hướng nào: hỏi em đề xuất một dấu hiệu đủ liên quan tới kết luận. Mới có một hướng: hỏi em một hướng khác muốn thử; nếu em chưa biết, gợi một nhóm đối tượng có thể xét mà chưa cho sẵn cả chiến lược. Hai ý tưởng ngắn cũng đủ bắt đầu, không ép viết hai lời giải hoàn chỉnh.
++- Kiểm tra tính hợp lệ trước khi so sánh độ ngắn. Nếu một hướng thiếu căn cứ hoặc dùng dấu hiệu sai, chỉ dừng ở vướng mắc đầu tiên ấy. Chưa đủ bài làm thì nói “hai ý tưởng dự kiến”, không khẳng định cả hai đã đúng.
++- Mỗi lượt chọn đúng một tiêu chí có ích: điều kiện của dấu hiệu; mức tận dụng giả thiết; có cần dựng thêm hay không; số mắt xích chưa có căn cứ; hoặc khả năng dùng lại khi đổi một giả thiết. Không liệt kê mọi tiêu chí và không đưa một bảng dài.
++- Đối chiếu cụ thể phần đã có: “Hướng 1 ...; hướng 2 ...” trong tối đa hai mệnh đề ngắn, rồi hỏi một quyết định có căn cứ. Không dựng thêm các bước còn thiếu của cả hai hướng để minh họa.
++- Không kết luận cách ngắn hơn luôn tốt hơn. Cho em tự chọn hướng theo điều kiện của bài và giải thích một lí do; sau đó hướng dẫn đúng hướng em chọn, một mắt xích mỗi lượt. Hai cách chỉ đổi thứ tự viết cùng một dấu hiệu thì chỉ ra điểm giống, không ép coi là hai chiến lược khác nhau.
++- Khi em đã tự hoàn thành, có thể hỏi về điều kiện còn giữ được khi đổi cấu hình (tương tự hóa/khái quát hóa), hoặc một trường hợp riêng để kiểm tra giới hạn (đặc biệt hóa/phản ví dụ). Chờ em giải thích, không cung cấp kết quả của bài biến đổi.
++Phản hồi vẫn có đúng một SO_DO, một “Thao tác tư duy:” và đúng một “Gợi mở:”, khoảng 180 từ. Thường dùng thao tác So sánh; khi đang sửa một điều kiện sai thì dùng Phân tích. MUC_TIEU ghi đúng tiêu chí đang xét; CAU_NOI là điều kiện tương ứng của dấu hiệu, không phải lời giải. Em cần củng cố: đối chiếu một điều kiện cụ thể, dùng lời quen thuộc. Em khá/giỏi: tự chọn tiêu chí và lí giải phạm vi áp dụng. Không cung cấp đáp án hoặc lời giải hoàn chỉnh dù em xin hai cách để so sánh.
++Ví dụ chỉ dùng khi em đã nêu hai hướng nhận biết hình bình hành: một cặp cạnh đối song song và bằng nhau; hai đường chéo cắt nhau tại trung điểm mỗi đường. Chỉ đối chiếu điều kiện em đã chứng minh, rồi hỏi: “Với các kết quả em vừa chứng minh, hướng nào đã có đủ điều kiện áp dụng?” Chờ em nêu căn cứ; chưa khẳng định hướng nào tối ưu thay em.
++`;
++
++export function reviewCompareGuidance(mode) {
++  return mode === 'review' ? REVIEW_GUIDANCE : mode === 'compare' ? COMPARE_GUIDANCE : '';
++}
+--- baseline/tests/preserved.test.mjs
++++ updated/tests/preserved.test.mjs
+@@ -3,6 +3,9 @@
+  const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
+  // Explicitly authorized integrations are separately tested, not declared byte-identical.
+  const drawingIntegration=new Set(['netlify.toml','lib/tutor.ts','app/page.tsx','app/globals.css','lib/learning.ts','components/learning-visuals.tsx','main.tsx','package.json','package-lock.json','server/gemini.mjs','tests/gemini.test.mjs','README.md']);
++ // Survey labels and the continue-after-survey flow changed by request. The
++ // updated UI script is not byte-identical; survey-component.test.mjs covers it.
++ drawingIntegration.add('scripts/check-ui.mjs');
+  for(const [file,hash] of Object.entries(expected)){if(drawingIntegration.has(file))continue;assert.equal(createHash('sha256').update(await readFile(new URL('../'+file,import.meta.url))).digest('hex'),hash,file);}
+ });
+ test('Gemini authentication and transport remain unchanged after reversing documented V6.1 integrations',async()=>{
+--- baseline/tests/review-compare.test.mjs
++++ updated/tests/review-compare.test.mjs
+@@ -0,0 +1,86 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {readFileSync} from 'node:fs';
++import {createHash} from 'node:crypto';
++import {instructions} from '../server/policy.mjs';
++import {reviewCompareGuidance,REVIEW_GUIDANCE,COMPARE_GUIDANCE} from '../server/review-compare-policy.mjs';
++import {handleChat} from '../server/gemini.mjs';
++import {guardTutorOutput} from '../server/strict-tutor.mjs';
++import {learningModes,lessons,parseTutorResponse} from '../lib/learning.ts';
++
++// Authored acceptance examples, not responses recorded from a live model.
++export const examples={
++ review:{
++  input:'Cho tứ giác ABCD có AC = BD. Em viết: AC = BD nên ABCD là hình chữ nhật. Nhờ Thầy kiểm tra bước này.',
++  reply:`[SO_DO]
++DU_KIEN: ABCD là tứ giác; AC = BD.
++MUC_TIEU: Kiểm tra điều kiện của dấu hiệu vừa dùng.
++CAU_NOI: Đối chiếu loại tứ giác trong điều kiện áp dụng dấu hiệu.
++BUOC_TIEP: Xác định một điều kiện chưa có căn cứ.
++[/SO_DO]
++Thao tác tư duy: Phân tích — tách điều kiện cần kiểm tra trong một suy luận.
++Nhận xét: Ở bước “AC = BD nên ABCD là hình chữ nhật”, em chưa bảo đảm đủ điều kiện của dấu hiệu.
++Gợi mở: Trong dấu hiệu em đang dùng, tứ giác cần có điều kiện nào trước khi xét hai đường chéo?`,
++ },
++ compare:{
++  input:'Cho tứ giác ABCD có AB song song CD và AB = CD. Để nhận biết hình bình hành, em muốn đối chiếu hướng dùng một cặp cạnh đối với hướng dùng hai đường chéo.',
++  reply:`[SO_DO]
++DU_KIEN: AB ∥ CD; AB = CD; em đã nêu hai hướng dự kiến.
++MUC_TIEU: So sánh điều kiện đã có của mỗi hướng.
++CAU_NOI: Đối chiếu điều kiện của dấu hiệu với giả thiết, chưa bổ sung kết quả.
++BUOC_TIEP: Tìm một điều kiện còn thiếu căn cứ trong hướng đường chéo.
++[/SO_DO]
++Thao tác tư duy: So sánh — đối chiếu hai ý tưởng theo điều kiện áp dụng.
++Đối chiếu: Hướng thứ nhất xét cạnh đối; hướng thứ hai xét hai đường chéo. Mình đang so sánh ý tưởng, chưa kết luận cả hai đã hoàn chỉnh.
++Gợi mở: Trong hướng dùng hai đường chéo, điều kiện nào em chưa có căn cứ từ đề bài?`,
++ },
++};
++
++test('only review and compare carry the development status; original API mode IDs remain unchanged',()=>{
++  assert.deepEqual(learningModes.filter(m=>m.status).map(m=>[m.id,m.api,m.status]),[
++    ['review','review','Đang phát triển'],['compare','compare','Đang phát triển'],
++  ]);
++  assert.deepEqual(learningModes.map(m=>m.api),['guide','review','compare','guide','guide']);
++});
++
++test('the guide-mode prompt and all original lesson contents are unchanged from v6.2',()=>{
++  const baseline=JSON.parse(readFileSync(new URL('./v62-mode-baseline.json',import.meta.url),'utf8'));
++  const hash=s=>createHash('sha256').update(s).digest('hex');
++  assert.equal(hash(instructions('guide',[])),baseline.guidePromptSha256);
++  assert.equal(hash(JSON.stringify(lessons)),baseline.lessonsSha256);
++});
++
++test('mode-specific instructions are isolated and retain the strict one-question teaching policy',()=>{
++  assert.equal(reviewCompareGuidance('guide'),'');assert.equal(reviewCompareGuidance('diagram'),'');
++  assert(instructions('review').includes(REVIEW_GUIDANCE));assert(!instructions('review').includes(COMPARE_GUIDANCE));
++  assert(instructions('compare').includes(COMPARE_GUIDANCE));assert(!instructions('compare').includes(REVIEW_GUIDANCE));
++  for(const mode of ['review','compare']){
++    assert.match(instructions(mode),/KHÔNG CUNG CẤP ĐÁP ÁN HOẶC LỜI GIẢI HOÀN CHỈNH/);
++    assert.match(instructions(mode),/đúng một câu hỏi chính sau “Gợi mở:”/);
++    assert.match(instructions(mode),/Chưa đủ bài làm|chưa có bài làm/);
++  }
++});
++
++for(const mode of ['review','compare'])test('specialized '+mode+' instructions reach Gemini with the same history and response schema',async()=>{
++  const example=examples[mode],messages=[{role:'user',content:'[Bối cảnh học tập tự khai] '+JSON.stringify({mucDo:'Mất gốc'})+'\n[Yêu cầu học sinh]\n'+example.input}];
++  let calls=0;
++  const r=await handleChat(new Request('http://test/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({accessCode:'HOCGIOITOAN',mode,messages})}),{GEMINI_API_KEY:'test-placeholder'},async(url,options)=>{
++    calls++;assert.equal(options.headers['x-goog-api-key'],'test-placeholder');
++    const payload=JSON.parse(options.body);
++    assert.equal(payload.systemInstruction.parts[0].text,instructions(mode,messages));
++    assert.match(payload.systemInstruction.parts[0].text,/Mức tự khai: Mất gốc/);
++    assert.deepEqual(payload.contents,[{role:'user',parts:[{text:messages[0].content}]}]);
++    return Response.json({candidates:[{finishReason:'STOP',content:{parts:[{text:example.reply}]}}]});
++  });
++  assert.equal(calls,1);assert.equal(r.status,200);
++  const body=await r.json();assert.deepEqual(Object.keys(body).sort(),['model','text']);assert.equal(body.text,example.reply);
++});
++
++for(const mode of ['review','compare'])test('authored '+mode+' example keeps one diagram, one question, a thinking operation and no completion marker',()=>{
++  const {reply,input}=examples[mode],parsed=parseTutorResponse(reply);
++  assert(parsed.plan);assert.equal(parsed.complete,false);
++  assert.equal((reply.match(/\[SO_DO\]/g)||[]).length,1);
++  assert.equal((reply.match(/\?/g)||[]).length,1);assert.match(reply,/Thao tác tư duy:/);
++  assert(reply.split(/\s+/).length<=180);
++  assert.equal(guardTutorOutput(reply,[{role:'user',content:input}]),reply);
++});
+--- baseline/tests/survey-component.test.mjs
++++ updated/tests/survey-component.test.mjs
+@@ -0,0 +1,160 @@
++// React integration checks. Rendering-only children are replaced; profile,
++// survey, timer and HTTP request code run unchanged. No browser or live writes.
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {readFileSync} from 'node:fs';
++import {createRequire} from 'node:module';
++import ts from 'typescript';
++import React from 'react';
++import {create, act} from 'react-test-renderer';
++import * as tutor from '../lib/tutor.ts';
++import * as learning from '../lib/learning.ts';
++import * as session from '../lib/session-recovery.ts';
++import * as survey from '../lib/survey.ts';
++import * as reminder from '../lib/use-survey-reminder.ts';
++
++globalThis.IS_REACT_ACT_ENVIRONMENT=true;
++const h=React.createElement, none=()=>null;
++function compile(path, mocks={}) {
++  const url=new URL('../'+path,import.meta.url), nativeRequire=createRequire(url);
++  const js=ts.transpileModule(readFileSync(url,'utf8'),{compilerOptions:{
++    module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true,
++  }}).outputText;
++  const module={exports:{}};
++  new Function('require','module','exports',js)(p=>p in mocks?mocks[p]:nativeRequire(p),module,module.exports);
++  return module.exports;
++}
++const feedback=compile('lib/feedback.ts');
++const container=({children,...props})=>h('div',props,children);
++const App=compile('app/page.tsx',{
++  '@/lib/tutor':tutor,'@/lib/learning':learning,'@/lib/session-recovery':session,
++  '@/lib/feedback':feedback,'@/lib/survey':survey,'@/lib/use-survey-reminder':reminder,
++  'lucide-react':new Proxy({},{get:()=>none}),
++  '@/components/learner-panel':{LearnerPanel:none},
++  '@/components/ui/dialog':{Dialog:({open,children})=>open?h('section',{},children):null,
++    DialogContent:container,DialogHeader:container,DialogTitle:container,DialogDescription:container},
++  '@/components/learning-visuals':{GeometryFigure:none,LearningMap:none,TutorAvatar:none},
++  '@/components/math-text':{MathText:({text})=>h('span',{},text)},
++  '@/components/worksheet-bank':{WorksheetBank:none},'@/lib/worksheets':{worksheets:[],findWorksheet:()=>null},
++  '@/components/tikz-figure':{ProblemFigure:none},
++  '@/lib/problem-diagram':{problemForTurn:(text,previous)=>previous||text},
++  '@/lib/geometry-model':{compileGeometry:()=>({givens:[],goal:''})},
++  '@/lib/diagram-interpretation':{diagramPrompt:()=>'',diagramBlock:()=>''},
++  '@/lib/adaptive-learning':{
++    readLearnerState:()=>({grade:'8',level:'Cơ bản',questions:[]}),
++    createLearnerState:level=>({grade:'8',level,questions:[]}),
++    observeAnswer:s=>s,planThinkingQuestion:()=>({question:''}),
++    questionFromReply:()=>({question:''}),learnerContext:()=>'',
++  },
++}).default;
++
++function text(node) {return typeof node==='string'?node:(node?.children||[]).map(text).join('');}
++function storage() {const map=new Map();return {getItem:k=>map.get(k)||null,setItem:(k,v)=>map.set(k,v),removeItem:k=>map.delete(k)};}
++
++async function setup(t,{className='',delivery='confirmed'}={}) {
++  const keys=['fetch','document','localStorage','sessionStorage','matchMedia','addEventListener','removeEventListener'];
++  const saved=Object.fromEntries(keys.map(k=>[k,globalThis[k]]));
++  globalThis.document=Object.assign(new EventTarget(),{hidden:false,documentElement:{dataset:{}}});
++  globalThis.localStorage=storage();globalThis.sessionStorage=storage();
++  globalThis.matchMedia=()=>({matches:true});globalThis.addEventListener=()=>{};globalThis.removeEventListener=()=>{};
++  const requests=[];
++  globalThis.fetch=async(url,options)=>{
++    const body=JSON.parse(options.body);requests.push({url,body});
++    if(url==='/api/chat')return Response.json(body.check?{ok:true}:{text:'Gợi mở: Em dựa vào dữ kiện nào để chọn dấu hiệu?'});
++    assert.equal(url,'/.netlify/functions/feedback');
++    return Response.json({ok:delivery==='confirmed',delivery,message:delivery==='confirmed'?'Đã xác nhận khảo sát.':'Chưa xác nhận khảo sát.'});
++  };
++  t.mock.timers.enable({apis:['setInterval']});
++  let tree;await act(async()=>{tree=create(h(App));});
++  t.after(async()=>{await act(async()=>tree.unmount());for(const k of keys)globalThis[k]=saved[k];});
++  const byClass=c=>tree.root.findByProps({className:c});
++  const button=label=>tree.root.findAllByType('button').find(b=>text(b).trim()===label.trim());
++  const click=label=>act(async()=>{const b=button(label);assert(b,`button ${label}`);b.props.onClick();});
++  const input=label=>tree.root.findAllByType('label').find(n=>text(n).startsWith(label)).findByType('input');
++  const change=(node,value)=>act(async()=>node.props.onChange({target:{value,checked:value}}));
++  const submit=dialog=>act(async()=>byClass(dialog).findByType('form').props.onSubmit({preventDefault(){}}));
++  await click('Kết nối AI');await change(input('Mã truy cập'),'HOCGIOITOAN');await submit('connection-dialog');
++  const schoolLabel=tree.root.findAllByType('label').find(n=>text(n).startsWith('Trường đang học'));
++  assert(text(schoolLabel).startsWith('Trường đang học (nơi công tác)'));
++  assert.equal(input('Lớp đang học (Nếu bạn là GV thì để trống)').props.required,undefined);
++  await change(input('Họ và tên'),'Người kiểm thử');await change(input('Trường đang học'),'Trường kiểm thử');
++  await change(input('Email'),'test@example.test');await change(input('Lớp đang học'),className);
++  await submit('profile-dialog');await click('Bắt đầu khám phá ');
++  return {tree,byClass,button,click,input,change,submit,requests,tick:ms=>act(async()=>t.mock.timers.tick(ms)),
++    posts:()=>requests.filter(r=>r.url==='/.netlify/functions/feedback')};
++}
++
++test('teacher survey uses the real five-field payload without ending the chat; next reminder starts a new consented survey',async t=>{
++  const r=await setup(t,{className:'   '});
++  assert(text(r.byClass('side-profile')).includes('Giáo viên'));
++  const poster=r.byClass('creators-footer').findByType('a');
++  assert.equal(poster.props.href,'https://app.netlify.com/projects/poster-online-khkt/overview');
++  assert.equal(poster.props.target,'_blank');assert.match(poster.props.rel,/noopener/);
++  assert.doesNotMatch(text(r.byClass('creators-footer')),/Phiên bản/);
++  await r.change(r.tree.root.findByProps({id:'problem'}),'Câu hỏi đang soạn');
++  await r.tick(179999);assert.equal(r.tree.root.findAllByType('div').filter(n=>n.props.className==='feedback-dialog').length,0);
++  await r.tick(1);assert.equal(r.tree.root.findAllByType('div').filter(n=>n.props.className==='feedback-dialog').length,1);
++  assert.equal(r.posts().length,0);
++  await r.change(r.tree.root.findByProps({'aria-label':'4 sao — Hài lòng'}),4);
++  await r.change(r.input('Kèm tóm tắt'),false);
++  assert.equal(r.button('Gửi khảo sát').props.disabled,true);
++  await r.change(r.input('Tôi đồng ý'),true);await r.submit('feedback-dialog');
++  assert.equal(r.posts().length,1);
++  const first=r.posts()[0].body;
++  assert.deepEqual(Object.keys(first).sort(),['accessCode','comment','consent','email','name','rating','school','submissionId'].sort());
++  assert.match(first.comment,/\[Người tham gia\]\nGiáo viên/);assert.doesNotMatch(first.comment,/Lớp:|Thông tin sử dụng/);
++  await r.click('Tiếp tục sử dụng');
++  assert.equal(r.tree.root.findByProps({id:'problem'}).props.value,'Câu hỏi đang soạn');
++  assert.equal(r.tree.root.findAllByProps({className:'session-ended'}).length,0);
++  await r.tick(180000);
++  assert.equal(r.posts().length,1);assert.equal(r.input('Tôi đồng ý').props.checked,false);
++  assert.equal(r.button('Gửi khảo sát').props.disabled,true);
++  await r.change(r.tree.root.findByProps({'aria-label':'5 sao — Rất hài lòng'}),5);
++  await r.change(r.input('Tôi đồng ý'),true);await r.submit('feedback-dialog');
++  assert.equal(r.posts().length,2);assert.notEqual(r.posts()[1].body.submissionId,first.submissionId);
++});
++
++test('student class is preserved and an unfinished survey keeps its rating and comment across reminders',async t=>{
++  const r=await setup(t,{className:' 8A1 '});
++  await r.click('Khảo sát đánh giá ứng dụng');
++  await r.change(r.tree.root.findByProps({'aria-label':'4 sao — Hài lòng'}),4);
++  await r.change(r.byClass('feedback-dialog').findByType('textarea'),'Góp ý đang viết');
++  await r.tick(180000);await r.click('Để sau, tiếp tục sử dụng');
++  assert.equal(r.tree.root.findAllByType('div').filter(n=>n.props.className==='feedback-dialog').length,0);
++  await r.tick(180000);
++  assert.equal(r.byClass('feedback-dialog').findByType('textarea').props.value,'Góp ý đang viết');
++  assert.equal(r.tree.root.findByProps({'aria-label':'4 sao — Hài lòng'}).props.checked,true);
++  assert.equal(r.posts().length,0);
++  await r.change(r.input('Tôi đồng ý'),true);await r.submit('feedback-dialog');
++  assert.match(r.posts()[0].body.comment,/Lớp: 8A1/);assert.doesNotMatch(r.posts()[0].body.comment,/Giáo viên/);
++});
++
++test('unconfirmed delivery retains its original prefilled Form and never retries on a timer',async t=>{
++  const r=await setup(t);
++  // Force an uncertain delivery without any real network request.
++  globalThis.fetch=async(url,options)=>{r.requests.push({url,body:JSON.parse(options.body)});return Response.json({ok:false,delivery:'unconfirmed',message:'Chưa xác nhận khảo sát.'});};
++  await r.click('Khảo sát đánh giá ứng dụng');
++  await r.change(r.tree.root.findByProps({'aria-label':'3 sao — Bình thường'}),3);
++  await r.change(r.input('Tôi đồng ý'),true);await r.submit('feedback-dialog');
++  const form=()=>r.byClass('feedback-dialog').findByType('a').props.href, first=form();
++  const url=new URL(first);assert.match(url.searchParams.get('entry.326585189'),/Giáo viên/);
++  assert.equal(url.searchParams.get('entry.1301171588'),'test@example.test');
++  await r.click('Để sau, tiếp tục sử dụng');await r.tick(180000);
++  assert.equal(form(),first);assert.equal(r.posts().length,1);
++  assert.equal(r.byClass('feedback-dialog').findByType('fieldset').props.disabled,true);
++});
++
++test('review and compare show development status in navigation and headings with distinct input guidance',async t=>{
++  const r=await setup(t,{className:'8A1'});
++  for(const [label,placeholder] of [
++    ['Kiểm tra lời giải','Nhập đề bài và từng bước trong lời giải của em…'],
++    ['So sánh cách giải','Nhập đề bài và các ý tưởng em muốn đối chiếu…'],
++  ]){
++    const nav=r.tree.root.findAllByType('button').find(b=>text(b).startsWith(label));
++    assert(text(nav).includes('(Đang phát triển)'));
++    await act(async()=>nav.props.onClick());
++    assert.equal(text(r.byClass('chat-heading').findByType('h1')),label+' (Đang phát triển)');
++    assert.equal(r.tree.root.findByProps({id:'problem'}).props.placeholder,placeholder);
++  }
++  assert.equal(r.requests.filter(r=>!r.body.check).length,0);
++});
+--- baseline/tests/survey-preserved.test.mjs
++++ updated/tests/survey-preserved.test.mjs
+@@ -0,0 +1,12 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {readFileSync} from 'node:fs';
++import {createHash} from 'node:crypto';
++
++test('survey update preserves v6.2 Gemini, class authentication, Forms transport, TikZ, learner model and Netlify configuration',()=>{
++  const hashes=JSON.parse(readFileSync(new URL('./v62-protected.json',import.meta.url),'utf8'));
++  for(const [file,expected] of Object.entries(hashes)) {
++    const actual=createHash('sha256').update(readFileSync(new URL('../'+file,import.meta.url))).digest('hex');
++    assert.equal(actual,expected,file);
++  }
++});
+--- baseline/tests/survey-reminder.test.mjs
++++ updated/tests/survey-reminder.test.mjs
+@@ -0,0 +1,78 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import React from 'react';
++import {create, act} from 'react-test-renderer';
++import {useSurveyReminder, SURVEY_INTERVAL_MS} from '../lib/use-survey-reminder.ts';
++
++globalThis.IS_REACT_ACT_ENVIRONMENT = true;
++function Harness(props) { useSurveyReminder(props); return null; }
++
++async function setup(t, initial = {}) {
++  t.mock.timers.enable({apis:['setInterval']});
++  const oldDocument = globalThis.document;
++  globalThis.document = Object.assign(new EventTarget(), {hidden:false});
++  let calls=0, root, props={enabled:true,open:false,blocked:false,onRemind:()=>calls++, ...initial};
++  await act(async()=>{root=create(React.createElement(Harness,props));});
++  let mounted=true;
++  async function close(){if(mounted){await act(async()=>root.unmount());mounted=false;}}
++  t.after(async()=>{await close();globalThis.document=oldDocument;});
++  return {
++    calls:()=>calls,
++    tick:ms=>act(async()=>t.mock.timers.tick(ms)),
++    update:patch=>act(async()=>{props={...props,...patch};root.update(React.createElement(Harness,props));}),
++    visibility:hidden=>act(async()=>{document.hidden=hidden;document.dispatchEvent(new Event('visibilitychange'));}),
++    close,
++  };
++}
++
++test('survey first appears at exactly three minutes and repeats after dismissal',async t=>{
++  const r=await setup(t);
++  assert.equal(SURVEY_INTERVAL_MS,180000);
++  await r.tick(179999);assert.equal(r.calls(),0);
++  await r.tick(1);assert.equal(r.calls(),1);
++  await r.update({open:true});await r.update({open:false});
++  await r.tick(179999);assert.equal(r.calls(),1);
++  await r.tick(1);assert.equal(r.calls(),2);
++});
++
++test('an open survey counts as the reminder and does not immediately reopen on close',async t=>{
++  const r=await setup(t,{open:true});
++  await r.tick(180000);assert.equal(r.calls(),0);
++  await r.update({open:false});assert.equal(r.calls(),0);
++  await r.tick(180000);assert.equal(r.calls(),1);
++});
++
++test('busy or conflicting dialogs defer and coalesce multiple reminders into one',async t=>{
++  const r=await setup(t,{blocked:true});
++  for(let i=0;i<3;i++)await r.tick(180000);
++  assert.equal(r.calls(),0);
++  await r.update({blocked:false});assert.equal(r.calls(),1);
++  await r.update({blocked:true});await r.update({blocked:false});assert.equal(r.calls(),1);
++});
++
++test('hidden tabs wait until visible without accumulating survey dialogs',async t=>{
++  const r=await setup(t);
++  await r.visibility(true);await r.tick(180000);await r.tick(180000);
++  assert.equal(r.calls(),0);
++  await r.visibility(false);assert.equal(r.calls(),1);
++});
++
++test('connection and profile are required; disconnect cancels pending reminders',async t=>{
++  const r=await setup(t,{enabled:false});
++  await r.tick(360000);assert.equal(r.calls(),0);
++  await r.update({enabled:true,blocked:true});await r.tick(180000);
++  await r.update({enabled:false,blocked:false});assert.equal(r.calls(),0);
++  await r.update({enabled:true});await r.tick(179999);assert.equal(r.calls(),0);
++  await r.tick(1);assert.equal(r.calls(),1);
++});
++
++test('ordinary rerenders use the latest callback without restarting the three-minute clock',async t=>{
++  const r=await setup(t);let latest=0;
++  await r.tick(179000);await r.update({onRemind:()=>latest++});
++  await r.tick(1000);assert.equal(latest,1);assert.equal(r.calls(),0);
++});
++
++test('unmount removes the timer and visibility listener',async t=>{
++  const r=await setup(t);await r.close();
++  await r.tick(360000);await r.visibility(false);assert.equal(r.calls(),0);
++});
+--- baseline/tests/survey.test.mjs
++++ updated/tests/survey.test.mjs
+@@ -0,0 +1,48 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {participantLabel, surveyComment} from '../lib/survey.ts';
++import {emptyProfile} from '../lib/tutor.ts';
++import {feedbackPayload} from '../server/feedback.mjs';
++
++const profile = {...emptyProfile, name:'Người kiểm thử', school:'Trường thử nghiệm', email:'test@example.test'};
++const build = (patch = {}, includeSummary = true) => surveyComment({
++  profile:{...profile, ...patch}, comment:'Góp ý kiểm thử', includeSummary,
++  topic:'Hình bình hành', mode:'Gợi mở từng bước', checkpoints:[],
++});
++
++test('blank and whitespace class values identify a teacher, with no invented class', () => {
++  for (const className of ['', '  ', '\t\n', '\u00a0']) {
++    assert.equal(participantLabel({className}), 'Giáo viên');
++    assert.match(build({className}), /\[Người tham gia\]\nGiáo viên/);
++    assert.doesNotMatch(build({className}), /Lớp:|mức độ tự khai|Mục tiêu:/);
++  }
++  assert.equal(participantLabel(null), 'Chưa có thông tin');
++});
++
++test('student classification keeps the actual trimmed class and optional learning summary', () => {
++  assert.equal(participantLabel({className:' 8A1 '}), 'Lớp: 8A1');
++  const comment = build({className:' 8A1 ', level:'Giỏi'});
++  assert.match(comment, /Lớp: 8A1/);
++  assert.match(comment, /mức độ tự khai: Giỏi/);
++  assert.match(comment, /Mục tiêu: Cải thiện điểm số/);
++});
++
++test('participant identity remains in Google Forms when learning summary is unchecked', () => {
++  for (const [className, label] of [['', 'Giáo viên'], ['8A1', 'Lớp: 8A1']]) {
++    const comment = build({className}, false);
++    assert(comment.includes(label));
++    assert.doesNotMatch(comment, /Thông tin sử dụng|Chủ đề:|Mục tiêu:/);
++    const body = feedbackPayload({...profile, comment, rating:4, consent:true});
++    assert.equal(body.size, 5);
++    assert.equal(body.get('entry.326585189'), comment);
++    assert.equal(body.get('entry.551915748'), profile.name);
++  }
++});
++
++test('maximum survey input and profile summary fit the existing server comment limit', () => {
++  const comment = surveyComment({profile:{...profile,className:'8'.repeat(40),level:'Học sinh năng khiếu'},
++    comment:'x'.repeat(1800),includeSummary:true,topic:'Hình bình hành',mode:'Gợi mở từng bước',
++    checkpoints:['Em nêu được giả thiết và kết luận','Em giải thích được bước then chốt','Em có thể tự làm lại']});
++  assert(comment.length<=3000);
++  assert.doesNotThrow(()=>feedbackPayload({...profile,comment,rating:5,consent:true}));
++});
+--- baseline/tests/v61-component.test.mjs
++++ updated/tests/v61-component.test.mjs
+@@ -5,6 +5,9 @@
+ const {ProblemFigure}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ const latex=readFileSync(new URL('./fixtures/right-isosceles.tex',import.meta.url),'utf8');const good=()=>Response.json({latex,question:''});
+ const originalFetch=globalThis.fetch;globalThis.IS_REACT_ACT_ENVIRONMENT=true;globalThis.location={origin:'http://test'};
++// V6.2 selects manual drawing on touch devices. These existing compiler tests
++// exercise desktop behavior and need the browser API in their Node environment.
++const originalMatchMedia=globalThis.matchMedia;globalThis.matchMedia=()=>({matches:false});
+ let receive;globalThis.addEventListener=(_type,fn)=>{receive=fn;};globalThis.removeEventListener=(_type,fn)=>{if(receive===fn)receive=undefined;};
+ async function setup(responses,props={}){let calls=0;globalThis.fetch=async()=>{calls++;return (responses[calls-1]||good)();};const sent=[];const window={postMessage:msg=>sent.push(msg)};let root;
+  await act(async()=>{root=create(React.createElement(ProblemFigure,{problem:'fixture '+Math.random(),accessCode:'fixture',...props}),{createNodeMock:e=>e.type==='iframe'?{contentWindow:window}:null});});
+@@ -15,4 +18,4 @@
+ test('V6.1 malformed JSON response is automatically repaired once before compiling',async()=>{const r=await setup([()=>Response.json({}),good]);try{assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
+ test('V6.1 compiler error runs a single repair and then succeeds',async()=>{const r=await setup([good,good]);try{await r.complete('error');assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
+ test('V6.1 repeated format failure stops instead of remaining in loading state',async()=>{const r=await setup([()=>Response.json({}),()=>Response.json({})]);try{assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByProps({role:'status'}).length,0);assert.equal(r.root.root.findAllByProps({role:'alert'}).length,1);}finally{await r.close();}});
+-test.after(()=>{globalThis.fetch=originalFetch;});
++test.after(()=>{globalThis.fetch=originalFetch;globalThis.matchMedia=originalMatchMedia;});
+--- baseline/tests/v62-mode-baseline.json
++++ updated/tests/v62-mode-baseline.json
+@@ -0,0 +1,4 @@
++{
++  "guidePromptSha256": "9f6798791be1db3e4ebb31896b5942d8a0831f8ec4443fcd4a1b792471658c7b",
++  "lessonsSha256": "470878648f3d46f7da8c5fe72cf6604fcbdd5e9a404b5d203ca9755f51bbd82c"
++}
+--- baseline/tests/v62-protected.json
++++ updated/tests/v62-protected.json
+@@ -0,0 +1,21 @@
++{
++  ".env.example": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e",
++  "app/globals.css": "ee59e3d75699bb524a768564cd6e9645fbaffd70e70ee4f38fb17e55f7ce92e5",
++  "components/tikz-figure.tsx": "5e419ec7767f0279656b9d149c2d2cf88536319677e76760993a015cc97e6c6d",
++  "lib/adaptive-learning.ts": "01dfb337f525a96cf59c4465641da0f6e74607522dfc72a06c513f1e419644ec",
++  "lib/diagram-request.ts": "128060cfe727e002d5baeb4d8810b3b234bf89b61eddd05740a5a472cc0e1cab",
++  "lib/feedback.ts": "fb29bbbb36f58e1cf267dfc53ce1cd7f3dd9cc20e3870a8f9bf0e8dc1d8c45ce",
++  "lib/form-config.json": "ab79a36d1684de279cdf8ffe81fe1d8317ec3ee3edf55f466b208614515e94bd",
++  "lib/tutor.ts": "1f3d1c655ab8b0dd6350c8caa40ccbcb782bbee593106761c1aad4169322e37a",
++  "lib/worksheets.ts": "d3b83cffb28e06b8020b85d66065b5776728f3c8948259b5689cb71280fb9b5e",
++  "netlify.toml": "a34110efd4bdbc996f4940ea1690f6a92eac5a5e15716356a27a2b9837fbbc0d",
++  "netlify/functions/chat.mjs": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
++  "netlify/functions/feedback.mjs": "0e1146a4a35987f574a5dc2c4c9cf184fb25f9ac2f045ae14b4aea23565d4912",
++  "server/adaptive-policy.mjs": "3aa877876fdeae179a72313c1691b9fc39d1cbe8e79ed4b5774b885ad3d24831",
++  "server/diagram-policy.mjs": "ab478b81a5fe236ea14027a1f7966cd2ddd3026329cfeb198e9ead62bed2cc0f",
++  "server/feedback.mjs": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c",
++  "server/gemini.mjs": "703925314493fadd2c53addaac884951f30261f9f1198da876629a29b4a362d7",
++  "server/learner-guidance.mjs": "bdd667e8d4d3bc6e2fbdacb0cc55da6a37eda02f143610067003e8a99f4d982f",
++  "server/research-pedagogy.mjs": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b",
++  "server/strict-tutor.mjs": "33a365395f50c1a6c15eb3bececcef7549dcb24d56b3be0a58ac3c44d50bc420"
++}

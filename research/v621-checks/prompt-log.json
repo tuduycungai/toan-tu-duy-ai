@@ -1,0 +1,24 @@
+[
+  {
+    "id": "SURVEY-001",
+    "source": "Yêu cầu người dùng hiển thị trong cuộc trò chuyện",
+    "message_timestamp": null,
+    "implementation_date_utc": "2026-09-19",
+    "prompt_verbatim": "Điều chỉnh cập nhật phiên bản gồm nhnữg ý sau đây:\n\n- chỗ Poster khoa học online thì gắn thêm đường dẫn Poster online theo link tôi gửi. và xoá đi phần số phiên bản. https://app.netlify.com/projects/poster-online-khkt/overview\n- Chỗ \" Trường đang học\" sửa thành \" Trường đang học ( nơi công tác)\n- Chỗ \" Lớp\" đổi thành \" Lớp đang học ( Nếu bạn là GV thì để trống ). Lưu ý nếu Gv bỏ trống thì wed tự hiểu là GV và gửi thông tin thu thập biểu mẫu hiện là \"Giáo viên\" thay vì \"Lớp : 8a1\"\n- Chỗ \" Em đã biết làm, cảm ơn thầy\" sửa thành \" Khảo sát đánh giá ứng dụng\"\n- Chỉnh thêm bảng khảo sát cài đặt cứ 3 phút lại hiện trên wed 1 lần",
+    "scope": "Năm yêu cầu cập nhật hồ sơ, khảo sát và liên kết poster",
+    "model": "ChatGPT / Codex (OpenAI); không ghi số hiệu mô hình khi không có metadata xác minh",
+    "result": "Thay đổi được liệt kê trong source-changes.json và source-changes.diff",
+    "historical_note": "Không phục dựng nhật ký các phiên phát triển không có trong đợt làm việc này."
+  },
+  {
+    "id": "SURVEY-002",
+    "source": "Yêu cầu bổ sung của người dùng hiển thị trong cuộc trò chuyện",
+    "message_timestamp": null,
+    "implementation_date_utc": "2026-09-19",
+    "prompt_verbatim": "Tiếp tục việc gian dở \nCập nhật chỉnh sửa \nHai chế độ “ kiểm tra lời giải” và “ so sánh cách giải” cập nhật đưa ra câu trả lời tốt hơn và có ( đang phát triển)",
+    "scope": "Cải thiện hai chế độ kiểm tra/so sánh lời giải và nhãn Đang phát triển",
+    "model": "ChatGPT / Codex (OpenAI); không ghi số hiệu mô hình khi không có metadata xác minh",
+    "result": "Chỉ dẫn riêng, nhãn và kiểm thử; xem source-changes.diff và test-results.json",
+    "validation_note": "429 đạt, 1 live test bỏ qua. Ví dụ phản hồi là dữ liệu biên soạn; HTTP Gemini/Forms được mô phỏng, không phải hội thoại thực tế."
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "filename": "Sản phẩm dự án KHKT 2627.rar",
+  "sha256": "c81263bfc742505c8b544631c0cac51764501759cfda39333c2970bfc0b603dc",
+  "protected_files": {
+    ".env.example": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e",
+    "app/globals.css": "ee59e3d75699bb524a768564cd6e9645fbaffd70e70ee4f38fb17e55f7ce92e5",
+    "components/tikz-figure.tsx": "5e419ec7767f0279656b9d149c2d2cf88536319677e76760993a015cc97e6c6d",
+    "lib/adaptive-learning.ts": "01dfb337f525a96cf59c4465641da0f6e74607522dfc72a06c513f1e419644ec",
+    "lib/diagram-request.ts": "128060cfe727e002d5baeb4d8810b3b234bf89b61eddd05740a5a472cc0e1cab",
+    "lib/feedback.ts": "fb29bbbb36f58e1cf267dfc53ce1cd7f3dd9cc20e3870a8f9bf0e8dc1d8c45ce",
+    "lib/form-config.json": "ab79a36d1684de279cdf8ffe81fe1d8317ec3ee3edf55f466b208614515e94bd",
+    "lib/tutor.ts": "1f3d1c655ab8b0dd6350c8caa40ccbcb782bbee593106761c1aad4169322e37a",
+    "lib/worksheets.ts": "d3b83cffb28e06b8020b85d66065b5776728f3c8948259b5689cb71280fb9b5e",
+    "netlify.toml": "a34110efd4bdbc996f4940ea1690f6a92eac5a5e15716356a27a2b9837fbbc0d",
+    "netlify/functions/chat.mjs": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
+    "netlify/functions/feedback.mjs": "0e1146a4a35987f574a5dc2c4c9cf184fb25f9ac2f045ae14b4aea23565d4912",
+    "server/adaptive-policy.mjs": "3aa877876fdeae179a72313c1691b9fc39d1cbe8e79ed4b5774b885ad3d24831",
+    "server/diagram-policy.mjs": "ab478b81a5fe236ea14027a1f7966cd2ddd3026329cfeb198e9ead62bed2cc0f",
+    "server/feedback.mjs": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c",
+    "server/gemini.mjs": "703925314493fadd2c53addaac884951f30261f9f1198da876629a29b4a362d7",
+    "server/learner-guidance.mjs": "bdd667e8d4d3bc6e2fbdacb0cc55da6a37eda02f143610067003e8a99f4d982f",
+    "server/research-pedagogy.mjs": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b",
+    "server/strict-tutor.mjs": "33a365395f50c1a6c15eb3bececcef7549dcb24d56b3be0a58ac3c44d50bc420"
+  },
+  "authorized_partial_changes": [
+    "server/policy.mjs: thêm hướng dẫn riêng cho review/compare",
+    "lib/learning.ts: nhãn và mô tả của hai chế độ"
+  ]
+}

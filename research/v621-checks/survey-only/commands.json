@@ -1,0 +1,23 @@
+[
+  {
+    "command": "npm test",
+    "started_at_utc": "2026-09-19T15:55:27.413165+00:00",
+    "duration_seconds": 5.3,
+    "exit_code": 0,
+    "log": "research/v621-checks/npm-test.log"
+  },
+  {
+    "command": "npx tsc --noEmit",
+    "started_at_utc": "2026-09-19T15:55:32.714723+00:00",
+    "duration_seconds": 3.138,
+    "exit_code": 0,
+    "log": "research/v621-checks/typecheck.log"
+  },
+  {
+    "command": "npm run build",
+    "started_at_utc": "2026-09-19T15:55:35.853773+00:00",
+    "duration_seconds": 1.494,
+    "exit_code": 0,
+    "log": "research/v621-checks/build.log"
+  }
+]

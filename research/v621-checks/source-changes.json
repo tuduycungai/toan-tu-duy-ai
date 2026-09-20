@@ -1,0 +1,438 @@
+[
+  {
+    "file": "README.md",
+    "kind": "modified",
+    "before_sha256": "dafd6c356dbc2045cf336a074e8fd2c4187b35961460c217745e9c126bf415e7",
+    "after_sha256": "0023fdb7f59f0fad983c818f8b2c187352a32a70a58cb1842164700a8c87fd70",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 1,
+        "old_end": 1,
+        "new_start": 1,
+        "new_end": 10
+      }
+    ]
+  },
+  {
+    "file": "app/enhancements.css",
+    "kind": "modified",
+    "before_sha256": "5a514c01f460a2f0899a697b68cb875da139c8ecbca9dcefe4761dc6d99c6ef0",
+    "after_sha256": "50f9ef15e3aad88fc39dcf2e2d265bca56c3ed2f087007bf0e12c60684752511",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 19,
+        "old_end": 18,
+        "new_start": 19,
+        "new_end": 21
+      }
+    ]
+  },
+  {
+    "file": "app/page.tsx",
+    "kind": "modified",
+    "before_sha256": "6b134627548b2948463a61671c88c6ebb8b95ae1d8df4494262f618c0cbb27c6",
+    "after_sha256": "026dae792511806b3d836c160abb6e607fbbc010faedb35fe6272aaf35233ef4",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 6,
+        "old_end": 6,
+        "new_start": 6,
+        "new_end": 6
+      },
+      {
+        "operation": "insert",
+        "old_start": 19,
+        "old_end": 18,
+        "new_start": 19,
+        "new_end": 20
+      },
+      {
+        "operation": "replace",
+        "old_start": 31,
+        "old_end": 31,
+        "new_start": 33,
+        "new_end": 33
+      },
+      {
+        "operation": "insert",
+        "old_start": 36,
+        "old_end": 35,
+        "new_start": 38,
+        "new_end": 39
+      },
+      {
+        "operation": "replace",
+        "old_start": 43,
+        "old_end": 43,
+        "new_start": 47,
+        "new_end": 47
+      },
+      {
+        "operation": "replace",
+        "old_start": 49,
+        "old_end": 50,
+        "new_start": 53,
+        "new_end": 54
+      },
+      {
+        "operation": "replace",
+        "old_start": 59,
+        "old_end": 61,
+        "new_start": 63,
+        "new_end": 94
+      },
+      {
+        "operation": "replace",
+        "old_start": 68,
+        "old_end": 69,
+        "new_start": 101,
+        "new_end": 102
+      },
+      {
+        "operation": "replace",
+        "old_start": 71,
+        "old_end": 72,
+        "new_start": 104,
+        "new_end": 105
+      },
+      {
+        "operation": "replace",
+        "old_start": 74,
+        "old_end": 74,
+        "new_start": 107,
+        "new_end": 107
+      }
+    ]
+  },
+  {
+    "file": "lib/learning.ts",
+    "kind": "modified",
+    "before_sha256": "9d3735d13a22a0ab49d5e70c5c9f302701935bd4528a4a948e7671d51e434b2e",
+    "after_sha256": "a0cff4e7ed426edf0b17c36a75880ee39aeb4644cb051d7ae15f0457ff4cee89",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 7,
+        "old_end": 8,
+        "new_start": 7,
+        "new_end": 8
+      }
+    ]
+  },
+  {
+    "file": "lib/survey.ts",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "749f58b05028def446652d60777506cc8c94bd3a21617703bf64be2293735a5c",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 27
+      }
+    ]
+  },
+  {
+    "file": "lib/use-survey-reminder.ts",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "9c58c721e61395e1502808c70ebf2eb9584448490f20b7398206d435bb0dfc25",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 38
+      }
+    ]
+  },
+  {
+    "file": "package-lock.json",
+    "kind": "modified",
+    "before_sha256": "1fff38ba7cc30beed733414cf5f4f064148d1c8e0a775225cf35db9124c12a8d",
+    "after_sha256": "59b3854c20af207c375a6a9f9e2103e58848e21f66679b5cc12f7565a81d8f91",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 3,
+        "old_end": 3,
+        "new_start": 3,
+        "new_end": 3
+      },
+      {
+        "operation": "replace",
+        "old_start": 9,
+        "old_end": 9,
+        "new_start": 9,
+        "new_end": 9
+      }
+    ]
+  },
+  {
+    "file": "package.json",
+    "kind": "modified",
+    "before_sha256": "c91d80ea3478952600a336a44385a1941d9c8b2b31e4e8071074163b763c4619",
+    "after_sha256": "fee0b7d539a48efeab7e46c39723fcd04052b262273329358cd196ff89dabbd6",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 3,
+        "old_end": 3,
+        "new_start": 3,
+        "new_end": 3
+      }
+    ]
+  },
+  {
+    "file": "scripts/check-ui.mjs",
+    "kind": "modified",
+    "before_sha256": "7a9a20c3d9948675c4a6ec93194dde79260d7c4153cf230ecabf1087ee3681d1",
+    "after_sha256": "6be952a6a59f6b034b1bccdab52506f4eb48d7bee9c835616d7ea2521a70fa41",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 12,
+        "old_end": 12,
+        "new_start": 12,
+        "new_end": 12
+      },
+      {
+        "operation": "replace",
+        "old_start": 14,
+        "old_end": 15,
+        "new_start": 14,
+        "new_end": 15
+      }
+    ]
+  },
+  {
+    "file": "scripts/check-v5-ui.mjs",
+    "kind": "modified",
+    "before_sha256": "09a79516dd122bb591689ee05e88cb6389315ae4539174433fa989a916c4b2cb",
+    "after_sha256": "c59a92ffbb9750a124949d1dbd83f767ab10e2967ae3db764ee50d9990a76bfd",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 31,
+        "old_end": 31,
+        "new_start": 31,
+        "new_end": 31
+      }
+    ]
+  },
+  {
+    "file": "scripts/check-v6-ui.mjs",
+    "kind": "modified",
+    "before_sha256": "50d78bbd623891bd9703250818064064582c1f28178fe1618f546b88ed675f95",
+    "after_sha256": "225a3f3df97f454f044e1bb17d9a916af020b195a8877c367ade60583e108e5f",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 12,
+        "old_end": 12,
+        "new_start": 12,
+        "new_end": 12
+      }
+    ]
+  },
+  {
+    "file": "scripts/check-v62-mobile.mjs",
+    "kind": "modified",
+    "before_sha256": "8c232eeb54559a8d8dbce38142e0efa8ff6c23bddc54524726e46b8fe922b28e",
+    "after_sha256": "9eb0d387dad10a4120f6c2487388104794a5c8df870bbcd68e5352438db33ab9",
+    "changed_lines": [
+      {
+        "operation": "replace",
+        "old_start": 7,
+        "old_end": 7,
+        "new_start": 7,
+        "new_end": 7
+      }
+    ]
+  },
+  {
+    "file": "server/policy.mjs",
+    "kind": "modified",
+    "before_sha256": "c7691f508610ba1a76bb20d5295cfdfb76ebd673fcacc0d4cd9ea66a7c75253a",
+    "after_sha256": "d55f5563ada520db09800db9d8315962e74f018926108c58bffd337f99cc7333",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 5,
+        "old_end": 4,
+        "new_start": 5,
+        "new_end": 5
+      },
+      {
+        "operation": "replace",
+        "old_start": 78,
+        "old_end": 78,
+        "new_start": 79,
+        "new_end": 79
+      }
+    ]
+  },
+  {
+    "file": "server/review-compare-policy.mjs",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "6e7e38e0e4d04c82d6d455cd6b1df28af47806ec1d0edb17f9e062f8f2eeb455",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 32
+      }
+    ]
+  },
+  {
+    "file": "tests/preserved.test.mjs",
+    "kind": "modified",
+    "before_sha256": "86de6ee97f015770d4693d9933c5cb72387e6ac21d2fe3ab74ed6f7cef50c1d5",
+    "after_sha256": "a449a808cfe360a4d396e14598f541064d5f808b209f333ca2e7ab4d1c347d7c",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 6,
+        "old_end": 5,
+        "new_start": 6,
+        "new_end": 8
+      }
+    ]
+  },
+  {
+    "file": "tests/review-compare.test.mjs",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "b968b04e2d12058e2555fae2148a287531ab10704b4733a2e761c25d45ae1460",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 86
+      }
+    ]
+  },
+  {
+    "file": "tests/survey-component.test.mjs",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "a495ad0ba234e9bf8c4098c913cb807dc1ea2ef5d15a9fdbe20e62adf2f40bed",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 160
+      }
+    ]
+  },
+  {
+    "file": "tests/survey-preserved.test.mjs",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "0b4f2b69567e879db0cddc4f4f293fd13648ea952956543d8e41f524c6f422d1",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 12
+      }
+    ]
+  },
+  {
+    "file": "tests/survey-reminder.test.mjs",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "678ea19eafccef39bc28e63295e8560b62c93891bdc499c7067cacc7650bc52c",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 78
+      }
+    ]
+  },
+  {
+    "file": "tests/survey.test.mjs",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "b6061d0aaa951def4ecdddec74f6498e2ff9330b7ad1da8139c6d99a3e12f59b",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 48
+      }
+    ]
+  },
+  {
+    "file": "tests/v61-component.test.mjs",
+    "kind": "modified",
+    "before_sha256": "540ab166d91999643b297fa3bc7e921c2617390a8182a977d3a6dee2465277bc",
+    "after_sha256": "da885b53eaf9510b96fb148f46795a10e903fdc6af6d4a560e61dbbd274569e6",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 8,
+        "old_end": 7,
+        "new_start": 8,
+        "new_end": 10
+      },
+      {
+        "operation": "replace",
+        "old_start": 18,
+        "old_end": 18,
+        "new_start": 21,
+        "new_end": 21
+      }
+    ]
+  },
+  {
+    "file": "tests/v62-mode-baseline.json",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "c52b7dbdf63db5dd79b48690376f8217412be3fc2989bf48c28b6a02315c4d17",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 4
+      }
+    ]
+  },
+  {
+    "file": "tests/v62-protected.json",
+    "kind": "added",
+    "before_sha256": null,
+    "after_sha256": "51c239360e011349323178739d4f6e0926e894d710b4aa5bb686d14b137091ee",
+    "changed_lines": [
+      {
+        "operation": "insert",
+        "old_start": 1,
+        "old_end": 0,
+        "new_start": 1,
+        "new_end": 21
+      }
+    ]
+  }
+]

@@ -4,8 +4,8 @@ export type Figure={points:Point[];outline:string[];lines:[string,string][]};
 export type Lesson={id:string;title:string;topic:string;level:string;operation:string;minutes:number;problem:string;plan:Plan;figure:Figure;hint:string;solution:string;transfer:string};
 export const learningModes=[
  {id:'guide',api:'guide',title:'Gợi mở từng bước',desc:'Tự tìm đường đến lời giải',icon:'light'},
- {id:'review',api:'review',title:'Kiểm tra lời giải',desc:'Hiểu lỗi sai, sửa có căn cứ',icon:'check'},
- {id:'compare',api:'compare',title:'So sánh cách giải',desc:'Một bài toán, nhiều góc nhìn',icon:'compare'},
+ {id:'review',api:'review',title:'Kiểm tra lời giải',status:'Đang phát triển',desc:'Xem từng bước, sửa đúng căn cứ',icon:'check'},
+ {id:'compare',api:'compare',title:'So sánh cách giải',status:'Đang phát triển',desc:'Đối chiếu ý tưởng, chọn có lí do',icon:'compare'},
  {id:'practice',api:'guide',title:'Luyện tập mỗi ngày',desc:'Vận dụng và kết nối kiến thức',icon:'pen'},
  {id:'test',api:'guide',title:'Tự kiểm tra',desc:'Tự làm trước, nhận xét sau',icon:'target'}
 ];

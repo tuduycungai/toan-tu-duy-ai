@@ -1,4 +1,13 @@
-# AI TUTOR TỨ GIÁC PRO V6.1
+# Tư duy Toán học — Gia sư hình học tứ giác
+
+Bản cập nhật khảo sát: xem `CAP_NHAT_KHAO_SAT.md` để biết thay đổi, kết quả kiểm thử và phạm vi kiểm tra. Số phiên bản kỹ thuật trong `package.json` không hiển thị ở chân trang.
+
+Hai chế độ **Kiểm tra lời giải** và **So sánh cách giải** có nhãn **(Đang phát triển)** trong danh mục và tiêu đề. Mỗi chế độ có hướng dẫn sư phạm riêng: kiểm tra lỗi đầu tiên và căn cứ, hoặc đối chiếu đúng một tiêu chí giữa các ý tưởng của học sinh. Chưa có bài làm/ý tưởng thì hỏi phần cần bổ sung; không viết hộ lời giải. Prompt của chế độ Gợi mở từng bước và nội dung bài mẫu giữ nguyên so với bản nền.
+
+- Liên kết “Poster khoa học online” mở đúng địa chỉ Netlify do người quản lý cung cấp. Đây là trang quản trị dự án, có thể yêu cầu đăng nhập.
+- Hồ sơ để trống lớp (kể cả chỉ nhập khoảng trắng) được nhận diện là **Giáo viên**. Vai trò hoặc lớp luôn nằm trong nội dung khảo sát gửi Google Forms, kể cả khi không gửi tóm tắt học tập.
+- Nút **Khảo sát đánh giá ứng dụng** mở khảo sát và không kết thúc cuộc trò chuyện. Lời mời nhắc mỗi **180 giây**, bắt đầu sau khi kết nối AI và hoàn tất hồ sơ. Nếu đang trả lời, mở hộp thoại khác hoặc ở tab nền, lời mời chờ đến khi sẵn sàng; không chồng hộp thoại.
+- Đóng khảo sát chưa gửi vẫn giữ bản nháp. Sau một lần gửi đã được xác nhận, lần khảo sát mới dùng mã gửi mới, yêu cầu chọn sao và đồng ý lại. Kết quả chưa xác nhận được giữ nguyên, không tự gửi lại. Không có yêu cầu gửi Google Forms nào chỉ do đồng hồ kích hoạt.
 
 Bản sửa 6.1: xem `SUA_LOI_V6_1.md` để biết lỗi đã sửa và kết quả kiểm tra trực tiếp trên website.
 

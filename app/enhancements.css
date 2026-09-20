@@ -16,3 +16,6 @@
 .skip-link:not(:focus){width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.skip-link:focus{width:auto;height:auto;clip-path:none;white-space:normal}.preview-hint{font-size:13px;color:var(--muted);line-height:1.7;margin:10px 0}.diagram-viewport .problem-svg{max-height:calc(370px * var(--figure-zoom,1))}.problem-figure{max-width:100%}
 @media(max-width:520px){.diagram-viewport .problem-svg{max-height:calc(280px * var(--figure-zoom,1))}}
 .tikz-result{display:block;width:100%;object-fit:contain;background:#fff;padding:24px;min-height:220px}.problem-figure .figure-caption input{display:block;width:100%;margin:8px 0;padding:10px}
+.creators-footer > a{display:inline-flex;align-items:center;gap:6px;max-width:100%;min-height:44px;line-height:1.5}
+@media(max-width:640px){.creators-footer > a{margin-bottom:12px}.profile-dialog .form-grid > label{min-width:0;overflow-wrap:break-word}}
+.mode-status{display:block;margin-top:3px;font-size:11px;line-height:1.4;font-weight:500;color:var(--muted)}

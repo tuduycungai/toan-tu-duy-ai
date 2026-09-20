@@ -5,6 +5,9 @@ js=js.replace(/from (['"])([^'"]+)\1/g,(_,q,p)=>'from '+q+(p.startsWith('.')?mod
 const {ProblemFigure}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
 const latex=readFileSync(new URL('./fixtures/right-isosceles.tex',import.meta.url),'utf8');const good=()=>Response.json({latex,question:''});
 const originalFetch=globalThis.fetch;globalThis.IS_REACT_ACT_ENVIRONMENT=true;globalThis.location={origin:'http://test'};
+// V6.2 selects manual drawing on touch devices. These existing compiler tests
+// exercise desktop behavior and need the browser API in their Node environment.
+const originalMatchMedia=globalThis.matchMedia;globalThis.matchMedia=()=>({matches:false});
 let receive;globalThis.addEventListener=(_type,fn)=>{receive=fn;};globalThis.removeEventListener=(_type,fn)=>{if(receive===fn)receive=undefined;};
 async function setup(responses,props={}){let calls=0;globalThis.fetch=async()=>{calls++;return (responses[calls-1]||good)();};const sent=[];const window={postMessage:msg=>sent.push(msg)};let root;
  await act(async()=>{root=create(React.createElement(ProblemFigure,{problem:'fixture '+Math.random(),accessCode:'fixture',...props}),{createNodeMock:e=>e.type==='iframe'?{contentWindow:window}:null});});
@@ -15,4 +18,4 @@ test('V6.1 chat redraw forces a new request and does not reuse cached code',asyn
 test('V6.1 malformed JSON response is automatically repaired once before compiling',async()=>{const r=await setup([()=>Response.json({}),good]);try{assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 compiler error runs a single repair and then succeeds',async()=>{const r=await setup([good,good]);try{await r.complete('error');assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 repeated format failure stops instead of remaining in loading state',async()=>{const r=await setup([()=>Response.json({}),()=>Response.json({})]);try{assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByProps({role:'status'}).length,0);assert.equal(r.root.root.findAllByProps({role:'alert'}).length,1);}finally{await r.close();}});
-test.after(()=>{globalThis.fetch=originalFetch;});
+test.after(()=>{globalThis.fetch=originalFetch;globalThis.matchMedia=originalMatchMedia;});
