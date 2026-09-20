@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-20T02:34:54.918Z",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Gia sư hình học · AI\nSơ đồ định hướng của lượt này\nThầy giải th\nThầy giải thích giúp em nhé: \"2AM = AB\" nghĩa là độ dài đoạn thẳng AB gấp đôi độ dài đoạn thẳng AM. Vì M nằm trên AB, nên điều này cũng có nghĩa là M là **trung điểm** của đoạn thẳng AB đấy. Bây giờ, hãy nhìn vào tứ giác AMCN, em hãy so sánh độ dài AM với AB, và so sánh độ dài CN với CD dựa trên giả thiết đề bài cho nhé. Thao tác tư duy: Phân tích — Liên hệ đẳng thức độ dài với định nghĩa trung điểm để tìm mối quan hệ giữa các cạnh. Gợi mở: Nếu M là trung điểm AB và N là trung điểm CD, mà ta đã biết AB = CD, thì em có nhận xét gì về độ dài của hai đoạn thẳng AM và CN?"
+      }
+    ],
+    "isError": false
+  }
+}

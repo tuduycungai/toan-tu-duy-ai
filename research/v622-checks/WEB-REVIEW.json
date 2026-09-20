@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-20T02:36:02.494Z",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Error: Playwright selector deadline exceeded\nwaiting on click for selector internal:role=button[name=\"Kiểm tra lời giải (Đang phát triển) Xem từng bước, sửa đúng căn cứ\"s]\nLocator diagnostics: {\"kind\":\"no_matches\",\"action\":\"click\",\"locator\":\"internal:role=button[name=\\\"Kiểm tra lời giải (Đang phát triển) Xem từng bước, sửa đúng căn cứ\\\"s]\",\"matchCount\":0,\"matches\":[],\"visibleCount\":0,\"truncated\":false}"
+      }
+    ],
+    "isError": true
+  }
+}

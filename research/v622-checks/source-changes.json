@@ -1,0 +1,197 @@
+{
+  "base": "6.2.1",
+  "release": "6.2.2",
+  "files": [
+    {
+      "path": "CAP_NHAT_V6_2_2.md",
+      "status": "added",
+      "sha256_before": null,
+      "sha256_after": "ae9b3d315ecf8b5673715f6cba3f16373206382d57b647d33a82457a9b58777b",
+      "hunks": [
+        "@@ -0,0 +1,56 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "MINH_CHUNG_V6_2_2.md",
+      "status": "added",
+      "sha256_before": null,
+      "sha256_after": "1e2aa30c5efbcd2512fb6e5fbfc5707332ddd7ed6646e2261c9612042d0586a1",
+      "hunks": [
+        "@@ -0,0 +1,78 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "README.md",
+      "status": "modified",
+      "sha256_before": "0023fdb7f59f0fad983c818f8b2c187352a32a70a58cb1842164700a8c87fd70",
+      "sha256_after": "08525898c055575db39b54c38fedf8b076d541cdc220d65726caf816ac642081",
+      "hunks": [
+        "@@ -1,10 +1,10 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "app/page.tsx",
+      "status": "modified",
+      "sha256_before": "026dae792511806b3d836c160abb6e607fbbc010faedb35fe6272aaf35233ef4",
+      "sha256_after": "a95a7e1321fa75e9da9fae75b8cc2084b727f92b8b361f2bf55aed04e4a46098",
+      "hunks": [
+        "@@ -2,7 +2,7 @@",
+        "@@ -18,11 +18,12 @@",
+        "@@ -50,9 +51,9 @@",
+        "@@ -99,7 +100,7 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "components/math-text.tsx",
+      "status": "modified",
+      "sha256_before": "3100f0170f9a42b5778d448d373883a3b3ff62b001ebdcacde7fccdbbda75506",
+      "sha256_after": "77a2331d632e2a5cb6dc33e69fed56f2b9834c66fd86b2694b12b43881188b60",
+      "hunks": [
+        "@@ -9,5 +9,5 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "lib/exercise-choice.ts",
+      "status": "added",
+      "sha256_before": null,
+      "sha256_after": "864cf476ebdc491741b3869c4df547e7417614a8a337889d8ad24d7c620f9140",
+      "hunks": [
+        "@@ -0,0 +1,18 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "package-lock.json",
+      "status": "modified",
+      "sha256_before": "59b3854c20af207c375a6a9f9e2103e58848e21f66679b5cc12f7565a81d8f91",
+      "sha256_after": "d80012c807c0feb2a4c6b2de31e9daba58b08ea35a7e3653f62318945b391094",
+      "hunks": [
+        "@@ -1,12 +1,12 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "package.json",
+      "status": "modified",
+      "sha256_before": "fee0b7d539a48efeab7e46c39723fcd04052b262273329358cd196ff89dabbd6",
+      "sha256_after": "805996273f10d253e4bc4847d75af3e6f625d975a54db7456558efc1f6ded69a",
+      "hunks": [
+        "@@ -1,6 +1,6 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "server/exercise-set.mjs",
+      "status": "added",
+      "sha256_before": null,
+      "sha256_after": "ae7c26f94cafd17e9bfa3ace5dd923099e918b3795219e25a60ebc30352b0c91",
+      "hunks": [
+        "@@ -0,0 +1,33 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "server/policy.mjs",
+      "status": "modified",
+      "sha256_before": "d55f5563ada520db09800db9d8315962e74f018926108c58bffd337f99cc7333",
+      "sha256_after": "954c013c535aa92cb0e099efc8fbb036851effbcd66f918faa5a3af1a174a4a5",
+      "hunks": [
+        "@@ -3,6 +3,8 @@",
+        "@@ -76,7 +78,7 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "server/review-compare-policy.mjs",
+      "status": "modified",
+      "sha256_before": "6e7e38e0e4d04c82d6d455cd6b1df28af47806ec1d0edb17f9e062f8f2eeb455",
+      "sha256_after": "b51fe90556b943c57b1e47a0a887cfe9ab6f7ca9ff44f7ad8520a37d087723da",
+      "hunks": [
+        "@@ -6,6 +6,7 @@",
+        "@@ -19,6 +20,7 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "server/strict-tutor.mjs",
+      "status": "modified",
+      "sha256_before": "33a365395f50c1a6c15eb3bececcef7549dcb24d56b3be0a58ac3c44d50bc420",
+      "sha256_after": "6b898bf1510c99ad0acdad939a1272797f7ced0ddab1cd39f764aa2598646942",
+      "hunks": [
+        "@@ -1,4 +1,6 @@",
+        "@@ -28,7 +30,10 @@",
+        "@@ -38,9 +43,7 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "server/theorem-checks.mjs",
+      "status": "added",
+      "sha256_before": null,
+      "sha256_after": "e7abc4bdf9eacee5d3a8fb6e3d4591b03e13ecea91c7f31d85407bca0d800bdc",
+      "hunks": [
+        "@@ -0,0 +1,17 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "tests/exercise-set.test.mjs",
+      "status": "added",
+      "sha256_before": null,
+      "sha256_after": "0b3f9dac746b05e7e24d41498306386bef110331d52fdaa84aafa024ccdb0bbe",
+      "hunks": [
+        "@@ -0,0 +1,70 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "tests/live-regressions.test.mjs",
+      "status": "added",
+      "sha256_before": null,
+      "sha256_after": "e3bbf797e0d47a721475c70e7c11a461bddc14d3989d2371cd19555e0b464330",
+      "hunks": [
+        "@@ -0,0 +1,64 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "tests/strict-tutor.test.mjs",
+      "status": "modified",
+      "sha256_before": "02244b644c3477253fe9e97e95d797c61a5e271765e410407045b36da762fa14",
+      "sha256_after": "a0723b2267542aed03adccf626b68ad1ea8e94ec994c885bef52571933012d24",
+      "hunks": [
+        "@@ -8,7 +8,7 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "tests/survey-component.test.mjs",
+      "status": "modified",
+      "sha256_before": "a495ad0ba234e9bf8c4098c913cb807dc1ea2ef5d15a9fdbe20e62adf2f40bed",
+      "sha256_after": "aaaf004ae64c09b81c5c0fdaefda09d476a5c50986a31031df62946a5a5de5fe",
+      "hunks": [
+        "@@ -12,6 +12,8 @@",
+        "@@ -40,18 +42,14 @@",
+        "@@ -79,6 +77,7 @@",
+        "@@ -88,7 +87,7 @@",
+        "@@ -158,3 +157,41 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    },
+    {
+      "path": "tests/v62-protected.json",
+      "status": "modified",
+      "sha256_before": "51c239360e011349323178739d4f6e0926e894d710b4aa5bb686d14b137091ee",
+      "sha256_after": "ad23c0d5904aacd549d3bd8a975a8fdec7e249549e4b5613de1b3a0865df619d",
+      "hunks": [
+        "@@ -16,6 +16,5 @@"
+      ],
+      "provenance": "AI hỗ trợ tạo/chỉnh sửa trong đợt 6.2.2; phần không nằm trong diff được kế thừa."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "counts": [
+    442,
+    1,
+    0,
+    443
+  ],
+  "liveRecords": 17,
+  "inspection": "{\"kind\":\"table\",\"sheet\":\"Tong_quan\",\"address\":\"A5:D16\",\"rows\":12,\"cols\":4,\"values\":[[\"Kiểm thử mã nguồn\",\"Số ca\",null,\"Phân biệt hai nguồn bằng chứng\"],[\"Đạt\",442,null,\"Kiểm thử tự động: mã nguồn bản 6.2.2, chưa triển khai lên Netlify.\"],[\"Bỏ qua\",1,null,\"Website thật: bản 6.2.1, có các ca nhận phản hồi Gemini bằng mã lớp.\"],[\"Lỗi\",0,null,\"18 tệp lõi giữ nguyên mã băm. Có 13 ca kiểm thử mới.\"],[\"Tổng số\",443,null,\"1 ca cần khóa Gemini trực tiếp bị bỏ qua trong npm test.\"],[null,null,null,null],[null,null,null,null],[\"Lệnh\",\"Kết quả\",\"Thời gian (giây)\",\"Bắt đầu (UTC)\"],[\"npm test\",\"Đạt\",6.13788,\"2026-09-20T09:39:49.937Z\"],[\"npx tsc --noEmit\",\"Đạt\",3.00959,\"2026-09-20T09:39:56.076Z\"],[\"npm run build\",\"Đạt\",1.44722,\"2026-09-20T09:39:59.086Z\"],[\"npm start\",\"Sẵn sàng\",0.43081,\"2026-09-20T09:42:05.454Z\"]]}",
+  "error_scan": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}"
+}

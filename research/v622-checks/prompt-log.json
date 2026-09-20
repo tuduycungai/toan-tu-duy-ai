@@ -1,0 +1,22 @@
+{
+  "recorded_at_utc": "2026-09-20T09:49:21.283397+00:00",
+  "original_message_timestamps": "Không được cung cấp; không tự gán thời điểm gửi.",
+  "entries": [
+    {
+      "id": "LIVE-001",
+      "text": "Kiểm tra thật bằng khóa tôi gửi. Còn lỗi gì của các tính năng nào thì sửa cho hoàn chỉnh"
+    },
+    {
+      "id": "LIVE-002",
+      "text": "Tôi đã đăng cập nhật lại wed, bạn hãy kiểm tra lại\nvà đồng thời chỉ lại link poster online là link này\nhttps://poster-online-khkt.netlify.app/"
+    },
+    {
+      "id": "LIVE-003",
+      "text": "Tiếp tục"
+    }
+  ],
+  "auth_values_recorded": false,
+  "code_provenance": "source-changes.json",
+  "technical_run": "commands.json",
+  "live_results": "live-observations.json"
+}

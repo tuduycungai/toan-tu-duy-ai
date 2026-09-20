@@ -9,5 +9,5 @@ function Formula({source,display}:{source:string;display:boolean}){
 /** Only KaTeX-generated markup is inserted; surrounding/model HTML stays escaped React text. */
 export function MathText({text}:{text:string}){
  const normalized=text.replace(/\n[\t ]*\n(?:[\t ]*\n)+/g,'\n\n');
- return <>{mathParts(normalized).map((p,i)=>p.type==='text'?<span key={i}>{p.value}</span>:<Formula key={i} source={p.value} display={p.type==='display'}/>)}</>;
+ return <>{mathParts(normalized).map((p,i)=>p.type==='text'?<span key={i}>{p.value.split(/(\*\*[^*\n]+\*\*)/g).map((part,j)=>part.startsWith('**')&&part.endsWith('**')&&part.length>4?<strong key={j}>{part.slice(2,-2)}</strong>:part)}</span>:<Formula key={i} source={p.value} display={p.type==='display'}/>)}</>;
 }

@@ -1,0 +1,9 @@
+{
+  "command": "npm start",
+  "started_at_utc": "2026-09-20T09:42:05.454721+00:00",
+  "ready": true,
+  "duration_ms": 430.81,
+  "port": 3184,
+  "log": "npm-start.log",
+  "scope": "Quan sát máy chủ sẵn sàng; không gọi Gemini cục bộ. Tiến trình đã dừng sau kiểm tra."
+}

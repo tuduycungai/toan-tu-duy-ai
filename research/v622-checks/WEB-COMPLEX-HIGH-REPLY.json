@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-20T02:43:59.236Z",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Error: Playwright selector deadline exceeded\nlocator.waitFor(hidden) timed out for selector internal:role=button[name=\"Dừng\"s]\nLocator diagnostics: {\"kind\":\"action_failed\",\"action\":\"waitFor\",\"locator\":\"internal:role=button[name=\\\"Dừng\\\"s]\",\"matchCount\":1,\"matches\":[{\"ariaLabel\":null,\"disabled\":false,\"role\":null,\"tag\":\"button\",\"text\":\"Dừng\",\"type\":null,\"visible\":true}],\"visibleCount\":1,\"truncated\":false}"
+      }
+    ],
+    "isError": true
+  }
+}

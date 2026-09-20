@@ -1,0 +1,31 @@
+{
+  "release": "6.2.2",
+  "built_from_source": true,
+  "protected_count": 18,
+  "protected_files": {
+    ".env.example": true,
+    "app/globals.css": true,
+    "components/tikz-figure.tsx": true,
+    "lib/adaptive-learning.ts": true,
+    "lib/diagram-request.ts": true,
+    "lib/feedback.ts": true,
+    "lib/form-config.json": true,
+    "lib/tutor.ts": true,
+    "lib/worksheets.ts": true,
+    "netlify.toml": true,
+    "netlify/functions/chat.mjs": true,
+    "netlify/functions/feedback.mjs": true,
+    "server/adaptive-policy.mjs": true,
+    "server/diagram-policy.mjs": true,
+    "server/feedback.mjs": true,
+    "server/gemini.mjs": true,
+    "server/learner-guidance.mjs": true,
+    "server/research-pedagogy.mjs": true
+  },
+  "source_changed_count": 18,
+  "real_google_api_key_pattern_matches": 0,
+  "google_forms_live_write": false,
+  "release_deployed": false,
+  "observed_live_version": "6.2.1",
+  "date_utc": "2026-09-20T09:49:21.283218+00:00"
+}

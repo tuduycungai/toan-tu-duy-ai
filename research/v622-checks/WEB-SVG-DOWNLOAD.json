@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-20T02:45:53.565Z",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Timed out after 15000ms waiting for download."
+      }
+    ],
+    "isError": true
+  }
+}
