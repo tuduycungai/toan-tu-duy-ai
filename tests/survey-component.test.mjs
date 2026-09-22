@@ -12,6 +12,8 @@ import * as learning from '../lib/learning.ts';
 import * as session from '../lib/session-recovery.ts';
 import * as survey from '../lib/survey.ts';
 import * as reminder from '../lib/use-survey-reminder.ts';
+import * as adaptive from '../lib/adaptive-learning.ts';
+import * as exerciseChoice from '../lib/exercise-choice.ts';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT=true;
 const h=React.createElement, none=()=>null;
@@ -40,18 +42,14 @@ const App=compile('app/page.tsx',{
   '@/lib/problem-diagram':{problemForTurn:(text,previous)=>previous||text},
   '@/lib/geometry-model':{compileGeometry:()=>({givens:[],goal:''})},
   '@/lib/diagram-interpretation':{diagramPrompt:()=>'',diagramBlock:()=>''},
-  '@/lib/adaptive-learning':{
-    readLearnerState:()=>({grade:'8',level:'Cơ bản',questions:[]}),
-    createLearnerState:level=>({grade:'8',level,questions:[]}),
-    observeAnswer:s=>s,planThinkingQuestion:()=>({question:''}),
-    questionFromReply:()=>({question:''}),learnerContext:()=>'',
-  },
+  '@/lib/adaptive-learning':adaptive,
+  '@/lib/exercise-choice':exerciseChoice,
 }).default;
 
 function text(node) {return typeof node==='string'?node:(node?.children||[]).map(text).join('');}
 function storage() {const map=new Map();return {getItem:k=>map.get(k)||null,setItem:(k,v)=>map.set(k,v),removeItem:k=>map.delete(k)};}
 
-async function setup(t,{className='',delivery='confirmed'}={}) {
+async function setup(t,{className='',delivery='confirmed',level='Cơ bản'}={}) {
   const keys=['fetch','document','localStorage','sessionStorage','matchMedia','addEventListener','removeEventListener'];
   const saved=Object.fromEntries(keys.map(k=>[k,globalThis[k]]));
   globalThis.document=Object.assign(new EventTarget(),{hidden:false,documentElement:{dataset:{}}});
@@ -79,6 +77,7 @@ async function setup(t,{className='',delivery='confirmed'}={}) {
   assert.equal(input('Lớp đang học (Nếu bạn là GV thì để trống)').props.required,undefined);
   await change(input('Họ và tên'),'Người kiểm thử');await change(input('Trường đang học'),'Trường kiểm thử');
   await change(input('Email'),'test@example.test');await change(input('Lớp đang học'),className);
+  await change(tree.root.findAllByType('label').find(n=>text(n).startsWith('Mức độ tự nhận xét')).findByType('select'),level);
   await submit('profile-dialog');await click('Bắt đầu khám phá ');
   return {tree,byClass,button,click,input,change,submit,requests,tick:ms=>act(async()=>t.mock.timers.tick(ms)),
     posts:()=>requests.filter(r=>r.url==='/.netlify/functions/feedback')};
@@ -88,7 +87,7 @@ test('teacher survey uses the real five-field payload without ending the chat; n
   const r=await setup(t,{className:'   '});
   assert(text(r.byClass('side-profile')).includes('Giáo viên'));
   const poster=r.byClass('creators-footer').findByType('a');
-  assert.equal(poster.props.href,'https://app.netlify.com/projects/poster-online-khkt/overview');
+  assert.equal(poster.props.href,'https://poster-online-khkt.netlify.app/');
   assert.equal(poster.props.target,'_blank');assert.match(poster.props.rel,/noopener/);
   assert.doesNotMatch(text(r.byClass('creators-footer')),/Phiên bản/);
   await r.change(r.tree.root.findByProps({id:'problem'}),'Câu hỏi đang soạn');
@@ -157,4 +156,42 @@ test('review and compare show development status in navigation and headings with
     assert.equal(r.tree.root.findByProps({id:'problem'}).props.placeholder,placeholder);
   }
   assert.equal(r.requests.filter(r=>!r.body.check).length,0);
+});
+
+test('profile regression: changing level updates actual support and the next Gemini context for the same learner',async t=>{
+ const r=await setup(t,{className:'8-TEST',level:'Mất căn bản'});
+ const sendProblem=async()=>{
+  await r.change(r.tree.root.findByProps({id:'problem'}),'Cho hình bình hành ABCD. M là trung điểm AB. Chứng minh AM ∥ CD.');
+  await act(async()=>r.byClass('composer').props.onSubmit({preventDefault(){}}));
+  const message=r.requests.filter(x=>x.url==='/api/chat'&&!x.body.check).at(-1).body.messages.at(-1).content;
+  return JSON.parse(message.match(/\[HO_SO_TU_DUY_V5\]\n(.+)\n/)[1]);
+ };
+ const low=await sendProblem();assert.equal(low.level,'Mất căn bản');assert.equal(low.supportLevel,3);
+ await act(async()=>r.tree.root.findByProps({'aria-label':'Thông tin người học'}).props.onClick());
+ const levelSelect=()=>r.tree.root.findAllByType('label').find(n=>text(n).startsWith('Mức độ tự nhận xét')).findByType('select');
+ await r.change(levelSelect(),'Giỏi');await r.submit('profile-dialog');await r.click('Bài mới');
+ const high=await sendProblem();assert.equal(high.level,'Giỏi');assert.equal(high.supportLevel,0);
+ assert.notEqual(high.question.question,low.question.question);
+ assert.equal(high.question.hintPolicy,'Không đưa đáp án trực tiếp');
+ await act(async()=>r.tree.root.findByProps({'aria-label':'Thông tin người học'}).props.onClick());
+ await r.change(levelSelect(),'Mất gốc');await r.submit('profile-dialog');await r.click('Bài mới');
+ const lowAgain=await sendProblem();assert.equal(lowAgain.level,'Mất căn bản');assert.equal(lowAgain.supportLevel,3);
+});
+
+test('a generated set exposes five selection buttons and sends only the chosen problem as the new task',async t=>{
+ const r=await setup(t,{className:'8-TEST'});
+ const items=Array.from({length:5},(_,i)=>`Câu ${i+1}: Cho hình bình hành ABCD. M là trung điểm AB. Chứng minh AM ∥ CD. Đề số ${i+1}.`);
+ const set=items.join('\n\n')+'\n\nGợi mở: Em muốn bắt đầu với câu nào?';
+ globalThis.fetch=async(url,options)=>{
+  const body=JSON.parse(options.body);r.requests.push({url,body});
+  return Response.json({text:body.messages.at(-1).content.includes('Tạo đúng')?set:'Gợi mở: Em cần kiểm tra điều kiện nào?'});
+ };
+ const nav=r.tree.root.findAllByType('button').find(b=>text(b).startsWith('Luyện tập mỗi ngày'));
+ await act(async()=>nav.props.onClick());
+ await act(async()=>r.byClass('practice-card').props.onSubmit({preventDefault(){}}));
+ assert.equal(r.tree.root.findByProps({'aria-label':'Chọn câu trong bộ đề'}).findAllByType('button').length,5);
+ await r.click('Làm câu 2');
+ const content=r.requests.at(-1).body.messages.at(-1).content;
+ assert.match(content,/Em chọn câu 2\. Cho hình bình hành/);assert.match(content,/Đề số 2/);assert.doesNotMatch(content,/Đề số [1345]/);
+ assert.equal(r.tree.root.findAllByProps({'aria-label':'Chọn câu trong bộ đề'}).length,0);
 });

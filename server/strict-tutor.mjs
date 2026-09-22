@@ -1,4 +1,6 @@
 /** Product guardrails, not a proof that a language model can never make an error. */
+import {correctTheoremBridge} from './theorem-checks.mjs';
+import {requestedExerciseCount,normalizeExerciseSet,incompleteExerciseSet} from './exercise-set.mjs';
 const plain=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[đĐ]/g,'d').toLowerCase();
 export function studentRequest(messages){
  const source=messages.at(-1)?.content||'';
@@ -28,7 +30,10 @@ export function guidedFallback(messages){
 }
 export function guardTutorOutput(text,messages){
  if(asksForAnswer(messages))return guidedFallback(messages);
+ text=correctTheoremBridge(text);
  let visible=text.replace(/\[DE_HINH_HOC\][\s\S]*?(?:\[\/DE_HINH_HOC\]|$)/g,'');
+ const requestedCount=requestedExerciseCount(studentRequest(messages));
+ if(requestedCount)return normalizeExerciseSet(visible,requestedCount)||incompleteExerciseSet(requestedCount);
  if(!/^Gợi mở:/mu.test(visible)&&/[?？]\s*$/.test(visible)){visible=visible.replace(/(^|\n)([^\n]*[?？])\s*$/u,'$1Gợi mở: $2');text=visible;}
  const plan=publicPlan(visible);const mathTurn=/\[SO_DO\]/.test(visible)||messages.some(m=>/hình|tứ giác|tam giác|chứng minh|trung điểm|song song|vuông góc|\b[A-Z]{2}\b/.test(m.content));
  const questions=(visible.match(/[?？]/g)||[]).length;
@@ -38,9 +43,7 @@ export function guardTutorOutput(text,messages){
  const fullSolution=/(?:^|\n)\s*(?:#{1,4}\s*)?(?:lời giải(?:\s+(?:hoàn chỉnh|chi tiết|đầy đủ))?|đáp án|bài giải)\s*:|(?:^|\n)\s*Bước\s*[2-9]\s*[:.]/imu.test(visible);
  if(fullSolution)return guidedFallback(messages);
  if(!mathTurn)return text;
- // Exercise sets may contain question marks in the statements, but just one final tutor question.
- const exerciseSet=/(?:tạo|sinh)\s+(?:đúng\s+)?(?:[5-9]|10)\s+câu/iu.test(student)&&!/(?:lời giải|đáp án)\s*:/iu.test(visible);
  const prompts=[...visible.matchAll(/^Gợi mở:\s*([^\n]+)$/gmu)];
- if((!exerciseSet&&visible.split(/\s+/).length>250)||(!completed&&(prompts.length!==1||(prompts[0][1].match(/[?？]/g)||[]).length!==1||(!exerciseSet&&questions!==1)))||(completed&&(!reasoned||questions!==0)))return guidedFallback(messages);
+ if(visible.split(/\s+/).length>250||(!completed&&(prompts.length!==1||(prompts[0][1].match(/[?？]/g)||[]).length!==1||questions!==1))||(completed&&(!reasoned||questions!==0)))return guidedFallback(messages);
  return text;
 }

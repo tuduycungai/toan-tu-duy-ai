@@ -16,6 +16,5 @@
   "server/feedback.mjs": "5362a8a5ac59a0bea2ddbd7656e09a2ece030a0d774dc912213a3f1be1939e1c",
   "server/gemini.mjs": "703925314493fadd2c53addaac884951f30261f9f1198da876629a29b4a362d7",
   "server/learner-guidance.mjs": "bdd667e8d4d3bc6e2fbdacb0cc55da6a37eda02f143610067003e8a99f4d982f",
-  "server/research-pedagogy.mjs": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b",
-  "server/strict-tutor.mjs": "33a365395f50c1a6c15eb3bececcef7549dcb24d56b3be0a58ac3c44d50bc420"
+  "server/research-pedagogy.mjs": "95ffc3fe5df86956b32dca80e15a6f6dd98f410cf2c696821cf4ceb3587e2d3b"
 }
