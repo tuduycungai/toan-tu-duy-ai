@@ -1,0 +1,37 @@
+[
+  {
+    "check": "lint",
+    "command": "npm run lint",
+    "exitCode": 0,
+    "durationSeconds": 1.825,
+    "log": "lint.txt"
+  },
+  {
+    "check": "typecheck",
+    "command": "npm run typecheck",
+    "exitCode": 0,
+    "durationSeconds": 3.176,
+    "log": "typecheck.txt"
+  },
+  {
+    "check": "tests",
+    "command": "npm test",
+    "exitCode": 0,
+    "durationSeconds": 6.546,
+    "log": "tests.txt"
+  },
+  {
+    "check": "compiler",
+    "command": "npm run test:tikz",
+    "exitCode": 0,
+    "durationSeconds": 10.512,
+    "log": "compiler.txt"
+  },
+  {
+    "check": "legacy-ui",
+    "command": "npm run test:ui",
+    "exitCode": 0,
+    "durationSeconds": 6.696,
+    "log": "legacy-ui.txt"
+  }
+]

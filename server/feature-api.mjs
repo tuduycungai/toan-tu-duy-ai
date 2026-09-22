@@ -5,10 +5,11 @@ import {prepareTikz} from '../public/tikz-format.mjs';
 import {validateImage,IMAGE_LIMITS} from '../public/image-format.mjs';
 import {checkGeometryCode} from './geometry-checks.mjs';
 import {seal,unseal} from './signed-state.mjs';
+import {mathText} from './reading-normalization.mjs';
 
 const reply=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const fail=(message,status=400)=>Object.assign(Error(message),{status});
-export const IMAGE_MODES=['image-read','image-confirm','image-revise','image-diagram'];
+export const IMAGE_MODES=['image-read','image-confirm','image-revise','image-diagram','image-restore'];
 export async function handleFeature(body,env,model,fetcher=fetch) {
   const secret=env.GEMINI_API_KEY.trim();
   async function generate(prompt,contents,schema,maxOutputTokens=6000){
@@ -41,21 +42,24 @@ export async function handleFeature(body,env,model,fetcher=fetch) {
       const bytes=Buffer.from(img.data,'base64');validateImage(bytes,img.mimeType,IMAGE_LIMITS.uploadBytes);
       const note=typeof body.note==='string'?body.note.slice(0,1200):'';
       const raw=await generate(IMAGE_PROMPT,[{role:'user',parts:[{inlineData:{mimeType:img.mimeType,data:img.data}},{text:'Đọc ảnh đề toán. Câu hỏi bổ sung của học sinh (không tự thay giả thiết): '+note}]}],IMAGE_SCHEMA,7500);
-      let reading;try{const value=JSON.parse(raw);try{reading=validateReading(value);}catch{reading=recoverTranscription(value);}}catch(e){throw fail(e.message,502);}
+      let reading;try{const value=JSON.parse(raw);try{reading=validateReading(value);}catch(e){reading=recoverTranscription(value,e.message);}}catch(e){throw fail(e.message,502);}
       return reply({reading,imageToken:seal({reading,confirmed:false,attempt:0,correction:''},secret,'image'),confirmed:false,model});
     }
     let saved;try{saved=unseal(body.imageToken,secret,'image');}catch(e){throw fail(e.message,409);}
+    if(body.mode==='image-restore')return reply({reading:saved.reading,imageToken:body.imageToken,confirmed:saved.confirmed===true,model});
     if(body.mode==='image-confirm'||body.mode==='image-revise'){
       const transcript=typeof body.transcription==='string'?body.transcription.trim():saved.reading.transcription;
       const correction=typeof body.correction==='string'?body.correction.trim():'';
       if(!transcript||transcript.length>6000||correction.length>1200)throw fail('Phần xác nhận quá dài hoặc trống.');
       const changed=transcript!==saved.reading.transcription||!!correction;
+      const needsRepair=saved.reading.structureStatus==='needs_repair';
       if(body.mode==='image-revise'&&!correction)throw fail('Em hãy nêu điểm, quan hệ hoặc nhãn nào đang sai.');
-      if(!changed&&!saved.reading.ready)throw fail('Còn dữ kiện chưa rõ. Em hãy bổ sung hoặc chụp lại trước khi vẽ.');
-      if(changed){
-        const raw=await generate(IMAGE_PROMPT,[{role:'user',parts:[{text:JSON.stringify({previous:saved.reading,transcriptionConfirmedByStudent:transcript,correction,task:'Cập nhật cấu trúc, trả bản đề mới để học sinh kiểm tra. Không giữ uncertainty đã được xác nhận rõ; không đoán uncertainty còn thiếu.'})}]}],IMAGE_SCHEMA,7500);
-        let reading;try{reading=validateReading(JSON.parse(raw));}catch(e){throw fail(e.message,502);}
-        return reply({reading,confirmed:false,imageToken:seal({reading,confirmed:false,attempt:0,correction},secret,'image'),model});
+      if(!changed&&!saved.reading.ready&&!needsRepair)throw fail('Còn dữ kiện chưa rõ. Em hãy bổ sung hoặc chụp lại trước khi vẽ.');
+      if(changed||needsRepair){
+        const raw=await generate(IMAGE_PROMPT,[{role:'user',parts:[{text:JSON.stringify({previous:saved.reading,transcriptionConfirmedByStudent:transcript,correction,structureError:needsRepair?saved.reading.structureIssue:'',task:'Học sinh vừa xác nhận bản phiên âm. Sửa CẤU TRÚC JSON từ chính đề này, không yêu cầu chụp lại vì lỗi schema. Giữ nguyên transcription nếu không có sửa đề. Tách đủ yêu cầu Tính/Chứng minh đã có. source phải là trích dẫn có trong bản phiên âm, không diễn đạt lại. Không giữ lỗi cấu trúc dưới dạng uncertainty; vẫn giữ và hỏi cụ thể dữ kiện toán học thật sự chưa rõ.'})}]}],IMAGE_SCHEMA,7500);
+        let reading;try{const value=JSON.parse(raw);try{reading=validateReading(value);}catch(e){reading=recoverTranscription(value,e.message);}}catch{throw fail('Chưa kiểm tra được cấu trúc. Bản phiên âm vẫn được giữ; em có thể thử lại.',502);}
+        const confirmed=!changed&&reading.ready&&mathText(reading.transcription)===mathText(transcript);
+        return reply({reading,confirmed,imageToken:seal({reading,confirmed,attempt:0,correction:correction||saved.correction},secret,'image'),model});
       }
       return reply({reading:saved.reading,confirmed:true,imageToken:seal({...saved,confirmed:true,attempt:0},secret,'image'),model});
     }

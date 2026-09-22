@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "method": "GET",
+  "httpStatus": 405,
+  "deployed": false
+}

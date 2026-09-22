@@ -10,6 +10,7 @@ import {create, act} from 'react-test-renderer';
 import * as tutor from '../lib/tutor.ts';
 import * as learning from '../lib/learning.ts';
 import * as session from '../lib/session-recovery.ts';
+import * as imageSession from '../lib/image-session.ts';
 import * as survey from '../lib/survey.ts';
 import * as reminder from '../lib/use-survey-reminder.ts';
 import * as adaptive from '../lib/adaptive-learning.ts';
@@ -30,7 +31,7 @@ const feedback=compile('lib/feedback.ts');
 const container=({children,...props})=>h('div',props,children);
 const App=compile('app/page.tsx',{
   '@/components/image-problem':{ImageProblem:none},
-  '@/lib/tutor':tutor,'@/lib/learning':learning,'@/lib/session-recovery':session,
+  '@/lib/image-session':imageSession,'@/lib/tutor':tutor,'@/lib/learning':learning,'@/lib/session-recovery':session,
   '@/lib/feedback':feedback,'@/lib/survey':survey,'@/lib/use-survey-reminder':reminder,
   'lucide-react':new Proxy({},{get:()=>none}),
   '@/components/learner-panel':{LearnerPanel:none},
@@ -92,7 +93,7 @@ test('teacher survey uses the real five-field payload without ending the chat; n
   assert.equal(poster.props.target,'_blank');assert.match(poster.props.rel,/noopener/);
   assert.doesNotMatch(text(r.byClass('creators-footer')),/Phiên bản/);
   await r.change(r.tree.root.findByProps({id:'problem'}),'Câu hỏi đang soạn');
-  await r.tick(179999);assert.equal(r.tree.root.findAllByType('div').filter(n=>n.props.className==='feedback-dialog').length,0);
+  await r.tick(779999);assert.equal(r.tree.root.findAllByType('div').filter(n=>n.props.className==='feedback-dialog').length,0);
   await r.tick(1);assert.equal(r.tree.root.findAllByType('div').filter(n=>n.props.className==='feedback-dialog').length,1);
   assert.equal(r.posts().length,0);
   await r.change(r.tree.root.findByProps({'aria-label':'4 sao — Hài lòng'}),4);
@@ -106,7 +107,7 @@ test('teacher survey uses the real five-field payload without ending the chat; n
   await r.click('Tiếp tục sử dụng');
   assert.equal(r.tree.root.findByProps({id:'problem'}).props.value,'Câu hỏi đang soạn');
   assert.equal(r.tree.root.findAllByProps({className:'session-ended'}).length,0);
-  await r.tick(180000);
+  await r.tick(780000);
   assert.equal(r.posts().length,1);assert.equal(r.input('Tôi đồng ý').props.checked,false);
   assert.equal(r.button('Gửi khảo sát').props.disabled,true);
   await r.change(r.tree.root.findByProps({'aria-label':'5 sao — Rất hài lòng'}),5);
@@ -119,9 +120,9 @@ test('student class is preserved and an unfinished survey keeps its rating and c
   await r.click('Khảo sát đánh giá ứng dụng');
   await r.change(r.tree.root.findByProps({'aria-label':'4 sao — Hài lòng'}),4);
   await r.change(r.byClass('feedback-dialog').findByType('textarea'),'Góp ý đang viết');
-  await r.tick(180000);await r.click('Để sau, tiếp tục sử dụng');
+  await r.tick(780000);await r.click('Để sau, tiếp tục sử dụng');
   assert.equal(r.tree.root.findAllByType('div').filter(n=>n.props.className==='feedback-dialog').length,0);
-  await r.tick(180000);
+  await r.tick(780000);
   assert.equal(r.byClass('feedback-dialog').findByType('textarea').props.value,'Góp ý đang viết');
   assert.equal(r.tree.root.findByProps({'aria-label':'4 sao — Hài lòng'}).props.checked,true);
   assert.equal(r.posts().length,0);
@@ -139,7 +140,7 @@ test('unconfirmed delivery retains its original prefilled Form and never retries
   const form=()=>r.byClass('feedback-dialog').findByType('a').props.href, first=form();
   const url=new URL(first);assert.match(url.searchParams.get('entry.326585189'),/Giáo viên/);
   assert.equal(url.searchParams.get('entry.1301171588'),'test@example.test');
-  await r.click('Để sau, tiếp tục sử dụng');await r.tick(180000);
+  await r.click('Để sau, tiếp tục sử dụng');await r.tick(780000);
   assert.equal(form(),first);assert.equal(r.posts().length,1);
   assert.equal(r.byClass('feedback-dialog').findByType('fieldset').props.disabled,true);
 });

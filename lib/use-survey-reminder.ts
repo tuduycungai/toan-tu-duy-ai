@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 
-export const SURVEY_INTERVAL_MS = 180_000;
+export const SURVEY_INTERVAL_MS = 13 * 60_000;
 
 /** Remind on a fixed cadence; never submit or reset a survey draft. */
 export function useSurveyReminder({enabled, open, blocked, onRemind}: {

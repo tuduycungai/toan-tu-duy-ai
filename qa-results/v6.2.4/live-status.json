@@ -1,0 +1,6 @@
+{
+  "status": "NOT_RUN",
+  "credentialConfigured": false,
+  "reason": "No live credential supplied in this environment; physical mobile devices unavailable.",
+  "fixtureDisclaimer": "Controlled provider responses are not live OCR/model-quality results."
+}

@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "ai": "mocked; actual browser compiler and PNG export",
+  "results": [
+    "Gemini fixture → real TeX/WASM → SVG with embedded fonts",
+    "Removed assumptions panel",
+    "PNG export",
+    "Mobile 390 and 768 px",
+    "Real compiler failure triggers one AI repair then displays image",
+    "Missing point location asks one question; no fabricated triangle",
+    "No browser JS errors"
+  ]
+}

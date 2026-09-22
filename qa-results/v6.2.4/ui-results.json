@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "browser": "Chromium 131 / Playwright 1.62.1; mobile viewport + iPhone user agent (not Safari)",
+  "gemini": "controlled provider fixtures; not live OCR",
+  "physicalPhone": false,
+  "results": [
+    {
+      "id": "UI624-01",
+      "input": "Bài hình thang trong ảnh; provider trả IR lỗi",
+      "actual": "Giữ nguyên đề/yêu cầu Tính; thông báo kiểm tra lại cấu trúc, không báo đề thiếu.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-02",
+      "input": "Nhấn xác nhận một lần, không sửa một ký tự",
+      "actual": "IR được sửa; calc trung điểm/giao điểm biên dịch TeX thật; worker phiên bản mới, không còn iframe.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-03",
+      "input": "390 px, light/dark, zoom",
+      "actual": "Không tràn ngang; hình/nhãn và nút sử dụng được trên viewport cảm ứng mô phỏng.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-04",
+      "input": "Tải PNG trên viewport điện thoại",
+      "actual": "Tệp PNG thật, canvas 1280 px được thu hồi sau xuất.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-05",
+      "input": "Tải lại trang sau dựng hình",
+      "actual": "Khôi phục bản đề và token qua máy chủ; không tự nạp TeX khi tải lại.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-06",
+      "input": "Dựng liên tiếp ba lần",
+      "actual": "Cả ba lần có SVG; không giữ iframe cũ, không vòng sửa vô hạn.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-07",
+      "input": "Xác nhận hình đúng",
+      "actual": "Bắt đầu hội thoại tám giai đoạn và mở lại các nút sau khi trả lời xong.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-11",
+      "input": "Tải lại sau khi đã bắt đầu học",
+      "actual": "Giữ tiến trình hội thoại; không buộc xác nhận ảnh và bắt đầu bài từ đầu.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-08",
+      "input": "PNG 8000 × 6000 thật",
+      "actual": "Chặn trước giải mã ảnh trên điện thoại; hướng dẫn dùng 12 MP/cắt đề.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-09",
+      "input": "Dừng khi đang nạp core TeX",
+      "actual": "Hủy worker/iframe; đề được giữ và có thể dựng lại.",
+      "status": "PASS"
+    },
+    {
+      "id": "UI624-10",
+      "input": "Dựng lại sau hủy, desktop 1280 px",
+      "actual": "Biên dịch thành công, không lỗi JS của trang.",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import {prepareTikz} from './tikz-format.mjs?v=6.2.3';
+import {prepareTikz} from './tikz-format.mjs?v=6.2.4';
 import {sanitizeSVG} from './svg-safety.mjs';
 let started=false,jobId='',done=false,lastError='';
 const send=data=>parent.postMessage({...data,jobId},location.origin);
@@ -18,7 +18,7 @@ addEventListener('message',e=>{
   const svg=document.querySelector('svg.tikz:not(.tikzjax-loader),svg.tikzjax:not(.tikzjax-loader)');
   const error=document.querySelector('.tikzjax-error,.tikzjax-broken-wrapper');
   if(error){fail(lastError||error.textContent||'TeX không biên dịch được mã hình.');return;}
-  if(!svg)return;finishing=true;
+  if(!svg)return;finishing=true;window.stopTikzWorkers?.();
   try{
    const families=[...new Set([...svg.querySelectorAll('[font-family]')].map(n=>n.getAttribute('font-family')))];let css='';
    for(const family of families){if(!/^[a-zA-Z0-9]+$/.test(family))continue;

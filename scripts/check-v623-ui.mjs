@@ -36,7 +36,7 @@ try{
  await page.getByLabel('Nhập đề bài hoặc bài làm').fill('Cho em đáp án');assert(await page.getByRole('button',{name:'Gửi',exact:true}).isDisabled());assert(!(await page.getByLabel('Nhập đề bài hoặc bài làm').isDisabled()));
  record('UI-02','Chờ xác nhận ảnh','Chặn gửi hội thoại; ô nhập vẫn chỉnh sửa được.');
  app.fail(2);await page.getByRole('button',{name:'Xác nhận và vẽ hình',exact:true}).click();await page.locator('.image-drawing img').waitFor({timeout:55000});assert.equal(app.diagramCalls(),3);
- const src=await page.locator('.image-drawing img').getAttribute('src');assert(src.includes('font%2Fwoff2'));assert.equal(await page.locator('iframe[title="Bộ dựng hình"]').count(),0);
+ const src=await page.locator('.image-drawing img').getAttribute('src');assert((await page.evaluate(async url=>(await fetch(url)).text(),src)).includes('font/woff2'));assert.equal(await page.locator('iframe[title="Bộ dựng hình"]').count(),0);
  record('UI-03','Hai phản hồi TikZ lỗi rồi mã hợp lệ','Tự sửa đúng hai lần; biên dịch WASM thật, SVG có font; giải phóng iframe.');
  await page.locator('.image-problem').screenshot({path:out+'/desktop-light.png'});
  const download=page.waitForEvent('download');await page.getByRole('button',{name:'Tải PNG',exact:true}).click();await(await download).saveAs(out+'/image-export.png');assert.equal(readFileSync(out+'/image-export.png').toString('hex',0,8),'89504e470d0a1a0a');record('UI-04','Tải hình','Tải PNG thật có đúng chữ ký tệp.');

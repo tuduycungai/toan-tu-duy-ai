@@ -1,0 +1,37 @@
+{
+  "version": "6.2.4",
+  "unitIntegration": {
+    "tests": 502,
+    "pass": 501,
+    "fail": 0,
+    "skip": 1,
+    "skipReason": "Live Gemini requires real server credential and explicit opt-in"
+  },
+  "newUnitTests": 11,
+  "browserUI": {
+    "new": 11,
+    "imageRegression": 12,
+    "legacy": 7,
+    "physicalPhones": false,
+    "geminiProvider": "controlled fixture",
+    "engine": "real TeX/WASM/SVG/PNG"
+  },
+  "compilerFixtures": 6,
+  "surveyIntervalMs": 780000,
+  "memory": {
+    "wasmBytes": 163840000,
+    "coreDumpStreamedDirectlyToWasm": true,
+    "physicalDevicePeakRAMMeasured": false
+  },
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "chromium": "131.0.6778.0",
+    "playwright": "1.62.1"
+  },
+  "buildWarning": {
+    "jsKB": 760.8,
+    "gzipKB": 234.73,
+    "warning": "chunk exceeds default 500 kB guidance"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "browser": "Chromium 131; Playwright 1.62.1",
+  "gemini": "controlled fixtures, not live OCR",
+  "results": [
+    {
+      "id": "UI-01",
+      "input": "Ảnh PNG rõ",
+      "actual": "Nén JPEG thật, gửi inline image, hiển thị phiên âm; chưa gọi vẽ trước xác nhận.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-02",
+      "input": "Chờ xác nhận ảnh",
+      "actual": "Chặn gửi hội thoại; ô nhập vẫn chỉnh sửa được.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-03",
+      "input": "Hai phản hồi TikZ lỗi rồi mã hợp lệ",
+      "actual": "Tự sửa đúng hai lần; biên dịch WASM thật, SVG có font; giải phóng iframe.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-04",
+      "input": "Tải hình",
+      "actual": "Tải PNG thật có đúng chữ ký tệp.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-05",
+      "input": "Bắt đầu sau xác nhận và trả lời tiếp",
+      "actual": "Có giai đoạn 1–8; gửi trạng thái ký qua lượt tiếp theo dù câu trả lời nêu một loại hình.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-06",
+      "input": "Báo hình sai ở nhãn M",
+      "actual": "Chuyển về xác nhận; gửi đúng phần sai để cập nhật cấu trúc.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-07",
+      "input": "Tệp TXT",
+      "actual": "Báo sai định dạng, không gọi Gemini.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-08",
+      "input": "Tệp 25 MB",
+      "actual": "Chặn trước giải mã ảnh và trước API.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-09",
+      "input": "Phản hồi OCR mờ có kiểm soát",
+      "actual": "Đánh dấu đoạn nghi ngờ; không dựng hình khi chưa bổ sung.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-10",
+      "input": "390px cảm ứng giả lập; PNG xoay 90 độ",
+      "actual": "Chọn ảnh qua input camera, đọc, vẽ, phóng to không tràn; light/dark hiển thị. Không phải kiểm thử máy thật.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "UI-11",
+      "input": "412px cảm ứng giả lập; PNG xoay 90 độ",
+      "actual": "Chọn ảnh qua input camera, đọc, vẽ, phóng to không tràn; light/dark hiển thị. Không phải kiểm thử máy thật.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    },
+    {
+      "id": "SEC-UI-01",
+      "input": "SVG chứa script, HTML và URL ngoài",
+      "actual": "Bộ làm sạch loại mã chủ động và liên kết ngoài trước hiển thị.",
+      "status": "PASS",
+      "evidence": "Real production browser + Netlify handler; Gemini provider controlled"
+    }
+  ]
+}

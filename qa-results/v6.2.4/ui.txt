@@ -1,0 +1,16 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> toan-tu-duy-gemini-netlify@6.2.4 test:ui:v624
+> node scripts/check-v624-ui.mjs
+
+UI624-01 PASS Giữ nguyên đề/yêu cầu Tính; thông báo kiểm tra lại cấu trúc, không báo đề thiếu.
+UI624-02 PASS IR được sửa; calc trung điểm/giao điểm biên dịch TeX thật; worker phiên bản mới, không còn iframe.
+UI624-03 PASS Không tràn ngang; hình/nhãn và nút sử dụng được trên viewport cảm ứng mô phỏng.
+UI624-04 PASS Tệp PNG thật, canvas 1280 px được thu hồi sau xuất.
+UI624-05 PASS Khôi phục bản đề và token qua máy chủ; không tự nạp TeX khi tải lại.
+UI624-06 PASS Cả ba lần có SVG; không giữ iframe cũ, không vòng sửa vô hạn.
+UI624-07 PASS Bắt đầu hội thoại tám giai đoạn và mở lại các nút sau khi trả lời xong.
+UI624-11 PASS Giữ tiến trình hội thoại; không buộc xác nhận ảnh và bắt đầu bài từ đầu.
+UI624-08 PASS Chặn trước giải mã ảnh trên điện thoại; hướng dẫn dùng 12 MP/cắt đề.
+UI624-09 PASS Hủy worker/iframe; đề được giữ và có thể dựng lại.
+UI624-10 PASS Biên dịch thành công, không lỗi JS của trang.

@@ -1,3 +1,17 @@
+# Bản cập nhật V6.2.4
+
+Sửa lỗi đề đã đọc rõ nhưng bị chặn ở bước xác nhận cấu trúc; bổ sung kiểm tra tọa độ trung điểm/giao điểm bằng calc; giảm các bản sao bộ nhớ khi nạp TeX và giữ đề trước khi bắt đầu học nếu trang tải lại. Lịch mời khảo sát đổi thành **13 phút**.
+
+Giữ React/Vite/TypeScript, Gemini API, Netlify, mã lớp, bài mẫu và giao diện hiện có. Không cần dịch vụ hay khóa mới. Đọc `docs/BAO_CAO_V6_2_4.md`, `docs/BANG_KIEM_THU_V6_2_4.md`, `docs/HUONG_DAN_GIAO_VIEN_V6_2_4.md` để xem kết quả thực tế và giới hạn thiết bị.
+
+Lệnh kiểm tra bổ sung: `npm run test:v624` và `npm run test:ui:v624`. Trên điện thoại, giới hạn ảnh đầu vào 16 triệu điểm ảnh; nên chụp 12 MP và cắt riêng đề. Chưa nghiệm thu Gemini thật hoặc Safari/iPhone/Android vật lý; kiểm thử UI dùng Chromium và phản hồi Gemini có kiểm soát.
+
+Bản vá bộ nhớ TikZJax được tạo lại trong prebuild từ dependency khóa, với mã nguồn ở `scripts/patch-tikz-memory.mjs` và `scripts/tikz-core-stream.mjs`. Thông tin sửa thư viện: `THIRD_PARTY/TIKZJAX-V6_2_4-MODIFICATIONS.md`.
+
+Phần V6.2.3 bên dưới ghi lại nền tảng tính năng đã có; kết quả kiểm thử và giới hạn mới nhất nằm trong tài liệu V6.2.4.
+
+---
+
 # Bản cập nhật V6.2.3
 
 Hai tính năng mới được triển khai tiếp trên bản V6.2.2:
@@ -23,7 +37,7 @@ Hai chế độ **Kiểm tra lời giải** và **So sánh cách giải** có nh
 
 - Liên kết “Poster khoa học online” mở https://poster-online-khkt.netlify.app/ theo địa chỉ mới người quản lý cung cấp.
 - Hồ sơ để trống lớp (kể cả chỉ nhập khoảng trắng) được nhận diện là **Giáo viên**. Vai trò hoặc lớp luôn nằm trong nội dung khảo sát gửi Google Forms, kể cả khi không gửi tóm tắt học tập.
-- Nút **Khảo sát đánh giá ứng dụng** mở khảo sát và không kết thúc cuộc trò chuyện. Lời mời nhắc mỗi **180 giây**, bắt đầu sau khi kết nối AI và hoàn tất hồ sơ. Nếu đang trả lời, mở hộp thoại khác hoặc ở tab nền, lời mời chờ đến khi sẵn sàng; không chồng hộp thoại.
+- Nút **Khảo sát đánh giá ứng dụng** mở khảo sát và không kết thúc cuộc trò chuyện. Lời mời nhắc mỗi **13 phút (780 giây)**, bắt đầu sau khi kết nối AI và hoàn tất hồ sơ. Nếu đang trả lời, mở hộp thoại khác hoặc ở tab nền, lời mời chờ đến khi sẵn sàng; không chồng hộp thoại.
 - Đóng khảo sát chưa gửi vẫn giữ bản nháp. Sau một lần gửi đã được xác nhận, lần khảo sát mới dùng mã gửi mới, yêu cầu chọn sao và đồng ý lại. Kết quả chưa xác nhận được giữ nguyên, không tự gửi lại. Không có yêu cầu gửi Google Forms nào chỉ do đồng hồ kích hoạt.
 
 V6 thay đường dựng hình của giao diện học sinh bằng **Gemini → TikZ → TeX/WebAssembly → SVG**. Bộ đọc câu theo mẫu của V5 không còn quyết định hình hiển thị. Vẫn giữ ngân hàng 87 bài, hồ sơ học sinh, lý thuyết, sơ đồ định hướng và phản hồi.

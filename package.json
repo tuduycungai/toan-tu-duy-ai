@@ -1,6 +1,6 @@
 {
   "name": "toan-tu-duy-gemini-netlify",
-  "version": "6.2.3",
+  "version": "6.2.4",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -23,7 +23,9 @@
     "lint": "eslint . --max-warnings=0",
     "test:v623": "node --test tests/v623-*.test.mjs",
     "test:ui:v623": "node scripts/check-v623-ui.mjs",
-    "test:live:v623": "node --env-file-if-exists=.env scripts/check-v623-live.mjs"
+    "test:live:v623": "node --env-file-if-exists=.env scripts/check-v623-live.mjs",
+    "test:v624": "node --test tests/v624-*.test.mjs",
+    "test:ui:v624": "node scripts/check-v624-ui.mjs"
   },
   "dependencies": {
     "@rod2ik/tikzjax": "1.6.0",

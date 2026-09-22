@@ -1,4 +1,5 @@
 import {stripComments} from '../public/tikz-format.mjs';
+import {coordinateMap} from './tikz-coordinates.mjs';
 const number=s=>{const parts=s.trim().replace(/^\{(.*)\}$/,'$1').split('/');if(parts.length>2||parts.some(x=>!/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(x.trim())))return NaN;return Number(parts[0])/(parts.length===2?Number(parts[1]):1);};
 const sub=(a,b)=>[a[0]-b[0],a[1]-b[1]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1],cross=(a,b)=>a[0]*b[1]-a[1]*b[0];
 const len=(a,b)=>Math.hypot(...sub(a,b));
@@ -7,16 +8,13 @@ const onLine=(p,a,b)=>len(a,b)>1e-7&&near(cross(sub(p,a),sub(b,a)),0);
 const onSegment=(p,a,b)=>onLine(p,a,b)&&dot(sub(p,a),sub(p,b))<=1e-5;
 const angle=(a,o,b)=>Math.acos(Math.max(-1,Math.min(1,dot(sub(a,o),sub(b,o))/(len(a,o)*len(b,o)))))*180/Math.PI;
 export function checkGeometryCode(latex,reading){
-  const clean=stripComments(latex),points=new Map(),checked=[],unverified=[];
+  const clean=stripComments(latex),points=coordinateMap(stripComments(latex)),checked=[],unverified=[];
   if(/\\begin\s*\{scope\}|(?:xscale|yscale|xshift|yshift|shift|cm|transform canvas)\s*=|[\[,\s](?:x|y)\s*=/i.test(clean))throw Error('Không biến đổi riêng tọa độ đã kiểm tra. Dùng một hệ trục và scale đồng đều.');
   const circles=new Map();
   for(const m of clean.matchAll(/\(([A-Z](?:[0-9]{1,2}|['′]{1,2})?)\)\s+circle\s*\(([^()]+)\)/g)){const radius=number(m[2]);if(Number.isFinite(radius)&&radius>0)circles.set(m[1],radius);}
   const coordinateNames=[...clean.matchAll(/\\coordinate\s*\(([^)]+)\)/g)].map(m=>m[1]);
   if(new Set(coordinateNames).size!==coordinateNames.length)throw Error('Không định nghĩa lại điểm sau khi đã kiểm tra.');
-  for(const m of clean.matchAll(/\\coordinate\s*\(([A-Z](?:[0-9]{1,2}|['′]{1,2})?)\)\s+at\s*\(([^,()]+),([^,()]+)\)\s*;/g)){
-    const p=[number(m[2]),number(m[3])];if(p.every(n=>Number.isFinite(n)&&Math.abs(n)<=1000))points.set(m[1],p);
-  }
-  for(const name of reading.points)if(!points.has(name))throw Error('Điểm '+name+' cần tọa độ số hữu hạn để đối chiếu quan hệ.');
+  for(const name of reading.points)if(!points.has(name))throw Error('Điểm '+name+' cần tọa độ số hoặc phép dựng calc/giao điểm được hỗ trợ để đối chiếu.');
   const same=(a,b)=>len(a,b)<1e-7;
   for(const r of reading.relations){
     const ps=r.items.map(n=>points.get(n));if(ps.some(p=>!p))throw Error('Thiếu tọa độ cho '+r.description);

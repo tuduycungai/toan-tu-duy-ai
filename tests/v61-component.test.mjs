@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import ts from 'typescript';import React from 'react';import {create,act} from 'react-test-renderer';import {moduleURL} from './load-ts.mjs';
-let source=readFileSync(new URL('../components/tikz-figure.tsx',import.meta.url),'utf8').replace(/import \{TheoryPanel\}[^\n]+/,'const TheoryPanel=()=>null;').replace(/import \{compileGeometry\}[^\n]+/,'const compileGeometry=()=>null;');
+let source=readFileSync(new URL('../components/tikz-figure.tsx',import.meta.url),'utf8').replace(/import \{TheoryPanel\}[^\n]+/,'const TheoryPanel=()=>null;').replace(/import \{compileGeometry\}[^\n]+/,'const compileGeometry=()=>null;').replace(/import \{compileTikz\}[^\n]+/,'const compileTikz=(...args)=>globalThis.__v624Compiler(...args);');
 let js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText;
 js=js.replace(/from (['"])([^'"]+)\1/g,(_,q,p)=>'from '+q+(p.startsWith('.')?moduleURL(p.endsWith('.ts')?p:p+'.ts',new URL('../components/tikz-figure.tsx',import.meta.url)):import.meta.resolve(p))+q);
 const {ProblemFigure}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
@@ -8,14 +8,18 @@ const originalFetch=globalThis.fetch;globalThis.IS_REACT_ACT_ENVIRONMENT=true;gl
 // V6.2 selects manual drawing on touch devices. These existing compiler tests
 // exercise desktop behavior and need the browser API in their Node environment.
 const originalMatchMedia=globalThis.matchMedia;globalThis.matchMedia=()=>({matches:false});
-let receive;globalThis.addEventListener=(_type,fn)=>{receive=fn;};globalThis.removeEventListener=(_type,fn)=>{if(receive===fn)receive=undefined;};
-async function setup(responses,props={}){let calls=0;globalThis.fetch=async()=>{calls++;return (responses[calls-1]||good)();};const sent=[];const window={postMessage:msg=>sent.push(msg)};let root;
- await act(async()=>{root=create(React.createElement(ProblemFigure,{problem:'fixture '+Math.random(),accessCode:'fixture',...props}),{createNodeMock:e=>e.type==='iframe'?{contentWindow:window}:null});});
- const complete=async(type='compiled')=>{await act(async()=>{root.root.findByType('iframe').props.onLoad();const j=sent.at(-1);receive({source:window,origin:'http://test',data:{type,jobId:j.jobId,svg:'<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0L1 1"/></svg>',error:'Undefined control sequence'}});});};
- return {root,sent,complete,window,calls:()=>calls,close:()=>act(async()=>root.unmount())};}
-test('V6.1 parent onLoad handles lost ready message and removes compiler after success',async()=>{const r=await setup([good]);try{assert.equal(r.calls(),1);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);assert.equal(r.root.root.findAllByType('iframe').length,0);}finally{await r.close();}});
+globalThis.document=Object.assign(new EventTarget(),{hidden:false});
+async function setup(responses,props={}){
+ let calls=0,root,pending;const sent=[];
+ globalThis.fetch=async()=>{calls++;return (responses[calls-1]||good)();};
+ globalThis.__v624Compiler=(code,signal)=>new Promise((resolve,reject)=>{sent.push(code);pending={resolve,reject};signal.addEventListener('abort',()=>reject(new DOMException('Cancelled','AbortError')),{once:true});});
+ await act(async()=>{root=create(React.createElement(ProblemFigure,{problem:'fixture '+Math.random(),accessCode:'fixture',...props}));});
+ const complete=async(type='compiled')=>{await act(async()=>{if(type==='compiled')pending.resolve('<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0L1 1"/></svg>');else pending.reject(Error('Undefined control sequence'));});};
+ return {root,sent,complete,calls:()=>calls,close:()=>act(async()=>root.unmount())};
+}
+test('V6.2.4 parent uses shared compiler and shows its completed result',async()=>{const r=await setup([good]);try{assert.equal(r.calls(),1);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);assert.equal(r.root.root.findAllByType('iframe').length,0);}finally{await r.close();}});
 test('V6.1 chat redraw forces a new request and does not reuse cached code',async()=>{const problem='redraw fixture';const r=await setup([good,good],{problem});try{await r.complete();await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',redrawToken:1})));assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByType('img').length,0);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 malformed JSON response is automatically repaired once before compiling',async()=>{const r=await setup([()=>Response.json({}),good]);try{assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 compiler error runs a single repair and then succeeds',async()=>{const r=await setup([good,good]);try{await r.complete('error');assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 repeated format failure stops instead of remaining in loading state',async()=>{const r=await setup([()=>Response.json({}),()=>Response.json({})]);try{assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByProps({role:'status'}).length,0);assert.equal(r.root.root.findAllByProps({role:'alert'}).length,1);}finally{await r.close();}});
-test.after(()=>{globalThis.fetch=originalFetch;globalThis.matchMedia=originalMatchMedia;});
+test.after(()=>{delete globalThis.__v624Compiler;globalThis.fetch=originalFetch;globalThis.matchMedia=originalMatchMedia;});

@@ -1,0 +1,512 @@
+{
+  "from": "6.2.3",
+  "to": "6.2.4",
+  "comparison": "actual bytes against delivered V6.2.3 ZIP",
+  "modified": 28,
+  "added": 55,
+  "deleted": [],
+  "selfReferentialMetadataExcluded": [
+    "docs/THAY_DOI_TEP_V6_2_4.json",
+    "qa-results/v6.2.4/archive-validation.json"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "change": "modified",
+      "sha256": "fc188af05961c63c763a62e9aeb7f1288ea243861e37bc74f443054e4599dd66",
+      "bytes": 8936
+    },
+    {
+      "path": "THIRD_PARTY/TIKZJAX-V6_2_4-MODIFICATIONS.md",
+      "change": "added",
+      "sha256": "fa0bf6c5256c03be2163e338ba08ed823b1328c3ce5cda5aaa7d1ecefab3055b",
+      "bytes": 1479
+    },
+    {
+      "path": "app/page.tsx",
+      "change": "modified",
+      "sha256": "40b44624b868695bdfdefc5fed8881dcc2bfc0df768bc13aba4a237d6c18e023",
+      "bytes": 47950
+    },
+    {
+      "path": "components/image-problem.tsx",
+      "change": "modified",
+      "sha256": "9b85082503da29cfa32ecf74adde7461460d9a51e4115a8e8a7d1fce08aceacf",
+      "bytes": 14238
+    },
+    {
+      "path": "components/tikz-figure.tsx",
+      "change": "modified",
+      "sha256": "1abf7b304ba58da4655923b156f756bd3ca92ffdbadf65ea605527f0837676cb",
+      "bytes": 5624
+    },
+    {
+      "path": "docs/BANG_KIEM_THU_V6_2_4.md",
+      "change": "added",
+      "sha256": "99d3297ce2ee6b875092905d077f11a9fc0c6cc9920d73cb1818b0167996499a",
+      "bytes": 22877
+    },
+    {
+      "path": "docs/BAO_CAO_V6_2_4.md",
+      "change": "added",
+      "sha256": "29dd197355a23c916aa9a07397bc22f2e6ce3839a35646e041639c2de87153c6",
+      "bytes": 10045
+    },
+    {
+      "path": "docs/HUONG_DAN_GIAO_VIEN_V6_2_4.md",
+      "change": "added",
+      "sha256": "edb86d9a41ea48996d15d7d46d0dd5c53bf6bd1ddcee003d20ca28b80e814b7c",
+      "bytes": 4608
+    },
+    {
+      "path": "lib/device-budget.ts",
+      "change": "added",
+      "sha256": "3461315bb2b4d39adf370b9b192ef2638ff8e8e4962386e5077c18ac7e493339",
+      "bytes": 324
+    },
+    {
+      "path": "lib/diagram-export.ts",
+      "change": "modified",
+      "sha256": "2e4adf5bb5eb072ed559395bac514be1ab93cf15422e412864e8c9c32313dabc",
+      "bytes": 2668
+    },
+    {
+      "path": "lib/image-input.ts",
+      "change": "modified",
+      "sha256": "78150a61ae2785b3613eeb502040124b263c25e3646078bf752c720de681b13d",
+      "bytes": 4204
+    },
+    {
+      "path": "lib/image-session.ts",
+      "change": "added",
+      "sha256": "baee06b90f0ac166e277353c34e18f64b13d1038553e369c75d1e7b5330ed093",
+      "bytes": 922
+    },
+    {
+      "path": "lib/image-workflow.ts",
+      "change": "modified",
+      "sha256": "3d00b629a3562fffcffd5ce7f250d5c140ab2c64e02afa6bd05503a294a44c99",
+      "bytes": 2055
+    },
+    {
+      "path": "lib/tikz-compiler.ts",
+      "change": "modified",
+      "sha256": "379a335cdc8a2d28208c64a37c76f5e2e150c4ef133456eb891ca56af9b9097d",
+      "bytes": 2338
+    },
+    {
+      "path": "lib/use-blob-url.ts",
+      "change": "added",
+      "sha256": "9103b2445e0705fe7bd35b9ba8d87612546091f5fc189e32b618fd3ab2694d9b",
+      "bytes": 471
+    },
+    {
+      "path": "lib/use-survey-reminder.ts",
+      "change": "modified",
+      "sha256": "71ef0bbebc6f9a94807ce6d03b31392f9af9ccf57a48e9b0657325678f1d7451",
+      "bytes": 1362
+    },
+    {
+      "path": "package-lock.json",
+      "change": "modified",
+      "sha256": "4bdf0215f20bf3ee2dc1b9f55ddeb4bad67c39b048161260bb794e1fddbc073a",
+      "bytes": 198485
+    },
+    {
+      "path": "package.json",
+      "change": "modified",
+      "sha256": "5c331f092344c62f0b91fe5454f17519cdd4e0faf689df00a444379effe88743",
+      "bytes": 1867
+    },
+    {
+      "path": "public/tikz-frame.html",
+      "change": "modified",
+      "sha256": "8248613708849dd23f805b0e8be24cfef2069812b696555e9ad2290321cc7c6c",
+      "bytes": 664
+    },
+    {
+      "path": "public/tikz-frame.js",
+      "change": "modified",
+      "sha256": "245b8dd69c60477a4bb413b383e8989063501786aefd41f505cae076e56a343c",
+      "bytes": 2990
+    },
+    {
+      "path": "public/tikz-init.js",
+      "change": "modified",
+      "sha256": "1f95bd3a3f4ee279122440d17b6b371aa950664002869b5e2be87fcace9d9558",
+      "bytes": 779
+    },
+    {
+      "path": "public/tikz/run-tex.js",
+      "change": "modified",
+      "sha256": "341b6df354e0bc47d44589d7d1b004e4ee1b707ca4b8e3ecf6e831f738299849",
+      "bytes": 527110
+    },
+    {
+      "path": "public/tikz/run-tex.min.js",
+      "change": "modified",
+      "sha256": "341b6df354e0bc47d44589d7d1b004e4ee1b707ca4b8e3ecf6e831f738299849",
+      "bytes": 527110
+    },
+    {
+      "path": "qa-results/v6.2.4/build.txt",
+      "change": "added",
+      "sha256": "f0b055efbbd769be712a370f543237aa006c3ab6b17d4c053a3d4577602f2fe0",
+      "bytes": 4793
+    },
+    {
+      "path": "qa-results/v6.2.4/commands.json",
+      "change": "added",
+      "sha256": "1e75b52a01329d155fc8a864ed21cda82b98405e84233a1628d48de69b95b55d",
+      "bytes": 702
+    },
+    {
+      "path": "qa-results/v6.2.4/compiler.txt",
+      "change": "added",
+      "sha256": "2a7dde148a25b0d98c6a2dfedbf288ec85f7b6260ff1488dcdde5f63c3d17384",
+      "bytes": 1046
+    },
+    {
+      "path": "qa-results/v6.2.4/desktop.png",
+      "change": "added",
+      "sha256": "822fffacbc481d6d88a29918b16b8baea1cdc3d97533bc9cd64ac4aebf7f953d",
+      "bytes": 110279
+    },
+    {
+      "path": "qa-results/v6.2.4/image-regression/android-viewport-dark.png",
+      "change": "added",
+      "sha256": "81e20ed7c14095b8c69136fc35a32a0a6d5340a591fc236ee599f8e6bb374f0c",
+      "bytes": 79186
+    },
+    {
+      "path": "qa-results/v6.2.4/image-regression/android-viewport-light.png",
+      "change": "added",
+      "sha256": "195fa6b7fd7c237f8833941cdae4b08cb6331270bf04268e9eab446d3d336680",
+      "bytes": 77771
+    },
+    {
+      "path": "qa-results/v6.2.4/image-regression/desktop-light.png",
+      "change": "added",
+      "sha256": "a85c75a34b0c886b20892e5dec18e1c07a7a7ff0d988996ac0e73b80e921bd22",
+      "bytes": 81584
+    },
+    {
+      "path": "qa-results/v6.2.4/image-regression/image-export.png",
+      "change": "added",
+      "sha256": "a704f4ebc5b475e06003585d3a6e8f1ce423dc3592f18cf9ba441eb72cb306ce",
+      "bytes": 65038
+    },
+    {
+      "path": "qa-results/v6.2.4/image-regression/iphone-viewport-dark.png",
+      "change": "added",
+      "sha256": "7a62532f7a66552aa14f687a61554930c08e335bc358e5fe96a85364847e4014",
+      "bytes": 79877
+    },
+    {
+      "path": "qa-results/v6.2.4/image-regression/iphone-viewport-light.png",
+      "change": "added",
+      "sha256": "2061e14ff9f92230b427947b632bf7034917b9af617f103bb9c65e8f0ade74ce",
+      "bytes": 77442
+    },
+    {
+      "path": "qa-results/v6.2.4/image-regression/ui-results.json",
+      "change": "added",
+      "sha256": "60a3b3e930323e20374958fd8cd18ee06013aed8ea7234b7d1edd7dd855b634d",
+      "bytes": 3752
+    },
+    {
+      "path": "qa-results/v6.2.4/install.txt",
+      "change": "added",
+      "sha256": "3df59ba81d9fd584a96c4b019d0bd4fd07cc0acddbf33c6c997d272052565389",
+      "bytes": 126
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy-ui.txt",
+      "change": "added",
+      "sha256": "9309354aec066ac8fcb47f6c8efab33ff517b05954934df359534fff6c39e377",
+      "bytes": 484
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/01-hinh-v6.png",
+      "change": "added",
+      "sha256": "a47569bd604e0696dc20a67c2b506f8457c677b38a01f77d4ebd646d3737dee8",
+      "bytes": 62286
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/02-export.png",
+      "change": "added",
+      "sha256": "1cd45753b17de73358a66612d8779cc2807d8b31610d3e6245c23c3a14ac2e2c",
+      "bytes": 75924
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/circle-tangent.svg",
+      "change": "added",
+      "sha256": "f2e831da19dcf47d9800157cee18e6ae423fda9d7633b1441426270b09310c30",
+      "bytes": 20170
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/compiler-results.json",
+      "change": "added",
+      "sha256": "b4a432b1652259f9b074effcb42852b3f6cb69c0fe9a7a7ecfd65c0cb5ce6886",
+      "bytes": 497
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/parallelogram-midpoints.svg",
+      "change": "added",
+      "sha256": "88813b65280d32361efbab1adccc3b4c84b4a7bed1a71a688435c4c7efb37a89",
+      "bytes": 23602
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/perpendicular-foot.svg",
+      "change": "added",
+      "sha256": "b7fcbabdab0aed2b92904e21a579051179d1cd9b4f47ce4f5857e1c29467a620",
+      "bytes": 21272
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/plot.svg",
+      "change": "added",
+      "sha256": "330ddccf29c3a40d50fbdaac0d6597fb9c97eb2b664816bae71362681e35d4c2",
+      "bytes": 21168
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/results.json",
+      "change": "added",
+      "sha256": "2566fd393437d13b44610ad3752c687b711fa95ca6575e898a643a8186ec7139",
+      "bytes": 419
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/right-isosceles.svg",
+      "change": "added",
+      "sha256": "bd427d04daeb1911522c57416248932cba5320df767ed3b001562a0b45616821",
+      "bytes": 22559
+    },
+    {
+      "path": "qa-results/v6.2.4/legacy/solid-projection.svg",
+      "change": "added",
+      "sha256": "060a8107ab5ea06946ffe2ca59da3bbe0a547b77cb29bc3fef696f9c4d7a242c",
+      "bytes": 831
+    },
+    {
+      "path": "qa-results/v6.2.4/lint.txt",
+      "change": "added",
+      "sha256": "55b216594d70b44d8aeb2bd19db15f444e5def9eb963960a5e82d9dddccb9946",
+      "bytes": 169
+    },
+    {
+      "path": "qa-results/v6.2.4/live-status.json",
+      "change": "added",
+      "sha256": "a4bba59709ac8998e7aded3f5728aa949cd036f199d53c5917eb35802b06be4f",
+      "bytes": 255
+    },
+    {
+      "path": "qa-results/v6.2.4/netlify-entry.json",
+      "change": "added",
+      "sha256": "33a108aa8ac85722cd197d915f55329363b7f105854d47c09b54e709cfa41726",
+      "bytes": 83
+    },
+    {
+      "path": "qa-results/v6.2.4/phone-dark.png",
+      "change": "added",
+      "sha256": "cde03c0c03637a30803b622e0399fa243196ba383d78bfa72638d0528b833670",
+      "bytes": 104823
+    },
+    {
+      "path": "qa-results/v6.2.4/phone-light.png",
+      "change": "added",
+      "sha256": "6e1e0d18c1985848ef4b983b5a426f9cfed22788471f36f19bd991b891f2275c",
+      "bytes": 103769
+    },
+    {
+      "path": "qa-results/v6.2.4/source-audit.json",
+      "change": "added",
+      "sha256": "f6c7c33f362d82652da5e4b2da084ab3d7facdcbe39b4fa7ec44a01736631bb1",
+      "bytes": 1855
+    },
+    {
+      "path": "qa-results/v6.2.4/summary.json",
+      "change": "added",
+      "sha256": "4d2669735c722bd7fd9cc2e21ee93e580f95f88415d84a3b51e392d1b4cd175f",
+      "bytes": 852
+    },
+    {
+      "path": "qa-results/v6.2.4/tests.txt",
+      "change": "added",
+      "sha256": "4d7de175c4440ab4749de3029f7c385846e7771a1b0ad332cb4cec5c76509b25",
+      "bytes": 42409
+    },
+    {
+      "path": "qa-results/v6.2.4/trapezoid.png",
+      "change": "added",
+      "sha256": "0ecf3e8e32b171e8764fb11c9c2a3fc7b05defe30df20c6de36daad1e46d7abb",
+      "bytes": 62807
+    },
+    {
+      "path": "qa-results/v6.2.4/trapezoid.svg",
+      "change": "added",
+      "sha256": "e40906c0c39efe567eeb1c1c1750be40a755ee0f1e47e5b0ce8bca9b1159e409",
+      "bytes": 39931
+    },
+    {
+      "path": "qa-results/v6.2.4/typecheck.txt",
+      "change": "added",
+      "sha256": "33abdf63628251a246d9f19b21ac10d39b49638f85321b72535153ea371d5af8",
+      "bytes": 161
+    },
+    {
+      "path": "qa-results/v6.2.4/ui-regression.txt",
+      "change": "added",
+      "sha256": "fbce63d1b2dc44ef56b4709f67fee7c5c463b9e3dbbb91480780ca99ea490051",
+      "bytes": 1352
+    },
+    {
+      "path": "qa-results/v6.2.4/ui-results.json",
+      "change": "added",
+      "sha256": "2a1f4db5f45d8c6daca547a91e7b5d74777af1556149ac6e18211b3baeb1e85f",
+      "bytes": 2684
+    },
+    {
+      "path": "qa-results/v6.2.4/ui.txt",
+      "change": "added",
+      "sha256": "f7ce3994ecbb1551b26b09f5e893f815d4844c1d103fa03fe9ef644af5079b1a",
+      "bytes": 1320
+    },
+    {
+      "path": "scripts/check-v6-ui.mjs",
+      "change": "modified",
+      "sha256": "13c21205e5561ff7c917f03af66bd88efa3f3404014098cce9bd09e809a14298",
+      "bytes": 4941
+    },
+    {
+      "path": "scripts/check-v623-ui.mjs",
+      "change": "modified",
+      "sha256": "da75be131636ecfb3b36ed667e9d0b54d55ab7a894f8b0a00f5bf56bb62d1472",
+      "bytes": 10845
+    },
+    {
+      "path": "scripts/check-v624-ui.mjs",
+      "change": "added",
+      "sha256": "eae5377b50c557dd1c84e6925ed37e69b665f3456b9455fafcb83b4098d60ea9",
+      "bytes": 10863
+    },
+    {
+      "path": "scripts/patch-tikz-memory.mjs",
+      "change": "added",
+      "sha256": "d61f3faf6f0cad2d080b2395ca56ea9c7ccbbb40494cccece707c682f509d781",
+      "bytes": 1431
+    },
+    {
+      "path": "scripts/prepare-tikz.mjs",
+      "change": "modified",
+      "sha256": "e191bbb2e2e42221a0c0c582b93686d663985c8e6cdc7769d9e623a274eda8b9",
+      "bytes": 908
+    },
+    {
+      "path": "scripts/tikz-core-stream.mjs",
+      "change": "added",
+      "sha256": "aa88976d4822ea74f6930c48d7d22fe2115e1aff1760ffe7865f559f113dcb7b",
+      "bytes": 1153
+    },
+    {
+      "path": "server/feature-api.mjs",
+      "change": "modified",
+      "sha256": "f4f04465b417459f96a0b9d1d28ac90562ea63943bb6b742109908d71b169ae7",
+      "bytes": 9039
+    },
+    {
+      "path": "server/geometry-checks.mjs",
+      "change": "modified",
+      "sha256": "2a4a6ed701dc517857c6613b4c9169e6baef794f1decb03645c661d76d214440",
+      "bytes": 5559
+    },
+    {
+      "path": "server/image-policy.mjs",
+      "change": "modified",
+      "sha256": "c2a2ba833ac984f075db4c043fbac532ae0190207f6dd3bc090f4929674a7dce",
+      "bytes": 10105
+    },
+    {
+      "path": "server/reading-normalization.mjs",
+      "change": "added",
+      "sha256": "c65c491158527424166dcade0ab09c2a497962e60c1a2cb20f4d62692ae025de",
+      "bytes": 3531
+    },
+    {
+      "path": "server/tikz-coordinates.mjs",
+      "change": "added",
+      "sha256": "79e7c4f39b0be676f5d6474d8697fdbb1d4beed95ad4cda3a0d69efb0e75c5b8",
+      "bytes": 4259
+    },
+    {
+      "path": "server/tikz-image-prompt.mjs",
+      "change": "modified",
+      "sha256": "97c99eae3be93e2c57945b1f5af1e97a1d38df2278473a6cfbad79e0613b1a3d",
+      "bytes": 4842
+    },
+    {
+      "path": "tests/fixtures/images/camera-48mp-v624.png",
+      "change": "added",
+      "sha256": "2a79f7f3ee90e733ec3718e1a6387436cb7c08f5059cdb8e4343f2fc50811885",
+      "bytes": 159326
+    },
+    {
+      "path": "tests/fixtures/images/trapezoid-v624.png",
+      "change": "added",
+      "sha256": "204853ab4fe3545da1db846082c7cabb028ee376cd03dd61097513202ce4b443",
+      "bytes": 30442
+    },
+    {
+      "path": "tests/fixtures/trapezoid-v624.tex",
+      "change": "added",
+      "sha256": "81880c7422b3359852eb253bfdf7fcc01b51970880872d7a22262a4a8a3d4535",
+      "bytes": 1675
+    },
+    {
+      "path": "tests/fixtures/v624-data.mjs",
+      "change": "added",
+      "sha256": "12b69d9a61b939fb734a93327f3d2694de8862f2aa0ce9a8f7ae119757e6cc00",
+      "bytes": 2214
+    },
+    {
+      "path": "tests/load-ts.mjs",
+      "change": "modified",
+      "sha256": "4329da2523a4d276a911484b7d0529848e7800955e6056d2913cdba54da77a34",
+      "bytes": 989
+    },
+    {
+      "path": "tests/survey-component.test.mjs",
+      "change": "modified",
+      "sha256": "f124c3317e1d79a21a3f42cf8306da0045587b0097a3c498909a7fc14beba834",
+      "bytes": 14168
+    },
+    {
+      "path": "tests/survey-preserved.test.mjs",
+      "change": "modified",
+      "sha256": "e7416d72473db96e51d957372772b01de15c76c1a96b99c1496c629aa2e5b9f4",
+      "bytes": 873
+    },
+    {
+      "path": "tests/survey-reminder.test.mjs",
+      "change": "modified",
+      "sha256": "677bdb41dc9272f5e887dde7f9d6142bd31db53f97b0d0594876aa74e6ba61a3",
+      "bytes": 3521
+    },
+    {
+      "path": "tests/v61-component.test.mjs",
+      "change": "modified",
+      "sha256": "a180150d2b1445428c6525ea7f6bb89dfdc0244dd64694f639546452d49ec05d",
+      "bytes": 4276
+    },
+    {
+      "path": "tests/v624-memory.test.mjs",
+      "change": "added",
+      "sha256": "64240350d6ce971b0baba593d76c226aecb543b131724ed9c7de0d0ef9f59504",
+      "bytes": 2683
+    },
+    {
+      "path": "tests/v624-recovery.test.mjs",
+      "change": "added",
+      "sha256": "159b2a1babd15744468132c2c7170b162bdff511d485a10d8d5660602fb94f17",
+      "bytes": 5427
+    }
+  ]
+}

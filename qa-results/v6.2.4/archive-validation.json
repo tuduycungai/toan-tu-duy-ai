@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "archive": "TU-DUY-TOAN-HOC-V6_2_4-BAN-TRIEN-KHAI.zip",
+  "crc": "all entries valid",
+  "safePaths": true,
+  "sourceBytesMatch": true,
+  "exclusions": [
+    "node_modules",
+    "dist",
+    "actual .env files",
+    "cache",
+    "temporary build outputs"
+  ],
+  "allPreviousFilesRetained": true,
+  "finalFileCount": 679,
+  "originalTimestamps": "Inherited from V6.2.3 ZipInfo for byte-identical files; changed/new files use actual filesystem timestamps.",
+  "previousZipSha256": "3f1fcad696c9941fa0ef6fc18432ce8e87790585109a3705af39bffa18e82389",
+  "secretPatternMatches": 0,
+  "selfHashOmitted": "Archive validation metadata does not contain its enclosing ZIP hash."
+}

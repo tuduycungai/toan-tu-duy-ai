@@ -2,7 +2,7 @@ export type ImageReading={transcription:string;figureLabels:string[];givens:stri
   objects:{name:string;type:string;points:string[];definition:string;source:string}[];
   relations:{kind:string;items:string[];value:number;description:string;source:string}[];
   auxiliary:string[];highlights:string[];uncertainties:{text:string;question:string;critical:boolean}[];confidence:number;
-  theory:{name:string;conditions:string}[];clarification:string;ready:boolean};
+  theory:{name:string;conditions:string}[];clarification:string;ready:boolean;structureStatus?:'validated'|'needs_repair';structureIssue?:string};
 export type ImageResponse={reading:ImageReading;imageToken:string;confirmed:boolean};
 export type DiagramResponse={latex:string;repairToken:string;validation:{checked:string[];unverified:string[];notice:string}};
 export class ImageAPIError extends Error{
