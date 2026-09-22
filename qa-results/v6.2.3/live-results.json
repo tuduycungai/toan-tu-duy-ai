@@ -1,0 +1,42 @@
+{
+  "status": "NOT_RUN",
+  "reason": "Requires server GEMINI_API_KEY and explicit RUN_LIVE_GEMINI=1. Never paste the key into the app or report.",
+  "images": [
+    {
+      "file": "clear-ratio.png",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "skewed.png",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "rotated.png",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "text-figure.jpg",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "blurred-cropped.png",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "midpoint.png",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "parallel-perpendicular.png",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "circle.png",
+      "status": "NOT_RUN"
+    },
+    {
+      "file": "graph.png",
+      "status": "NOT_RUN"
+    }
+  ]
+}

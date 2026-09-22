@@ -1,0 +1,17 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> toan-tu-duy-gemini-netlify@6.2.3 test:ui:v623
+> node scripts/check-v623-ui.mjs
+
+UI-01 PASS Nén JPEG thật, gửi inline image, hiển thị phiên âm; chưa gọi vẽ trước xác nhận.
+UI-02 PASS Chặn gửi hội thoại; ô nhập vẫn chỉnh sửa được.
+UI-03 PASS Tự sửa đúng hai lần; biên dịch WASM thật, SVG có font; giải phóng iframe.
+UI-04 PASS Tải PNG thật có đúng chữ ký tệp.
+UI-05 PASS Có giai đoạn 1–8; gửi trạng thái ký qua lượt tiếp theo dù câu trả lời nêu một loại hình.
+UI-06 PASS Chuyển về xác nhận; gửi đúng phần sai để cập nhật cấu trúc.
+UI-07 PASS Báo sai định dạng, không gọi Gemini.
+UI-08 PASS Chặn trước giải mã ảnh và trước API.
+UI-09 PASS Đánh dấu đoạn nghi ngờ; không dựng hình khi chưa bổ sung.
+UI-10 PASS Chọn ảnh qua input camera, đọc, vẽ, phóng to không tràn; light/dark hiển thị. Không phải kiểm thử máy thật.
+UI-11 PASS Chọn ảnh qua input camera, đọc, vẽ, phóng to không tràn; light/dark hiển thị. Không phải kiểm thử máy thật.
+SEC-UI-01 PASS Bộ làm sạch loại mã chủ động và liên kết ngoài trước hiển thị.

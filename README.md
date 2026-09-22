@@ -1,19 +1,32 @@
+# Bản cập nhật V6.2.3
+
+Hai tính năng mới được triển khai tiếp trên bản V6.2.2:
+
+- Hội thoại thích ứng 12 trạng thái, tám giai đoạn, bộ nhớ có chữ ký máy chủ; chỉ tổng hợp ở giai đoạn 7 sau bằng chứng học sinh đã chứng minh.
+- Chọn/chụp/kéo thả ảnh → đọc và xác nhận đề → cấu trúc hình học → TikZ → kiểm tra → biên dịch WASM → xác nhận hình → học gợi mở. Tự sửa mã tối đa hai lần.
+
+Đọc `docs/BAO_CAO_V6_2_3.md`, `docs/BANG_KIEM_THU_V6_2_3.md` và `docs/HUONG_DAN_GIAO_VIEN_V6_2_3.md` trước khi cập nhật Netlify. Các cấu hình triển khai và biến môi trường hiện tại được giữ nguyên. Không cần khóa hoặc dịch vụ biên dịch mới.
+
+Kiểm thử đã chạy và giới hạn chưa kiểm tra được ghi riêng trong báo cáo. Các phản hồi Gemini dùng trong kiểm thử tự động cục bộ là fixture có kiểm soát; không được xem là bằng chứng chất lượng OCR hoặc đánh giá sư phạm của Gemini thật.
+
+Lệnh bổ sung: `npm run lint`, `npm run test:v623`, `npm run test:ui:v623`. Kiểm thử Gemini thật tùy chọn: cấu hình khóa ở môi trường máy chủ, đặt `RUN_LIVE_GEMINI=1`, rồi chạy `npm run test:live:v623`. Không đưa khóa vào giao diện hay ZIP.
+
+---
+
 # Tư duy Toán học — Gia sư hình học tứ giác
 
-Bản cập nhật sau kiểm tra website: xem `CAP_NHAT_V6_2_2.md` để biết lỗi đã sửa, kết quả kiểm thử và giới hạn kiểm chứng. Nhật ký hỗ trợ AI nằm trong `MINH_CHUNG_V6_2_2.md`. Tài liệu `CAP_NHAT_KHAO_SAT.md` ghi lịch sử bản 6.2.1. Số phiên bản kỹ thuật trong `package.json` không hiển thị ở chân trang.
+Mã nguồn ứng dụng, cấu hình triển khai, tài nguyên giao diện và bộ kiểm thử.
 
-Hai chế độ **Kiểm tra lời giải** và **So sánh cách giải** có nhãn **(Đang phát triển)** trong danh mục và tiêu đề. Mỗi chế độ có hướng dẫn sư phạm riêng: kiểm tra lỗi đầu tiên và căn cứ, hoặc đối chiếu đúng một tiêu chí giữa các ý tưởng của học sinh. Chưa có bài làm/ý tưởng thì hỏi phần cần bổ sung; không viết hộ lời giải. Prompt của lượt gợi mở thông thường và nội dung bài mẫu giữ nguyên so với bản nền. Yêu cầu tạo bộ 5–10 câu có chỉ dẫn và kiểm tra định dạng riêng; chọn một câu để bắt đầu hướng dẫn.
+## Tính năng
+
+Hai chế độ **Kiểm tra lời giải** và **So sánh cách giải** có nhãn **(Đang phát triển)** trong danh mục và tiêu đề. Mỗi chế độ có hướng dẫn sư phạm riêng: kiểm tra lỗi đầu tiên và căn cứ, hoặc đối chiếu đúng một tiêu chí giữa các ý tưởng của học sinh. Chưa có bài làm/ý tưởng thì hỏi phần cần bổ sung; không viết hộ lời giải. V6.2.3 mở rộng lượt gợi mở thông thường bằng trạng thái thích ứng; nội dung bài mẫu giữ nguyên. Yêu cầu tạo bộ 5–10 câu có chỉ dẫn và kiểm tra định dạng riêng; chọn một câu để bắt đầu hướng dẫn.
 
 - Liên kết “Poster khoa học online” mở https://poster-online-khkt.netlify.app/ theo địa chỉ mới người quản lý cung cấp.
 - Hồ sơ để trống lớp (kể cả chỉ nhập khoảng trắng) được nhận diện là **Giáo viên**. Vai trò hoặc lớp luôn nằm trong nội dung khảo sát gửi Google Forms, kể cả khi không gửi tóm tắt học tập.
 - Nút **Khảo sát đánh giá ứng dụng** mở khảo sát và không kết thúc cuộc trò chuyện. Lời mời nhắc mỗi **180 giây**, bắt đầu sau khi kết nối AI và hoàn tất hồ sơ. Nếu đang trả lời, mở hộp thoại khác hoặc ở tab nền, lời mời chờ đến khi sẵn sàng; không chồng hộp thoại.
 - Đóng khảo sát chưa gửi vẫn giữ bản nháp. Sau một lần gửi đã được xác nhận, lần khảo sát mới dùng mã gửi mới, yêu cầu chọn sao và đồng ý lại. Kết quả chưa xác nhận được giữ nguyên, không tự gửi lại. Không có yêu cầu gửi Google Forms nào chỉ do đồng hồ kích hoạt.
 
-Bản sửa 6.1: xem `SUA_LOI_V6_1.md` để biết lỗi đã sửa và kết quả kiểm tra trực tiếp trên website.
-
 V6 thay đường dựng hình của giao diện học sinh bằng **Gemini → TikZ → TeX/WebAssembly → SVG**. Bộ đọc câu theo mẫu của V5 không còn quyết định hình hiển thị. Vẫn giữ ngân hàng 87 bài, hồ sơ học sinh, lý thuyết, sơ đồ định hướng và phản hồi.
-
-Đọc `BAO_CAO_BAN_GIAO_V6.md` trước khi triển khai. Các báo cáo V5/V4 còn trong dự án là tài liệu lịch sử, không mô tả giao diện V6.
 
 ## Chạy trên máy
 
@@ -69,6 +82,8 @@ npm run test:ui
 Có thể đặt CHROMIUM_EXECUTABLE nếu dùng Chromium riêng. TEST_PRODUCTION=1 dùng bản dist trong bài kiểm tra UI. Test UI giả lập phản hồi Gemini, nhưng biên dịch TeX và tải PNG thật.
 
 ## Bộ dựng hình
+
+Các mục dưới đây mô tả luồng dựng hình từ đề nhập chữ đã có. Luồng ảnh V6.2.3 dùng cùng bộ biên dịch, thêm xác nhận phiên âm/cấu trúc/hình và cho phép tối đa hai lần tự sửa mã.
 
 - Khi gửi hoặc xem hình: một yêu cầu riêng, có xác thực, gọi Gemini bằng mode diagram trên /api/chat.
 - JSON trả mã LaTeX hoàn chỉnh hoặc một câu hỏi về dữ kiện thực sự thiếu. JSON chỉ là vỏ giao tiếp; học sinh không phải đọc mã.

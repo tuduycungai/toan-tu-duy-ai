@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "archive": "TU-DUY-TOAN-HOC-V6_2_3-BAN-TRIEN-KHAI.zip",
+  "source_sha256": "99576c396968cb3f0355df397ddeb5956280b7d052837cbc2fad0541bf6543c8",
+  "checks": [
+    "ZIP CRC and unique safe paths",
+    "Every entry matches reviewed workspace source",
+    "No node_modules, dist, private env, log or cache files",
+    "Required Netlify and self-hosted TikZ assets present",
+    "Original deployment/env templates and license bytes preserved",
+    "Unchanged original entry timestamps preserved",
+    "Text secret-pattern scan passed",
+    "Original archive SHA-256 unchanged"
+  ],
+  "pass_counted_entries": 622,
+  "note": "Archive rebuilt and fully verified after adding this report; hashes of this report and the manifest are not recursive."
+}

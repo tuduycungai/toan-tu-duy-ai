@@ -1,6 +1,6 @@
 {
   "name": "toan-tu-duy-gemini-netlify",
-  "version": "6.2.2",
+  "version": "6.2.3",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -19,7 +19,11 @@
     "prestart": "node scripts/prepare-tikz.mjs",
     "predev": "node scripts/prepare-tikz.mjs",
     "test:ui:v5": "node scripts/check-v5-ui.mjs",
-    "test:tikz": "node scripts/check-tikz-runtime.mjs"
+    "test:tikz": "node scripts/check-tikz-runtime.mjs",
+    "lint": "eslint . --max-warnings=0",
+    "test:v623": "node --test tests/v623-*.test.mjs",
+    "test:ui:v623": "node scripts/check-v623-ui.mjs",
+    "test:live:v623": "node --env-file-if-exists=.env scripts/check-v623-live.mjs"
   },
   "dependencies": {
     "@rod2ik/tikzjax": "1.6.0",
@@ -37,7 +41,9 @@
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@typescript-eslint/parser": "8.70.1",
     "@vitejs/plugin-react": "6.0.2",
+    "eslint": "10.11.0",
     "playwright": "1.62.1",
     "react-test-renderer": "19.2.6",
     "tailwindcss": "4.2.1",

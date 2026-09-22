@@ -1,0 +1,501 @@
+{
+  "version": "6.2.3",
+  "source_archive": "TU-DUY-TOAN-HOC-V6_2_2-BAN-TRIEN-KHAI.zip",
+  "source_sha256": "99576c396968cb3f0355df397ddeb5956280b7d052837cbc2fad0541bf6543c8",
+  "unchanged_packaged_files": 540,
+  "modified": 13,
+  "added": 67,
+  "changes": [
+    {
+      "path": "README.md",
+      "change": "modified",
+      "sha256": "f9761b3e6cbba5b353c81382126a888afb7c15931beb065323188093cd342784",
+      "bytes": 7482
+    },
+    {
+      "path": "app/enhancements.css",
+      "change": "modified",
+      "sha256": "e29451237960255f3ac37546751146fc8f245cc716155d6e5fad961d9d0c9c74",
+      "bytes": 11302
+    },
+    {
+      "path": "app/page.tsx",
+      "change": "modified",
+      "sha256": "1ad12c71ee652a7c7ac3bc798045bc8c8b7c7958635212a2b9c69a6f55a916df",
+      "bytes": 47786
+    },
+    {
+      "path": "components/image-problem.tsx",
+      "change": "added",
+      "sha256": "19f141fa314cb9ed3307e37614024fbb2c7dd8f014c157579ef7836a57c0a392",
+      "bytes": 11556
+    },
+    {
+      "path": "docs/BANG_KIEM_THU_V6_2_3.md",
+      "change": "added",
+      "sha256": "3028b66bbf1130ea1fd36510b8434bdd2432739f24d8d37ff41144c17970e139",
+      "bytes": 25419
+    },
+    {
+      "path": "docs/BAO_CAO_V6_2_3.md",
+      "change": "added",
+      "sha256": "2a4bad7c5442334334ee1a64cab4894e948a5506a6f7be3b31fcb7d68003ef5a",
+      "bytes": 13325
+    },
+    {
+      "path": "docs/HUONG_DAN_GIAO_VIEN_V6_2_3.md",
+      "change": "added",
+      "sha256": "534b00e84f0ed7453561b35739b4d003e167b09a01ef02fa18989af90fb1c1d0",
+      "bytes": 6698
+    },
+    {
+      "path": "eslint.config.mjs",
+      "change": "added",
+      "sha256": "dd570c59e0ff5ba4f837e600caa189ced45a47da145be2adac45237309145233",
+      "bytes": 683
+    },
+    {
+      "path": "lib/image-input.ts",
+      "change": "added",
+      "sha256": "58d7ff26d5e068d7f0cce92c5c900a19c32d37dc7a9cb7216c60d72e5508a836",
+      "bytes": 2569
+    },
+    {
+      "path": "lib/image-workflow.ts",
+      "change": "added",
+      "sha256": "6dfc997d420f89984bcf31852446f8b543bb94633e0ef7064f416da5c2d7257a",
+      "bytes": 1988
+    },
+    {
+      "path": "lib/session-recovery.ts",
+      "change": "modified",
+      "sha256": "6ac10aaae4e09207524dc1faf18e5d9d034d64d6387fe43b97c3a3bd1b8b7420",
+      "bytes": 1777
+    },
+    {
+      "path": "lib/tikz-compiler.ts",
+      "change": "added",
+      "sha256": "823ead0097e5aaa0630ed355a4ad01e2b0a4c7fb023674bf3733701dfac16c8f",
+      "bytes": 1943
+    },
+    {
+      "path": "package-lock.json",
+      "change": "modified",
+      "sha256": "89f00f994f256eb397ed5cb23683c12d94c3b3dbcd2f789842d68eb54fe58934",
+      "bytes": 198485
+    },
+    {
+      "path": "package.json",
+      "change": "modified",
+      "sha256": "6d55c7454f887700fe13c5124f29d7618fca81dd2a383e6e3c98754b08793677",
+      "bytes": 1759
+    },
+    {
+      "path": "public/image-format.d.mts",
+      "change": "added",
+      "sha256": "18828e4bdb6a1afed7969d06320dbb834e0ead4bf855b7d9fcdd791077e06816",
+      "bytes": 374
+    },
+    {
+      "path": "public/image-format.mjs",
+      "change": "added",
+      "sha256": "2a906a2c68fb057c71730d52318d7349b3ba1a6a0d27c742c5d975ca60df3677",
+      "bytes": 2447
+    },
+    {
+      "path": "public/svg-safety.d.mts",
+      "change": "added",
+      "sha256": "b585aaff5f2d07443c6ffad4fbfee8c2f3e80e1a45882549feb3b34e4ae4d1cb",
+      "bytes": 51
+    },
+    {
+      "path": "public/svg-safety.mjs",
+      "change": "added",
+      "sha256": "dde678ad089cbcd9388d88593a6a67e5807000baf1895c11e47e7217a2c55617",
+      "bytes": 2494
+    },
+    {
+      "path": "public/tikz-format.mjs",
+      "change": "modified",
+      "sha256": "03d10df4b6e10825e42669aa2940cea186f6dbe8bf6e7f17786b43bf32ec2c07",
+      "bytes": 6051
+    },
+    {
+      "path": "public/tikz-frame.html",
+      "change": "modified",
+      "sha256": "1b67b6b35162597b7150fea9a0a91c25c9783354a81d3ab0a1b43582db3b08f0",
+      "bytes": 648
+    },
+    {
+      "path": "public/tikz-frame.js",
+      "change": "modified",
+      "sha256": "0df478525aab9311a1e9adf37fd78e0d47227e7382c491998560ea547f2f098a",
+      "bytes": 2963
+    },
+    {
+      "path": "public/tikz-init.js",
+      "change": "added",
+      "sha256": "62aabc18be1dc258894c4262c570350ec529c62db1055a2265e13b7f0fffb861",
+      "bytes": 562
+    },
+    {
+      "path": "qa-results/v6.2.3/android-viewport-dark.png",
+      "change": "added",
+      "sha256": "9e88c4717fcd28ed6fde826a83b834bde20fdbabbdc311cb91d5109354d6b027",
+      "bytes": 79099
+    },
+    {
+      "path": "qa-results/v6.2.3/android-viewport-light.png",
+      "change": "added",
+      "sha256": "3a005aee3f14264ac8f785b4988482a9e753a4a2bdcc7226289b56da5a83cbad",
+      "bytes": 77711
+    },
+    {
+      "path": "qa-results/v6.2.3/build.txt",
+      "change": "added",
+      "sha256": "eac94e2e43d45d332df245cc70d959df8726e51ea7c125b343dd6d78e06a7593",
+      "bytes": 4789
+    },
+    {
+      "path": "qa-results/v6.2.3/desktop-light.png",
+      "change": "added",
+      "sha256": "9118fb088429cc522da57ed1379fdad178985478fbf418751f3ebecf01e1367e",
+      "bytes": 81940
+    },
+    {
+      "path": "qa-results/v6.2.3/image-export.png",
+      "change": "added",
+      "sha256": "a704f4ebc5b475e06003585d3a6e8f1ce423dc3592f18cf9ba441eb72cb306ce",
+      "bytes": 65038
+    },
+    {
+      "path": "qa-results/v6.2.3/install.txt",
+      "change": "added",
+      "sha256": "5cd42be1e966545684cff51b336b5d85ebb1fc92299f7c711b9c4ba79768951a",
+      "bytes": 125
+    },
+    {
+      "path": "qa-results/v6.2.3/iphone-viewport-dark.png",
+      "change": "added",
+      "sha256": "f96ea9bed650e5f6abfe060770fa505e42164af22c8392cdbf2c7d39a93ed4a8",
+      "bytes": 79487
+    },
+    {
+      "path": "qa-results/v6.2.3/iphone-viewport-light.png",
+      "change": "added",
+      "sha256": "d68f116bd96e399e0d0d1a009478fa01a4d4c57e1d771b4b1a99cf5f4e7d6e43",
+      "bytes": 77103
+    },
+    {
+      "path": "qa-results/v6.2.3/legacy-ui.txt",
+      "change": "added",
+      "sha256": "57094e3cf3e28330cc19254684b2542569a0687daa58f1650c4ae7589d9252fc",
+      "bytes": 484
+    },
+    {
+      "path": "qa-results/v6.2.3/lint.txt",
+      "change": "added",
+      "sha256": "cbb0f892875650cb1f9105ab889960db4d91e7df19c2482193d91710ce082921",
+      "bytes": 169
+    },
+    {
+      "path": "qa-results/v6.2.3/live-results.json",
+      "change": "added",
+      "sha256": "a80064e4f7aa91f690e04f31d034d42f3159b22d6d1f70d1b94bd374ab31638d",
+      "bytes": 805
+    },
+    {
+      "path": "qa-results/v6.2.3/source-audit.json",
+      "change": "added",
+      "sha256": "439dafd8d8678f409eb826e40cdbcd21549bbb32acaff422fc3ae9daf3fbc0f2",
+      "bytes": 973
+    },
+    {
+      "path": "qa-results/v6.2.3/tests.txt",
+      "change": "added",
+      "sha256": "2db2d32567b623c2a73e6df886e087f00aa5e2c58a4c647adad48ef61f70f5fb",
+      "bytes": 41317
+    },
+    {
+      "path": "qa-results/v6.2.3/tikz-gallery.png",
+      "change": "added",
+      "sha256": "b8c219e1744ad2796b24e3464fcb545a2ad0d03e9056805c3b6442152316a9fb",
+      "bytes": 73873
+    },
+    {
+      "path": "qa-results/v6.2.3/tikz-runtime.txt",
+      "change": "added",
+      "sha256": "237cb2ba7445fdcedc72f97464fbd65f0e470b206e3c282d745260a5144f6a6f",
+      "bytes": 661
+    },
+    {
+      "path": "qa-results/v6.2.3/typecheck.txt",
+      "change": "added",
+      "sha256": "120fd5fef982b605fc08e101238c72c13cedfe12351d9cabe3d8cbcb3590c6f8",
+      "bytes": 161
+    },
+    {
+      "path": "qa-results/v6.2.3/ui-results.json",
+      "change": "added",
+      "sha256": "60a3b3e930323e20374958fd8cd18ee06013aed8ea7234b7d1edd7dd855b634d",
+      "bytes": 3752
+    },
+    {
+      "path": "qa-results/v6.2.3/ui.txt",
+      "change": "added",
+      "sha256": "b6e641521c3dd848d488ab1c82579f8cb45282765425e14c4d1f1260c388ca50",
+      "bytes": 1352
+    },
+    {
+      "path": "qa-results/v6.2.3/validation-summary.json",
+      "change": "added",
+      "sha256": "38d4bc0eb514d006e331bebaada557325d8761c7a8429e352bb3e5f1710ed4ce",
+      "bytes": 1823
+    },
+    {
+      "path": "research/v6-checks/01-hinh-v6.png",
+      "change": "added",
+      "sha256": "a1fe11fbfeaa72cb34f34225be845c622d56619c9751c27bc8157b176a80bcb8",
+      "bytes": 62291
+    },
+    {
+      "path": "research/v6-checks/02-export.png",
+      "change": "added",
+      "sha256": "1cd45753b17de73358a66612d8779cc2807d8b31610d3e6245c23c3a14ac2e2c",
+      "bytes": 75924
+    },
+    {
+      "path": "research/v6-checks/circle-tangent.svg",
+      "change": "added",
+      "sha256": "f2e831da19dcf47d9800157cee18e6ae423fda9d7633b1441426270b09310c30",
+      "bytes": 20170
+    },
+    {
+      "path": "research/v6-checks/compiler-results.json",
+      "change": "added",
+      "sha256": "b4a432b1652259f9b074effcb42852b3f6cb69c0fe9a7a7ecfd65c0cb5ce6886",
+      "bytes": 497
+    },
+    {
+      "path": "research/v6-checks/parallelogram-midpoints.svg",
+      "change": "added",
+      "sha256": "88813b65280d32361efbab1adccc3b4c84b4a7bed1a71a688435c4c7efb37a89",
+      "bytes": 23602
+    },
+    {
+      "path": "research/v6-checks/perpendicular-foot.svg",
+      "change": "added",
+      "sha256": "b7fcbabdab0aed2b92904e21a579051179d1cd9b4f47ce4f5857e1c29467a620",
+      "bytes": 21272
+    },
+    {
+      "path": "research/v6-checks/plot.svg",
+      "change": "added",
+      "sha256": "330ddccf29c3a40d50fbdaac0d6597fb9c97eb2b664816bae71362681e35d4c2",
+      "bytes": 21168
+    },
+    {
+      "path": "research/v6-checks/results.json",
+      "change": "added",
+      "sha256": "2566fd393437d13b44610ad3752c687b711fa95ca6575e898a643a8186ec7139",
+      "bytes": 419
+    },
+    {
+      "path": "research/v6-checks/right-isosceles.svg",
+      "change": "added",
+      "sha256": "bd427d04daeb1911522c57416248932cba5320df767ed3b001562a0b45616821",
+      "bytes": 22559
+    },
+    {
+      "path": "research/v6-checks/solid-projection.svg",
+      "change": "added",
+      "sha256": "060a8107ab5ea06946ffe2ca59da3bbe0a547b77cb29bc3fef696f9c4d7a242c",
+      "bytes": 831
+    },
+    {
+      "path": "scripts/check-v623-live.mjs",
+      "change": "added",
+      "sha256": "510dadf63d7f30bc50c15541c0e0cd67c3e052bc6ec30c000400e526e25903ae",
+      "bytes": 3284
+    },
+    {
+      "path": "scripts/check-v623-ui.mjs",
+      "change": "added",
+      "sha256": "fb2ba3fbef7ea8efa9204aa39c632f4ba4c0b26f102c40e78057e559de4896d9",
+      "bytes": 10787
+    },
+    {
+      "path": "scripts/make-image-fixtures.py",
+      "change": "added",
+      "sha256": "8b13b567863e9d17cc796264168aa37d2a7789ca5c4c5e9bb8f2c3fc2627a135",
+      "bytes": 2541
+    },
+    {
+      "path": "server/adaptive-tutor.mjs",
+      "change": "added",
+      "sha256": "daf426ab8ff8da91a0ba68d83206df210ac186fe97514605a5950f9b3d119ae3",
+      "bytes": 14051
+    },
+    {
+      "path": "server/feature-api.mjs",
+      "change": "added",
+      "sha256": "bba4fba22f348a9a66d3287b250079e2c0feb14f795263b29518504ea9f6e2a1",
+      "bytes": 8060
+    },
+    {
+      "path": "server/gemini.mjs",
+      "change": "modified",
+      "sha256": "a38d75e2a2b410be546b7aa4477b22882be5a7623be5bab5f33331bc95332fce",
+      "bytes": 6337
+    },
+    {
+      "path": "server/geometry-checks.mjs",
+      "change": "added",
+      "sha256": "a400d798b80d8d13d7fa1df4af2d0fd626ed2d7c2aa404c18df852d04854fca8",
+      "bytes": 5687
+    },
+    {
+      "path": "server/image-policy.mjs",
+      "change": "added",
+      "sha256": "aab081c26cf764d8ffa049fdb7d715c4344be7a0109fbb218b45ac7a0f2229ab",
+      "bytes": 9437
+    },
+    {
+      "path": "server/signed-state.mjs",
+      "change": "added",
+      "sha256": "71382e66b68b85b6897c7be41f49f3520397850c7d00787f002bdf7c04ed6e8f",
+      "bytes": 1283
+    },
+    {
+      "path": "server/tikz-image-prompt.mjs",
+      "change": "added",
+      "sha256": "c5a24df64196dc3a265a8867b07e38d4f8676b2f1fded75475cde07b46809842",
+      "bytes": 4442
+    },
+    {
+      "path": "tests/fixtures/images/README.md",
+      "change": "added",
+      "sha256": "3573cad24b2786f5dc80b8424659f7f39247d0c32fc977f6963eae4a3c41f186",
+      "bytes": 309
+    },
+    {
+      "path": "tests/fixtures/images/blurred-cropped.png",
+      "change": "added",
+      "sha256": "67ee3ce01cc8e8a9e7e693f9348d6206851826fa4081d6156db94260b32e4dd7",
+      "bytes": 40005
+    },
+    {
+      "path": "tests/fixtures/images/circle.png",
+      "change": "added",
+      "sha256": "7cc263238ee23bdd502d8afa0f78a981dd5120b53db697fc42cafd07f6c2ed26",
+      "bytes": 26809
+    },
+    {
+      "path": "tests/fixtures/images/clear-ratio.png",
+      "change": "added",
+      "sha256": "c9c9900aea59948a345c2cf67c9c1bed6c271a8ca2eb6cab1ef8df9bdd3e5ab5",
+      "bytes": 27191
+    },
+    {
+      "path": "tests/fixtures/images/clear.webp",
+      "change": "added",
+      "sha256": "1e835eda4240de773f1267f1568534a10f03b8bdecfe2840cf8f144a89b5376a",
+      "bytes": 21896
+    },
+    {
+      "path": "tests/fixtures/images/graph.png",
+      "change": "added",
+      "sha256": "22b67c38d427bc131429506c9a2af70689453556ce9336458b3f6921166e2a8a",
+      "bytes": 20223
+    },
+    {
+      "path": "tests/fixtures/images/invalid.txt",
+      "change": "added",
+      "sha256": "71e20bc386514762034edf6aa4c52917c23c42726159a14102cb997717655ba4",
+      "bytes": 56
+    },
+    {
+      "path": "tests/fixtures/images/midpoint.png",
+      "change": "added",
+      "sha256": "627c884f5df2a425c0f2c87c3a3d0340f4baaf4b7839235727fc077ecde78de5",
+      "bytes": 21068
+    },
+    {
+      "path": "tests/fixtures/images/parallel-perpendicular.png",
+      "change": "added",
+      "sha256": "dd5261141e7098f8f1e1fb9960fd9150a1e8816d03548279ac7c1dc3b14c4d0a",
+      "bytes": 25393
+    },
+    {
+      "path": "tests/fixtures/images/rotated.png",
+      "change": "added",
+      "sha256": "e4806138ec3c478f7ec6e1afbb7f3c4f724b605b0bba2a5ebb5d0048e8f83185",
+      "bytes": 36719
+    },
+    {
+      "path": "tests/fixtures/images/skewed.png",
+      "change": "added",
+      "sha256": "784168fcd8e64b6ded3a6b88886ade8428ff300db5ac91f8a27d0fc1868b8813",
+      "bytes": 74961
+    },
+    {
+      "path": "tests/fixtures/images/text-figure.jpg",
+      "change": "added",
+      "sha256": "35f82ec675a3a8aeb3acf2220401ead65edb2c5b1ae78f47cb22da2ebd72a600",
+      "bytes": 70330
+    },
+    {
+      "path": "tests/fixtures/v623-data.mjs",
+      "change": "added",
+      "sha256": "39e1e356b92f79639a348861f7e8600482e3143e4f5b23e8ca185856e7f1da16",
+      "bytes": 2629
+    },
+    {
+      "path": "tests/preserved.test.mjs",
+      "change": "modified",
+      "sha256": "fc11a353cb003c9824635c5efef6fee8a90cc7aeaf50abb489955fe683e67036",
+      "bytes": 5268
+    },
+    {
+      "path": "tests/survey-component.test.mjs",
+      "change": "modified",
+      "sha256": "001233bf9462dac43e795952dccc5b47cc5d415eab1c81bc5f13f484d61f802a",
+      "bytes": 14076
+    },
+    {
+      "path": "tests/survey-preserved.test.mjs",
+      "change": "modified",
+      "sha256": "c1b5386d96dedae42b898d7fe99790ae75d9922c4c6d73baad2cf3bf23bf7c16",
+      "bytes": 740
+    },
+    {
+      "path": "tests/v623-adaptive.test.mjs",
+      "change": "added",
+      "sha256": "88c83bb13a038c1d1940099a31eeacd87439321dd3dd98f229b69ec45f39af24",
+      "bytes": 8009
+    },
+    {
+      "path": "tests/v623-image.test.mjs",
+      "change": "added",
+      "sha256": "e2859a8842d409ce4c6313c8713dccf889e48cf5cea4bfb54aa2a062eb88aabd",
+      "bytes": 10606
+    },
+    {
+      "path": "tests/v623-session.test.mjs",
+      "change": "added",
+      "sha256": "78cdf3dc8d141514fcbca83fcf4f70da0f4585ea10fc627dbe6848b755cb8d28",
+      "bytes": 1115
+    }
+  ],
+  "metadata_files_without_recursive_hash": [
+    "docs/THAY_DOI_TEP_V6_2_3.json",
+    "qa-results/v6.2.3/archive-validation.json"
+  ],
+  "excluded_generated_or_private": [
+    "dist/**",
+    "node_modules/**",
+    ".env except .env.example",
+    "cache/build transient files"
+  ],
+  "timestamp_policy": "Reuse original ZipInfo for byte-identical original files. New/modified files keep their actual filesystem mtime."
+}

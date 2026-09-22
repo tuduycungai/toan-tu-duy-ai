@@ -1,0 +1,73 @@
+{
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "chromium": "131.0.6778",
+    "playwright": "1.62.1"
+  },
+  "commands": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "exit_code": 0,
+      "evidence": "install.txt"
+    },
+    {
+      "command": "npm run lint",
+      "exit_code": 0,
+      "evidence": "lint.txt"
+    },
+    {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "evidence": "typecheck.txt"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "evidence": "tests.txt"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "evidence": "build.txt"
+    },
+    {
+      "command": "npm run test:tikz",
+      "exit_code": 0,
+      "evidence": "tikz-runtime.txt"
+    },
+    {
+      "command": "TEST_PRODUCTION=1 npm run test:ui",
+      "exit_code": 0,
+      "evidence": "legacy-ui.txt"
+    },
+    {
+      "command": "npm run test:ui:v623",
+      "exit_code": 0,
+      "evidence": "ui.txt"
+    }
+  ],
+  "unit_integration": {
+    "total": 491,
+    "pass": 490,
+    "fail": 0,
+    "skip": 1,
+    "skip_reason": "Live Gemini requires opt-in and server key"
+  },
+  "new_tests": 48,
+  "production_ui_checks": 12,
+  "compiler_fixtures": 6,
+  "live_gemini": "NOT_RUN",
+  "physical_devices": "NOT_RUN",
+  "safari_webkit": "NOT_RUN: unavailable system libraries",
+  "warnings": [
+    "Vite JS chunk 757.79 kB, gzip 233.99 kB",
+    "npm http-proxy environment configuration warning"
+  ],
+  "fixture_visual_review": {
+    "new_ratio_diagram": "Labels clear in inspected screenshot",
+    "legacy_perpendicular_foot": "H is too close to right-angle marker",
+    "legacy_parallelogram_midpoints": "A/B are close to incident sides",
+    "scope": "Visual review of authored fixtures, not a guarantee for generated figures"
+  }
+}

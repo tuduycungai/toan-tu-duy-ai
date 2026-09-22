@@ -1,3 +1,4 @@
+import {handleFeature,IMAGE_MODES} from './feature-api.mjs';
 import {DIAGRAM_PROMPT,parseDiagram} from './diagram-policy.mjs';
 import { timingSafeEqual } from 'node:crypto';
 import { instructions } from './policy.mjs';
@@ -15,17 +16,20 @@ export async function handleChat(request,env,fetcher=fetch){
  const apiKey=env.GEMINI_API_KEY?.trim(),access=(env.ACCESS_CODE?.trim()||'HOCGIOITOAN').normalize('NFC');
  if(!apiKey||!access||access.length<10)return reply({error:'Giáo viên cần kiểm tra GEMINI_API_KEY trong Netlify. Nếu tự đặt ACCESS_CODE, mã phải có ít nhất 10 ký tự. Sau đó triển khai lại.'},503);
  const reader=request.body?.getReader();if(!reader)return reply({error:'Thiếu nội dung.'},400);
- let raw='',size=0;const decoder=new TextDecoder();try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>250000){await reader.cancel();return reply({error:'Nội dung quá dài. Hãy mở bài mới.'},413);}raw+=decoder.decode(value,{stream:true});}raw+=decoder.decode();}catch{return reply({error:'Không đọc được nội dung.'},400);}
+ let raw='',size=0;const decoder=new TextDecoder();try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>3900000){await reader.cancel();return reply({error:'Nội dung quá dài. Hãy mở bài mới.'},413);}raw+=decoder.decode(value,{stream:true});}raw+=decoder.decode();}catch{return reply({error:'Không đọc được nội dung.'},400);}
  let body;try{body=JSON.parse(raw);}catch{return reply({error:'Dữ liệu không hợp lệ.'},400);}
  if(!body||typeof body!=='object')return reply({error:'Dữ liệu không hợp lệ.'},400);
  const provided=typeof body.accessCode==='string'?body.accessCode.trim().normalize('NFC'):'';
  const a=Buffer.from(provided),b=Buffer.from(access);
  if(a.length!==b.length||!timingSafeEqual(a,b))return reply({error:'Mã truy cập chưa đúng. Hãy hỏi giáo viên để nhận mã.'},401);
+ if(!IMAGE_MODES.includes(body.mode)&&size>250000)return reply({error:'Nội dung quá dài. Hãy mở bài mới.'},413);
  const check=body.check===true;
+ const featureImage=IMAGE_MODES.includes(body.mode);
  const diagram=body.mode==='diagram';
- if(!check&&(!(diagram?Array.isArray(body.messages)&&body.messages.length===1&&body.messages[0]?.role==='user'&&typeof body.messages[0].content==='string'&&body.messages[0].content.length>0&&body.messages[0].content.length<=26000:validMessages(body.messages))||!['guide','review','compare','diagram'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);
+ if(!check&&!featureImage&&(!(diagram?Array.isArray(body.messages)&&body.messages.length===1&&body.messages[0]?.role==='user'&&typeof body.messages[0].content==='string'&&body.messages[0].content.length>0&&body.messages[0].content.length<=26000:validMessages(body.messages))||!['guide','review','compare','diagram'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);
  const model=env.GEMINI_MODEL?.trim()||'gemini-2.5-flash';
  if(!/^gemini-[a-zA-Z0-9.-]+$/.test(model))return reply({error:'GEMINI_MODEL chưa hợp lệ. Giáo viên cần kiểm tra cấu hình.'},503);
+ if(!check&&(featureImage||body.adaptive===true))return handleFeature(body,env,model,fetcher);
  if(!check&&!diagram&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});
  const contents=check?[{role:'user',parts:[{text:'Reply with OK only.'}]}]:body.messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
  const generationConfig={maxOutputTokens:check?128:diagram?6000:2400};

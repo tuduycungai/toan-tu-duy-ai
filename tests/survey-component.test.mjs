@@ -29,6 +29,7 @@ function compile(path, mocks={}) {
 const feedback=compile('lib/feedback.ts');
 const container=({children,...props})=>h('div',props,children);
 const App=compile('app/page.tsx',{
+  '@/components/image-problem':{ImageProblem:none},
   '@/lib/tutor':tutor,'@/lib/learning':learning,'@/lib/session-recovery':session,
   '@/lib/feedback':feedback,'@/lib/survey':survey,'@/lib/use-survey-reminder':reminder,
   'lucide-react':new Proxy({},{get:()=>none}),

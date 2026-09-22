@@ -1,0 +1,1 @@
+Ảnh kiểm thử tự soạn bằng Pillow. Không phải dữ liệu thực nghiệm của học sinh. Các biến thể nghiêng, xoay, mờ dùng để chạy kiểm thử đầu vào và làm bộ ca gọi Gemini thật khi có khóa. Không coi phản hồi API giả lập là kết quả OCR thật.

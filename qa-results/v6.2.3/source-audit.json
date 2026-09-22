@@ -1,0 +1,33 @@
+{
+  "original_sha256": "99576c396968cb3f0355df397ddeb5956280b7d052837cbc2fad0541bf6543c8",
+  "status": "PASS",
+  "text_files_scanned": 184,
+  "checks": [
+    "dist references",
+    "compiler assets and stylesheet font paths",
+    "secret patterns",
+    "input archive hash",
+    "environment and deployment configs",
+    "original third-party licenses",
+    "Netlify handler import and GET returns 405"
+  ],
+  "audit_note": "Initial audit assumed a tikz-fonts.json file; actual engine uses tikz/fonts.css. Corrected expected path, no application change needed.",
+  "assets": [
+    "/favicon.svg",
+    "/assets/index-8GN34yul.js",
+    "/assets/index-CvIR3WKr.css",
+    "/tikz/fonts.css",
+    "/tikz-init.js",
+    "/tikz/tikzjax.js",
+    "/tikz-frame.js",
+    "/tikz/tikzjax.js",
+    "/tikz/run-tex.js",
+    "/tikz/tex.wasm.gz.bin",
+    "/tikz/core.dump.gz.bin",
+    "/tikz/fonts.css",
+    "/image-format.mjs",
+    "/svg-safety.mjs",
+    "/tikz-init.js"
+  ],
+  "errors": []
+}

@@ -11,6 +11,12 @@ test('Unaffected auth, Forms, original assets and deploy files remain byte-ident
 test('Gemini authentication and transport remain unchanged after reversing documented V6.1 integrations',async()=>{
  const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
  const source=(await readFile(new URL('../server/gemini.mjs',import.meta.url),'utf8'))
+ .replace("import {handleFeature,IMAGE_MODES} from './feature-api.mjs';\n",'')
+ .replace('if(size>3900000)','if(size>250000)')
+ .replace(" if(!IMAGE_MODES.includes(body.mode)&&size>250000)return reply({error:'Nội dung quá dài. Hãy mở bài mới.'},413);\n",'')
+ .replace(" const featureImage=IMAGE_MODES.includes(body.mode);\n",'')
+ .replace('if(!check&&!featureImage&&','if(!check&&')
+ .replace(" if(!check&&(featureImage||body.adaptive===true))return handleFeature(body,env,model,fetcher);\n",'')
  .replace("import {DIAGRAM_PROMPT,parseDiagram} from './diagram-policy.mjs';\n","")
  .replace(" const diagram=body.mode==='diagram';\n if(!check&&(!(diagram?Array.isArray(body.messages)&&body.messages.length===1&&body.messages[0]?.role==='user'&&typeof body.messages[0].content==='string'&&body.messages[0].content.length>0&&body.messages[0].content.length<=26000:validMessages(body.messages))||!['guide','review','compare','diagram'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);\n"," if(!check&&(!validMessages(body.messages)||!['guide','review','compare'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);\n")
  .replace(" if(!check&&!diagram&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});\n"," if(!check&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});\n")

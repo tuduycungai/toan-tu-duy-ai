@@ -1,0 +1,17 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> toan-tu-duy-gemini-netlify@6.2.3 test:tikz
+> node scripts/check-tikz-runtime.mjs
+
+Files in the public directory are served at the root path.
+Instead of /public/image-format.mjs, use /image-format.mjs.
+Files in the public directory are served at the root path.
+Instead of /public/tikz-format.mjs, use /tikz-format.mjs.
+Files in the public directory are served at the root path.
+Instead of /public/svg-safety.mjs, use /svg-safety.mjs.
+right-isosceles PASS
+parallelogram-midpoints PASS
+circle-tangent PASS
+perpendicular-foot PASS
+plot PASS
+solid-projection PASS
