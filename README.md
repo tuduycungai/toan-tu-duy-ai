@@ -1,115 +1,66 @@
-# Bản cập nhật V6.2.4
+# Tư duy Toán học — V6.3.0
 
-Sửa lỗi đề đã đọc rõ nhưng bị chặn ở bước xác nhận cấu trúc; bổ sung kiểm tra tọa độ trung điểm/giao điểm bằng calc; giảm các bản sao bộ nhớ khi nạp TeX và giữ đề trước khi bắt đầu học nếu trang tải lại. Lịch mời khảo sát đổi thành **13 phút**.
+Bản nâng cấp từ **TU-DUY-TOAN-HOC-V6_2_4-BAN-TRIEN-KHAI.zip** theo hai yêu cầu: kết nối OpenAI và giữ hình khi trao đổi tiếp.
 
-Giữ React/Vite/TypeScript, Gemini API, Netlify, mã lớp, bài mẫu và giao diện hiện có. Không cần dịch vụ hay khóa mới. Đọc `docs/BAO_CAO_V6_2_4.md`, `docs/BANG_KIEM_THU_V6_2_4.md`, `docs/HUONG_DAN_GIAO_VIEN_V6_2_4.md` để xem kết quả thực tế và giới hạn thiết bị.
+## Bắt đầu
 
-Lệnh kiểm tra bổ sung: `npm run test:v624` và `npm run test:ui:v624`. Trên điện thoại, giới hạn ảnh đầu vào 16 triệu điểm ảnh; nên chụp 12 MP và cắt riêng đề. Chưa nghiệm thu Gemini thật hoặc Safari/iPhone/Android vật lý; kiểm thử UI dùng Chromium và phản hồi Gemini có kiểm soát.
+Mở `public/huong-dan-api.html` để xem hướng dẫn cho giáo viên, hoặc truy cập `/huong-dan-api.html` sau triển khai. Tóm tắt cũng có ở `HUONG_DAN.md`.
 
-Bản vá bộ nhớ TikZJax được tạo lại trong prebuild từ dependency khóa, với mã nguồn ở `scripts/patch-tikz-memory.mjs` và `scripts/tikz-core-stream.mjs`. Thông tin sửa thư viện: `THIRD_PARTY/TIKZJAX-V6_2_4-MODIFICATIONS.md`.
+- **Không cần API:** xem bài mẫu, lý thuyết và hình thuộc các dạng bộ dựng cục bộ đã đối chiếu được.
+- **Dùng OpenAI:** đặt các biến môi trường bên dưới ở máy chủ/Netlify Functions. API có phí riêng, không nằm trong ChatGPT Plus.
+- **Giữ Gemini cũ:** đặt `AI_PROVIDER=gemini`; khóa và mô hình Gemini vẫn hoạt động theo cấu hình cũ. Không tự chuyển nhà cung cấp hoặc tăng mức phí khi có lỗi.
 
-Phần V6.2.3 bên dưới ghi lại nền tảng tính năng đã có; kết quả kiểm thử và giới hạn mới nhất nằm trong tài liệu V6.2.4.
+```dotenv
+AI_PROVIDER=openai
+OPENAI_API_KEY=YOUR_SERVER_SIDE_KEY
+OPENAI_MODEL=gpt-6-luna
+OPENAI_REASONING_EFFORT=medium
+ACCESS_CODE=HOCGIOITOAN
+```
 
----
+`gpt-6-luna` là mặc định tiết kiệm; `gpt-6-sol` cân bằng năng lực/chi phí; `gpt-6-astra` ưu tiên năng lực cho bài khó. Cả ba đều tính phí. Mô hình được chọn ở máy chủ, học sinh không tự nâng lên mô hình đắt hơn. Danh mục được kiểm tra theo tài liệu OpenAI ngày 22/9/2026; quyền truy cập tùy tài khoản. Không có tuyên bố mô hình nào đã được kiểm nghiệm là tốt nhất cho mọi bài toán của ứng dụng này.
 
-# Bản cập nhật V6.2.3
+## Hành vi hình vẽ
 
-Hai tính năng mới được triển khai tiếp trên bản V6.2.2:
-
-- Hội thoại thích ứng 12 trạng thái, tám giai đoạn, bộ nhớ có chữ ký máy chủ; chỉ tổng hợp ở giai đoạn 7 sau bằng chứng học sinh đã chứng minh.
-- Chọn/chụp/kéo thả ảnh → đọc và xác nhận đề → cấu trúc hình học → TikZ → kiểm tra → biên dịch WASM → xác nhận hình → học gợi mở. Tự sửa mã tối đa hai lần.
-
-Đọc `docs/BAO_CAO_V6_2_3.md`, `docs/BANG_KIEM_THU_V6_2_3.md` và `docs/HUONG_DAN_GIAO_VIEN_V6_2_3.md` trước khi cập nhật Netlify. Các cấu hình triển khai và biến môi trường hiện tại được giữ nguyên. Không cần khóa hoặc dịch vụ biên dịch mới.
-
-Kiểm thử đã chạy và giới hạn chưa kiểm tra được ghi riêng trong báo cáo. Các phản hồi Gemini dùng trong kiểm thử tự động cục bộ là fixture có kiểm soát; không được xem là bằng chứng chất lượng OCR hoặc đánh giá sư phạm của Gemini thật.
-
-Lệnh bổ sung: `npm run lint`, `npm run test:v623`, `npm run test:ui:v623`. Kiểm thử Gemini thật tùy chọn: cấu hình khóa ở môi trường máy chủ, đặt `RUN_LIVE_GEMINI=1`, rồi chạy `npm run test:live:v623`. Không đưa khóa vào giao diện hay ZIP.
-
----
-
-# Tư duy Toán học — Gia sư hình học tứ giác
-
-Mã nguồn ứng dụng, cấu hình triển khai, tài nguyên giao diện và bộ kiểm thử.
-
-## Tính năng
-
-Hai chế độ **Kiểm tra lời giải** và **So sánh cách giải** có nhãn **(Đang phát triển)** trong danh mục và tiêu đề. Mỗi chế độ có hướng dẫn sư phạm riêng: kiểm tra lỗi đầu tiên và căn cứ, hoặc đối chiếu đúng một tiêu chí giữa các ý tưởng của học sinh. Chưa có bài làm/ý tưởng thì hỏi phần cần bổ sung; không viết hộ lời giải. V6.2.3 mở rộng lượt gợi mở thông thường bằng trạng thái thích ứng; nội dung bài mẫu giữ nguyên. Yêu cầu tạo bộ 5–10 câu có chỉ dẫn và kiểm tra định dạng riêng; chọn một câu để bắt đầu hướng dẫn.
-
-- Liên kết “Poster khoa học online” mở https://poster-online-khkt.netlify.app/ theo địa chỉ mới người quản lý cung cấp.
-- Hồ sơ để trống lớp (kể cả chỉ nhập khoảng trắng) được nhận diện là **Giáo viên**. Vai trò hoặc lớp luôn nằm trong nội dung khảo sát gửi Google Forms, kể cả khi không gửi tóm tắt học tập.
-- Nút **Khảo sát đánh giá ứng dụng** mở khảo sát và không kết thúc cuộc trò chuyện. Lời mời nhắc mỗi **13 phút (780 giây)**, bắt đầu sau khi kết nối AI và hoàn tất hồ sơ. Nếu đang trả lời, mở hộp thoại khác hoặc ở tab nền, lời mời chờ đến khi sẵn sàng; không chồng hộp thoại.
-- Đóng khảo sát chưa gửi vẫn giữ bản nháp. Sau một lần gửi đã được xác nhận, lần khảo sát mới dùng mã gửi mới, yêu cầu chọn sao và đồng ý lại. Kết quả chưa xác nhận được giữ nguyên, không tự gửi lại. Không có yêu cầu gửi Google Forms nào chỉ do đồng hồ kích hoạt.
-
-V6 thay đường dựng hình của giao diện học sinh bằng **Gemini → TikZ → TeX/WebAssembly → SVG**. Bộ đọc câu theo mẫu của V5 không còn quyết định hình hiển thị. Vẫn giữ ngân hàng 87 bài, hồ sơ học sinh, lý thuyết, sơ đồ định hướng và phản hồi.
+1. Hình cục bộ đã đối chiếu giả thiết được ưu tiên; không gọi AI để vẽ các hình này.
+2. Đề cần AI có hình dựng lần đầu. Máy tính có thể dựng khi mở đề và kết nối; điện thoại nhấn **Vẽ hình**.
+3. Trả lời, xin gợi ý và kiểm tra bước làm giữ nguyên hình. Câu kết luận của học sinh không tự biến thành đề mới.
+4. **Vẽ lại hình** chỉ kích hoạt một lượt dựng lại, không kéo theo vẽ lại ở các lượt chat sau. Hình cũ vẫn hiển thị trong lúc chờ; nếu dựng thất bại, hình cũ còn nguyên.
+5. Đổi đề hoặc chủ động sửa/bổ sung dữ kiện cập nhật hình. Chọn **Bài mới** hoặc nhập “Cho…”, “Xét…”, “Bài mới…” để bắt đầu đề khác.
+6. Tối đa ba hình SVG/TikZ gần nhất được giữ trong bộ nhớ phiên của cùng tab, tối đa 12 giờ theo bản lưu; không lưu khóa API. Dung lượng trình duyệt có thể giới hạn khôi phục. Tải PNG/SVG nếu cần lưu lâu dài.
 
 ## Chạy trên máy
 
-Yêu cầu Node.js >= 22.13.0.
+Cần Node.js >= 22.13. Sao chép `.env.example` thành `.env` và điền cấu hình máy chủ.
 
-```bash
+```sh
 npm ci
-```
-
-Sao chép `.env.example` thành `.env`, điền GEMINI_API_KEY ở máy chủ. Sau đó:
-
-```bash
 npm start
 ```
 
-Mở http://127.0.0.1:3000. `npm run dev` chỉ phục vụ giao diện; muốn gọi Gemini dùng `npm start`.
+Mở `http://localhost:3000`. `npm run dev` chỉ phục vụ giao diện; `npm start` có thêm API cục bộ.
 
-## Cập nhật trang Netlify hiện có
+## Cập nhật Netlify
 
-Giữ GEMINI_API_KEY, GEMINI_MODEL và ACCESS_CODE trong biến môi trường Netlify (Functions). Không đưa khóa vào VITE_* hay mã giao diện. Giữ đúng dự án đang dùng tên miền của bạn.
-
-Với Git: thay mã dự án bằng V6, commit/push lên nhánh Netlify theo dõi. `netlify.toml` đã có build `npm run build`, publish `dist`, functions `netlify/functions`.
-
-Với Netlify CLI, chạy tại thư mục chứa package.json:
-
-```bash
-npm ci
-npx netlify-cli login
-npx netlify-cli link
-npx netlify-cli deploy
-```
-
-Chọn đúng site hiện có trong bước link. Lệnh deploy tạo bản nháp và dựng cả giao diện/functions. Kiểm tra bản nháp rồi xuất bản:
-
-```bash
-npx netlify-cli deploy --prod
-```
-
-Không chỉ kéo thư mục dist vào Netlify Drop: luồng Gemini cần được triển khai cùng Functions.
-Nguồn: https://cli.netlify.com/commands/deploy/ và https://docs.netlify.com/api-and-cli-guides/cli-guides/get-started-with-cli/
+Dùng toàn bộ thư mục mã nguồn này. Build command: `npm run build`; publish: `dist`; functions: `netlify/functions`. Giữ cấu hình trong `netlify.toml`, đặt biến môi trường phạm vi Functions rồi triển khai lại. Chỉ kéo `dist` lên sẽ không đủ cho hội thoại AI/đọc ảnh/dựng AI. Không đặt khóa trong `VITE_*`, mã giao diện hoặc tệp ZIP chia sẻ.
 
 ## Kiểm tra
 
-```bash
+```sh
 npm test
 npm run typecheck
+npm run lint
 npm run build
-npx playwright install chromium
-npm run test:tikz
-npm run test:ui
+npm run test:ui:v630
 ```
 
-Có thể đặt CHROMIUM_EXECUTABLE nếu dùng Chromium riêng. TEST_PRODUCTION=1 dùng bản dist trong bài kiểm tra UI. Test UI giả lập phản hồi Gemini, nhưng biên dịch TeX và tải PNG thật.
+UI test cần Chromium của Playwright; có thể chỉ định `CHROMIUM_EXECUTABLE`. Các kiểm thử OpenAI/Gemini dùng phản hồi mô phỏng, không phát sinh API trả phí. Xem `docs/BAO_CAO_V6_3_0.md` cho kết quả và giới hạn nghiệm thu.
 
-## Bộ dựng hình
+## Tài liệu
 
-Các mục dưới đây mô tả luồng dựng hình từ đề nhập chữ đã có. Luồng ảnh V6.2.3 dùng cùng bộ biên dịch, thêm xác nhận phiên âm/cấu trúc/hình và cho phép tối đa hai lần tự sửa mã.
+- `public/huong-dan-api.html`: lấy API, chọn mô hình, cấu hình và cách dùng hình.
+- `docs/BAO_CAO_V6_3_0.md`: thay đổi và kiểm thử.
+- `docs/THAY_DOI_TEP_V6_3_0.json`: đối chiếu tệp với ZIP gốc.
+- `docs/HISTORIQUE_AVANT_V6_3.md`: README các bản cũ, chỉ để tham khảo lịch sử.
 
-- Khi gửi hoặc xem hình: một yêu cầu riêng, có xác thực, gọi Gemini bằng mode diagram trên /api/chat.
-- JSON trả mã LaTeX hoàn chỉnh hoặc một câu hỏi về dữ kiện thực sự thiếu. JSON chỉ là vỏ giao tiếp; học sinh không phải đọc mã.
-- Trích môi trường tikzpicture và các thư viện để biên dịch trong worker của TikZJax; file .tex tải về vẫn có standalone/document.
-- Bộ biên dịch và font đặt tại cùng website, không phụ thuộc CDN khi học.
-- Một lượt sửa mã khi biên dịch lỗi; có hủy yêu cầu, giới hạn thời gian và bộ nhớ đệm kết quả theo đề trong phiên.
-- Ảnh SVG nhúng font; PNG giữ tỉ lệ và nền trắng. Có phóng to và tải .tex.
-- Dựng đúng cú pháp không chứng minh rằng AI hiểu đúng toán. Giáo viên cần kiểm tra các đề mới hoặc khó.
-- Hỗ trợ TikZ, hình phẳng, hình không gian dạng chiếu và đồ thị TikZ đơn giản. Chưa hỗ trợ toàn bộ LaTeX/PGFPlots hay mọi bài toán bất kỳ.
-
-Chi tiết thay đổi tệp nén của bộ biên dịch: `scripts/prepare-tikz.mjs`. Script đổi đuôi tài nguyên nén thành .gz.bin để tránh trình duyệt và máy chủ giải nén hai lần. Phiên bản phụ thuộc được khóa trong package-lock.json.
-
-## Bản quyền thư viện
-
-TikZJax @rod2ik/tikzjax 1.6.0: https://github.com/rod2ik/tikzjax (GPL-3.0-or-later), kế thừa TikZJax và Web2JS. Bản giấy phép kèm trong THIRD_PARTY. Mã ứng dụng và script tích hợp được cung cấp trong gói; mã nguồn upstream có tại liên kết dự án. Giữ các thông báo bản quyền khi phân phối thư viện. Xem các giấy phép phụ thuộc trong node_modules sau npm ci.
+Bản mới giữ trọng tâm **hình học THCS, nhất là tứ giác lớp 8** và cách học gợi mở. Việc đổi API không biến ứng dụng thành công cụ giải mọi chuyên đề toán. Các văn bản V6.2.x trong `docs/` là hồ sơ lịch sử, không thay thế hướng dẫn V6.3.0.

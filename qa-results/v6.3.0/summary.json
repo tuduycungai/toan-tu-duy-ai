@@ -1,0 +1,53 @@
+{
+  "mode": "OpenAI responses mocked; real UI and TikZ compiler",
+  "results": [
+    {
+      "name": "UI630-01",
+      "status": "PASS",
+      "details": "Hình cục bộ không gọi API."
+    },
+    {
+      "name": "UI630-02",
+      "status": "PASS",
+      "details": "OpenAI adapter trả TikZ hợp lệ; biên dịch TeX thật ra SVG."
+    },
+    {
+      "name": "UI630-03",
+      "status": "PASS",
+      "details": "Hai câu trả lời giữ nguyên SVG và không tạo yêu cầu diagram mới."
+    },
+    {
+      "name": "UI630-04",
+      "status": "PASS",
+      "details": "Vẽ lại đúng một lần; lượt chat tiếp theo không vẽ lặp."
+    },
+    {
+      "name": "UI630-05",
+      "status": "PASS",
+      "details": "Hết hạn mức không đăng xuất mã lớp và không làm mất hình."
+    },
+    {
+      "name": "UI630-06",
+      "status": "PASS",
+      "details": "Tải lại cùng tab khôi phục hình mà không gọi API và chưa cần kết nối lại."
+    },
+    {
+      "name": "UI630-07",
+      "status": "PASS",
+      "details": "Hình đã lưu hiển thị ở 390 px, sáng/tối, không tràn ngang."
+    },
+    {
+      "name": "UI630-08",
+      "status": "PASS",
+      "details": "Không có lỗi JavaScript; trình duyệt không nhận khóa API."
+    },
+    {
+      "name": "UI630-09",
+      "status": "PASS",
+      "details": "Hướng dẫn API mở được trên màn hình điện thoại."
+    }
+  ],
+  "errors": [],
+  "drawings": 2,
+  "turns": 3
+}

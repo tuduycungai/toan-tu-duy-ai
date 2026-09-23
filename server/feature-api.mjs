@@ -10,9 +10,10 @@ import {mathText} from './reading-normalization.mjs';
 const reply=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const fail=(message,status=400)=>Object.assign(Error(message),{status});
 export const IMAGE_MODES=['image-read','image-confirm','image-revise','image-diagram','image-restore'];
-export async function handleFeature(body,env,model,fetcher=fetch) {
-  const secret=env.GEMINI_API_KEY.trim();
+export async function handleFeature(body,env,model,fetcher=fetch,provider=null) {
+  const secret=provider?.secret||env.STATE_SIGNING_KEY?.trim()||env.GEMINI_API_KEY.trim();
   async function generate(prompt,contents,schema,maxOutputTokens=6000){
+    if(provider)return provider.generate(prompt,contents,schema,maxOutputTokens);
     const generationConfig={maxOutputTokens,...(schema?{responseMimeType:'application/json',responseSchema:schema}:{})};
     if(model==='gemini-2.5-flash')generationConfig.thinkingConfig={thinkingBudget:512};
     const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':secret},body:JSON.stringify({systemInstruction:{parts:[{text:prompt}]},contents,generationConfig}),signal:AbortSignal.timeout(22000)});

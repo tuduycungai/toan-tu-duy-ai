@@ -5,6 +5,7 @@ import {imageRequest,ImageAPIError,type ImageReading,type ImageResponse,type Dia
 import {compileTikz} from '../lib/tikz-compiler';
 import {downloadBlob,exportPNG} from '../lib/diagram-export';
 import {readImageSession,saveImageSession,clearImageSession} from '../lib/image-session';
+import {saveFigure} from '../lib/figure-cache';
 import {useBlobURL} from '../lib/use-blob-url';
 import {MathText} from './math-text';
 
@@ -37,7 +38,7 @@ export function ImageProblem({accessCode,disabled,onConnect,onReady,onStateChang
   }
   function applyReading(d:ImageResponse){setRecovery(null);saveImageSession({transcription:d.reading.transcription,imageToken:d.imageToken});setImage(current=>current?{...current,data:''}:null);setReading(d.reading);setTranscript(d.reading.transcription);setToken(d.imageToken);setConfirmed(d.confirmed);setCorrection('');setSVG('');setLatex('');setValidation(null);pending();}
   const read=()=>void job(async signal=>{if(!image)return;setStatus('AI đang đọc đề và kiểm tra ký hiệu…');const d=await imageRequest<ImageResponse>({mode:'image-read',image:{data:image.data,mimeType:image.mimeType},note},accessCode,signal);if(!signal.aborted)applyReading(d);});
-  async function draw(imageToken:string,signal:AbortSignal){
+  async function draw(imageToken:string,signal:AbortSignal,problemText=transcript){
     let repairToken=imageToken,previous='',failure='';setSVG('');setLatex('');setValidation(null);pending();
     for(let attempt=0;attempt<3;attempt++){
       setStatus(attempt?`Đang sửa hình (${attempt}/2)…`:'Đang sinh và kiểm tra mã hình…');
@@ -45,7 +46,7 @@ export function ImageProblem({accessCode,disabled,onConnect,onReady,onStateChang
       try{
         received=await imageRequest<DiagramResponse>({mode:'image-diagram',imageToken:repairToken,previous,failure},accessCode,signal);
         if(signal.aborted)return;repairToken=received.repairToken;previous=received.latex;setLatex(previous);setStatus('Đang biên dịch hình…');
-        const output=await compileTikz(previous,signal);if(signal.aborted)return;setSVG(output);setValidation(received.validation);return;
+        const output=await compileTikz(previous,signal);if(signal.aborted)return;saveFigure(problemText,{latex:previous,svg:output});setSVG(output);setValidation(received.validation);return;
       }catch(e){
         if(signal.aborted||(e as Error).name==='AbortError')throw e;
         if(e instanceof ImageAPIError){if(!e.repairable||attempt===2)throw e;repairToken=e.repairToken;previous=e.latex;failure=e.detail||e.message;}
@@ -57,7 +58,7 @@ export function ImageProblem({accessCode,disabled,onConnect,onReady,onStateChang
   const confirm=()=>void job(async signal=>{
     setStatus('Đang đối chiếu đề em xác nhận…');const d=await imageRequest<ImageResponse>({mode:revising?'image-revise':'image-confirm',imageToken:token,transcription:transcript,correction},accessCode,signal);
     if(signal.aborted)return;applyReading(d);setRevising(false);
-    if(d.confirmed)await draw(d.imageToken,signal);else setError(d.reading.structureStatus==='needs_repair'?'Chưa kiểm tra được cấu trúc hình. Đề vẫn được giữ; em có thể thử xác nhận lại.':'Đã cập nhật bản đọc. Em kiểm tra lại rồi nhấn Xác nhận và vẽ hình.');
+    if(d.confirmed)await draw(d.imageToken,signal,d.reading.transcription);else setError(d.reading.structureStatus==='needs_repair'?'Chưa kiểm tra được cấu trúc hình. Đề vẫn được giữ; em có thể thử xác nhận lại.':'Đã cập nhật bản đọc. Em kiểm tra lại rồi nhấn Xác nhận và vẽ hình.');
   });
   async function download(kind:'png'|'svg'){try{downloadBlob(kind==='svg'?new Blob([svg],{type:'image/svg+xml'}):await exportPNG(svg),'de-toan-v6.2.4.'+kind);}catch(e){setError((e as Error).message);}}
   return <section className={`image-problem ${drag?'drag-active':''}`} aria-label="Gửi ảnh đề toán" onDragOver={e=>{e.preventDefault();if(!busy&&!disabled)setDrag(true);}} onDragLeave={()=>setDrag(false)} onDrop={e=>{e.preventDefault();setDrag(false);void select(e.dataTransfer.files[0]);}}>

@@ -2,7 +2,7 @@
 import http from 'node:http';
 import {Readable} from 'node:stream';
 import {createServer as createViteServer} from 'vite';
-import {handleChat} from '../server/gemini.mjs';
+import {handleChat} from '../server/chat.mjs';
 import {handleFeedback} from '../server/feedback.mjs';
 const vite=await createViteServer({server:{middlewareMode:true},appType:'spa'});
 const server=http.createServer(async(req,res)=>{

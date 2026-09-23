@@ -6,6 +6,8 @@ test('Unaffected auth, Forms, original assets and deploy files remain byte-ident
  // Survey labels and the continue-after-survey flow changed by request. The
  // updated UI script is not byte-identical; survey-component.test.mjs covers it.
  drawingIntegration.add('scripts/check-ui.mjs');
+ // V6.3 explicitly adds OpenAI and changes the server routing/environment template.
+ for(const file of ['.env.example','netlify/functions/chat.mjs','scripts/start.mjs','HUONG_DAN.md'])drawingIntegration.add(file);
  for(const [file,hash] of Object.entries(expected)){if(drawingIntegration.has(file))continue;assert.equal(createHash('sha256').update(await readFile(new URL('../'+file,import.meta.url))).digest('hex'),hash,file);}
 });
 test('Gemini authentication and transport remain unchanged after reversing documented V6.1 integrations',async()=>{

@@ -18,8 +18,39 @@ async function setup(responses,props={}){
  return {root,sent,complete,calls:()=>calls,close:()=>act(async()=>root.unmount())};
 }
 test('V6.2.4 parent uses shared compiler and shows its completed result',async()=>{const r=await setup([good]);try{assert.equal(r.calls(),1);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);assert.equal(r.root.root.findAllByType('iframe').length,0);}finally{await r.close();}});
-test('V6.1 chat redraw forces a new request and does not reuse cached code',async()=>{const problem='redraw fixture';const r=await setup([good,good],{problem});try{await r.complete();await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',redrawToken:1})));assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByType('img').length,0);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
+test('V6.1 chat redraw forces a new request and does not reuse cached code',async()=>{const problem='redraw fixture';const r=await setup([good,good],{problem});try{await r.complete();await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',redrawToken:1})));assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByType('img').length,1);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 malformed JSON response is automatically repaired once before compiling',async()=>{const r=await setup([()=>Response.json({}),good]);try{assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 compiler error runs a single repair and then succeeds',async()=>{const r=await setup([good,good]);try{await r.complete('error');assert.equal(r.calls(),2);await r.complete();assert.equal(r.root.root.findAllByType('img').length,1);}finally{await r.close();}});
 test('V6.1 repeated format failure stops instead of remaining in loading state',async()=>{const r=await setup([()=>Response.json({}),()=>Response.json({})]);try{assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByProps({role:'status'}).length,0);assert.equal(r.root.root.findAllByProps({role:'alert'}).length,1);}finally{await r.close();}});
+test('V6.3 completed figure survives repeated chat busy states and explicit redraw is consumed once',async()=>{
+ const problem='stable conversation figure';const r=await setup([good,good],{problem});
+ try{
+  await r.complete();const src=r.root.root.findByType('img').props.src;
+  for(const suspended of [true,false,true,false]){await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',suspended})));assert.equal(r.root.root.findByType('img').props.src,src);}
+  assert.equal(r.calls(),1);
+  await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',redrawToken:1})));
+  assert.equal(r.calls(),2);assert.equal(r.root.root.findByType('img').props.src,src);await r.complete();
+  for(const suspended of [true,false,true,false])await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',redrawToken:1,suspended})));
+  assert.equal(r.calls(),2);assert.equal(r.root.root.findAllByType('img').length,1);
+ }finally{await r.close();}
+});
+test('V6.3 cache survives leaving the view and disconnecting; reconnection never redraws an existing figure',async()=>{
+ const problem='cached view fixture';const first=await setup([good],{problem});await first.complete();await first.close();
+ const second=await setup([],{problem,accessCode:''});
+ try{
+  assert.equal(second.calls(),0);assert.equal(second.root.root.findAllByType('img').length,1);
+  await act(async()=>second.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture'})));
+  assert.equal(second.calls(),0);
+ }finally{await second.close();}
+});
+test('V6.3 failed redraw preserves the previous image without retry on the next answer',async()=>{
+ const problem='failed redraw stable fixture';const r=await setup([good,()=>Response.json({error:'quota'},{status:429})],{problem});
+ try{
+  await r.complete();const src=r.root.root.findByType('img').props.src;
+  await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',redrawToken:1})));
+  assert.equal(r.calls(),2);assert.equal(r.root.root.findByType('img').props.src,src);
+  for(const suspended of [true,false])await act(async()=>r.root.update(React.createElement(ProblemFigure,{problem,accessCode:'fixture',redrawToken:1,suspended})));
+  assert.equal(r.calls(),2);
+ }finally{await r.close();}
+});
 test.after(()=>{delete globalThis.__v624Compiler;globalThis.fetch=originalFetch;globalThis.matchMedia=originalMatchMedia;});

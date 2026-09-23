@@ -1,0 +1,204 @@
+{
+  "version": "6.3.0",
+  "source_zip_sha256": "ecf3d2e6f5fc1e52a55f21ac04ec6453da9f5eb4b309714326af3a11d9a07593",
+  "changes": [
+    {
+      "file": ".env.example",
+      "change": "modified",
+      "before_sha256": "e5f647f284ca118cbd72df8fe75a9ce3cd3b73769e2ff2af41c1ab531c38858e",
+      "after_sha256": "7752307f2025bb5c392efe855dca0c649b7b34f103068f2aac7d8abf0106df5d"
+    },
+    {
+      "file": "HUONG_DAN.md",
+      "change": "modified",
+      "before_sha256": "75bf6cc645bbe7ac98385dabde60a8668f8fdd9b53fe05b0307a01d330ff080f",
+      "after_sha256": "143d7a93238f93e12ca149c645785c6a2ab1085ca6cd90b53953fc1f90da78c3"
+    },
+    {
+      "file": "README.md",
+      "change": "modified",
+      "before_sha256": "fc188af05961c63c763a62e9aeb7f1288ea243861e37bc74f443054e4599dd66",
+      "after_sha256": "9cfad898c96c89e4a38c1bf4bcef5ea63ed6a0ccf7e9382e6048a0aa3695d14e"
+    },
+    {
+      "file": "app/page.tsx",
+      "change": "modified",
+      "before_sha256": "40b44624b868695bdfdefc5fed8881dcc2bfc0df768bc13aba4a237d6c18e023",
+      "after_sha256": "9a8bc2f532a721d6e0049ce30955dea93a3f33f1c532b3cb425570ced65029a4"
+    },
+    {
+      "file": "components/image-problem.tsx",
+      "change": "modified",
+      "before_sha256": "9b85082503da29cfa32ecf74adde7461460d9a51e4115a8e8a7d1fce08aceacf",
+      "after_sha256": "2745e17958ed2f65b6cbf672383049f96a3cdc07752a8a226fef379526b56b48"
+    },
+    {
+      "file": "components/math-figure.tsx",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "f20b59b1aa22dc67b0de8393d7393a5d80abafca62f1c4ee16e097208002252d"
+    },
+    {
+      "file": "components/tikz-figure.tsx",
+      "change": "modified",
+      "before_sha256": "1abf7b304ba58da4655923b156f756bd3ca92ffdbadf65ea605527f0837676cb",
+      "after_sha256": "a7667b881fb62690af41208f75ee7148ed6cfa80ea37dab82496864a2346c3d8"
+    },
+    {
+      "file": "docs/BAO_CAO_V6_3_0.md",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "36ecaa182991cb67f194d4714601dcc7f0d8cb400e0d889177c3d9361ce50e86"
+    },
+    {
+      "file": "docs/HISTORIQUE_AVANT_V6_3.md",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "fc188af05961c63c763a62e9aeb7f1288ea243861e37bc74f443054e4599dd66"
+    },
+    {
+      "file": "lib/figure-cache.ts",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "30a9e5f4eed5f6a8723c05fbee635cb79c0bfa673771cd10f517bdd2ab981ad9"
+    },
+    {
+      "file": "lib/problem-turn.ts",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "70a19b68f07469a268f56534228e4bc8a537a11fcf9fa60ac43a8d39fec6bc64"
+    },
+    {
+      "file": "netlify/functions/chat.mjs",
+      "change": "modified",
+      "before_sha256": "8af0f204dd5e23b36d78e376ddbb70d3fcc5d60af9d4468d24fb9bff7491b27e",
+      "after_sha256": "e1549fea376d7a48495ce8ecc56e9fe1b2ee96794d403f4069c56a7c18a9e58b"
+    },
+    {
+      "file": "package-lock.json",
+      "change": "modified",
+      "before_sha256": "4bdf0215f20bf3ee2dc1b9f55ddeb4bad67c39b048161260bb794e1fddbc073a",
+      "after_sha256": "958577d268c6281802d97834b066a7a79f3f6cf68af61fe66400d7a207b36f44"
+    },
+    {
+      "file": "package.json",
+      "change": "modified",
+      "before_sha256": "5c331f092344c62f0b91fe5454f17519cdd4e0faf689df00a444379effe88743",
+      "after_sha256": "0fcfe07bd8f170218836cc8249ee4325163969ae3549e20bd1c605d7f01bdb92"
+    },
+    {
+      "file": "public/huong-dan-api.html",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "dd8a6647700e3a1ea8938b28778b7fccd04a9893c9c65821b7979a4a26128276"
+    },
+    {
+      "file": "qa-results/v6.3.0/giu-hinh-desktop.png",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "505045d8b5bf26d80f61c287bba79865b656af45f6b79979b9ff60547b77e7ed"
+    },
+    {
+      "file": "qa-results/v6.3.0/giu-hinh-mobile-dark.png",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "8c4c60f02f24be55863c8df862d49eec86328a8355519f8ab22e5d94d8d96632"
+    },
+    {
+      "file": "qa-results/v6.3.0/giu-hinh-mobile.png",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "ad15056cac4fe9dee0226230f0a2cfd2ac66e124fed2c34b63bbfc166b89796c"
+    },
+    {
+      "file": "qa-results/v6.3.0/ket-noi-openai.png",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "563fa95864984020ae96bf0479c31b992f9770ab736f1f7f0339b77e3b824863"
+    },
+    {
+      "file": "qa-results/v6.3.0/production-build.log",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "4def0d590611a1dce1bac0858c16909ff0e18a00fc15ba3de51c376564ed44b0"
+    },
+    {
+      "file": "qa-results/v6.3.0/summary.json",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "d6ad097350006d1bfe915c3c18309c6ab7b23ddc8150068032686ad51e222bed"
+    },
+    {
+      "file": "qa-results/v6.3.0/unit-tests.log",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "7fb800203135d792643c0ee45ef7c7471262c2413b3df822df40039d13e46c97"
+    },
+    {
+      "file": "scripts/check-v630-ui.mjs",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "da3117b21a0644f2fd8e9a12c829b4149d74c7d6635fe2142dc9c5c438437363"
+    },
+    {
+      "file": "scripts/start.mjs",
+      "change": "modified",
+      "before_sha256": "0a218abdef14eaf01f1b986d47f098b53b79e2a8ffa85c4a8ec90ce8a3066ba5",
+      "after_sha256": "71c1cef00650e3f15b81f54cef6e8da477734cd832796dddcba3c296a2021404"
+    },
+    {
+      "file": "server/chat.mjs",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "4f55bf3c602b7e78e11b7ac1dbf86cf2432838d712dad3ea671f0b0f7b4f3e19"
+    },
+    {
+      "file": "server/feature-api.mjs",
+      "change": "modified",
+      "before_sha256": "f4f04465b417459f96a0b9d1d28ac90562ea63943bb6b742109908d71b169ae7",
+      "after_sha256": "bcb8253b44f26ce1d9bc69fd85ab730a07ec7755b3d58e377289f3f8fcb71071"
+    },
+    {
+      "file": "server/openai.mjs",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "6890957a003c24c5568ad88e0fcf6d6e356a9b8c54dbf47a5f955903f8353069"
+    },
+    {
+      "file": "tests/preserved.test.mjs",
+      "change": "modified",
+      "before_sha256": "fc11a353cb003c9824635c5efef6fee8a90cc7aeaf50abb489955fe683e67036",
+      "after_sha256": "fdaf1eb21bfdc4557fdc176855bfdca89a0f4c8440c4bd2955dd484813a408f1"
+    },
+    {
+      "file": "tests/survey-component.test.mjs",
+      "change": "modified",
+      "before_sha256": "f124c3317e1d79a21a3f42cf8306da0045587b0097a3c498909a7fc14beba834",
+      "after_sha256": "5f464940fbcb93c3cc0a2d28fe7eabdc8aa017a1f614d387ae89e9b030316fbd"
+    },
+    {
+      "file": "tests/survey-preserved.test.mjs",
+      "change": "modified",
+      "before_sha256": "e7416d72473db96e51d957372772b01de15c76c1a96b99c1496c629aa2e5b9f4",
+      "after_sha256": "d3ac826574413fc8d6f5bcbcd1eca1715b352ede8040acdaebcc22e80a5dce3e"
+    },
+    {
+      "file": "tests/v61-component.test.mjs",
+      "change": "modified",
+      "before_sha256": "a180150d2b1445428c6525ea7f6bb89dfdc0244dd64694f639546452d49ec05d",
+      "after_sha256": "09123960e01c424119a2b5e53a946c4f6ff2248750791bfdd1b184391e5e43d4"
+    },
+    {
+      "file": "tests/v630-openai.test.mjs",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "02dca0a9cf3d8046e4974f4f877a0bf5f8b38f8c5ba35a80117b9f5bf72f5bdf"
+    },
+    {
+      "file": "tests/v630-problem-turn.test.mjs",
+      "change": "added",
+      "before_sha256": null,
+      "after_sha256": "ce0b4e9df50524a854a949e3fd8e25d6519f187e6b878054b698fe168c8093b6"
+    }
+  ]
+}
