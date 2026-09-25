@@ -1,5 +1,11 @@
 {
   "viewUrl": "https://docs.google.com/forms/d/e/1FAIpQLScySWZ7CZxnxKjmfwUOZov9LXzd5aeQ_iZ7TEa7qaccUjz41A/viewform",
   "submitUrl": "https://docs.google.com/forms/d/e/1FAIpQLScySWZ7CZxnxKjmfwUOZov9LXzd5aeQ_iZ7TEa7qaccUjz41A/formResponse",
-  "fields": {"name":"entry.551915748","school":"entry.1887301755","email":"entry.1301171588","rating":"entry.54850382","comment":"entry.326585189"}
+  "fields": {
+    "name": "entry.551915748",
+    "school": "entry.1887301755",
+    "email": "entry.1301171588",
+    "rating": "entry.54850382",
+    "comment": "entry.326585189"
+  }
 }

@@ -1,27 +1,192 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {loadTS} from './load-ts.mjs';
-const {compileGeometry}=await loadTS('lib/geometry-model.ts');
-const {problemForTurn,normalizeProblem}=await loadTS('lib/problem-diagram.ts');
-const {distance,lerp,near,onSegment,parallel,perpendicular,intersection,segmentVisible}=await loadTS('lib/geometry.ts');
-const {dynamicTheoryForProblem}=await loadTS('lib/theory.ts');
-export const target='Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. Chứng minh rằng AE // CF.';
-function ready(q){const m=compileGeometry(q);assert.equal(m.status,'verified',JSON.stringify(m.missingData));assert(Object.values(m.drawing.points).every(p=>Number.isFinite(p.x)&&Number.isFinite(p.y)));return m;}
-function midpoint(p,n,a,b){assert(onSegment(p[n],p[a],p[b]));assert(near(distance(p[n],p[a]),distance(p[n],p[b])));}
-test('V5 01 exact screenshot: center, ordered midpoints, both diagonals and goal lines',()=>{const m=ready(target),d=m.drawing,p=d.points;assert(near(distance(p.O,intersection(p.A,p.C,p.B,p.D)),0));midpoint(p,'E','O','D');midpoint(p,'F','O','B');for(const s of [['A','C'],['B','D'],['A','E'],['C','F']])assert(segmentVisible(d,s));assert(parallel(p.A,p.E,p.C,p.F));assert(!m.relations.some(r=>r.type==='parallel'),'Conclusion must not become a given');assert.match(m.goal,/AE ∥ CF/);});
-test('V5 02 rectangle with a perpendicular foot',()=>{const m=ready('Cho hình chữ nhật ABCD. H thuộc BD, AH vuông góc với BD. Chứng minh AH vuông góc BD.'),p=m.drawing.points;assert(onSegment(p.H,p.B,p.D));assert(perpendicular(p.A,p.H,p.B,p.D));});
-test('V5 03 rhombus diagonals and center',()=>{const m=ready('Cho hình thoi PQRS tâm I. Chứng minh PR vuông góc QS.'),p=m.drawing.points;assert(perpendicular(p.P,p.R,p.Q,p.S));midpoint(p,'I','P','R');});
-test('V5 04 trapezoid midline, including length relation',()=>{const m=ready('Cho hình thang ABCD có AB // CD. M và N theo thứ tự là trung điểm AD và BC. Chứng minh MN // AB.'),p=m.drawing.points;midpoint(p,'M','A','D');midpoint(p,'N','B','C');assert(parallel(p.M,p.N,p.A,p.B));assert(near(distance(p.M,p.N),(distance(p.A,p.B)+distance(p.C,p.D))/2));});
-test('V5 05 triangle with midpoint and parallel construction',()=>{const m=ready('Cho tam giác ABC. M là trung điểm AB. Qua M kẻ đường thẳng song song với BC, cắt AC tại N. Chứng minh N là trung điểm AC.'),p=m.drawing.points;midpoint(p,'M','A','B');midpoint(p,'N','A','C');assert(parallel(p.M,p.N,p.B,p.C));});
-test('V5 06 circle radius and tangent',()=>{const m=ready('Cho đường tròn (O) bán kính OA = 3 cm. Kẻ tiếp tuyến d tại A. Chứng minh d vuông góc OA.'),d=m.drawing,p=d.points;assert.equal(d.circles[0].radius,3);assert(near(distance(p.O,p.A),3));assert(perpendicular(p.O,p.A,d.guides[0].a,d.guides[0].b));});
-test('V5 07 new freely named configuration outside the bank',()=>{const m=ready('Cho hình bình hành KLMN tâm P. R và S theo thứ tự là trung điểm PN và PL. Chứng minh KR // MS.'),p=m.drawing.points;midpoint(p,'R','P','N');midpoint(p,'S','P','L');assert(parallel(p.K,p.R,p.M,p.S));});
-test('V5 08 multiline Unicode NFD and LaTeX wrappers',()=>{for(const q of [target.normalize('NFD'),target.replaceAll(' ','\n'),String.raw`Cho hình bình hành $ABCD$ tâm $O$. E và F theo thứ tự là trung điểm của $OD$ và $OB$. Chứng minh \(\overline{AE}\parallel CF\).`]){const m=ready(q);midpoint(m.drawing.points,'E','O','D');assert.match(m.goal,/AE\s*∥\s*CF/);}});
-test('V5 09 reversed ordered list stays reversed',()=>{const m=ready(target.replace('OD và OB','OB và OD')),p=m.drawing.points;midpoint(p,'E','O','B');midpoint(p,'F','O','D');});
-test('V5 10 incomplete statement shows explicit provisional drawing and questions',()=>{const m=compileGeometry('Cho hình bình hành ABCD. E và F theo thứ tự là trung điểm của OD và OB. Chứng minh AE // CF.');assert.equal(m.status,'provisional');assert(m.entities.some(e=>e.type==='point'));assert(m.assumptions.length&&m.missingData.length&&m.questions.length);assert(!m.drawing.points.O,'Missing center must not be invented');});
-test('negative: false target never changes base geometry',()=>{const m=ready('Cho hình bình hành ABCD tâm O. Chứng minh AC vuông góc BD.'),p=m.drawing.points;assert(!perpendicular(p.A,p.C,p.B,p.D));assert(!m.relations.some(r=>r.type==='perpendicular'));});
-test('negative: contradictory givens never reported as verified',()=>{const m=compileGeometry('Cho hình bình hành ABCD. E là trung điểm AB; E là trung điểm CD. Chứng minh AE // CF.');assert.equal(m.status,'provisional');assert(m.missingData.length);});
-test('unknown angle / unsupported clause remains visible as unresolved',()=>{const m=compileGeometry('Cho tam giác ABC. Góc A bằng 37 độ. Chứng minh AB = AC.');assert.equal(m.status,'provisional');assert(m.missingData.some(s=>s.includes('37')));});
-test('free point is not silently placed at a midpoint',()=>{const m=ready('Cho hình bình hành ABCD. M thuộc AB. Qua M kẻ đường thẳng song song với CD. Chứng minh AB // CD.'),p=m.drawing.points;assert(onSegment(p.M,p.A,p.B));assert(!near(distance(p.A,p.M),distance(p.B,p.M)));assert(m.assumptions.some(s=>s.includes('tự do')));});
-test('auxiliary construction during a conversation keeps original goal',()=>{const q=problemForTurn('Nối A với E',target),m=ready(q);assert.match(m.goal,/AE ∥ CF/);assert(segmentVisible(m.drawing,['A','E']));});
-test('ray is retained as a ray, not merely a segment',()=>{const m=ready('Cho tam giác ABC. Vẽ tia AB. Chứng minh AB = BA.');assert.deepEqual(m.drawing.rays,[{from:'A',through:'B'}]);});
-test('circle: zero radius and impossible tangent labels are provisional',()=>{for(const q of ['Cho đường tròn (O) bán kính 0 cm.','Cho đường tròn (O) bán kính OA = 3 cm. Kẻ tiếp tuyến BC tại A.'])assert.equal(compileGeometry(q).status,'provisional');});
-test('theory exists on verified, new, circle and incomplete inputs',()=>{for(const q of [target,'Cho đường tròn (I) bán kính IM = 4 cm. Kẻ tiếp tuyến tại M.','Cho hình bình hành PQRS. X là trung điểm IZ. Chứng minh PX = QZ.','X thuộc YZ.']){const m=compileGeometry(q),cards=dynamicTheoryForProblem(q,m);assert(cards.length);for(const c of cards)for(const k of ['definition','conditions','connectionToProblem','thinkingOperation','commonMistake','source','example','recognition'])assert(c[k]?.length,k);}});
-test('circle theory does not default to unrelated angle sum',()=>{const q='Cho đường tròn (O) bán kính OA = 3 cm. Kẻ tiếp tuyến tại A.';const cards=dynamicTheoryForProblem(q,compileGeometry(q));assert(cards.some(c=>c.id==='tangent'));assert(!cards.some(c=>c.id==='angles'||c.id==='congruence'));});
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { loadTS } from './load-ts.mjs';
+const { compileGeometry } = await loadTS('lib/geometry-model.ts');
+const { problemForTurn } = await loadTS('lib/problem-diagram.ts');
+const { distance, near, onSegment, parallel, perpendicular, intersection, segmentVisible } =
+  await loadTS('lib/geometry.ts');
+const { dynamicTheoryForProblem } = await loadTS('lib/theory.ts');
+export const target =
+  'Cho hình bình hành ABCD tâm O, E và F theo thứ tự là trung điểm của OD và OB. Chứng minh rằng AE // CF.';
+function ready(q) {
+  const m = compileGeometry(q);
+  assert.equal(m.status, 'verified', JSON.stringify(m.missingData));
+  assert(
+    Object.values(m.drawing.points).every((p) => Number.isFinite(p.x) && Number.isFinite(p.y)),
+  );
+  return m;
+}
+function midpoint(p, n, a, b) {
+  assert(onSegment(p[n], p[a], p[b]));
+  assert(near(distance(p[n], p[a]), distance(p[n], p[b])));
+}
+test('V5 01 exact screenshot: center, ordered midpoints, both diagonals and goal lines', () => {
+  const m = ready(target),
+    d = m.drawing,
+    p = d.points;
+  assert(near(distance(p.O, intersection(p.A, p.C, p.B, p.D)), 0));
+  midpoint(p, 'E', 'O', 'D');
+  midpoint(p, 'F', 'O', 'B');
+  for (const s of [
+    ['A', 'C'],
+    ['B', 'D'],
+    ['A', 'E'],
+    ['C', 'F'],
+  ])
+    assert(segmentVisible(d, s));
+  assert(parallel(p.A, p.E, p.C, p.F));
+  assert(!m.relations.some((r) => r.type === 'parallel'), 'Conclusion must not become a given');
+  assert.match(m.goal, /AE ∥ CF/);
+});
+test('V5 02 rectangle with a perpendicular foot', () => {
+  const m = ready(
+      'Cho hình chữ nhật ABCD. H thuộc BD, AH vuông góc với BD. Chứng minh AH vuông góc BD.',
+    ),
+    p = m.drawing.points;
+  assert(onSegment(p.H, p.B, p.D));
+  assert(perpendicular(p.A, p.H, p.B, p.D));
+});
+test('V5 03 rhombus diagonals and center', () => {
+  const m = ready('Cho hình thoi PQRS tâm I. Chứng minh PR vuông góc QS.'),
+    p = m.drawing.points;
+  assert(perpendicular(p.P, p.R, p.Q, p.S));
+  midpoint(p, 'I', 'P', 'R');
+});
+test('V5 04 trapezoid midline, including length relation', () => {
+  const m = ready(
+      'Cho hình thang ABCD có AB // CD. M và N theo thứ tự là trung điểm AD và BC. Chứng minh MN // AB.',
+    ),
+    p = m.drawing.points;
+  midpoint(p, 'M', 'A', 'D');
+  midpoint(p, 'N', 'B', 'C');
+  assert(parallel(p.M, p.N, p.A, p.B));
+  assert(near(distance(p.M, p.N), (distance(p.A, p.B) + distance(p.C, p.D)) / 2));
+});
+test('V5 05 triangle with midpoint and parallel construction', () => {
+  const m = ready(
+      'Cho tam giác ABC. M là trung điểm AB. Qua M kẻ đường thẳng song song với BC, cắt AC tại N. Chứng minh N là trung điểm AC.',
+    ),
+    p = m.drawing.points;
+  midpoint(p, 'M', 'A', 'B');
+  midpoint(p, 'N', 'A', 'C');
+  assert(parallel(p.M, p.N, p.B, p.C));
+});
+test('V5 06 circle radius and tangent', () => {
+  const m = ready(
+      'Cho đường tròn (O) bán kính OA = 3 cm. Kẻ tiếp tuyến d tại A. Chứng minh d vuông góc OA.',
+    ),
+    d = m.drawing,
+    p = d.points;
+  assert.equal(d.circles[0].radius, 3);
+  assert(near(distance(p.O, p.A), 3));
+  assert(perpendicular(p.O, p.A, d.guides[0].a, d.guides[0].b));
+});
+test('V5 07 new freely named configuration outside the bank', () => {
+  const m = ready(
+      'Cho hình bình hành KLMN tâm P. R và S theo thứ tự là trung điểm PN và PL. Chứng minh KR // MS.',
+    ),
+    p = m.drawing.points;
+  midpoint(p, 'R', 'P', 'N');
+  midpoint(p, 'S', 'P', 'L');
+  assert(parallel(p.K, p.R, p.M, p.S));
+});
+test('V5 08 multiline Unicode NFD and LaTeX wrappers', () => {
+  for (const q of [
+    target.normalize('NFD'),
+    target.replaceAll(' ', '\n'),
+    String.raw`Cho hình bình hành $ABCD$ tâm $O$. E và F theo thứ tự là trung điểm của $OD$ và $OB$. Chứng minh \(\overline{AE}\parallel CF\).`,
+  ]) {
+    const m = ready(q);
+    midpoint(m.drawing.points, 'E', 'O', 'D');
+    assert.match(m.goal, /AE\s*∥\s*CF/);
+  }
+});
+test('V5 09 reversed ordered list stays reversed', () => {
+  const m = ready(target.replace('OD và OB', 'OB và OD')),
+    p = m.drawing.points;
+  midpoint(p, 'E', 'O', 'B');
+  midpoint(p, 'F', 'O', 'D');
+});
+test('V5 10 incomplete statement shows explicit provisional drawing and questions', () => {
+  const m = compileGeometry(
+    'Cho hình bình hành ABCD. E và F theo thứ tự là trung điểm của OD và OB. Chứng minh AE // CF.',
+  );
+  assert.equal(m.status, 'provisional');
+  assert(m.entities.some((e) => e.type === 'point'));
+  assert(m.assumptions.length && m.missingData.length && m.questions.length);
+  assert(!m.drawing.points.O, 'Missing center must not be invented');
+});
+test('negative: false target never changes base geometry', () => {
+  const m = ready('Cho hình bình hành ABCD tâm O. Chứng minh AC vuông góc BD.'),
+    p = m.drawing.points;
+  assert(!perpendicular(p.A, p.C, p.B, p.D));
+  assert(!m.relations.some((r) => r.type === 'perpendicular'));
+});
+test('negative: contradictory givens never reported as verified', () => {
+  const m = compileGeometry(
+    'Cho hình bình hành ABCD. E là trung điểm AB; E là trung điểm CD. Chứng minh AE // CF.',
+  );
+  assert.equal(m.status, 'provisional');
+  assert(m.missingData.length);
+});
+test('unknown angle / unsupported clause remains visible as unresolved', () => {
+  const m = compileGeometry('Cho tam giác ABC. Góc A bằng 37 độ. Chứng minh AB = AC.');
+  assert.equal(m.status, 'provisional');
+  assert(m.missingData.some((s) => s.includes('37')));
+});
+test('free point is not silently placed at a midpoint', () => {
+  const m = ready(
+      'Cho hình bình hành ABCD. M thuộc AB. Qua M kẻ đường thẳng song song với CD. Chứng minh AB // CD.',
+    ),
+    p = m.drawing.points;
+  assert(onSegment(p.M, p.A, p.B));
+  assert(!near(distance(p.A, p.M), distance(p.B, p.M)));
+  assert(m.assumptions.some((s) => s.includes('tự do')));
+});
+test('auxiliary construction during a conversation keeps original goal', () => {
+  const q = problemForTurn('Nối A với E', target),
+    m = ready(q);
+  assert.match(m.goal, /AE ∥ CF/);
+  assert(segmentVisible(m.drawing, ['A', 'E']));
+});
+test('ray is retained as a ray, not merely a segment', () => {
+  const m = ready('Cho tam giác ABC. Vẽ tia AB. Chứng minh AB = BA.');
+  assert.deepEqual(m.drawing.rays, [{ from: 'A', through: 'B' }]);
+});
+test('circle: zero radius and impossible tangent labels are provisional', () => {
+  for (const q of [
+    'Cho đường tròn (O) bán kính 0 cm.',
+    'Cho đường tròn (O) bán kính OA = 3 cm. Kẻ tiếp tuyến BC tại A.',
+  ])
+    assert.equal(compileGeometry(q).status, 'provisional');
+});
+test('theory exists on verified, new, circle and incomplete inputs', () => {
+  for (const q of [
+    target,
+    'Cho đường tròn (I) bán kính IM = 4 cm. Kẻ tiếp tuyến tại M.',
+    'Cho hình bình hành PQRS. X là trung điểm IZ. Chứng minh PX = QZ.',
+    'X thuộc YZ.',
+  ]) {
+    const m = compileGeometry(q),
+      cards = dynamicTheoryForProblem(q, m);
+    assert(cards.length);
+    for (const c of cards)
+      for (const k of [
+        'definition',
+        'conditions',
+        'connectionToProblem',
+        'thinkingOperation',
+        'commonMistake',
+        'source',
+        'example',
+        'recognition',
+      ])
+        assert(c[k]?.length, k);
+  }
+});
+test('circle theory does not default to unrelated angle sum', () => {
+  const q = 'Cho đường tròn (O) bán kính OA = 3 cm. Kẻ tiếp tuyến tại A.';
+  const cards = dynamicTheoryForProblem(q, compileGeometry(q));
+  assert(cards.some((c) => c.id === 'tangent'));
+  assert(!cards.some((c) => c.id === 'angles' || c.id === 'congruence'));
+});

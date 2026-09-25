@@ -1,12 +1,98 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {loadTS} from './load-ts.mjs';
-const {worksheets,worksheetDrawings,findWorksheet}=await loadTS('lib/worksheets.ts');const g=await loadTS('lib/geometry.ts');const p=await loadTS('lib/problem-diagram.ts');
-const len=(d,s)=>g.distance(d.points[s[0]],d.points[s[1]]);const drawing=(id,t=.37)=>worksheetDrawings(worksheets.find(w=>w.id===id),t)[0];
-test('entire supplied PDF inventory: 81 exercises, 93 figures, seven sections',()=>{assert.equal(worksheets.length,81);assert.equal(new Set(worksheets.map(w=>w.id)).size,81);assert.equal(worksheets.reduce((n,w)=>n+worksheetDrawings(w).length,0),93);assert.equal(new Set(worksheets.map(w=>w.section)).size,7);});
-for(const w of worksheets)test('audited PDF '+w.id+' / page '+w.page,()=>{assert(w.problem.trim()&&w.page>=1&&w.page<=46);assert.equal(findWorksheet(w.problem)?.id,w.id);assert.equal(p.problemForTurn(w.problem,''),w.problem);assert.equal(p.resolveProblemDiagram(w.problem).status,'ready');for(const t of [.17,.37,.5,.72,.89])for(const d of worksheetDrawings(w,t)){assert(d.checks.length);assert(Object.values(d.points).every(v=>Number.isFinite(v.x+v.y)));for(const s of d.segments)assert(len(d,s.join(''))>1e-7);const tex=g.toTikZ(d);assert(!/NaN|Infinity|write18|input\{/.test(tex));assert(tex.includes('\\end{tikzpicture}'));}});
-test('changing facts never selects an old audited preset',()=>{const w=worksheets.find(w=>w.id==='tt-b9');assert.equal(findWorksheet(w.problem.replace('80 cm','81 cm')),undefined);assert.equal(findWorksheet(w.problem+' Biết AC = 99 cm.'),undefined);assert.equal(findWorksheet(w.problem.replaceAll('A',"A'")),undefined);});
-test('all checks execute mathematical predicates, not unconditional placeholders',()=>assert(!/=>\s*true/.test(readFileSync(new URL('../lib/worksheets.ts',import.meta.url),'utf8'))));
-test('screenshot concurrency: M,N,O,I collinear and I=O without assuming the conclusion',()=>{for(const t of [.17,.37,.72,.89]){const d=drawing('hb-b3',t);assert(g.near(len(d,'AP'),len(d,'CQ')));assert(g.onSegment(d.points.O,d.points.M,d.points.N));assert(g.onSegment(d.points.O,d.points.P,d.points.Q));assert(g.distance(d.points.O,d.points.I)<1e-7);assert(g.parallel(d.points.M,d.points.N,d.points.A,d.points.B));}});
-test('opposite anchors: midpoint K/I and free K/I both satisfy actual givens',()=>{for(const id of ['hb-b4','hb-b5']){const d=drawing(id);assert(g.near(len(d,'AK'),len(d,'CI')));assert(g.onSegment(d.points.K,d.points.A,d.points.B));assert(g.onSegment(d.points.I,d.points.C,d.points.D));}});
-test('source dimensional facts independently checked',()=>{for(const [id,values]of [['tt-b9',{AB:80,AD:60}],['tt-b2',{AB:13,AH:12,HC:16}],['tt-b11a',{AC:17,BC:10,CH:8}],['th-b2',{AB:25,AC:14}],['ht-v3',{BC:3}]]){const d=drawing(id);for(const[s,n]of Object.entries(values))assert(g.near(len(d,s),n),id+' '+s);}});
-test('public angle checks do not publish unknown answers',()=>{for(const id of ['tg-v2','tg-b2','tg-b3','tg-b4','tt-b1']){const w=worksheets.find(w=>w.id===id);assert(!/x = 105|15 cm/.test(w.note));for(const d of worksheetDrawings(w))assert(!d.checks.some(s=>/=[ ]*(105|115|36|72|108|144|75|85|95)°/.test(s)));}});
-test('a malformed known figure fails validation instead of drawing anyway',()=>{for(const[id,n]of [['hb-b3','Q'],['hb-b4','K'],['ht-b3','C'],['tg-b2','A']]){const f=worksheets.find(w=>w.id===id).draw(.37)[0];f.points[n]={x:f.points[n].x+.5,y:f.points[n].y+.8};assert.throws(()=>f.build(),id);}});
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { loadTS } from './load-ts.mjs';
+const { worksheets, worksheetDrawings, findWorksheet } = await loadTS('lib/worksheets.ts');
+const g = await loadTS('lib/geometry.ts');
+const p = await loadTS('lib/problem-diagram.ts');
+const len = (d, s) => g.distance(d.points[s[0]], d.points[s[1]]);
+const drawing = (id, t = 0.37) =>
+  worksheetDrawings(
+    worksheets.find((w) => w.id === id),
+    t,
+  )[0];
+test('entire supplied PDF inventory: 81 exercises, 93 figures, seven sections', () => {
+  assert.equal(worksheets.length, 81);
+  assert.equal(new Set(worksheets.map((w) => w.id)).size, 81);
+  assert.equal(
+    worksheets.reduce((n, w) => n + worksheetDrawings(w).length, 0),
+    93,
+  );
+  assert.equal(new Set(worksheets.map((w) => w.section)).size, 7);
+});
+for (const w of worksheets)
+  test('audited PDF ' + w.id + ' / page ' + w.page, () => {
+    assert(w.problem.trim() && w.page >= 1 && w.page <= 46);
+    assert.equal(findWorksheet(w.problem)?.id, w.id);
+    assert.equal(p.problemForTurn(w.problem, ''), w.problem);
+    assert.equal(p.resolveProblemDiagram(w.problem).status, 'ready');
+    for (const t of [0.17, 0.37, 0.5, 0.72, 0.89])
+      for (const d of worksheetDrawings(w, t)) {
+        assert(d.checks.length);
+        assert(Object.values(d.points).every((v) => Number.isFinite(v.x + v.y)));
+        for (const s of d.segments) assert(len(d, s.join('')) > 1e-7);
+        const tex = g.toTikZ(d);
+        assert(!/NaN|Infinity|write18|input\{/.test(tex));
+        assert(tex.includes('\\end{tikzpicture}'));
+      }
+  });
+test('changing facts never selects an old audited preset', () => {
+  const w = worksheets.find((w) => w.id === 'tt-b9');
+  assert.equal(findWorksheet(w.problem.replace('80 cm', '81 cm')), undefined);
+  assert.equal(findWorksheet(w.problem + ' Biết AC = 99 cm.'), undefined);
+  assert.equal(findWorksheet(w.problem.replaceAll('A', "A'")), undefined);
+});
+test('all checks execute mathematical predicates, not unconditional placeholders', () =>
+  assert(
+    !/=>\s*true/.test(readFileSync(new URL('../lib/worksheets.ts', import.meta.url), 'utf8')),
+  ));
+test('screenshot concurrency: M,N,O,I collinear and I=O without assuming the conclusion', () => {
+  for (const t of [0.17, 0.37, 0.72, 0.89]) {
+    const d = drawing('hb-b3', t);
+    assert(g.near(len(d, 'AP'), len(d, 'CQ')));
+    assert(g.onSegment(d.points.O, d.points.M, d.points.N));
+    assert(g.onSegment(d.points.O, d.points.P, d.points.Q));
+    assert(g.distance(d.points.O, d.points.I) < 1e-7);
+    assert(g.parallel(d.points.M, d.points.N, d.points.A, d.points.B));
+  }
+});
+test('opposite anchors: midpoint K/I and free K/I both satisfy actual givens', () => {
+  for (const id of ['hb-b4', 'hb-b5']) {
+    const d = drawing(id);
+    assert(g.near(len(d, 'AK'), len(d, 'CI')));
+    assert(g.onSegment(d.points.K, d.points.A, d.points.B));
+    assert(g.onSegment(d.points.I, d.points.C, d.points.D));
+  }
+});
+test('source dimensional facts independently checked', () => {
+  for (const [id, values] of [
+    ['tt-b9', { AB: 80, AD: 60 }],
+    ['tt-b2', { AB: 13, AH: 12, HC: 16 }],
+    ['tt-b11a', { AC: 17, BC: 10, CH: 8 }],
+    ['th-b2', { AB: 25, AC: 14 }],
+    ['ht-v3', { BC: 3 }],
+  ]) {
+    const d = drawing(id);
+    for (const [s, n] of Object.entries(values)) assert(g.near(len(d, s), n), id + ' ' + s);
+  }
+});
+test('public angle checks do not publish unknown answers', () => {
+  for (const id of ['tg-v2', 'tg-b2', 'tg-b3', 'tg-b4', 'tt-b1']) {
+    const w = worksheets.find((w) => w.id === id);
+    assert(!/x = 105|15 cm/.test(w.note));
+    for (const d of worksheetDrawings(w))
+      assert(!d.checks.some((s) => /=[ ]*(105|115|36|72|108|144|75|85|95)°/.test(s)));
+  }
+});
+test('a malformed known figure fails validation instead of drawing anyway', () => {
+  for (const [id, n] of [
+    ['hb-b3', 'Q'],
+    ['hb-b4', 'K'],
+    ['ht-b3', 'C'],
+    ['tg-b2', 'A'],
+  ]) {
+    const f = worksheets.find((w) => w.id === id).draw(0.37)[0];
+    f.points[n] = { x: f.points[n].x + 0.5, y: f.points[n].y + 0.8 };
+    assert.throws(() => f.build(), id);
+  }
+});

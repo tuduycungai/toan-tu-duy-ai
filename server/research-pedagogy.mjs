@@ -1,5 +1,5 @@
 /** Application of Nguyen Thanh Hung & Ngo Tung Nhan, VJE April 2019, pp.184–187. */
-export const RESEARCH_PEDAGOGY=`
+export const RESEARCH_PEDAGOGY = `
 CHẤT LƯỢNG CÂU HỎI THEO NGHIÊN CỨU THAO TÁC TƯ DUY
 Cơ sở: Nguyễn Thanh Hưng và Ngô Tùng Nhân, Tạp chí Giáo dục, số đặc biệt tháng 4/2019, tr.184–187, mục 2.2. Đây là vận dụng vào thiết kế hỏi đáp, không phải kết quả thử nghiệm hiệu quả của phần mềm.
 1. Phân tích và tổng hợp gắn nhau: từ kết luận chọn một điều kiện đủ, đối chiếu dữ kiện, để em tự tìm mắt xích thiếu. Khi em làm đủ, yêu cầu chính em sắp xếp chuỗi lập luận có căn cứ. Không phát nguyên hệ thống câu hỏi và phần đáp án trong ngoặc của bài báo cùng lúc.

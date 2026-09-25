@@ -1,66 +1,101 @@
-# Tư duy Toán học — V6.3.0
+# Tư duy Toán học — V6.4.0
 
-Bản nâng cấp từ **TU-DUY-TOAN-HOC-V6_2_4-BAN-TRIEN-KHAI.zip** theo hai yêu cầu: kết nối OpenAI và giữ hình khi trao đổi tiếp.
+Bản nâng cấp dựng hình tổng quát ngày 24/09/2026, phát triển từ gói mã nguồn đã cung cấp. Giữ React + TypeScript + Vite, cấu hình OpenAI/Gemini và Netlify.
 
-## Bắt đầu
+**V6.4.0:** AI diễn giải đề thành các phép dựng; ứng dụng tính tọa độ, kiểm tra quan hệ và xuất SVG trực tiếp. Áp dụng cho đề nhập và đề ảnh đã xác nhận, tiếp tục dùng `gpt-6-luna`. Bộ dựng cục bộ và công cụ TikZ mở rộng vẫn được sử dụng khi phù hợp.
 
-Mở `public/huong-dan-api.html` để xem hướng dẫn cho giáo viên, hoặc truy cập `/huong-dan-api.html` sau triển khai. Tóm tắt cũng có ở `HUONG_DAN.md`.
-
-- **Không cần API:** xem bài mẫu, lý thuyết và hình thuộc các dạng bộ dựng cục bộ đã đối chiếu được.
-- **Dùng OpenAI:** đặt các biến môi trường bên dưới ở máy chủ/Netlify Functions. API có phí riêng, không nằm trong ChatGPT Plus.
-- **Giữ Gemini cũ:** đặt `AI_PROVIDER=gemini`; khóa và mô hình Gemini vẫn hoạt động theo cấu hình cũ. Không tự chuyển nhà cung cấp hoặc tăng mức phí khi có lỗi.
-
-```dotenv
-AI_PROVIDER=openai
-OPENAI_API_KEY=YOUR_SERVER_SIDE_KEY
-OPENAI_MODEL=gpt-6-luna
-OPENAI_REASONING_EFFORT=medium
-ACCESS_CODE=HOCGIOITOAN
-```
-
-`gpt-6-luna` là mặc định tiết kiệm; `gpt-6-sol` cân bằng năng lực/chi phí; `gpt-6-astra` ưu tiên năng lực cho bài khó. Cả ba đều tính phí. Mô hình được chọn ở máy chủ, học sinh không tự nâng lên mô hình đắt hơn. Danh mục được kiểm tra theo tài liệu OpenAI ngày 22/9/2026; quyền truy cập tùy tài khoản. Không có tuyên bố mô hình nào đã được kiểm nghiệm là tốt nhất cho mọi bài toán của ứng dụng này.
-
-## Hành vi hình vẽ
-
-1. Hình cục bộ đã đối chiếu giả thiết được ưu tiên; không gọi AI để vẽ các hình này.
-2. Đề cần AI có hình dựng lần đầu. Máy tính có thể dựng khi mở đề và kết nối; điện thoại nhấn **Vẽ hình**.
-3. Trả lời, xin gợi ý và kiểm tra bước làm giữ nguyên hình. Câu kết luận của học sinh không tự biến thành đề mới.
-4. **Vẽ lại hình** chỉ kích hoạt một lượt dựng lại, không kéo theo vẽ lại ở các lượt chat sau. Hình cũ vẫn hiển thị trong lúc chờ; nếu dựng thất bại, hình cũ còn nguyên.
-5. Đổi đề hoặc chủ động sửa/bổ sung dữ kiện cập nhật hình. Chọn **Bài mới** hoặc nhập “Cho…”, “Xét…”, “Bài mới…” để bắt đầu đề khác.
-6. Tối đa ba hình SVG/TikZ gần nhất được giữ trong bộ nhớ phiên của cùng tab, tối đa 12 giờ theo bản lưu; không lưu khóa API. Dung lượng trình duyệt có thể giới hạn khôi phục. Tải PNG/SVG nếu cần lưu lâu dài.
+Xem [phạm vi, kiểm chứng và cách cập nhật](docs/V6_4_0_DUNG_HINH_TONG_QUAT.md), [20 nhóm hình kiểm chứng](docs/v640-review/checks.json) và [bảng hình mẫu](docs/v640-review/gallery.svg). Bộ kiểm tra này đánh giá phép dựng và tích hợp bằng API giả lập; không bảo đảm AI diễn giải đúng mọi đề tự nhiên. Bản mới cần triển khai rồi kiểm tra API thật.
 
 ## Chạy trên máy
 
-Cần Node.js >= 22.13. Sao chép `.env.example` thành `.env` và điền cấu hình máy chủ.
+Cài Node.js theo `package.json` và dùng npm. Bản bàn giao được kiểm tra bằng Node.js 24.19.0, npm 11.9.0.
 
 ```sh
 npm ci
 npm start
 ```
 
-Mở `http://localhost:3000`. `npm run dev` chỉ phục vụ giao diện; `npm start` có thêm API cục bộ.
+Mở `http://localhost:3000`. Có thể xem bài mẫu, lý thuyết và hình được dựng cục bộ khi chưa cấu hình API. Muốn dùng hội thoại và đọc ảnh, sao chép `.env.example` thành `.env`, điền khóa máy chủ rồi khởi động lại. Trên Windows có thể sao chép tệp bằng File Explorer.
 
-## Cập nhật Netlify
+Mã lớp mặc định là `HOCGIOITOAN`. Học sinh nhập mã lớp trong hộp Kết nối AI; không nhập khóa API vào giao diện.
 
-Dùng toàn bộ thư mục mã nguồn này. Build command: `npm run build`; publish: `dist`; functions: `netlify/functions`. Giữ cấu hình trong `netlify.toml`, đặt biến môi trường phạm vi Functions rồi triển khai lại. Chỉ kéo `dist` lên sẽ không đủ cho hội thoại AI/đọc ảnh/dựng AI. Không đặt khóa trong `VITE_*`, mã giao diện hoặc tệp ZIP chia sẻ.
+## Cấu hình API
 
-## Kiểm tra
+Cấu hình API cho bản 6.4.0:
+
+| Biến                              | Vai trò                                                             |
+| --------------------------------- | ------------------------------------------------------------------- |
+| `AI_PROVIDER`                     | `openai` hoặc `gemini`                                              |
+| `OPENAI_API_KEY`                  | Khóa OpenAI ở máy chủ                                               |
+| `OPENAI_MODEL`                    | Mặc định `gpt-6-luna`; danh sách cấu hình trong `server/openai.mjs` |
+| `OPENAI_REASONING_EFFORT`         | Mặc định `medium` cho hội thoại                                     |
+| `OPENAI_DIAGRAM_REASONING_EFFORT` | Mặc định `low`, dành riêng cho vẽ hình                              |
+| `OPENAI_TIMEOUT_MS`               | Mặc định `50000`; hợp lệ từ `5000` đến `52000`                      |
+| `GEMINI_API_KEY`                  | Khóa Gemini ở máy chủ                                               |
+| `GEMINI_MODEL`                    | Mặc định `gemini-2.5-flash`                                         |
+| `ACCESS_CODE`                     | Mã lớp, mặc định `HOCGIOITOAN`                                      |
+| `STATE_SIGNING_KEY`               | Khóa ký trạng thái tùy chọn; xem `.env.example`                     |
+
+Giữ khóa ngoài mã nguồn, không đặt trong biến `VITE_*`. Quyền truy cập mô hình và hạn mức cần kiểm tra trên tài khoản API thực tế. Trong phiên kiểm tra ngày 24/09/2026, website đang chạy đã kết nối thành công và hiển thị `gpt-6-luna`; yêu cầu vẽ bài trong ảnh tái hiện lỗi mạng/hết thời gian. Bản sửa đã kiểm thử API bằng phản hồi giả lập; cần kiểm tra API thật sau khi triển khai.
+
+## Triển khai Netlify
+
+1. Đưa toàn bộ thư mục mã nguồn lên kho dự án kết nối với Netlify.
+2. Giữ `netlify.toml`: build `npm run build`, publish `dist`, Functions `netlify/functions`, Node `22`.
+3. Đặt biến môi trường cho Functions, rồi triển khai lại.
+4. Mở ứng dụng, nhập mã lớp và kiểm tra kết nối bằng tài khoản API của giáo viên.
+
+Chỉ tải `dist` lên dịch vụ lưu trữ tĩnh sẽ thiếu API hội thoại và gửi khảo sát. Tệp `.env` không nằm trong gói bàn giao.
+
+## Lệnh kiểm tra và phát triển
 
 ```sh
-npm test
-npm run typecheck
+npm run format
+npm run format:check
 npm run lint
+npm run typecheck
+npm test
+npm run test:v640
+npm run review:figures
 npm run build
-npm run test:ui:v630
+npm run preview
 ```
 
-UI test cần Chromium của Playwright; có thể chỉ định `CHROMIUM_EXECUTABLE`. Các kiểm thử OpenAI/Gemini dùng phản hồi mô phỏng, không phát sinh API trả phí. Xem `docs/BAO_CAO_V6_3_0.md` cho kết quả và giới hạn nghiệm thu.
+`npm run preview` phục vụ bản build giao diện; `npm start` chạy cả giao diện phát triển và API cục bộ. Các tệp TikZ ở `public/tikz` được tái tạo từ dependency đã khóa trước khi chạy dev, start, test hoặc build; không cần đóng gói bản sinh sẵn.
 
-## Tài liệu
+Kiểm thử trình duyệt cần cài Chromium của Playwright:
 
-- `public/huong-dan-api.html`: lấy API, chọn mô hình, cấu hình và cách dùng hình.
-- `docs/BAO_CAO_V6_3_0.md`: thay đổi và kiểm thử.
-- `docs/THAY_DOI_TEP_V6_3_0.json`: đối chiếu tệp với ZIP gốc.
-- `docs/HISTORIQUE_AVANT_V6_3.md`: README các bản cũ, chỉ để tham khảo lịch sử.
+```sh
+npx playwright install chromium
+npm run test:ui
+npm run test:ui:legacy
+npm run test:ui:v624
+npm run test:start
+```
 
-Bản mới giữ trọng tâm **hình học THCS, nhất là tứ giác lớp 8** và cách học gợi mở. Việc đổi API không biến ứng dụng thành công cụ giải mọi chuyên đề toán. Các văn bản V6.2.x trong `docs/` là hồ sơ lịch sử, không thay thế hướng dẫn V6.3.0.
+Có thể đặt `CHROMIUM_EXECUTABLE` tới Chromium đã cài. Các kiểm thử UI trên dùng phản hồi API có kiểm soát; không chứng minh chất lượng trả lời của mô hình thật và không gửi khảo sát thật.
+
+## Chức năng và phạm vi
+
+- Hồ sơ học sinh/giáo viên, phân loại mức học và gợi mở theo tám giai đoạn tư duy.
+- Ngân hàng 87 bài mẫu, lý thuyết dự kiến dùng, dựng hình cục bộ hoặc qua API.
+- Giữ hình qua các lượt trả lời; dựng lại khi người dùng chủ động yêu cầu hoặc đổi đề.
+- Kiểm tra lời giải và So sánh cách giải giữ nhãn **Đang phát triển** và luồng hiện có.
+- Giao diện sáng/tối, bố cục điện thoại, biểu mẫu khảo sát cuối buổi.
+
+Trọng tâm nội dung là hình học THCS, nhất là tứ giác lớp 8. Giáo viên cần kiểm tra nội dung và hình trước khi sử dụng làm học liệu.
+
+## Cấu trúc
+
+| Thư mục                       | Nội dung                                                     |
+| ----------------------------- | ------------------------------------------------------------ |
+| `app`, `components`           | Giao diện và thành phần React                                |
+| `lib`                         | Dữ liệu bài học, hình học, trạng thái học tập                |
+| `server`, `netlify/functions` | Xử lý API và các điểm vào Netlify                            |
+| `public`                      | Tài nguyên tĩnh, hướng dẫn và bộ tích hợp TikZ               |
+| `scripts`                     | Chuẩn bị tài nguyên, chạy cục bộ, kiểm tra                   |
+| `tests`                       | Kiểm thử tự động và dữ liệu kiểm thử tổng hợp cần để tái lập |
+| `docs`                        | Ghi chú bảo trì mô-đun                                       |
+| `THIRD_PARTY`, `vendor`       | Giấy phép, ghi công và tài nguyên thư viện                   |
+
+Không đóng gói `node_modules`, `dist`, `public/tikz`, log, ảnh chụp kiểm thử hoặc dữ liệu phiên người dùng. Giữ thông tin ghi công của dự án và thư viện; không thay đổi tuyên bố tác giả hoặc nguồn gốc.

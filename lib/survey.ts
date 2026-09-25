@@ -1,4 +1,4 @@
-import type {Profile} from './tutor';
+import type { Profile } from './tutor';
 
 export function participantLabel(profile: Pick<Profile, 'className'> | null): string {
   if (!profile) return 'Chưa có thông tin';
@@ -6,7 +6,14 @@ export function participantLabel(profile: Pick<Profile, 'className'> | null): st
   return className ? `Lớp: ${className}` : 'Giáo viên';
 }
 
-export function surveyComment({profile, comment, includeSummary, topic, mode, checkpoints}: {
+export function surveyComment({
+  profile,
+  comment,
+  includeSummary,
+  topic,
+  mode,
+  checkpoints,
+}: {
   profile: Profile;
   comment: string;
   includeSummary: boolean;

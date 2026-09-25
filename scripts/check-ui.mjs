@@ -1,19 +1,184 @@
 // Optional Playwright checks: all outbound AI/Form writes are mocked.
-import {createRequire} from 'node:module';import {spawn} from 'node:child_process';import {mkdir} from 'node:fs/promises';import {fileURLToPath} from 'node:url';import assert from 'node:assert/strict';
-const require=createRequire(import.meta.url);const{chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');const root=fileURLToPath(new URL('../',import.meta.url));const port=process.env.UI_TEST_PORT||'3025';const server=spawn('npm',['start'],{cwd:root,env:{...process.env,PORT:port},stdio:'ignore'});const output=process.env.UI_OUTPUT||root+'research/screenshots';await mkdir(output,{recursive:true});let browser;
-const diagram='[SO_DO]\nDU_KIEN: M là trung điểm AD và BC; ∠BAC = 90°.\nMUC_TIEU: Chứng minh ABDC là hình chữ nhật.\nCAU_NOI: Hai đường chéo cắt nhau tại trung điểm mỗi đường.\nBUOC_TIEP: Hãy xác định góc vuông của hình bình hành.\n[/SO_DO]\n';
-try{
- let ready=false;for(let i=0;i<100;i++){try{if((await fetch(`http://localhost:${port}`)).ok){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,100));}assert(ready);
- browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_EXECUTABLE?{executablePath:process.env.CHROMIUM_EXECUTABLE}:{}),args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu','--no-zygote']});const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});const errors=[];page.on('pageerror',e=>errors.push(e.message));let calls=[],feedbackCalls=[],complete=false,confirmed=true,fail=false;
- await page.route('**/api/chat',async r=>{const b=r.request().postDataJSON();calls.push(b);if(fail&&!b.check){fail=false;await r.fulfill({status:429,json:{error:'Giới hạn thử nghiệm. Hãy gửi lại.'}});return;}await r.fulfill({json:b.check?{ok:true,model:'gemini-2.5-flash'}:{text:diagram+(complete?'Em đã giải thích đúng. Mình đã hoàn tất bài học. [KET_THUC_BUOI_HOC]':'Em hãy nêu căn cứ để nhận biết hình bình hành.'),model:'gemini-2.5-flash'}});});
- await page.route('**/.netlify/functions/feedback',async r=>{feedbackCalls.push(r.request().postDataJSON());await r.fulfill({json:confirmed?{ok:true,delivery:'confirmed',message:'Google Forms đã xác nhận ghi nhận đánh giá. Cảm ơn em!'}:{ok:false,delivery:'unconfirmed',message:'Chưa nhận được xác nhận từ Google Forms.'}});});await page.route('https://docs.google.com/**',r=>r.abort());
- const shot=async name=>page.screenshot({path:output+'/'+name+'.png',fullPage:true});const button=name=>page.getByRole('button',{name,exact:true});const send=async text=>{if(text)await page.getByLabel('Nhập đề bài hoặc bài làm').fill(text);await button('Gửi').click();};
- await page.goto(`http://localhost:${port}`);assert.equal(await page.getByRole('dialog').count(),0);await shot('01-home-desktop');await button('Kết nối AI').click();await page.getByLabel('Mã truy cập',{exact:true}).fill('HOCGIOITOAN');await button('Kiểm tra & kết nối').click();
- await page.getByLabel('Họ và tên',{exact:false}).fill('Nguyễn An');await page.getByLabel('Trường đang học',{exact:false}).fill('Trường kiểm thử');await page.getByLabel('Email',{exact:false}).fill('student@example.com');await page.getByLabel('Lớp đang học (Nếu bạn là GV thì để trống)',{exact:true}).fill('8A1');await page.getByLabel('Ghi nhớ hồ sơ trên thiết bị này').check();await shot('02-profile-after-connection');await page.getByRole('button',{name:'Hoàn tất thông tin & bắt đầu học'}).click();assert.equal(feedbackCalls.length,0);
- await page.getByRole('button',{name:/Từ tam giác vuông đến hình chữ nhật/}).click();await send();await page.locator('.message.assistant').waitFor();assert.equal(await page.getByRole('dialog').count(),0);assert(!JSON.stringify(calls).includes('student@example.com'));assert(!JSON.stringify(calls).includes('Nguyễn An'));assert.equal(calls.at(-1).mode,'guide');await shot('03-chat-diagram');
- await button('Khảo sát đánh giá ứng dụng').click();assert.equal(await page.getByRole('radio',{checked:true}).count(),0);await page.getByRole('radio',{name:'4 sao — Hài lòng',exact:true}).check();await page.getByLabel('Bạn đánh giá trải nghiệm sử dụng như thế nào?').fill('Sơ đồ giúp em chọn dấu hiệu.');await page.getByLabel('Tôi đồng ý gửi thông tin trên',{exact:false}).check();await shot('04-feedback');await button('Gửi khảo sát').click();await page.getByText('Google Forms đã xác nhận ghi nhận đánh giá. Cảm ơn em!').waitFor();assert.equal(feedbackCalls.length,1);assert.equal(feedbackCalls[0].rating,4);await button('Tiếp tục sử dụng').click();assert.equal(await page.locator('.session-ended').count(),0);await page.getByLabel('Nhập đề bài hoặc bài làm').waitFor();
- await button('Bài mới').first().click();await send('Cho hình bình hành ABCD có một góc vuông.');await page.locator('.message.assistant').waitFor();complete=true;await send('Hình bình hành có một góc vuông là hình chữ nhật vì các góc còn lại đều vuông.');await page.getByRole('dialog').waitFor();confirmed=false;await page.getByRole('radio',{name:'5 sao — Rất hài lòng',exact:true}).check();await page.getByLabel('Tôi đồng ý gửi thông tin trên',{exact:false}).check();await button('Gửi khảo sát').click();const link=page.getByRole('link',{name:'Mở Google Form đã điền sẵn',exact:false});await link.waitFor();const url=new URL(await link.getAttribute('href'));assert.equal(url.searchParams.get('entry.1301171588'),'student@example.com');assert.equal(url.searchParams.get('entry.54850382'),'5');assert.equal(feedbackCalls.length,2);await button('Để sau, tiếp tục sử dụng').click();
- complete=false;fail=true;await send('Em cần kiểm tra lại dấu hiệu hình chữ nhật.');await page.getByText('Giới hạn thử nghiệm. Hãy gửi lại.').waitFor();assert.equal(await page.getByLabel('Nhập đề bài hoặc bài làm').inputValue(),'Em cần kiểm tra lại dấu hiệu hình chữ nhật.');await page.getByRole('button',{name:/Luyện tập mỗi ngày/}).click();await page.getByRole('button',{name:'Tạo 5 câu luyện tập',exact:false}).click();await page.locator('.message.assistant').waitFor();assert.equal(calls.at(-1).messages.length,1);
- await page.setViewportSize({width:390,height:844});await button('Trang chủ Tư duy Toán học').click();await shot('05-home-mobile');assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await button('Chuyển giao diện tối').click();await shot('06-dark-mobile');await button('Mở các chế độ học').click();await page.getByRole('button',{name:/Gợi mở từng bước/}).click();await shot('07-chat-mobile');assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.reload();assert.equal(await page.getByRole('dialog').count(),0);assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('ai-tutor-profile-v1')).name),'Nguyễn An');assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'dark');assert.deepEqual(errors,[]);
- console.log('PASS UI: connection-first profile, manual/automatic feedback, Form fallback, recovery, fresh history, privacy, persistence, mobile/light/dark, no browser errors. AI and feedback mocked.');
-}finally{if(browser)await browser.close();server.kill('SIGTERM');}
+import { createRequire } from 'node:module';
+import { spawn } from 'node:child_process';
+import { mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert/strict';
+const require = createRequire(import.meta.url);
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const root = fileURLToPath(new URL('../', import.meta.url));
+const port = process.env.UI_TEST_PORT || '3025';
+const server = spawn('npm', ['start'], {
+  cwd: root,
+  env: { ...process.env, PORT: port },
+  stdio: 'ignore',
+});
+const output = process.env.UI_OUTPUT || root + 'research/screenshots';
+await mkdir(output, { recursive: true });
+let browser;
+const diagram =
+  '[SO_DO]\nDU_KIEN: M là trung điểm AD và BC; ∠BAC = 90°.\nMUC_TIEU: Chứng minh ABDC là hình chữ nhật.\nCAU_NOI: Hai đường chéo cắt nhau tại trung điểm mỗi đường.\nBUOC_TIEP: Hãy xác định góc vuông của hình bình hành.\n[/SO_DO]\n';
+try {
+  let ready = false;
+  for (let i = 0; i < 100; i++) {
+    try {
+      if ((await fetch(`http://localhost:${port}`)).ok) {
+        ready = true;
+        break;
+      }
+    } catch {}
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  assert(ready);
+  browser = await chromium.launch({
+    headless: true,
+    ...(process.env.CHROMIUM_EXECUTABLE ? { executablePath: process.env.CHROMIUM_EXECUTABLE } : {}),
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu', '--no-zygote'],
+  });
+  const page = await browser.newPage({
+    viewport: { width: 1440, height: 1000 },
+    reducedMotion: 'reduce',
+  });
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  let calls = [],
+    feedbackCalls = [],
+    complete = false,
+    confirmed = true,
+    fail = false;
+  await page.route('**/api/chat', async (r) => {
+    const b = r.request().postDataJSON();
+    calls.push(b);
+    if (fail && !b.check) {
+      fail = false;
+      await r.fulfill({ status: 429, json: { error: 'Giới hạn thử nghiệm. Hãy gửi lại.' } });
+      return;
+    }
+    await r.fulfill({
+      json: b.check
+        ? { ok: true, model: 'gemini-2.5-flash' }
+        : {
+            text:
+              diagram +
+              (complete
+                ? 'Em đã giải thích đúng. Mình đã hoàn tất bài học. [KET_THUC_BUOI_HOC]'
+                : 'Em hãy nêu căn cứ để nhận biết hình bình hành.'),
+            model: 'gemini-2.5-flash',
+          },
+    });
+  });
+  await page.route('**/.netlify/functions/feedback', async (r) => {
+    feedbackCalls.push(r.request().postDataJSON());
+    await r.fulfill({
+      json: confirmed
+        ? {
+            ok: true,
+            delivery: 'confirmed',
+            message: 'Google Forms đã xác nhận ghi nhận đánh giá. Cảm ơn em!',
+          }
+        : {
+            ok: false,
+            delivery: 'unconfirmed',
+            message: 'Chưa nhận được xác nhận từ Google Forms.',
+          },
+    });
+  });
+  await page.route('https://docs.google.com/**', (r) => r.abort());
+  const shot = async (name) =>
+    page.screenshot({ path: output + '/' + name + '.png', fullPage: true });
+  const button = (name) => page.getByRole('button', { name, exact: true });
+  const send = async (text) => {
+    if (text) await page.getByLabel('Nhập đề bài hoặc bài làm').fill(text);
+    await button('Gửi').click();
+  };
+  await page.goto(`http://localhost:${port}`);
+  assert.equal(await page.getByRole('dialog').count(), 0);
+  await shot('01-home-desktop');
+  await button('Kết nối AI').click();
+  await page.getByLabel('Mã truy cập', { exact: true }).fill('HOCGIOITOAN');
+  await button('Kiểm tra & kết nối').click();
+  await page.getByLabel('Họ và tên', { exact: false }).fill('Nguyễn An');
+  await page.getByLabel('Trường đang học', { exact: false }).fill('Trường kiểm thử');
+  await page.getByLabel('Email', { exact: false }).fill('student@example.com');
+  await page.getByLabel('Lớp đang học (Nếu bạn là GV thì để trống)', { exact: true }).fill('8A1');
+  await page.getByLabel('Ghi nhớ hồ sơ trên thiết bị này').check();
+  await shot('02-profile-after-connection');
+  await page.getByRole('button', { name: 'Hoàn tất thông tin & bắt đầu học' }).click();
+  assert.equal(feedbackCalls.length, 0);
+  await page.getByRole('button', { name: /Từ tam giác vuông đến hình chữ nhật/ }).click();
+  await send();
+  await page.locator('.message.assistant').waitFor();
+  assert.equal(await page.getByRole('dialog').count(), 0);
+  assert(!JSON.stringify(calls).includes('student@example.com'));
+  assert(!JSON.stringify(calls).includes('Nguyễn An'));
+  assert.equal(calls.at(-1).mode, 'guide');
+  await shot('03-chat-diagram');
+  await button('Khảo sát đánh giá ứng dụng').click();
+  assert.equal(await page.getByRole('radio', { checked: true }).count(), 0);
+  await page.getByRole('radio', { name: '4 sao — Hài lòng', exact: true }).check();
+  await page
+    .getByLabel('Bạn đánh giá trải nghiệm sử dụng như thế nào?')
+    .fill('Sơ đồ giúp em chọn dấu hiệu.');
+  await page.getByLabel('Tôi đồng ý gửi thông tin trên', { exact: false }).check();
+  await shot('04-feedback');
+  await button('Gửi khảo sát').click();
+  await page.getByText('Google Forms đã xác nhận ghi nhận đánh giá. Cảm ơn em!').waitFor();
+  assert.equal(feedbackCalls.length, 1);
+  assert.equal(feedbackCalls[0].rating, 4);
+  await button('Tiếp tục sử dụng').click();
+  assert.equal(await page.locator('.session-ended').count(), 0);
+  await page.getByLabel('Nhập đề bài hoặc bài làm').waitFor();
+  await button('Bài mới').first().click();
+  await send('Cho hình bình hành ABCD có một góc vuông.');
+  await page.locator('.message.assistant').waitFor();
+  complete = true;
+  await send('Hình bình hành có một góc vuông là hình chữ nhật vì các góc còn lại đều vuông.');
+  await page.getByRole('dialog').waitFor();
+  confirmed = false;
+  await page.getByRole('radio', { name: '5 sao — Rất hài lòng', exact: true }).check();
+  await page.getByLabel('Tôi đồng ý gửi thông tin trên', { exact: false }).check();
+  await button('Gửi khảo sát').click();
+  const link = page.getByRole('link', { name: 'Mở Google Form đã điền sẵn', exact: false });
+  await link.waitFor();
+  const url = new URL(await link.getAttribute('href'));
+  assert.equal(url.searchParams.get('entry.1301171588'), 'student@example.com');
+  assert.equal(url.searchParams.get('entry.54850382'), '5');
+  assert.equal(feedbackCalls.length, 2);
+  await button('Để sau, tiếp tục sử dụng').click();
+  complete = false;
+  fail = true;
+  await send('Em cần kiểm tra lại dấu hiệu hình chữ nhật.');
+  await page.getByText('Giới hạn thử nghiệm. Hãy gửi lại.').waitFor();
+  assert.equal(
+    await page.getByLabel('Nhập đề bài hoặc bài làm').inputValue(),
+    'Em cần kiểm tra lại dấu hiệu hình chữ nhật.',
+  );
+  await page.getByRole('button', { name: /Luyện tập mỗi ngày/ }).click();
+  await page.getByRole('button', { name: 'Tạo 5 câu luyện tập', exact: false }).click();
+  await page.locator('.message.assistant').waitFor();
+  assert.equal(calls.at(-1).messages.length, 1);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await button('Trang chủ Tư duy Toán học').click();
+  await shot('05-home-mobile');
+  assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  await button('Chuyển giao diện tối').click();
+  await shot('06-dark-mobile');
+  await button('Mở các chế độ học').click();
+  await page.getByRole('button', { name: /Gợi mở từng bước/ }).click();
+  await shot('07-chat-mobile');
+  assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  await page.reload();
+  assert.equal(await page.getByRole('dialog').count(), 0);
+  assert.equal(
+    await page.evaluate(() => JSON.parse(localStorage.getItem('ai-tutor-profile-v1')).name),
+    'Nguyễn An',
+  );
+  assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'dark');
+  assert.deepEqual(errors, []);
+  console.log(
+    'PASS UI: connection-first profile, manual/automatic feedback, Form fallback, recovery, fresh history, privacy, persistence, mobile/light/dark, no browser errors. AI and feedback mocked.',
+  );
+} finally {
+  if (browser) await browser.close();
+  server.kill('SIGTERM');
+}

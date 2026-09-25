@@ -1,20 +1,196 @@
-import {useState} from 'react';
-import {GraduationCap} from 'lucide-react';
-import {diagnostics,learnerLevels,recordDiagnostic,setLearnerLevel,suggestedLevel,type LearnerState} from '../lib/adaptive-learning';
-export function LearnerPanel({state,onChange}:{state:LearnerState;onChange:(value:LearnerState)=>void}){
- const [choice,setChoice]=useState(-1),[explanation,setExplanation]=useState('');
- const current=diagnostics.find(q=>!state.diagnostics.some(d=>d.id===q.id)),suggested=suggestedLevel(state),last=state.diagnostics.at(-1);
- return <details className="learner-panel"><summary><GraduationCap size={18}/>Hồ sơ học tập · {state.level}</summary><p className="caption">Mức hỗ trợ có thể thay đổi. Bốn câu chẩn đoán chỉ gợi ý điểm bắt đầu; giáo viên và em có thể điều chỉnh.</p>
- <label>Khối lớp<select value={state.grade} onChange={e=>onChange({...state,grade:e.target.value})}>{['6','7','8','9'].map(g=><option key={g}>{g}</option>)}</select></label>
- <label>Mức độ tự tin<select value={state.confidence} onChange={e=>onChange({...state,confidence:Number(e.target.value)})}>{['Cần nhiều hỗ trợ','Còn băn khoăn','Tương đối tự tin','Tự tin','Rất tự tin'].map((s,i)=><option key={s} value={i+1}>{s}</option>)}</select></label>
- <label>Kiến thức nền<select value={state.foundation} onChange={e=>onChange({...state,foundation:e.target.value})}>{['Cần ôn định nghĩa từ đầu','Cần ôn một số định nghĩa','Nhớ tính chất, cần luyện suy luận','Tự chọn được hướng chứng minh'].map(s=><option key={s}>{s}</option>)}</select></label>
- <label>Điều chỉnh mức học<select value={state.level} onChange={e=>onChange(setLearnerLevel(state,e.target.value))}>{learnerLevels.map(l=><option key={l}>{l}</option>)}</select></label>
- <p className="caption">{state.manualLevel?'Đang dùng mức do người học/giáo viên chọn.':suggested?'Gợi ý từ bốn câu chẩn đoán: '+suggested+'.':'Chưa đủ bốn câu chẩn đoán; chưa tự phân loại.'} Mức hỗ trợ: {state.supportLevel}/3.</p>
- <details className="diagnostic-panel"><summary>Chẩn đoán kiến thức ({state.diagnostics.length}/4)</summary>
- {last&&<p role="status">{last.correct?'Lựa chọn vừa rồi đúng. ':'Lựa chọn vừa rồi cần xem lại. '}{diagnostics.find(q=>q.id===last.id)?.reason} Giáo viên cần xem thêm phần em giải thích.</p>}
- {current?<form onSubmit={e=>{e.preventDefault();onChange(recordDiagnostic(state,current.id,choice,explanation));setChoice(-1);setExplanation('');}}><fieldset><legend>{current.question}</legend>{current.options.map((s,i)=><label className="diagnostic-option" key={s}><input type="radio" name={current.id} checked={choice===i} onChange={()=>setChoice(i)}/><span>{s}</span></label>)}</fieldset><label>Vì sao em chọn như vậy?<textarea value={explanation} maxLength={700} onChange={e=>setExplanation(e.target.value)} required/></label><button type="submit" disabled={choice<0||explanation.trim().length<3}>Ghi nhận & câu tiếp theo</button></form>:<p>Đã hoàn tất bốn câu. Tiếp tục giải thích từng bước trong bài để điều chỉnh hỗ trợ theo quá trình học.</p>}
- <button type="button" className="text-button" onClick={()=>{onChange({...state,diagnostics:[]});setChoice(-1);setExplanation('');}}>Làm lại chẩn đoán</button></details>
- <details><summary>Bằng chứng và lỗi cần xem lại</summary>{state.diagnostics.filter(d=>!d.correct).map(d=><p key={d.id}><strong>{d.skill}:</strong> {diagnostics.find(q=>q.id===d.id)?.reason}</p>)}{!state.observations.length&&<p>Chưa có câu trả lời trong buổi học.</p>}{state.observations.slice(-5).map(o=><p key={o.id}><strong>{o.operation}:</strong> “{o.evidence}”<br/>{o.missing}</p>)}</details>
- <details><summary>Nhật ký câu hỏi tư duy ({state.questions.length})</summary>{state.questions.slice(-8).map((q,i)=><details key={i}><summary>{q.thinkingOperation} · mức {q.supportLevel}</summary><p>{q.question}</p><p><strong>Mục tiêu:</strong> {q.learningObjective}</p><p><strong>Em tự làm:</strong> {q.expectedStudentAction}</p><p><strong>Bằng chứng:</strong> {q.evidence}</p><p><strong>Bước tiếp:</strong> {q.nextStep}</p></details>)}</details>
- </details>;
+import { useState } from 'react';
+import { GraduationCap } from 'lucide-react';
+import {
+  diagnostics,
+  learnerLevels,
+  recordDiagnostic,
+  setLearnerLevel,
+  suggestedLevel,
+  type LearnerState,
+} from '../lib/adaptive-learning';
+export function LearnerPanel({
+  state,
+  onChange,
+}: {
+  state: LearnerState;
+  onChange: (value: LearnerState) => void;
+}) {
+  const [choice, setChoice] = useState(-1),
+    [explanation, setExplanation] = useState('');
+  const current = diagnostics.find((q) => !state.diagnostics.some((d) => d.id === q.id)),
+    suggested = suggestedLevel(state),
+    last = state.diagnostics.at(-1);
+  return (
+    <details className="learner-panel">
+      <summary>
+        <GraduationCap size={18} />
+        Hồ sơ học tập · {state.level}
+      </summary>
+      <p className="caption">
+        Mức hỗ trợ có thể thay đổi. Bốn câu chẩn đoán chỉ gợi ý điểm bắt đầu; giáo viên và em có thể
+        điều chỉnh.
+      </p>
+      <label>
+        Khối lớp
+        <select value={state.grade} onChange={(e) => onChange({ ...state, grade: e.target.value })}>
+          {['6', '7', '8', '9'].map((g) => (
+            <option key={g}>{g}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Mức độ tự tin
+        <select
+          value={state.confidence}
+          onChange={(e) => onChange({ ...state, confidence: Number(e.target.value) })}
+        >
+          {['Cần nhiều hỗ trợ', 'Còn băn khoăn', 'Tương đối tự tin', 'Tự tin', 'Rất tự tin'].map(
+            (s, i) => (
+              <option key={s} value={i + 1}>
+                {s}
+              </option>
+            ),
+          )}
+        </select>
+      </label>
+      <label>
+        Kiến thức nền
+        <select
+          value={state.foundation}
+          onChange={(e) => onChange({ ...state, foundation: e.target.value })}
+        >
+          {[
+            'Cần ôn định nghĩa từ đầu',
+            'Cần ôn một số định nghĩa',
+            'Nhớ tính chất, cần luyện suy luận',
+            'Tự chọn được hướng chứng minh',
+          ].map((s) => (
+            <option key={s}>{s}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Điều chỉnh mức học
+        <select
+          value={state.level}
+          onChange={(e) => onChange(setLearnerLevel(state, e.target.value))}
+        >
+          {learnerLevels.map((l) => (
+            <option key={l}>{l}</option>
+          ))}
+        </select>
+      </label>
+      <p className="caption">
+        {state.manualLevel
+          ? 'Đang dùng mức do người học/giáo viên chọn.'
+          : suggested
+            ? 'Gợi ý từ bốn câu chẩn đoán: ' + suggested + '.'
+            : 'Chưa đủ bốn câu chẩn đoán; chưa tự phân loại.'}{' '}
+        Mức hỗ trợ: {state.supportLevel}/3.
+      </p>
+      <details className="diagnostic-panel">
+        <summary>Chẩn đoán kiến thức ({state.diagnostics.length}/4)</summary>
+        {last && (
+          <p role="status">
+            {last.correct ? 'Lựa chọn vừa rồi đúng. ' : 'Lựa chọn vừa rồi cần xem lại. '}
+            {diagnostics.find((q) => q.id === last.id)?.reason} Giáo viên cần xem thêm phần em giải
+            thích.
+          </p>
+        )}
+        {current ? (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onChange(recordDiagnostic(state, current.id, choice, explanation));
+              setChoice(-1);
+              setExplanation('');
+            }}
+          >
+            <fieldset>
+              <legend>{current.question}</legend>
+              {current.options.map((s, i) => (
+                <label className="diagnostic-option" key={s}>
+                  <input
+                    type="radio"
+                    name={current.id}
+                    checked={choice === i}
+                    onChange={() => setChoice(i)}
+                  />
+                  <span>{s}</span>
+                </label>
+              ))}
+            </fieldset>
+            <label>
+              Vì sao em chọn như vậy?
+              <textarea
+                value={explanation}
+                maxLength={700}
+                onChange={(e) => setExplanation(e.target.value)}
+                required
+              />
+            </label>
+            <button type="submit" disabled={choice < 0 || explanation.trim().length < 3}>
+              Ghi nhận & câu tiếp theo
+            </button>
+          </form>
+        ) : (
+          <p>
+            Đã hoàn tất bốn câu. Tiếp tục giải thích từng bước trong bài để điều chỉnh hỗ trợ theo
+            quá trình học.
+          </p>
+        )}
+        <button
+          type="button"
+          className="text-button"
+          onClick={() => {
+            onChange({ ...state, diagnostics: [] });
+            setChoice(-1);
+            setExplanation('');
+          }}
+        >
+          Làm lại chẩn đoán
+        </button>
+      </details>
+      <details>
+        <summary>Bằng chứng và lỗi cần xem lại</summary>
+        {state.diagnostics
+          .filter((d) => !d.correct)
+          .map((d) => (
+            <p key={d.id}>
+              <strong>{d.skill}:</strong> {diagnostics.find((q) => q.id === d.id)?.reason}
+            </p>
+          ))}
+        {!state.observations.length && <p>Chưa có câu trả lời trong buổi học.</p>}
+        {state.observations.slice(-5).map((o) => (
+          <p key={o.id}>
+            <strong>{o.operation}:</strong> “{o.evidence}”<br />
+            {o.missing}
+          </p>
+        ))}
+      </details>
+      <details>
+        <summary>Nhật ký câu hỏi tư duy ({state.questions.length})</summary>
+        {state.questions.slice(-8).map((q, i) => (
+          <details key={i}>
+            <summary>
+              {q.thinkingOperation} · mức {q.supportLevel}
+            </summary>
+            <p>{q.question}</p>
+            <p>
+              <strong>Mục tiêu:</strong> {q.learningObjective}
+            </p>
+            <p>
+              <strong>Em tự làm:</strong> {q.expectedStudentAction}
+            </p>
+            <p>
+              <strong>Bằng chứng:</strong> {q.evidence}
+            </p>
+            <p>
+              <strong>Bước tiếp:</strong> {q.nextStep}
+            </p>
+          </details>
+        ))}
+      </details>
+    </details>
+  );
 }

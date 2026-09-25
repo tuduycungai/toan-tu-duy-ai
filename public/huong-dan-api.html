@@ -1,17 +1,221 @@
 <!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hướng dẫn API — Tư duy Toán học V6.3</title><style>body{font-family:system-ui,sans-serif;line-height:1.7;color:#183453;background:#f2f7fc;margin:0}main{max-width:820px;margin:30px auto;padding:28px;background:white;border-radius:16px}h1,h2{color:#1459a0}a{color:#155ca9}table{border-collapse:collapse;width:100%;font-size:.95rem}td,th{border:1px solid #cbdced;padding:10px;text-align:left}pre{padding:16px;background:#edf4fa;overflow:auto;border-radius:8px}.note{padding:14px;border-left:4px solid #3686d0;background:#edf5ff}code{overflow-wrap:anywhere}@media(max-width:600px){main{margin:0;padding:20px}table{font-size:.85rem}td,th{padding:6px}}</style></head><body><main>
-<a href="/">← Trở về ứng dụng</a><h1>Kết nối OpenAI và giữ hình vẽ</h1><p>Tư duy Toán học · Phiên bản 6.3.0</p>
-<p class="note"><strong>OpenAI API có tính phí riêng.</strong> Gói ChatGPT Plus không bao gồm phí API. Không có lựa chọn “API ChatGPT tốt nhất và miễn phí” được bảo đảm cho ứng dụng này. Bài mẫu, lý thuyết và các hình dựng trong ứng dụng có thể xem không cần API.</p>
-<h2>1. Lấy khóa API</h2><ol><li>Đăng nhập <a href="https://platform.openai.com/" target="_blank" rel="noreferrer">OpenAI Platform</a> bằng tài khoản của thầy/cô.</li><li>Kiểm tra mục Billing và Usage của dự án. Chỉ bật phần API trả phí khi thầy/cô có nhu cầu.</li><li>Mở <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer">API keys</a>, tạo khóa mới và sao chép khóa.</li><li>Điền khóa vào biến môi trường <code>OPENAI_API_KEY</code> trên máy chủ hoặc Netlify, phạm vi Functions. Không điền vào ô “Mã truy cập” của học sinh và không đưa khóa vào mã giao diện.</li></ol>
-<h2>2. Chọn mô hình</h2><table><thead><tr><th>Mã mô hình</th><th>Khi nào dùng</th><th>Chi phí</th></tr></thead><tbody><tr><td><code>gpt-6-luna</code></td><td>Mặc định tiết kiệm; thử trước với bài thường ngày.</td><td>Có phí, thấp hơn hai lựa chọn dưới.</td></tr><tr><td><code>gpt-6-sol</code></td><td>Cân bằng năng lực và chi phí.</td><td>Có phí.</td></tr><tr><td><code>gpt-6-astra</code></td><td>Ưu tiên năng lực suy luận cho bài khó.</td><td>Có phí cao hơn.</td></tr></tbody></table><p>Đây là lựa chọn theo phân loại chính thức của OpenAI, không phải kết quả so sánh độ chính xác toán học của bản ứng dụng này. Quyền dùng mô hình phụ thuộc tài khoản. Thầy/cô kiểm tra lời giải và hình trước khi dùng làm học liệu.</p>
-<h2>3. Cấu hình triển khai</h2><pre>AI_PROVIDER=openai
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hướng dẫn API — Tư duy Toán học V6.3</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        line-height: 1.7;
+        color: #183453;
+        background: #f2f7fc;
+        margin: 0;
+      }
+      main {
+        max-width: 820px;
+        margin: 30px auto;
+        padding: 28px;
+        background: white;
+        border-radius: 16px;
+      }
+      h1,
+      h2 {
+        color: #1459a0;
+      }
+      a {
+        color: #155ca9;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 0.95rem;
+      }
+      td,
+      th {
+        border: 1px solid #cbdced;
+        padding: 10px;
+        text-align: left;
+      }
+      pre {
+        padding: 16px;
+        background: #edf4fa;
+        overflow: auto;
+        border-radius: 8px;
+      }
+      .note {
+        padding: 14px;
+        border-left: 4px solid #3686d0;
+        background: #edf5ff;
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      @media (max-width: 600px) {
+        main {
+          margin: 0;
+          padding: 20px;
+        }
+        table {
+          font-size: 0.85rem;
+        }
+        td,
+        th {
+          padding: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="/">← Trở về ứng dụng</a>
+      <h1>Kết nối OpenAI và giữ hình vẽ</h1>
+      <p>Tư duy Toán học · Phiên bản 6.4.0</p>
+      <p class="note">
+        <strong>OpenAI API có tính phí riêng.</strong> Gói ChatGPT Plus không bao gồm phí API. Không
+        có lựa chọn “API ChatGPT tốt nhất và miễn phí” được bảo đảm cho ứng dụng này. Bài mẫu, lý
+        thuyết và các hình dựng trong ứng dụng có thể xem không cần API.
+      </p>
+      <h2>1. Lấy khóa API</h2>
+      <ol>
+        <li>
+          Đăng nhập
+          <a href="https://platform.openai.com/" target="_blank" rel="noreferrer"
+            >OpenAI Platform</a
+          >
+          bằng tài khoản của thầy/cô.
+        </li>
+        <li>
+          Kiểm tra mục Billing và Usage của dự án. Chỉ bật phần API trả phí khi thầy/cô có nhu cầu.
+        </li>
+        <li>
+          Mở
+          <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer"
+            >API keys</a
+          >, tạo khóa mới và sao chép khóa.
+        </li>
+        <li>
+          Điền khóa vào biến môi trường <code>OPENAI_API_KEY</code> trên máy chủ hoặc Netlify, phạm
+          vi Functions. Không điền vào ô “Mã truy cập” của học sinh và không đưa khóa vào mã giao
+          diện.
+        </li>
+      </ol>
+      <h2>2. Chọn mô hình</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã mô hình</th>
+            <th>Khi nào dùng</th>
+            <th>Chi phí</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>gpt-6-luna</code></td>
+            <td>Mô hình mặc định trong cấu hình ứng dụng.</td>
+            <td>Theo tài khoản API.</td>
+          </tr>
+          <tr>
+            <td><code>gpt-6-sol</code></td>
+            <td>Lựa chọn khác trong cấu hình máy chủ.</td>
+            <td>Có phí.</td>
+          </tr>
+          <tr>
+            <td><code>gpt-6-astra</code></td>
+            <td>Lựa chọn khác trong cấu hình máy chủ.</td>
+            <td>Theo tài khoản API.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Chỉ sử dụng mô hình mà tài khoản API của thầy/cô có quyền truy cập. Kiểm tra giá và hạn mức
+        trong tài khoản trước khi sử dụng. Thầy/cô kiểm tra lời giải và hình trước khi dùng làm học
+        liệu.
+      </p>
+      <h2>3. Cấu hình triển khai</h2>
+      <pre>
+AI_PROVIDER=openai
 OPENAI_API_KEY=điền_khóa_của_thầy_cô
 OPENAI_MODEL=gpt-6-luna
 OPENAI_REASONING_EFFORT=medium
-ACCESS_CODE=HOCGIOITOAN</pre><p>Thầy/cô có thể đổi <code>OPENAI_MODEL</code> sang <code>gpt-6-sol</code> hoặc <code>gpt-6-astra</code>. Triển khai lại cả mã nguồn và Functions; chỉ tải thư mục <code>dist</code> sẽ không cung cấp API. Nếu dùng cấu hình Gemini cũ, đặt <code>AI_PROVIDER=gemini</code> và giữ <code>GEMINI_API_KEY</code>, <code>GEMINI_MODEL</code>.</p>
-<p>Trong ứng dụng, chọn <strong>Kết nối AI → nhập mã lớp → Kiểm tra &amp; kết nối</strong>. Nút kiểm tra có thực hiện một yêu cầu AI nhỏ, có thể phát sinh phí API. Sau kết nối, ứng dụng hiển thị mã mô hình đang dùng trong hộp kết nối. Khóa API chỉ nằm trên máy chủ.</p>
-<h2>4. Khi nào ứng dụng vẽ hình?</h2><ul><li>Với dạng đề bộ dựng cục bộ đã nhận diện và đối chiếu được: hiển thị hình không cần gọi API.</li><li>Với đề cần AI: máy tính dựng hình lần đầu khi mở đề và đã kết nối; điện thoại nhấn <strong>Vẽ hình</strong>. Có thể chọn <strong>Dựng hình khác bằng AI</strong> để dùng API thay hình cục bộ.</li><li>Trả lời, xin gợi ý, kiểm tra bước làm: giữ nguyên hình hiện tại.</li><li>Bấm <strong>Vẽ lại hình</strong>: tạo một yêu cầu dựng lại; các lượt trả lời sau không tiếp tục kích hoạt yêu cầu này.</li><li>Khi đổi đề hoặc bổ sung đường/điểm qua thao tác chỉnh hình: cập nhật hình theo đề mới. Nếu nhập đề khác bằng tin nhắn, bắt đầu bằng “Cho…”, “Xét…” hoặc “Bài mới…”.</li><li>Hình AI đã biên dịch được giữ tạm trong cùng tab để phục hồi sau tải lại trang. Bộ nhớ phiên giữ tối đa ba hình vừa dùng; có thể không lưu được nếu trình duyệt chặn hoặc hết dung lượng. Nên tải PNG/SVG khi cần dùng lâu dài.</li></ul>
-<h2>5. Dùng phần miễn phí</h2><p>Chọn <strong>Xem bài mẫu và hình miễn phí</strong> trong hộp kết nối, hoặc mở <strong>Ngân hàng bài tập</strong>. Xem bài mẫu, lý thuyết và các hình cục bộ hỗ trợ không cần khóa API. Đối thoại AI, đọc ảnh và dựng hình AI vẫn cần một dịch vụ API hợp lệ. Có thể dùng <a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a> riêng theo hạn mức tài khoản; ứng dụng này không tự lấy câu trả lời từ phiên ChatGPT.</p>
-<h2>6. Khi kết nối báo lỗi</h2><ul><li><strong>Hết hạn mức thanh toán:</strong> kiểm tra Billing/Usage của OpenAI Platform, không phải gói ChatGPT Plus.</li><li><strong>Giới hạn số yêu cầu:</strong> đợi rồi thử lại. Hình và bài đang làm được giữ; không tự đổi sang mô hình đắt hơn.</li><li><strong>Khóa hoặc quyền không hợp lệ:</strong> kiểm tra khóa trong cấu hình máy chủ. Lỗi API không bị đánh đồng với sai mã lớp.</li><li><strong>Chưa có quyền dùng mô hình:</strong> kiểm tra mã mô hình và quyền dự án, sau đó triển khai lại.</li></ul>
-<p><small>Tài liệu OpenAI đã đối chiếu ngày 22/9/2026: <a href="https://developers.openai.com/api/docs/models">Danh mục mô hình</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus">Phí API và ChatGPT Plus</a>. Thông tin dịch vụ có thể thay đổi.</small></p>
-</main></body></html>
+ACCESS_CODE=HOCGIOITOAN</pre
+      >
+      <p>
+        Thầy/cô có thể đổi <code>OPENAI_MODEL</code> sang <code>gpt-6-sol</code> hoặc
+        <code>gpt-6-astra</code>. Triển khai lại cả mã nguồn và Functions; chỉ tải thư mục
+        <code>dist</code> sẽ không cung cấp API. Nếu dùng cấu hình Gemini cũ, đặt
+        <code>AI_PROVIDER=gemini</code> và giữ <code>GEMINI_API_KEY</code>,
+        <code>GEMINI_MODEL</code>.
+      </p>
+      <p>
+        Trong ứng dụng, chọn <strong>Kết nối AI → nhập mã lớp → Kiểm tra &amp; kết nối</strong>. Nút
+        kiểm tra có thực hiện một yêu cầu AI nhỏ, có thể phát sinh phí API. Sau kết nối, ứng dụng
+        hiển thị mã mô hình đang dùng trong hộp kết nối. Khóa API chỉ nằm trên máy chủ.
+      </p>
+      <h2>4. Khi nào ứng dụng vẽ hình?</h2>
+      <ul>
+        <li>
+          Với dạng đề bộ dựng cục bộ đã nhận diện và đối chiếu được: hiển thị hình không cần gọi
+          API.
+        </li>
+        <li>
+          Với đề cần AI: máy tính dựng hình lần đầu khi mở đề và đã kết nối; điện thoại nhấn
+          <strong>Vẽ hình</strong>. Có thể chọn <strong>Dựng hình khác bằng AI</strong> để dùng API
+          thay hình cục bộ.
+        </li>
+        <li>Trả lời, xin gợi ý, kiểm tra bước làm: giữ nguyên hình hiện tại.</li>
+        <li>
+          Bấm <strong>Vẽ lại hình</strong>: tạo một yêu cầu dựng lại; các lượt trả lời sau không
+          tiếp tục kích hoạt yêu cầu này.
+        </li>
+        <li>
+          Khi đổi đề hoặc bổ sung đường/điểm qua thao tác chỉnh hình: cập nhật hình theo đề mới. Nếu
+          nhập đề khác bằng tin nhắn, bắt đầu bằng “Cho…”, “Xét…” hoặc “Bài mới…”.
+        </li>
+        <li>
+          Hình AI đã biên dịch được giữ tạm trong cùng tab để phục hồi sau tải lại trang. Bộ nhớ
+          phiên giữ tối đa ba hình vừa dùng; có thể không lưu được nếu trình duyệt chặn hoặc hết
+          dung lượng. Nên tải PNG/SVG khi cần dùng lâu dài.
+        </li>
+      </ul>
+      <h2>5. Dùng phần miễn phí</h2>
+      <p>
+        Chọn <strong>Xem bài mẫu và hình miễn phí</strong> trong hộp kết nối, hoặc mở
+        <strong>Ngân hàng bài tập</strong>. Xem bài mẫu, lý thuyết và các hình cục bộ hỗ trợ không
+        cần khóa API. Đối thoại AI, đọc ảnh và dựng hình AI vẫn cần một dịch vụ API hợp lệ. Có thể
+        dùng <a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a> riêng theo
+        hạn mức tài khoản; ứng dụng này không tự lấy câu trả lời từ phiên ChatGPT.
+      </p>
+      <h2>6. Khi kết nối báo lỗi</h2>
+      <ul>
+        <li>
+          <strong>Hết hạn mức thanh toán:</strong> kiểm tra Billing/Usage của OpenAI Platform, không
+          phải gói ChatGPT Plus.
+        </li>
+        <li>
+          <strong>Giới hạn số yêu cầu:</strong> đợi rồi thử lại. Hình và bài đang làm được giữ;
+          không tự đổi sang mô hình đắt hơn.
+        </li>
+        <li>
+          <strong>Khóa hoặc quyền không hợp lệ:</strong> kiểm tra khóa trong cấu hình máy chủ. Lỗi
+          API không bị đánh đồng với sai mã lớp.
+        </li>
+        <li>
+          <strong>Chưa có quyền dùng mô hình:</strong> kiểm tra mã mô hình và quyền dự án, sau đó
+          triển khai lại.
+        </li>
+      </ul>
+      <p>
+        <small
+          >Tài liệu OpenAI đã đối chiếu ngày 22/9/2026:
+          <a href="https://developers.openai.com/api/docs/models">Danh mục mô hình</a> ·
+          <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> ·
+          <a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> ·
+          <a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus"
+            >Phí API và ChatGPT Plus</a
+          >. Thông tin dịch vụ có thể thay đổi.</small
+        >
+      </p>
+    </main>
+  </body>
+</html>

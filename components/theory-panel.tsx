@@ -1,7 +1,66 @@
-import {BookOpen} from 'lucide-react';
-import {dynamicTheoryForProblem} from '../lib/theory';
-import type {GeometryModel} from '../lib/geometry-model';
-export function TheoryPanel({problem,model,level='Cơ bản'}:{problem:string;model?:GeometryModel;level?:string}){
- const items=dynamicTheoryForProblem(problem,model,level),essential=/Mất/.test(level)?items.slice(0,2):items.slice(0,3);
- return <section className="theory-panel" aria-label="Lý thuyết dự kiến dùng"><h3><BookOpen size={18}/>LÝ THUYẾT DỰ KIẾN DÙNG</h3><p className="theory-intro">{essential.map(t=>t.title).join(' · ')}. Em kiểm tra điều kiện trước khi chọn cách dùng.</p><details><summary>Mở kiến thức và điều kiện áp dụng ({items.length})</summary>{items.map((t,i)=><details key={t.id} className="theory-card"><summary>{i+1}. {t.title}{i<essential.length?' · thiết yếu':''}</summary><p><strong>Kiến thức nền / định nghĩa:</strong> {t.definition}</p><p><strong>Điều kiện:</strong> {t.conditions.join(' ')}</p><p><strong>Liên hệ với bài:</strong> {t.connectionToProblem}</p><p><strong>Dấu hiệu tìm hướng:</strong> {t.recognition}</p><p><strong>Lỗi cần tránh:</strong> {t.commonMistake}</p><p><strong>Thao tác tư duy:</strong> {t.thinkingOperation}</p><details><summary>Xem ví dụ ngắn</summary><p>{t.example}</p></details><small>{t.source}</small></details>)}{/Khá|Giỏi/.test(level)&&<p className="theory-methods">Em thử so sánh hai hướng từ các kiến thức trên: hướng nào cần ít giả thiết bổ sung hơn? Chỉ khái quát sau khi đã kiểm tra điều kiện và tự chứng minh.</p>}</details></section>;
+import { BookOpen } from 'lucide-react';
+import { dynamicTheoryForProblem } from '../lib/theory';
+import type { GeometryModel } from '../lib/geometry-model';
+export function TheoryPanel({
+  problem,
+  model,
+  level = 'Cơ bản',
+}: {
+  problem: string;
+  model?: GeometryModel;
+  level?: string;
+}) {
+  const items = dynamicTheoryForProblem(problem, model, level),
+    essential = /Mất/.test(level) ? items.slice(0, 2) : items.slice(0, 3);
+  return (
+    <section className="theory-panel" aria-label="Lý thuyết dự kiến dùng">
+      <h3>
+        <BookOpen size={18} />
+        LÝ THUYẾT DỰ KIẾN DÙNG
+      </h3>
+      <p className="theory-intro">
+        {essential.map((t) => t.title).join(' · ')}. Em kiểm tra điều kiện trước khi chọn cách dùng.
+      </p>
+      <details>
+        <summary>Mở kiến thức và điều kiện áp dụng ({items.length})</summary>
+        {items.map((t, i) => (
+          <details key={t.id} className="theory-card">
+            <summary>
+              {i + 1}. {t.title}
+              {i < essential.length ? ' · thiết yếu' : ''}
+            </summary>
+            <p>
+              <strong>Kiến thức nền / định nghĩa:</strong> {t.definition}
+            </p>
+            <p>
+              <strong>Điều kiện:</strong> {t.conditions.join(' ')}
+            </p>
+            <p>
+              <strong>Liên hệ với bài:</strong> {t.connectionToProblem}
+            </p>
+            <p>
+              <strong>Dấu hiệu tìm hướng:</strong> {t.recognition}
+            </p>
+            <p>
+              <strong>Lỗi cần tránh:</strong> {t.commonMistake}
+            </p>
+            <p>
+              <strong>Thao tác tư duy:</strong> {t.thinkingOperation}
+            </p>
+            <details>
+              <summary>Xem ví dụ ngắn</summary>
+              <p>{t.example}</p>
+            </details>
+            <small>{t.source}</small>
+          </details>
+        ))}
+        {/Khá|Giỏi/.test(level) && (
+          <p className="theory-methods">
+            Em thử so sánh hai hướng từ các kiến thức trên: hướng nào cần ít giả thiết bổ sung hơn?
+            Chỉ khái quát sau khi đã kiểm tra điều kiện và tự chứng minh.
+          </p>
+        )}
+      </details>
+    </section>
+  );
 }

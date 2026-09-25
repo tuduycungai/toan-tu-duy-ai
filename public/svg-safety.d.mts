@@ -1,1 +1,1 @@
-export function sanitizeSVG(source:string):string;
+export function sanitizeSVG(source: string): string;

@@ -1,0 +1,38 @@
+{
+  "version": "6.4.0",
+  "date": "2026-09-24",
+  "model_default": "gpt-6-luna",
+  "test_summary": {
+    "tests": 635,
+    "pass": 634,
+    "fail": 0,
+    "skipped": 1,
+    "cancelled": 0
+  },
+  "gates": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed",
+    "format": "passed"
+  },
+  "coverage": {
+    "figure_families": 20,
+    "new_tests": 108,
+    "point_operations": 20,
+    "stroke_kinds": 11,
+    "constraint_kinds": 15
+  },
+  "validation_methods": [
+    "Numerical construction and invariant tests",
+    "Renaming, translation, rotation, and scaling",
+    "Mock OpenAI Responses requests through server and client",
+    "React component interactions for typed and confirmed image problems",
+    "Static visual inspection of 12 representative figures rendered by production SVG renderer"
+  ],
+  "limitations": [
+    "New geometry-v1 requests have not been tested against the real OpenAI API",
+    "Full browser interaction with the new build was blocked by the execution environment",
+    "Not deployed to Netlify; requires explicitly authorized admin access",
+    "Tests do not prove correct interpretation of all natural-language problems"
+  ]
+}

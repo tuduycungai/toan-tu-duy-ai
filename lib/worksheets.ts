@@ -1,109 +1,1485 @@
-import {WorksheetFigure,quad,triangle,angleQuad,xy,angle} from './worksheet-geometry';
-import {near,perpendicular,parallel,onSegment,distance,lerp,type Drawing} from './geometry';
-export type Worksheet={id:string;section:string;label:string;page:number;title:string;problem:string;note:string;draw:(t:number)=>WorksheetFigure[]};
-export const worksheets:Worksheet[]=[];
-let section='Tứ giác';
-function add(id:string,label:string,page:number,title:string,problem:string,draw:Worksheet['draw'],note=''){worksheets.push({id,section,label,page,title,problem,draw,note});}
-const Q=(title:string,kind='hbh',coords?:number[][])=>quad(title,kind,'ABCD',coords);
-const T=(title:string,kind='triangle',coords?:number[][])=>triangle(title,kind,coords);
-const R=Math.sqrt;
-const degrees=(title:string,names:string,values:number[])=>angleQuad(title,names,values);
-function hideAngles(f:WorksheetFigure){return f.hide('∠');}
-function diags(f:WorksheetFigure){return f.inter('O','AC','BD');}
-const onLine=(f:WorksheetFigure,n:string,s:string)=>f.require(n+' thuộc đường '+s,()=>Math.abs((f.p(n).x-f.p(s[0]).x)*(f.p(s[1]).y-f.p(s[0]).y)-(f.p(n).y-f.p(s[0]).y)*(f.p(s[1]).x-f.p(s[0]).x))<1e-6);
-add('tg-v1','Ví dụ 1',1,'Nhận biết tứ giác lồi','Quan sát năm hình a–e. Hình a có bốn đỉnh A,B,C,D; hình b có bốn đỉnh E,F,G,H; hình c có bốn đỉnh I,J,K,L; hình d có năm đỉnh M,N,O,P,Q; hình e có ba đỉnh R,S,T. Hình nào là tứ giác lồi? Đọc các cạnh, đỉnh và góc.',()=>[
- quad('Hình a','quad','ABCD',[[0,4],[1.5,1],[0,-1],[-1.5,1]]),quad('Hình b','quad','EFGH',[[0,0],[1,3],[4,3],[5,0]]),quad('Hình c','hbh','IJKL',[[0,0],[1,3],[5,3],[4,0]]),new WorksheetFigure('Hình d','MNOPQ',[[0,0],[.5,3],[3,4.5],[4,3],[4,0]]).shape('polygon'),triangle('Hình e','triangle',[[0,0],[2,3],[4,0]],'RST')], 'Đã thống nhất tên các đỉnh và sửa tên cạnh bị in nhầm. Hãy đếm các cạnh trước khi phân loại.');
-add('tg-v2','Ví dụ 2',2,'Tổng bốn góc của tứ giác','a) Cho tứ giác lồi ABCD có ∠A = ∠B = x, ∠C = 100°, ∠D = 50°. Tính x. b) Cho tứ giác lồi MNPQ có ∠M = ∠P = x, ∠N = ∠Q = 2x. Tính x.',()=>[hideAngles(degrees('Hình a: dữ kiện trên hình gốc','ABCD',[105,105,100,50])).check('C = 100°; D = 50°; A = B',f=>near(f.angle('BCD'),100)&&near(f.angle('CDA'),50)&&near(f.angle('DAB'),f.angle('ABC'))),hideAngles(degrees('Hình b','MNPQ',[60,120,60,120])).check('M = P; N = Q = 2M',f=>near(f.angle('QMN'),f.angle('NPQ'))&&near(f.angle('MNP'),2*f.angle('QMN'))&&near(f.angle('PQM'),2*f.angle('QMN')))],'Hình 1.3 ghi C = 100°, lời giải gốc dùng 110° nên không khớp. Bản này giữ số 100° trên hình. Em hãy dùng dữ kiện đã thống nhất để tự tính.');
-add('tg-v3','Ví dụ 3',2,'Diện tích thân diều','Cho tứ giác lồi ABCD có AC là đường trung trực của BD; AC = 90 cm, BD = 60 cm. Tính diện tích tứ giác ABCD.',()=>[diags(Q('Thân diều','quad',[[0,30],[-30,0],[0,-60],[30,0]])).perp('AC','BD').equ('OB','OD').len('AC',90).len('BD',60)]);
-add('tg-v4','Ví dụ 4',3,'Góc còn lại của vùng đất tứ giác','Mô hình vùng đất Long Xuyên là tứ giác lồi ABCD, có ∠ADC = 100°, ∠ABC = 120°, ∠DCA = 45°, ∠ACB = 33°. Tính ∠DAB.',()=>{// Positions below are determined by the given triangle angles.
- const Bx=6*Math.sin(33*Math.PI/180)*Math.cos(27*Math.PI/180)/Math.sin(120*Math.PI/180),By=-6*Math.sin(33*Math.PI/180)*Math.sin(27*Math.PI/180)/Math.sin(120*Math.PI/180);
- return [Q('Mô hình tứ giác','quad',[[0,0],[Bx,By],[6,0],[6*Math.sin(45*Math.PI/180)*Math.cos(35*Math.PI/180)/Math.sin(100*Math.PI/180),6*Math.sin(45*Math.PI/180)*Math.sin(35*Math.PI/180)/Math.sin(100*Math.PI/180)]]).edge('AC').deg('ADC',100).deg('ABC',120).deg('DCA',45).deg('ACB',33)];});
-add('tg-v5','Ví dụ 5',3,'So sánh đường chéo và cạnh','Cho tứ giác lồi ABCD. Hai đường chéo AC và BD cắt nhau tại O. Chứng minh: a) AC + BD > AB + CD; b) AC + BD > AD + BC.',()=>[diags(Q('Bất đẳng thức trong tứ giác','quad'))]);
-add('tg-b1','Bài 1',4,'Hai cặp cạnh kề bằng nhau','Cho tứ giác lồi ABCD có AB = BC, CD = DA. a) Chứng minh BD là đường trung trực của AC. b) Biết ∠B = 100°, ∠D = 80°. Tính ∠A và ∠C.',()=>[Q('Cấu hình theo cả hai ý','quad',[[-1,0],[0,1/Math.tan(50*Math.PI/180)],[1,0],[0,-1/Math.tan(40*Math.PI/180)]]).edge('AC','BD').equ('AB','BC').equ('CD','DA').deg('ABC',100).deg('CDA',80)],'Lời giải gốc ghi AB = AC ở một dòng; giả thiết đúng là AB = BC.');
-add('tg-b2','Bài 2',4,'Góc tỉ lệ với 1, 2, 3, 4','Cho tứ giác lồi ABCD có ∠A : ∠B : ∠C : ∠D = 1 : 2 : 3 : 4. Tính bốn góc.',()=>[hideAngles(degrees('Tứ giác có góc theo tỉ lệ','ABCD',[36,72,108,144])).check('Bốn góc tỉ lệ 1 : 2 : 3 : 4',f=>['ABC','BCD','CDA'].every((s,i)=>near(f.angle(s),(i+2)*f.angle('DAB'))))]);
-add('tg-b3','Bài 3',4,'Bốn góc tăng đều','Cho tứ giác lồi MNPQ có ∠N = ∠M + 10°, ∠P = ∠N + 10°, ∠Q = ∠P + 10°. Tính các góc.',()=>[hideAngles(degrees('Bốn góc tăng đều','MNPQ',[75,85,95,105])).check('Mỗi góc sau tăng 10°',f=>['MNP','NPQ','PQM'].every((s,i)=>near(f.angle(s),f.angle('QMN')+10*(i+1))))]);
-add('tg-b4','Bài 4',4,'Tổng và hiệu hai góc','Cho tứ giác lồi ABCD có ∠C = 60°, ∠D = 80°, ∠A − ∠B = 10°. Tính ∠A và ∠B.',()=>[hideAngles(degrees('Tổng và hiệu hai góc','ABCD',[115,105,60,80])).check('C = 60°; D = 80°; A − B = 10°',f=>near(f.angle('BCD'),60)&&near(f.angle('CDA'),80)&&near(f.angle('DAB')-f.angle('ABC'),10))]);
-add('tg-b5','Bài 5',5,'Tứ giác có hai đường chéo vuông góc','Cho tứ giác lồi ABCD có AC ⟂ BD tại O. a) Chứng minh AB² + CD² = AD² + BC². b) Biết AD = 5 cm, AB = 2 cm, BC = 10 cm. Tính CD.',()=>[diags(Q('Hai đường chéo vuông góc','quad',[[0,1],[R(3),0],[0,-R(97)],[-R(24),0]])).perp('AC','BD').len('AD',5).len('AB',2).len('BC',10)]);
-add('tg-b6','Bài 6',5,'Góc trong và góc ngoài','Tính x: a) Tứ giác ABCD có ∠A = 50°, ∠B = 100°, ∠C = 120°, ∠D = x. b) Tứ giác MNPQ có ∠M = ∠P = ∠Q = 90°, ∠N = x. c) Tứ giác EFGH có ∠E = 100°, ∠F = ∠H = 90°, ∠G = x. d) Tứ giác IKLR có góc ngoài tại K bằng 100°, góc ngoài tại L bằng 60°, ∠R = 90°, ∠I = x.',()=>[hideAngles(degrees('Hình a','ABCD',[50,100,120,90])),hideAngles(degrees('Hình b','MNPQ',[90,90,90,90])),hideAngles(degrees('Hình c','EFGH',[100,90,80,90])),hideAngles(degrees('Hình d','IKLR',[70,80,120,90]))]);
-add('tg-b7','Bài 7',6,'Góc ngoài tại các đỉnh','Cho tứ giác lồi ABCD có ∠A = 75°, ∠B = 90°, ∠C = 120°. Tính các góc ngoài kề bù với góc trong tại bốn đỉnh.',()=>[hideAngles(degrees('Tứ giác và góc ngoài','ABCD',[75,90,120,75])).check('Ba góc đã cho: A = 75°, B = 90°, C = 120°',f=>near(f.angle('DAB'),75)&&near(f.angle('ABC'),90)&&near(f.angle('BCD'),120))]);
-add('tg-b8','Bài 8',6,'Đường chéo và chu vi','Cho tứ giác lồi ABCD có AC cắt BD tại O, chu vi là P. Chứng minh: a) AC + BD > P/2; b) AC + BD < P.',()=>[diags(Q('Đường chéo và chu vi','quad'))],'Điều kiện AC < P/2 ở ý b của bản gốc luôn đúng với tứ giác lồi, nên được lược khỏi câu hỏi.');
-section='Hình thang cân';
-add('ht-v1','Ví dụ 1',8,'Từ tam giác cân đến hình thang cân','Cho tam giác ABC cân tại A. D nằm trong AB, E nằm trong AC sao cho AD = AE. a) Chứng minh BDEC là hình thang cân. b) Biết ∠A = 50°, tính các góc hình thang.',t=>[T('Hai điểm trên hai cạnh bên','isos',[[0,3/Math.tan(25*Math.PI/180)],[-3,0],[3,0]]).on('D','AB',t).on('E','AC',t).equ('AD','AE').deg('BAC',50).edge('DE')]);
-add('ht-v2','Ví dụ 2',9,'Giao điểm hai đường chéo','Cho hình thang cân ABCD có AB ∥ CD. Gọi O là giao điểm AC và BD. Chứng minh OA = OB và OC = OD.',()=>[diags(Q('Đường chéo hình thang cân','isoTrap'))]);
-const specialTrap=(title:string,s:number)=>Q(title,'isoTrap',[[s/2,s*R(3)/2],[1.5*s,s*R(3)/2],[2*s,0],[0,0]]).edge('BD').perp('BD','BC').bisector('D','A','B','C');
-add('ht-v3','Ví dụ 3',9,'Đường chéo và phân giác trong hình thang','Cho hình thang cân ABCD có AB ∥ CD, BD ⟂ BC và BD là tia phân giác ∠ADC. Biết BC = 3 cm. Tính chu vi ABCD.',()=>[specialTrap('Đường chéo và phân giác',3).len('BC',3)],'Phần tính chu vi trong lời giải gốc có lỗi cộng. Em cần tự kiểm tra tổng các cạnh theo giả thiết.');
-add('ht-v4','Ví dụ 4',9,'Dấu hiệu qua hai đường chéo','Cho hình thang MNPQ có MN ∥ PQ và MP = NQ. Qua N kẻ đường thẳng song song MP, cắt đường thẳng PQ tại K. Chứng minh: a) Tam giác NKQ cân; b) ΔMPQ = ΔNQP; c) MNPQ là hình thang cân.',()=>[quad('Đường phụ qua N','quad','MNPQ',[[1.5,3],[4.5,3],[6,0],[0,0]]).parallel('MN','PQ').equ('MP','NQ').cut('K','N','MP','PQ').polygon('NKQ').edge('MP','NQ')]);
-add('ht-b1','Bài 1',11,'Phân giác trong tam giác cân','Cho tam giác ABC cân tại A. BD là phân giác ∠ABC, D ∈ AC; CE là phân giác ∠ACB, E ∈ AB. a) Chứng minh BEDC là hình thang cân. b) Biết ∠C = 50°, tính các góc BEDC.',()=>[T('Hai đường phân giác','isos',[[0,3*Math.tan(50*Math.PI/180)],[-3,0],[3,0]]).bisect('D','B','A','C','AC').bisect('E','C','A','B','AB').edge('ED').deg('BCA',50)]);
-add('ht-b2','Bài 2',11,'Trục đối xứng hình thang cân','Cho hình thang cân ABCD có AB ∥ CD và AB ≠ CD. O là giao điểm AC và BD. E là giao điểm hai đường thẳng AD và BC. Chứng minh: a) OA = OB, OC = OD; b) EO là đường trung trực của AB và CD.',()=>[diags(Q('Giao điểm phần kéo dài','isoTrap')).inter('E','AD','BC').edge('EA','EB','EO')],'Nêu hai đáy khác độ dài để giao điểm của hai đường thẳng chứa cạnh bên tồn tại.');
-add('ht-b3','Bài 3',12,'Đáy lớn và đường chéo phân giác','Cho hình thang ABCD có AD ∥ BC, AD > BC, AC ⟂ CD, AC là tia phân giác ∠BAD và ∠D = 60°. a) Chứng minh ABCD là hình thang cân. b) Chu vi bằng 20 cm, tính AD.',()=>[Q('Hai đáy AD và BC','quad',[[0,0],[2,2*R(3)],[6,2*R(3)],[8,0]]).parallel('AD','BC').perp('AC','CD').deg('CDA',60).edge('AC').bisector('A','B','C','D').perimeter(20)]);
-add('ht-b4','Bài 4',12,'Chọn vị trí hai điểm trên cạnh bên','Cho tam giác ABC cân tại A. D ∈ AB, E ∈ AC, AD = AE; D,E không trùng các đỉnh. a) BDEC là hình gì? b) D,E cần ở vị trí nào để BD = DE = EC?',t=>[T('Vị trí tổng quát','isos').on('D','AB',t).on('E','AC',t).equ('AD','AE').edge('DE')]);
-add('ht-b5','Bài 5',14,'Một góc bằng 40 độ','Cho hình thang cân ABCD có AB ∥ CD và ∠D = 40°. Tính bốn góc của hình thang.',()=>[hideAngles(Q('Một cách đặt tên cho góc 40°','isoTrap',[[2,2*Math.tan(40*Math.PI/180)],[4,2*Math.tan(40*Math.PI/180)],[6,0],[0,0]]).deg('CDA',40))],'Bản gốc không chỉ tên góc; chọn D là góc 40° để viết đề độc lập với hình.');
-add('ht-b6','Bài 6',14,'Hai đường cao hình thang cân','Cho hình thang cân ABCD có AB ∥ CD và AB < CD. Kẻ AH ⟂ CD tại H, BK ⟂ CD tại K. Chứng minh DH = CK.',()=>[Q('Hai đường cao','isoTrap').foot('H','A','CD').foot('K','B','CD')]);
-add('ht-b7','Bài 7',14,'Tìm cạnh từ chu vi','Cho hình thang cân ABCD có AB ∥ CD, ∠C = 60°; BD là phân giác ∠ADC. Chu vi hình thang bằng 20 cm. Tính các cạnh.',()=>[specialTrap('Phân giác và chu vi',4).deg('BCD',60).perimeter(20)]);
-add('ht-b8','Bài 8',14,'Hai đường chéo bằng nhau','Cho hình thang ABCD có AB ∥ CD và AC = BD. Chứng minh ABCD là hình thang cân.',()=>[Q('Hình thang có AC = BD','quad',[[1.5,3],[4.5,3],[6,0],[0,0]]).parallel('AB','CD').edge('AC','BD').equ('AC','BD')]);
-section='Hình bình hành';
-add('hb-v1','Ví dụ 1',16,'Hai hình chiếu trên đường chéo','Cho hình bình hành ABCD. Kẻ AH ⟂ BD tại H và CK ⟂ BD tại K. Chứng minh AHCK là hình bình hành.',()=>[Q('Hai hình chiếu').foot('H','A','BD').foot('K','C','BD').edge('HC','KA')]);
-add('hb-v2','Ví dụ 2',16,'Trực tâm và hai đường vuông góc','Cho tam giác nhọn ABC có trực tâm H. Đường thẳng qua B vuông góc AB và đường thẳng qua C vuông góc AC cắt nhau tại D. Chứng minh BDCH là hình bình hành.',()=>[T('Trực tâm và giao điểm phụ').inter('H',{through:'A',of:['B','C'],relation:'perpendicular'},{through:'B',of:['A','C'],relation:'perpendicular'}).inter('D',{through:'B',of:['A','B'],relation:'perpendicular'},{through:'C',of:['A','C'],relation:'perpendicular'}).polygon('BDCH')],'Làm rõ tam giác nhọn như hình tham khảo; tam giác vuông có thể làm tứ giác cần chứng minh suy biến.');
-add('hb-v3','Ví dụ 3',17,'Trung điểm trên hai cạnh đối','Cho hình bình hành ABCD. E là trung điểm AD, F là trung điểm BC. Chứng minh: a) BE = DF và ∠ABE = ∠CDF; b) BE ∥ DF.',()=>[Q('Trung điểm E và F').mid('E','AD').mid('F','BC').edge('BE','DF')]);
-add('hb-v4','Ví dụ 4',17,'Trung điểm và hình chiếu','Cho hình bình hành ABCD. O = AC ∩ BD. P,Q lần lượt là trung điểm OB,OD. Kẻ PM ⟂ AB tại M, QN ⟂ CD tại N. Chứng minh M,O,N thẳng hàng và AC,MN,PQ đồng quy.',()=>[diags(Q('Trung điểm và hình chiếu')).mid('P','OB').mid('Q','OD').foot('M','P','AB').foot('N','Q','CD').edge('MN','PQ')]);
-add('hb-b1','Bài 1',19,'Hai phân giác của góc đối','Cho hình bình hành ABCD có AB > BC. Tia phân giác ∠ADC cắt AB tại E. Tia phân giác ∠ABC cắt CD tại F. a) Chứng minh DE ∥ BF. b) DEBF là hình gì?',()=>[Q('Hai phân giác').bisect('E','D','A','C','AB').bisect('F','B','A','C','CD').check('AB > BC',f=>f.length('AB')>f.length('BC'))]);
-add('hb-b2','Bài 2',19,'Ghép hai đường song song','Cho tam giác ABC. E nằm trong AC. Qua E kẻ EF ∥ BC, F ∈ AB; kẻ ED ∥ AB, D ∈ BC. Biết AE = BF. Chứng minh: a) Tam giác AED cân; b) AD là phân giác ∠BAC.',()=>{const f=T('Hai đường qua E');const t=f.length('AB')/(f.length('AB')+f.length('AC'));return [f.on('E','AC',t).cut('F','E','BC','AB').cut('D','E','AB','BC').equ('AE','BF').edge('AD')];});
-add('hb-b3','Bài 3',19,'Ba đường thẳng đồng quy','Cho hình bình hành ABCD. Gọi O là giao điểm hai đường thẳng AC và BD. Qua O kẻ đường thẳng song song AB, cắt AD và BC lần lượt tại M và N. Trên AB, CD lần lượt lấy P, Q sao cho AP = CQ. Gọi I là giao điểm AC và PQ. Chứng minh: a) AMNB và APCQ là hình bình hành; b) M,N,I thẳng hàng; c) AC,MN,PQ đồng quy.',t=>[diags(Q('Đường song song qua tâm')).cut('M','O','AB','AD').cut('N','O','AB','BC').on('P','AB',t).on('Q','CD',t).equ('AP','CQ').inter('I','AC','PQ').edge('MN')]);
-add('hb-b4','Bài 4',20,'Hai trung điểm và cặp đoạn bằng nhau','Cho hình bình hành ABCD. Gọi K,I lần lượt là trung điểm các cạnh AB và CD. Chứng minh: a) AI = CK và ∠IAC = ∠KCA; b) AI ∥ CK.',()=>[Q('K,I là hai trung điểm').mid('K','AB').mid('I','CD').edge('AI','CK','AC')]);
-add('hb-b5','Bài 5',21,'Hai điểm lấy từ hai đầu đối xứng','Cho hình bình hành ABCD, O là giao điểm AC và BD. Trên AB lấy K, trên CD lấy I sao cho AK = CI. Chứng minh K,O,I thẳng hàng và AC,BD,KI đồng quy.',t=>[diags(Q('AK = CI')).on('K','AB',t).on('I','CD',t).equ('AK','CI').edge('KI')]);
-add('hb-b6','Bài 6',22,'Hai cát tuyến qua tâm','Cho hình bình hành ABCD, O = AC ∩ BD. Đường thẳng a qua O cắt hai đường thẳng AD,BC tại E,F. Đường thẳng b khác a qua O cắt AB,CD tại K,H. Các giao điểm không trùng đỉnh. Chứng minh EKFH là hình bình hành.',t=>[diags(Q('Hai cát tuyến qua O')).on('E','AD',t).inter('F','EO','BC').on('K','AB',.27).inter('H','KO','CD').polygon('EKFH').edge('EF','KH')],'Nêu a và b khác nhau, các giao điểm không trùng đỉnh để tránh tứ giác suy biến.');
-section='Hình chữ nhật';
-add('cn-v1','Ví dụ 1',23,'Đối xứng qua trung điểm cạnh','Cho tam giác nhọn ABC, AH ⟂ BC tại H. I là trung điểm AC. D đối xứng với H qua I. Chứng minh AHCD là hình chữ nhật.',()=>[T('Đường cao và đối xứng').foot('H','A','BC').mid('I','AC').reflect('D','H','I').polygon('AHCD')],'Nêu tam giác nhọn như hình để H khác B,C và tứ giác không suy biến.');
-add('cn-v2','Ví dụ 2',23,'Góc giữa hai trung điểm nhìn từ chân cao','Cho tam giác ABC vuông tại A; AH ⟂ BC tại H. I,K lần lượt là trung điểm AB,AC. Chứng minh ∠IHK = 90°.',()=>[T('Hai trung điểm và chân đường cao','right').foot('H','A','BC').mid('I','AB').mid('K','AC').edge('IH','HK')]);
-add('cn-v3','Ví dụ 3',24,'Tính chiều cao hình thang vuông','Cho tứ giác ABCD có AD ∥ BC, CD ⟂ AD; AB = 13 cm, BC = 15 cm, AD = 10 cm. A và B ở cùng phía đường CD, đoạn AD nằm phía trên BC. Tính CD.',()=>[Q('Dữ kiện Hình chữ nhật – Ví dụ 3','quad',[[5,12],[0,0],[15,0],[15,12]]).parallel('AD','BC').perp('CD','AD').len('AB',13).len('BC',15).len('AD',10)],'Đã đưa các dấu song song, góc vuông và vị trí trong hình gốc vào câu chữ.');
-add('cn-b1','Bài 1',24,'Đáy nhỏ hình thang vuông','Cho hình thang ABCD có AB ∥ CD, AD ⟂ AB, AB > CD; AB = 9 cm, AD = 4 cm, BC = 5 cm. Tính CD.',()=>[Q('Tìm CD khi đáy AB lớn hơn','quad',[[0,4],[9,4],[6,0],[0,0]]).parallel('AB','CD').perp('AD','AB').len('AB',9).len('AD',4).len('BC',5)],'Đã chép quan hệ vị trí từ hình gốc để chọn đúng nhánh CD.');
-add('cn-b2','Bài 2',25,'Đáy lớn hình thang vuông','Cho hình thang ABCD có AB ∥ CD, AD ⟂ AB, CD > AB; AB = 7 cm, AD = 8 cm, BC = 10 cm. Tính CD.',()=>[Q('Tìm CD khi đáy CD lớn hơn','quad',[[0,8],[7,8],[13,0],[0,0]]).parallel('AB','CD').perp('AD','AB').len('AB',7).len('AD',8).len('BC',10)]);
-add('cn-b3','Bài 3',25,'Hình chữ nhật trong tam giác vuông cân','Cho tam giác ABC vuông cân tại C. P ∈ AC, Q ∈ CB, AP = CQ; P,Q không trùng đỉnh. Qua P kẻ PM ∥ BC, M ∈ AB. Chứng minh PCQM là hình chữ nhật.',t=>[T('Tam giác vuông cân tại C','triangle',[[0,5],[5,0],[0,0]]).perp('CA','CB').equ('CA','CB').on('P','AC',t).on('Q','CB',t).equ('AP','CQ').cut('M','P','BC','AB').edge('QM')]);
-add('cn-b4','Bài 4',25,'Giao điểm của hai đường vuông góc và song song','Cho tam giác nhọn ABC, AI ⟂ BC tại I. Đường qua A vuông góc AC cắt đường qua B song song AC tại M. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H. a) AMBQ là hình gì? b) Chứng minh tam giác PIQ cân.',()=>[T('Đường cao và trung điểm','triangle',[[3,5],[0,0],[8,0]]).foot('I','A','BC').inter('M',{through:'A',of:['A','C'],relation:'perpendicular'},{through:'B',of:['A','C'],relation:'parallel'}).mid('P','AB').inter('Q','MP','AC').inter('H','BQ','AI').polygon('AMBQ').edge('PI','IQ')],'Đổi mô tả tia Ax, By không chỉ rõ hướng thành hai đường thẳng như hình gốc, không tự đoán hướng tia.');
-section='Hình thoi';
-add('th-v1','Ví dụ 1',27,'Song song qua điểm trên phân giác','Cho góc xOy có tia phân giác Ot. M thuộc Ot và khác O. Qua M kẻ MA ∥ Oy, A ∈ Ox; MB ∥ Ox, B ∈ Oy. Chứng minh OAMB là hình thoi.',()=>[quad('M thuộc tia phân giác','quad','OAMB',[[0,0],[4,0],[6,2*R(3)],[2,2*R(3)]]).parallel('AM','OB').parallel('BM','OA').edge('OM').bisector('O','A','M','B')],'Bản gốc dùng Ot rồi ghi M thuộc Oz; thống nhất thành Ot. Các tia Ox, Oy được biểu diễn bởi OA, OB.');
-add('th-v2','Ví dụ 2',27,'Hai đường cao bằng nhau','Cho hình bình hành ABCD. Kẻ AH ⟂ BC tại H, AK ⟂ CD tại K; AH = AK. Chứng minh ABCD là hình thoi.',()=>[Q('Hai đường cao bằng nhau','hbh',[[0,0],[5,0],[8,4],[3,4]]).foot('H','A','BC').foot('K','A','CD').equ('AH','AK')],'Vị trí H trên đường BC và K trên đường CD được chép rõ từ hình gốc.');
-add('th-v3','Ví dụ 3',28,'Tam giác đều trong hình thoi','Cho hình thoi ABCD có ∠B = 60°. Kẻ AE ⟂ DC tại E, AF ⟂ BC tại F. Chứng minh: a) AE = AF; b) Tam giác AEF đều.',()=>[Q('Hình thoi có góc B 60°','rhomb',[[0,0],[4,0],[2,2*R(3)],[-2,2*R(3)]]).deg('ABC',60).foot('E','A','DC').foot('F','A','BC').edge('EF')]);
-add('th-v4','Ví dụ 4',28,'Hai đường chéo cho trước','Cho hình thoi ABCD có AC = 16 cm, BD = 12 cm. Tính diện tích, cạnh và đường cao của hình thoi.',()=>[diags(Q('Hình thoi theo hai đường chéo','rhomb',[[0,8],[-6,0],[0,-8],[6,0]])).len('AC',16).len('BD',12)]);
-add('th-b1','Bài 1',30,'Phân giác trong hình bình hành nhỏ','Cho tam giác ABC, AD là phân giác ∠BAC, D ∈ BC. Qua D kẻ DE ∥ AC, E ∈ AB; DF ∥ AB, F ∈ AC. Chứng minh EF là phân giác ∠AED.',()=>[T('Hai đường song song qua phân giác').bisect('D','A','B','C','BC').cut('E','D','AC','AB').cut('F','D','AB','AC').edge('EF')]);
-add('th-b2','Bài 2',30,'Tính đường chéo và góc','a) Cho hình thoi ABCD có AB = 25, AC = 14. Tính BD. b) Cho hình thoi DEFG có ∠D = 70°. Tính x = ∠DGE.',()=>[diags(Q('Ý a','rhomb',[[0,7],[24,0],[0,-7],[-24,0]])).len('AB',25).len('AC',14),quad('Ý b','rhomb','DEFG',[[0,0],[4,0],[4+4*Math.cos(70*Math.PI/180),4*Math.sin(70*Math.PI/180)],[4*Math.cos(70*Math.PI/180),4*Math.sin(70*Math.PI/180)]]).deg('GDE',70).edge('GE')]);
-add('th-b3','Bài 3',31,'Đường chéo vuông góc cạnh','Cho hình bình hành ABCD có AC ⟂ AD. E,F lần lượt là trung điểm AB,CD. Chứng minh AECF là hình thoi.',()=>[Q('AC vuông góc AD','hbh',[[0,0],[6,0],[4,2*R(2)],[-2,2*R(2)]]).perp('AC','AD').mid('E','AB').mid('F','CD').polygon('AECF').edge('AC')]);
-add('th-b4','Bài 4',31,'Độ dài cạnh hình thoi','Cho hình thoi ABCD có hai đường chéo cắt nhau tại O, AC = 8 cm và BD = 10 cm. Tính cạnh hình thoi.',()=>[diags(Q('Hai nửa đường chéo','rhomb',[[0,4],[5,0],[0,-4],[-5,0]])).len('AC',8).len('BD',10)]);
-add('th-b5','Bài 5',31,'Bốn điểm lấy theo hai đỉnh đối','Cho hình thoi ABCD, O = AC ∩ BD. Trên AB,BC,CD,DA lần lượt lấy M,N,P,Q sao cho AM = CN = CP = AQ; các điểm nằm trong cạnh. Chứng minh: a) M,O,P thẳng hàng và N,O,Q thẳng hàng; b) MNPQ là hình chữ nhật.',t=>[diags(Q('Bốn điểm theo độ dài bằng nhau','rhomb')).on('M','AB',t).on('N','CB',t).on('P','CD',t).on('Q','AD',t).equ('AM','CN').equ('AM','CP').equ('AM','AQ').polygon('MNPQ').edge('MP','NQ')]);
-add('th-b6','Bài 6',32,'Tìm vị trí điểm tạo hình thoi','Cho tam giác ABC. D nằm trong BC. Qua D kẻ DE ∥ AB, E ∈ AC; DF ∥ AC, F ∈ AB. a) AEDF là hình gì? b) D cần ở vị trí nào để AEDF là hình thoi?',t=>[T('Điểm D di chuyển').on('D','BC',t).cut('E','D','AB','AC').cut('F','D','AC','AB').edge('AD','EF')],'Ý b bản gốc ghi ADEF sai thứ tự; thống nhất AEDF với ý a và hình gốc.');
-section='Hình vuông';
-add('hv-v1','Ví dụ 1',33,'Hai hình chiếu từ phân giác','Cho tam giác ABC vuông tại A. AD là phân giác ∠BAC, D ∈ BC. Kẻ DE ⟂ AB tại E, DF ⟂ AC tại F. Chứng minh AEDF là hình vuông.',()=>[T('Phân giác góc vuông','right').bisect('D','A','B','C','BC').foot('E','D','AB').foot('F','D','AC')]);
-add('hv-v2','Ví dụ 2',34,'Hai tam giác bằng nhau trong hình vuông','Cho hình vuông ABCD. E ∈ AD, F ∈ DC, AE = DF; E,F nằm trong cạnh. Chứng minh: a) ΔADF = ΔBAE; b) BE ⟂ AF.',t=>[Q('Hai đoạn AE và DF','square').on('E','AD',t).on('F','DC',t).equ('AE','DF').edge('BE','AF')]);
-add('hv-v3','Ví dụ 3',34,'Từ hình chữ nhật đến hình vuông','Cho tam giác ABC vuông tại A. M nằm trong BC. Qua M kẻ ME ∥ AB, E ∈ AC; MF ∥ AC, F ∈ AB. a) AFME là hình gì? b) Tìm vị trí M để AFME là hình vuông.',t=>[T('Vị trí tổng quát của M','right').on('M','BC',t).cut('E','M','AB','AC').cut('F','M','AC','AB').edge('AM')]);
-add('hv-b1','Bài 1',34,'Bốn điểm quay quanh hình vuông','Cho hình vuông ABCD. M,N,P,Q lần lượt nằm trong AB,BC,CD,DA và AM = BN = CP = DQ. Chứng minh MNPQ là hình vuông.',t=>[Q('Bốn đoạn cùng độ dài','square').on('M','AB',t).on('N','BC',t).on('P','CD',t).on('Q','DA',t).equ('AM','BN').equ('AM','CP').equ('AM','DQ').polygon('MNPQ')]);
-add('hv-b2','Bài 2',35,'Phân giác và chân đường vuông góc','Cho hình vuông ABCD. M nằm trong DC. Phân giác ∠MAD cắt CD tại I. Kẻ IH ⟂ AM tại H; tia IH cắt BC tại K. Chứng minh: a) ΔABK = ΔAHK; b) ∠IAK = 45°.',t=>[Q('Phân giác của góc MAD','square').on('M','DC',t).bisect('I','A','M','D','CD').foot('H','I','AM').inter('K','IH','BC').edge('AK','AI','AM').check('K thuộc tia IH',f=>(f.p('K').x-f.p('I').x)*(f.p('H').x-f.p('I').x)+(f.p('K').y-f.p('I').y)*(f.p('H').y-f.p('I').y)>0)]);
-add('hv-b3','Bài 3',35,'Hai hình vuông dựng ra ngoài','Cho hình bình hành ABCD. Dựng hai hình vuông ABEF và ADGH về phía ngoài hình bình hành. Chứng minh: a) AC = FH; b) AC ⟂ FH; c) Tam giác CEG vuông cân.',()=>{const f=Q('Hai hình vuông ngoài hình bình hành');const A=f.p('A'),B=f.p('B'),D=f.p('D');f.put('E',xy(B.x,B.y-6)).put('F',xy(A.x,A.y-6)).put('H',xy(A.x-(D.y-A.y),A.y+(D.x-A.x))).put('G',xy(D.x-(D.y-A.y),D.y+(D.x-A.x)));return [f.polygon('ABEF').polygon('ADGH').shape('square','ABEF').shape('square','ADGH').edge('AC','FH','CE','CG','EG')];});
-add('hv-b4','Bài 4',35,'Hai trung điểm trong hình vuông','Cho hình vuông ABCD. E,F lần lượt là trung điểm AB,AD. Chứng minh: a) DE = CF; b) DE ⟂ CF.',()=>[Q('Hai trung điểm','square').mid('E','AB').mid('F','AD').edge('DE','CF')]);
-section='Tổng hợp';
-add('tt-b1','Bài 1',37,'Bốn bài tìm góc','Tính góc chưa biết: a) Tứ giác ABCD có A = 110°, B = 120°, C = 80°, D = x. b) Tứ giác EFGH có E = F = H = 90°, G = y. c) Tứ giác IJKL có I = 65°, J = L = 90°, K = z. d) Tứ giác MNOP có M = N = t, O = 65°, P = 95°.',()=>[hideAngles(degrees('Hình 1','ABCD',[110,120,80,50])),hideAngles(degrees('Hình 2','EFGH',[90,90,90,90])),hideAngles(degrees('Hình 3','IJKL',[65,90,115,90])),hideAngles(degrees('Hình 4','MNOP',[100,100,65,95]))]);
-add('tt-b2','Bài 2',38,'Đường cao và độ dài cạnh','Cho tam giác nhọn ABC. AH ⟂ BC tại H, H ∈ BC. Biết AB = 13 cm, AH = 12 cm, HC = 16 cm. Tính AC và BC.',()=>[T('Tam giác nhọn và đường cao','triangle',[[0,12],[-5,0],[16,0]]).foot('H','A','BC').len('AB',13).len('AH',12).len('HC',16)]);
-add('tt-b3','Bài 3',38,'Chiếc thang tựa vào tường','Mô hình tường và thang là tam giác ABC vuông tại A. AB là khoảng cách chân thang đến tường, AB = 1 m; BC là thang dài 4 m; AC là chiều cao cần tìm. Tính AC, làm tròn đến 0,1 m.',()=>[T('Mô hình chiếc thang','right',[[0,0],[1,0],[0,R(15)]]).len('AB',1).len('BC',4)],'Bổ sung tên A,B,C cho các vị trí trong hình thực tế, không đổi số liệu.');
-add('tt-b4','Bài 4',38,'Nẹp chéo cho khung chữ nhật','Cho khung hình chữ nhật ABCD có AD = 48 cm và CD = 36 cm. Tính chiều dài nẹp chéo AC.',()=>[Q('Khung chữ nhật','rect',[[0,0],[0,36],[48,36],[48,0]]).len('AD',48).len('CD',36).edge('AC')]);
-add('tt-b5','Bài 5',38,'Hai cột cao khác nhau','Cho tứ giác ABDC có AC ⟂ CD, BD ⟂ CD; A,B nằm cùng phía CD. Biết AC = 6, BD = 10, CD = 8. Tính x = AB.',()=>[quad('Dữ kiện hình ở trang 39','quad','ABDC',[[0,6],[8,10],[8,0],[0,0]]).perp('AC','CD').perp('BD','CD').len('AC',6).len('BD',10).len('CD',8)],'Tên tứ giác theo biên hình là ABDC.');
-add('tt-b6','Bài 6',39,'Tấm kính tam giác cân','Tấm kính có dạng tam giác ABC cân tại A, BC = 8 m, AB = AC = 10 m. Gọi H là chân đường cao từ A xuống BC. Tính AH, làm tròn đến 0,1 m.',()=>[T('Mô hình tấm kính','isos',[[0,R(84)],[-4,0],[4,0]]).foot('H','A','BC').len('BC',8).len('AB',10).len('AC',10)]);
-add('tt-b7','Bài 7',39,'Hai xuồng đi theo hai hướng vuông góc','Hai xuồng xuất phát tại A, đi theo hai hướng AB ⟂ AC. Xuồng thứ nhất đến C sau khi đi 12 km. Xuồng thứ hai đi 0,5 giờ với vận tốc 18 km/h đến B rồi đi thẳng đến C với vận tốc cũ. a) Tính thời gian đi BC theo phút. b) Tính diện tích tam giác ABC.',()=>[T('Hai hướng vuông góc','right',[[0,0],[9,0],[0,12]]).len('AC',12).check('AB = 18 × 0,5 km',f=>near(f.length('AB'),18*.5))]);
-add('tt-b8','Bài 8',39,'Kiểm tra cách dùng định lí đảo','Cho tam giác ABC có AB = 7 cm, AC = 25 cm, BC = 24 cm. Linh so sánh AB² + AC² với BC² và kết luận tam giác không vuông. Nhật cho rằng tam giác vuông. Hãy chỉ ra lỗi trong cách kiểm tra của Linh và giải thích.',()=>[T('Tam giác theo ba cạnh đã cho','triangle',[[0,7],[0,0],[24,0]]).len('AB',7).len('AC',25).len('BC',24)]);
-add('tt-b9','Bài 9',40,'Kích thước đường chéo màn hình','Màn hình chữ nhật ABCD có AB = 80 cm, AD = 60 cm. Biết 1 inch ≈ 2,54 cm. Hãy tính độ dài đường chéo màn hình theo inch, làm tròn đến hàng đơn vị.',()=>[Q('Mô hình màn hình','rect',[[0,60],[80,60],[80,0],[0,0]]).len('AB',80).len('AD',60).edge('AC')],'Hai kích thước 80 cm và 60 cm được đọc từ hình, không dùng số 21 inch trong phần giải thích đơn vị làm giả thiết.');
-add('tt-b10','Bài 10',40,'Chiều dài cần cẩu','Cho mô hình cần cẩu: A,C,D thẳng hàng theo thứ tự đó; AD = 6,5 m, CD = 3 m. CB ⟂ AD, CB = 3 m. Tính AB.',()=>[triangle('Tam giác vuông của cần cẩu','triangle',[[0,6.5],[3,3],[0,0]],'ABD').on('C','DA',3/6.5).edge('CB').perp('CB','AD').len('AD',6.5).len('CD',3).len('CB',3)]);
-add('tt-b11a','Bài 11 – bến tàu',40,'Khoảng cách giữa hai bến tàu','Cho tam giác ABC có AC = 17 km, BC = 10 km. CH ⟂ AB tại H, CH = 8 km. A,B,H thẳng hàng theo thứ tự A,B,H. Tính AB.',()=>[T('Hai bến cùng phía chân đường cao','triangle',[[-15,0],[-6,0],[0,8]]).foot('H','C','AB').len('AC',17).len('BC',10).len('CH',8).check('B nằm giữa A và H',f=>onSegment(f.p('B'),f.p('A'),f.p('H')))],'PDF có hai Bài 11; đặt mã riêng. Thứ tự A,B,H lấy từ hình gốc.');
-add('tt-b11b','Bài 11 – đối xứng',40,'Đối xứng qua hai cạnh góc vuông','Cho tam giác ABC vuông tại A, M là trung điểm BC. H đối xứng với M qua đường AB; E = MH ∩ AB. K đối xứng với M qua đường AC; F = MK ∩ AC. a) Nhận biết AEMF, AMBH, AMCK. b) Chứng minh H đối xứng K qua A. c) Điều kiện để AEMF là hình vuông?',()=>[T('Đối xứng qua hai đường','right').mid('M','BC').mirror('H','M','AB').inter('E','MH','AB').mirror('K','M','AC').inter('F','MK','AC').polygon('AEMF').polygon('AMBH').polygon('AMCK')],'Phân biệt đối xứng qua đường thẳng và đối xứng qua điểm.');
-add('tt-b12','Bài 12',41,'Hình bình hành có cạnh gấp đôi','Cho hình bình hành ABCD có BC = 2AB và ∠A = 60°. E,F là trung điểm BC,AD; I đối xứng A qua B. a) ABEF là hình gì? b) Chứng minh AIEF là hình thang cân. c) Chứng minh BICD là hình chữ nhật. d) Tính ∠AED.',()=>[Q('Cạnh gấp đôi và góc 60°','hbh',[[0,0],[3,0],[6,3*R(3)],[3,3*R(3)]]).equ('BC','AB',2).deg('DAB',60).mid('E','BC').mid('F','AD').reflect('I','A','B').polygon('ABEF').polygon('AIEF').polygon('BICD').edge('AE','ED')]);
-add('tt-b13','Bài 13',42,'Đường cao và điểm đối xứng','Cho hình thang cân ABCD có AB ∥ CD, AB < CD. Kẻ AH ⟂ CD tại H, BK ⟂ CD tại K. a) ABKH là hình gì? b) Chứng minh DH = CK. c) E đối xứng D qua H; D,E đối xứng nhau qua đường nào? d) ABCE là hình gì?',()=>[Q('Hình thang và đối xứng','isoTrap').foot('H','A','CD').foot('K','B','CD').reflect('E','D','H').polygon('ABCE')]);
-add('tt-b14','Bài 14',42,'Trung điểm và hai phép đối xứng','Cho tam giác ABC vuông tại B. E,F là trung điểm AC,BC. Qua E kẻ đường song song BC, cắt AB tại M. a) Chứng minh BMEF là hình chữ nhật. b) K đối xứng B qua E; BAKC là hình gì? c) G đối xứng E qua F; BGCE là hình gì? d) Điều kiện để BGCE là hình vuông?',()=>[T('Hai trung điểm trong tam giác vuông','triangle',[[0,5],[0,0],[7,0]]).perp('BA','BC').mid('E','AC').mid('F','BC').cut('M','E','BC','AB').reflect('K','B','E').reflect('G','E','F').polygon('BMEF').polygon('BAKC').polygon('BGCE')]);
-add('tt-b15','Bài 15',43,'Hình chiếu của trung điểm cạnh huyền','Cho tam giác ABC vuông tại A, AB < AC. M là trung điểm BC. Kẻ MD ⟂ AB tại D, ME ⟂ AC tại E. a) Chứng minh AM = DE. b) Chứng minh DMCE là hình bình hành. c) Kẻ AH ⟂ BC tại H. Chứng minh DHME là hình thang cân và A đối xứng H qua đường DE.',()=>[T('Hình chiếu và đường cao','right').mid('M','BC').foot('D','M','AB').foot('E','M','AC').foot('H','A','BC').check('AB < AC',f=>f.length('AB')<f.length('AC')).edge('AM','DE','DH','HM','MC')]);
-add('tt-b16','Bài 16',43,'Hình thang vuông và các giao điểm','Cho hình thang vuông ABCD có ∠A = ∠D = 90°, AB = AD = CD/2. Kẻ BH ⟂ CD tại H. a) Chứng minh ABHD là hình vuông. b) M là trung điểm BH; chứng minh A đối xứng C qua M. c) Kẻ DI ⟂ AC tại I; AH cắt DI tại P, cắt DM tại Q. Chứng minh DPBQ là hình thoi.',()=>[Q('Hình thang vuông','quad',[[0,4],[4,4],[8,0],[0,0]]).perp('AB','AD').perp('AD','CD').equ('AB','AD').equ('CD','AB',2).foot('H','B','CD').mid('M','BH').foot('I','D','AC').inter('P','AH','DI').inter('Q','AH','DM').polygon('DPBQ')]);
-add('tt-b17','Bài 17',44,'Một điểm trên tia đối','Cho hình vuông ABCD. E nằm trong DC. F thuộc tia đối của tia BC, BF = DE. a) Chứng minh tam giác AEF vuông cân. b) I là trung điểm EF; chứng minh I thuộc BD. c) K đối xứng A qua I; chứng minh AEKF là hình vuông.',t=>{const f=Q('Điểm F trên tia đối BC','square').on('E','DC',t);f.put('F',lerp(f.p('B'),f.p('C'),-t));return [f.equ('BF','DE').check('F thuộc tia đối BC',g=>(g.p('F').x-g.p('B').x)*(g.p('C').x-g.p('B').x)+(g.p('F').y-g.p('B').y)*(g.p('C').y-g.p('B').y)<0).mid('I','EF').reflect('K','A','I').polygon('AEKF').edge('BD','AF','EF','BF')];});
-add('tt-b18','Bài 18',45,'Đối xứng của trung điểm cạnh huyền','Cho tam giác ABC vuông tại A, M là trung điểm BC, D là trung điểm AB. E đối xứng M qua D. a) Chứng minh E đối xứng M qua đường AB. b) AEMC và AEBM là hình gì? c) Điều kiện để AEBM là hình vuông?',()=>[T('Trung điểm và đối xứng','right').mid('M','BC').mid('D','AB').reflect('E','M','D').polygon('AEMC').polygon('AEBM')]);
-add('tt-b19','Bài 19',45,'Góc 120 độ và cạnh gấp đôi','Cho hình bình hành MNPQ có MN = 2MQ, ∠M = 120°. I,K là trung điểm MN,PQ; A đối xứng Q qua M. a) MIKQ là hình gì? b) Chứng minh tam giác AMI đều. c) Chứng minh AMPN là hình chữ nhật.',()=>[quad('Cạnh gấp đôi, góc 120°','hbh','MNPQ',[[0,0],[6,0],[4.5,1.5*R(3)],[-1.5,1.5*R(3)]]).equ('MN','MQ',2).deg('QMN',120).mid('I','MN').mid('K','PQ').reflect('A','Q','M').polygon('MIKQ').polygon('AMI').polygon('AMPN')]);
-add('tt-b20','Bài 20',46,'Chuỗi đường song song qua trung điểm','Cho tứ giác lồi ABCD. E là trung điểm AB. Qua E kẻ EF ∥ AC, F ∈ BC. Qua F kẻ FG ∥ BD, G ∈ CD. Qua G kẻ GH ∥ AC, H ∈ AD. a) Chứng minh EFGH là hình bình hành. b) Điều kiện của ABCD để EFGH là hình chữ nhật?',()=>[Q('Ba phép dựng song song liên tiếp','quad').mid('E','AB').cut('F','E','AC','BC').cut('G','F','BD','CD').cut('H','G','AC','AD').polygon('EFGH').edge('AC','BD')]);
-add('tt-b21','Bài 21',46,'Ba trung điểm và một đường song song','Cho tam giác ABC vuông tại A. E,G,F lần lượt là trung điểm AB,BC,AC. Qua E kẻ đường song song BF, cắt đường thẳng GF tại I. a) AEGF là hình gì? b) Chứng minh BEIF là hình bình hành. c) Chứng minh AGCI là hình thoi. d) Điều kiện để AGCI là hình vuông?',()=>[T('Giao điểm trên đường GF kéo dài','right').mid('E','AB').mid('G','BC').mid('F','AC').cut('I','E','BF','GF').polygon('AEGF').polygon('BEIF').polygon('AGCI')],'Giữ đường thẳng GF, không đổi thành đoạn GF. Ý b trong phần giải gốc ghi nhầm BEFI; thứ tự đúng theo đề là BEIF.');
+import { WorksheetFigure, quad, triangle, angleQuad, xy } from './worksheet-geometry';
+import { near, onSegment, lerp, type Drawing } from './geometry';
+export type Worksheet = {
+  id: string;
+  section: string;
+  label: string;
+  page: number;
+  title: string;
+  problem: string;
+  note: string;
+  draw: (t: number) => WorksheetFigure[];
+};
+export const worksheets: Worksheet[] = [];
+let section = 'Tứ giác';
+function add(
+  id: string,
+  label: string,
+  page: number,
+  title: string,
+  problem: string,
+  draw: Worksheet['draw'],
+  note = '',
+) {
+  worksheets.push({ id, section, label, page, title, problem, draw, note });
+}
+const Q = (title: string, kind = 'hbh', coords?: number[][]) => quad(title, kind, 'ABCD', coords);
+const T = (title: string, kind = 'triangle', coords?: number[][]) => triangle(title, kind, coords);
+const R = Math.sqrt;
+const degrees = (title: string, names: string, values: number[]) => angleQuad(title, names, values);
+function hideAngles(f: WorksheetFigure) {
+  return f.hide('∠');
+}
+function diags(f: WorksheetFigure) {
+  return f.inter('O', 'AC', 'BD');
+}
+add(
+  'tg-v1',
+  'Ví dụ 1',
+  1,
+  'Nhận biết tứ giác lồi',
+  'Quan sát năm hình a–e. Hình a có bốn đỉnh A,B,C,D; hình b có bốn đỉnh E,F,G,H; hình c có bốn đỉnh I,J,K,L; hình d có năm đỉnh M,N,O,P,Q; hình e có ba đỉnh R,S,T. Hình nào là tứ giác lồi? Đọc các cạnh, đỉnh và góc.',
+  () => [
+    quad('Hình a', 'quad', 'ABCD', [
+      [0, 4],
+      [1.5, 1],
+      [0, -1],
+      [-1.5, 1],
+    ]),
+    quad('Hình b', 'quad', 'EFGH', [
+      [0, 0],
+      [1, 3],
+      [4, 3],
+      [5, 0],
+    ]),
+    quad('Hình c', 'hbh', 'IJKL', [
+      [0, 0],
+      [1, 3],
+      [5, 3],
+      [4, 0],
+    ]),
+    new WorksheetFigure('Hình d', 'MNOPQ', [
+      [0, 0],
+      [0.5, 3],
+      [3, 4.5],
+      [4, 3],
+      [4, 0],
+    ]).shape('polygon'),
+    triangle(
+      'Hình e',
+      'triangle',
+      [
+        [0, 0],
+        [2, 3],
+        [4, 0],
+      ],
+      'RST',
+    ),
+  ],
+  'Đã thống nhất tên các đỉnh và sửa tên cạnh bị in nhầm. Hãy đếm các cạnh trước khi phân loại.',
+);
+add(
+  'tg-v2',
+  'Ví dụ 2',
+  2,
+  'Tổng bốn góc của tứ giác',
+  'a) Cho tứ giác lồi ABCD có ∠A = ∠B = x, ∠C = 100°, ∠D = 50°. Tính x. b) Cho tứ giác lồi MNPQ có ∠M = ∠P = x, ∠N = ∠Q = 2x. Tính x.',
+  () => [
+    hideAngles(degrees('Hình a: dữ kiện trên hình gốc', 'ABCD', [105, 105, 100, 50])).check(
+      'C = 100°; D = 50°; A = B',
+      (f) =>
+        near(f.angle('BCD'), 100) &&
+        near(f.angle('CDA'), 50) &&
+        near(f.angle('DAB'), f.angle('ABC')),
+    ),
+    hideAngles(degrees('Hình b', 'MNPQ', [60, 120, 60, 120])).check(
+      'M = P; N = Q = 2M',
+      (f) =>
+        near(f.angle('QMN'), f.angle('NPQ')) &&
+        near(f.angle('MNP'), 2 * f.angle('QMN')) &&
+        near(f.angle('PQM'), 2 * f.angle('QMN')),
+    ),
+  ],
+  'Hình 1.3 ghi C = 100°, lời giải gốc dùng 110° nên không khớp. Bản này giữ số 100° trên hình. Em hãy dùng dữ kiện đã thống nhất để tự tính.',
+);
+add(
+  'tg-v3',
+  'Ví dụ 3',
+  2,
+  'Diện tích thân diều',
+  'Cho tứ giác lồi ABCD có AC là đường trung trực của BD; AC = 90 cm, BD = 60 cm. Tính diện tích tứ giác ABCD.',
+  () => [
+    diags(
+      Q('Thân diều', 'quad', [
+        [0, 30],
+        [-30, 0],
+        [0, -60],
+        [30, 0],
+      ]),
+    )
+      .perp('AC', 'BD')
+      .equ('OB', 'OD')
+      .len('AC', 90)
+      .len('BD', 60),
+  ],
+);
+add(
+  'tg-v4',
+  'Ví dụ 4',
+  3,
+  'Góc còn lại của vùng đất tứ giác',
+  'Mô hình vùng đất Long Xuyên là tứ giác lồi ABCD, có ∠ADC = 100°, ∠ABC = 120°, ∠DCA = 45°, ∠ACB = 33°. Tính ∠DAB.',
+  () => {
+    // Positions below are determined by the given triangle angles.
+    const Bx =
+        (6 * Math.sin((33 * Math.PI) / 180) * Math.cos((27 * Math.PI) / 180)) /
+        Math.sin((120 * Math.PI) / 180),
+      By =
+        (-6 * Math.sin((33 * Math.PI) / 180) * Math.sin((27 * Math.PI) / 180)) /
+        Math.sin((120 * Math.PI) / 180);
+    return [
+      Q('Mô hình tứ giác', 'quad', [
+        [0, 0],
+        [Bx, By],
+        [6, 0],
+        [
+          (6 * Math.sin((45 * Math.PI) / 180) * Math.cos((35 * Math.PI) / 180)) /
+            Math.sin((100 * Math.PI) / 180),
+          (6 * Math.sin((45 * Math.PI) / 180) * Math.sin((35 * Math.PI) / 180)) /
+            Math.sin((100 * Math.PI) / 180),
+        ],
+      ])
+        .edge('AC')
+        .deg('ADC', 100)
+        .deg('ABC', 120)
+        .deg('DCA', 45)
+        .deg('ACB', 33),
+    ];
+  },
+);
+add(
+  'tg-v5',
+  'Ví dụ 5',
+  3,
+  'So sánh đường chéo và cạnh',
+  'Cho tứ giác lồi ABCD. Hai đường chéo AC và BD cắt nhau tại O. Chứng minh: a) AC + BD > AB + CD; b) AC + BD > AD + BC.',
+  () => [diags(Q('Bất đẳng thức trong tứ giác', 'quad'))],
+);
+add(
+  'tg-b1',
+  'Bài 1',
+  4,
+  'Hai cặp cạnh kề bằng nhau',
+  'Cho tứ giác lồi ABCD có AB = BC, CD = DA. a) Chứng minh BD là đường trung trực của AC. b) Biết ∠B = 100°, ∠D = 80°. Tính ∠A và ∠C.',
+  () => [
+    Q('Cấu hình theo cả hai ý', 'quad', [
+      [-1, 0],
+      [0, 1 / Math.tan((50 * Math.PI) / 180)],
+      [1, 0],
+      [0, -1 / Math.tan((40 * Math.PI) / 180)],
+    ])
+      .edge('AC', 'BD')
+      .equ('AB', 'BC')
+      .equ('CD', 'DA')
+      .deg('ABC', 100)
+      .deg('CDA', 80),
+  ],
+  'Lời giải gốc ghi AB = AC ở một dòng; giả thiết đúng là AB = BC.',
+);
+add(
+  'tg-b2',
+  'Bài 2',
+  4,
+  'Góc tỉ lệ với 1, 2, 3, 4',
+  'Cho tứ giác lồi ABCD có ∠A : ∠B : ∠C : ∠D = 1 : 2 : 3 : 4. Tính bốn góc.',
+  () => [
+    hideAngles(degrees('Tứ giác có góc theo tỉ lệ', 'ABCD', [36, 72, 108, 144])).check(
+      'Bốn góc tỉ lệ 1 : 2 : 3 : 4',
+      (f) => ['ABC', 'BCD', 'CDA'].every((s, i) => near(f.angle(s), (i + 2) * f.angle('DAB'))),
+    ),
+  ],
+);
+add(
+  'tg-b3',
+  'Bài 3',
+  4,
+  'Bốn góc tăng đều',
+  'Cho tứ giác lồi MNPQ có ∠N = ∠M + 10°, ∠P = ∠N + 10°, ∠Q = ∠P + 10°. Tính các góc.',
+  () => [
+    hideAngles(degrees('Bốn góc tăng đều', 'MNPQ', [75, 85, 95, 105])).check(
+      'Mỗi góc sau tăng 10°',
+      (f) => ['MNP', 'NPQ', 'PQM'].every((s, i) => near(f.angle(s), f.angle('QMN') + 10 * (i + 1))),
+    ),
+  ],
+);
+add(
+  'tg-b4',
+  'Bài 4',
+  4,
+  'Tổng và hiệu hai góc',
+  'Cho tứ giác lồi ABCD có ∠C = 60°, ∠D = 80°, ∠A − ∠B = 10°. Tính ∠A và ∠B.',
+  () => [
+    hideAngles(degrees('Tổng và hiệu hai góc', 'ABCD', [115, 105, 60, 80])).check(
+      'C = 60°; D = 80°; A − B = 10°',
+      (f) =>
+        near(f.angle('BCD'), 60) &&
+        near(f.angle('CDA'), 80) &&
+        near(f.angle('DAB') - f.angle('ABC'), 10),
+    ),
+  ],
+);
+add(
+  'tg-b5',
+  'Bài 5',
+  5,
+  'Tứ giác có hai đường chéo vuông góc',
+  'Cho tứ giác lồi ABCD có AC ⟂ BD tại O. a) Chứng minh AB² + CD² = AD² + BC². b) Biết AD = 5 cm, AB = 2 cm, BC = 10 cm. Tính CD.',
+  () => [
+    diags(
+      Q('Hai đường chéo vuông góc', 'quad', [
+        [0, 1],
+        [R(3), 0],
+        [0, -R(97)],
+        [-R(24), 0],
+      ]),
+    )
+      .perp('AC', 'BD')
+      .len('AD', 5)
+      .len('AB', 2)
+      .len('BC', 10),
+  ],
+);
+add(
+  'tg-b6',
+  'Bài 6',
+  5,
+  'Góc trong và góc ngoài',
+  'Tính x: a) Tứ giác ABCD có ∠A = 50°, ∠B = 100°, ∠C = 120°, ∠D = x. b) Tứ giác MNPQ có ∠M = ∠P = ∠Q = 90°, ∠N = x. c) Tứ giác EFGH có ∠E = 100°, ∠F = ∠H = 90°, ∠G = x. d) Tứ giác IKLR có góc ngoài tại K bằng 100°, góc ngoài tại L bằng 60°, ∠R = 90°, ∠I = x.',
+  () => [
+    hideAngles(degrees('Hình a', 'ABCD', [50, 100, 120, 90])),
+    hideAngles(degrees('Hình b', 'MNPQ', [90, 90, 90, 90])),
+    hideAngles(degrees('Hình c', 'EFGH', [100, 90, 80, 90])),
+    hideAngles(degrees('Hình d', 'IKLR', [70, 80, 120, 90])),
+  ],
+);
+add(
+  'tg-b7',
+  'Bài 7',
+  6,
+  'Góc ngoài tại các đỉnh',
+  'Cho tứ giác lồi ABCD có ∠A = 75°, ∠B = 90°, ∠C = 120°. Tính các góc ngoài kề bù với góc trong tại bốn đỉnh.',
+  () => [
+    hideAngles(degrees('Tứ giác và góc ngoài', 'ABCD', [75, 90, 120, 75])).check(
+      'Ba góc đã cho: A = 75°, B = 90°, C = 120°',
+      (f) => near(f.angle('DAB'), 75) && near(f.angle('ABC'), 90) && near(f.angle('BCD'), 120),
+    ),
+  ],
+);
+add(
+  'tg-b8',
+  'Bài 8',
+  6,
+  'Đường chéo và chu vi',
+  'Cho tứ giác lồi ABCD có AC cắt BD tại O, chu vi là P. Chứng minh: a) AC + BD > P/2; b) AC + BD < P.',
+  () => [diags(Q('Đường chéo và chu vi', 'quad'))],
+  'Điều kiện AC < P/2 ở ý b của bản gốc luôn đúng với tứ giác lồi, nên được lược khỏi câu hỏi.',
+);
+section = 'Hình thang cân';
+add(
+  'ht-v1',
+  'Ví dụ 1',
+  8,
+  'Từ tam giác cân đến hình thang cân',
+  'Cho tam giác ABC cân tại A. D nằm trong AB, E nằm trong AC sao cho AD = AE. a) Chứng minh BDEC là hình thang cân. b) Biết ∠A = 50°, tính các góc hình thang.',
+  (t) => [
+    T('Hai điểm trên hai cạnh bên', 'isos', [
+      [0, 3 / Math.tan((25 * Math.PI) / 180)],
+      [-3, 0],
+      [3, 0],
+    ])
+      .on('D', 'AB', t)
+      .on('E', 'AC', t)
+      .equ('AD', 'AE')
+      .deg('BAC', 50)
+      .edge('DE'),
+  ],
+);
+add(
+  'ht-v2',
+  'Ví dụ 2',
+  9,
+  'Giao điểm hai đường chéo',
+  'Cho hình thang cân ABCD có AB ∥ CD. Gọi O là giao điểm AC và BD. Chứng minh OA = OB và OC = OD.',
+  () => [diags(Q('Đường chéo hình thang cân', 'isoTrap'))],
+);
+const specialTrap = (title: string, s: number) =>
+  Q(title, 'isoTrap', [
+    [s / 2, (s * R(3)) / 2],
+    [1.5 * s, (s * R(3)) / 2],
+    [2 * s, 0],
+    [0, 0],
+  ])
+    .edge('BD')
+    .perp('BD', 'BC')
+    .bisector('D', 'A', 'B', 'C');
+add(
+  'ht-v3',
+  'Ví dụ 3',
+  9,
+  'Đường chéo và phân giác trong hình thang',
+  'Cho hình thang cân ABCD có AB ∥ CD, BD ⟂ BC và BD là tia phân giác ∠ADC. Biết BC = 3 cm. Tính chu vi ABCD.',
+  () => [specialTrap('Đường chéo và phân giác', 3).len('BC', 3)],
+  'Phần tính chu vi trong lời giải gốc có lỗi cộng. Em cần tự kiểm tra tổng các cạnh theo giả thiết.',
+);
+add(
+  'ht-v4',
+  'Ví dụ 4',
+  9,
+  'Dấu hiệu qua hai đường chéo',
+  'Cho hình thang MNPQ có MN ∥ PQ và MP = NQ. Qua N kẻ đường thẳng song song MP, cắt đường thẳng PQ tại K. Chứng minh: a) Tam giác NKQ cân; b) ΔMPQ = ΔNQP; c) MNPQ là hình thang cân.',
+  () => [
+    quad('Đường phụ qua N', 'quad', 'MNPQ', [
+      [1.5, 3],
+      [4.5, 3],
+      [6, 0],
+      [0, 0],
+    ])
+      .parallel('MN', 'PQ')
+      .equ('MP', 'NQ')
+      .cut('K', 'N', 'MP', 'PQ')
+      .polygon('NKQ')
+      .edge('MP', 'NQ'),
+  ],
+);
+add(
+  'ht-b1',
+  'Bài 1',
+  11,
+  'Phân giác trong tam giác cân',
+  'Cho tam giác ABC cân tại A. BD là phân giác ∠ABC, D ∈ AC; CE là phân giác ∠ACB, E ∈ AB. a) Chứng minh BEDC là hình thang cân. b) Biết ∠C = 50°, tính các góc BEDC.',
+  () => [
+    T('Hai đường phân giác', 'isos', [
+      [0, 3 * Math.tan((50 * Math.PI) / 180)],
+      [-3, 0],
+      [3, 0],
+    ])
+      .bisect('D', 'B', 'A', 'C', 'AC')
+      .bisect('E', 'C', 'A', 'B', 'AB')
+      .edge('ED')
+      .deg('BCA', 50),
+  ],
+);
+add(
+  'ht-b2',
+  'Bài 2',
+  11,
+  'Trục đối xứng hình thang cân',
+  'Cho hình thang cân ABCD có AB ∥ CD và AB ≠ CD. O là giao điểm AC và BD. E là giao điểm hai đường thẳng AD và BC. Chứng minh: a) OA = OB, OC = OD; b) EO là đường trung trực của AB và CD.',
+  () => [
+    diags(Q('Giao điểm phần kéo dài', 'isoTrap')).inter('E', 'AD', 'BC').edge('EA', 'EB', 'EO'),
+  ],
+  'Nêu hai đáy khác độ dài để giao điểm của hai đường thẳng chứa cạnh bên tồn tại.',
+);
+add(
+  'ht-b3',
+  'Bài 3',
+  12,
+  'Đáy lớn và đường chéo phân giác',
+  'Cho hình thang ABCD có AD ∥ BC, AD > BC, AC ⟂ CD, AC là tia phân giác ∠BAD và ∠D = 60°. a) Chứng minh ABCD là hình thang cân. b) Chu vi bằng 20 cm, tính AD.',
+  () => [
+    Q('Hai đáy AD và BC', 'quad', [
+      [0, 0],
+      [2, 2 * R(3)],
+      [6, 2 * R(3)],
+      [8, 0],
+    ])
+      .parallel('AD', 'BC')
+      .perp('AC', 'CD')
+      .deg('CDA', 60)
+      .edge('AC')
+      .bisector('A', 'B', 'C', 'D')
+      .perimeter(20),
+  ],
+);
+add(
+  'ht-b4',
+  'Bài 4',
+  12,
+  'Chọn vị trí hai điểm trên cạnh bên',
+  'Cho tam giác ABC cân tại A. D ∈ AB, E ∈ AC, AD = AE; D,E không trùng các đỉnh. a) BDEC là hình gì? b) D,E cần ở vị trí nào để BD = DE = EC?',
+  (t) => [
+    T('Vị trí tổng quát', 'isos').on('D', 'AB', t).on('E', 'AC', t).equ('AD', 'AE').edge('DE'),
+  ],
+);
+add(
+  'ht-b5',
+  'Bài 5',
+  14,
+  'Một góc bằng 40 độ',
+  'Cho hình thang cân ABCD có AB ∥ CD và ∠D = 40°. Tính bốn góc của hình thang.',
+  () => [
+    hideAngles(
+      Q('Một cách đặt tên cho góc 40°', 'isoTrap', [
+        [2, 2 * Math.tan((40 * Math.PI) / 180)],
+        [4, 2 * Math.tan((40 * Math.PI) / 180)],
+        [6, 0],
+        [0, 0],
+      ]).deg('CDA', 40),
+    ),
+  ],
+  'Bản gốc không chỉ tên góc; chọn D là góc 40° để viết đề độc lập với hình.',
+);
+add(
+  'ht-b6',
+  'Bài 6',
+  14,
+  'Hai đường cao hình thang cân',
+  'Cho hình thang cân ABCD có AB ∥ CD và AB < CD. Kẻ AH ⟂ CD tại H, BK ⟂ CD tại K. Chứng minh DH = CK.',
+  () => [Q('Hai đường cao', 'isoTrap').foot('H', 'A', 'CD').foot('K', 'B', 'CD')],
+);
+add(
+  'ht-b7',
+  'Bài 7',
+  14,
+  'Tìm cạnh từ chu vi',
+  'Cho hình thang cân ABCD có AB ∥ CD, ∠C = 60°; BD là phân giác ∠ADC. Chu vi hình thang bằng 20 cm. Tính các cạnh.',
+  () => [specialTrap('Phân giác và chu vi', 4).deg('BCD', 60).perimeter(20)],
+);
+add(
+  'ht-b8',
+  'Bài 8',
+  14,
+  'Hai đường chéo bằng nhau',
+  'Cho hình thang ABCD có AB ∥ CD và AC = BD. Chứng minh ABCD là hình thang cân.',
+  () => [
+    Q('Hình thang có AC = BD', 'quad', [
+      [1.5, 3],
+      [4.5, 3],
+      [6, 0],
+      [0, 0],
+    ])
+      .parallel('AB', 'CD')
+      .edge('AC', 'BD')
+      .equ('AC', 'BD'),
+  ],
+);
+section = 'Hình bình hành';
+add(
+  'hb-v1',
+  'Ví dụ 1',
+  16,
+  'Hai hình chiếu trên đường chéo',
+  'Cho hình bình hành ABCD. Kẻ AH ⟂ BD tại H và CK ⟂ BD tại K. Chứng minh AHCK là hình bình hành.',
+  () => [Q('Hai hình chiếu').foot('H', 'A', 'BD').foot('K', 'C', 'BD').edge('HC', 'KA')],
+);
+add(
+  'hb-v2',
+  'Ví dụ 2',
+  16,
+  'Trực tâm và hai đường vuông góc',
+  'Cho tam giác nhọn ABC có trực tâm H. Đường thẳng qua B vuông góc AB và đường thẳng qua C vuông góc AC cắt nhau tại D. Chứng minh BDCH là hình bình hành.',
+  () => [
+    T('Trực tâm và giao điểm phụ')
+      .inter(
+        'H',
+        { through: 'A', of: ['B', 'C'], relation: 'perpendicular' },
+        { through: 'B', of: ['A', 'C'], relation: 'perpendicular' },
+      )
+      .inter(
+        'D',
+        { through: 'B', of: ['A', 'B'], relation: 'perpendicular' },
+        { through: 'C', of: ['A', 'C'], relation: 'perpendicular' },
+      )
+      .polygon('BDCH'),
+  ],
+  'Làm rõ tam giác nhọn như hình tham khảo; tam giác vuông có thể làm tứ giác cần chứng minh suy biến.',
+);
+add(
+  'hb-v3',
+  'Ví dụ 3',
+  17,
+  'Trung điểm trên hai cạnh đối',
+  'Cho hình bình hành ABCD. E là trung điểm AD, F là trung điểm BC. Chứng minh: a) BE = DF và ∠ABE = ∠CDF; b) BE ∥ DF.',
+  () => [Q('Trung điểm E và F').mid('E', 'AD').mid('F', 'BC').edge('BE', 'DF')],
+);
+add(
+  'hb-v4',
+  'Ví dụ 4',
+  17,
+  'Trung điểm và hình chiếu',
+  'Cho hình bình hành ABCD. O = AC ∩ BD. P,Q lần lượt là trung điểm OB,OD. Kẻ PM ⟂ AB tại M, QN ⟂ CD tại N. Chứng minh M,O,N thẳng hàng và AC,MN,PQ đồng quy.',
+  () => [
+    diags(Q('Trung điểm và hình chiếu'))
+      .mid('P', 'OB')
+      .mid('Q', 'OD')
+      .foot('M', 'P', 'AB')
+      .foot('N', 'Q', 'CD')
+      .edge('MN', 'PQ'),
+  ],
+);
+add(
+  'hb-b1',
+  'Bài 1',
+  19,
+  'Hai phân giác của góc đối',
+  'Cho hình bình hành ABCD có AB > BC. Tia phân giác ∠ADC cắt AB tại E. Tia phân giác ∠ABC cắt CD tại F. a) Chứng minh DE ∥ BF. b) DEBF là hình gì?',
+  () => [
+    Q('Hai phân giác')
+      .bisect('E', 'D', 'A', 'C', 'AB')
+      .bisect('F', 'B', 'A', 'C', 'CD')
+      .check('AB > BC', (f) => f.length('AB') > f.length('BC')),
+  ],
+);
+add(
+  'hb-b2',
+  'Bài 2',
+  19,
+  'Ghép hai đường song song',
+  'Cho tam giác ABC. E nằm trong AC. Qua E kẻ EF ∥ BC, F ∈ AB; kẻ ED ∥ AB, D ∈ BC. Biết AE = BF. Chứng minh: a) Tam giác AED cân; b) AD là phân giác ∠BAC.',
+  () => {
+    const f = T('Hai đường qua E');
+    const t = f.length('AB') / (f.length('AB') + f.length('AC'));
+    return [
+      f
+        .on('E', 'AC', t)
+        .cut('F', 'E', 'BC', 'AB')
+        .cut('D', 'E', 'AB', 'BC')
+        .equ('AE', 'BF')
+        .edge('AD'),
+    ];
+  },
+);
+add(
+  'hb-b3',
+  'Bài 3',
+  19,
+  'Ba đường thẳng đồng quy',
+  'Cho hình bình hành ABCD. Gọi O là giao điểm hai đường thẳng AC và BD. Qua O kẻ đường thẳng song song AB, cắt AD và BC lần lượt tại M và N. Trên AB, CD lần lượt lấy P, Q sao cho AP = CQ. Gọi I là giao điểm AC và PQ. Chứng minh: a) AMNB và APCQ là hình bình hành; b) M,N,I thẳng hàng; c) AC,MN,PQ đồng quy.',
+  (t) => [
+    diags(Q('Đường song song qua tâm'))
+      .cut('M', 'O', 'AB', 'AD')
+      .cut('N', 'O', 'AB', 'BC')
+      .on('P', 'AB', t)
+      .on('Q', 'CD', t)
+      .equ('AP', 'CQ')
+      .inter('I', 'AC', 'PQ')
+      .edge('MN'),
+  ],
+);
+add(
+  'hb-b4',
+  'Bài 4',
+  20,
+  'Hai trung điểm và cặp đoạn bằng nhau',
+  'Cho hình bình hành ABCD. Gọi K,I lần lượt là trung điểm các cạnh AB và CD. Chứng minh: a) AI = CK và ∠IAC = ∠KCA; b) AI ∥ CK.',
+  () => [Q('K,I là hai trung điểm').mid('K', 'AB').mid('I', 'CD').edge('AI', 'CK', 'AC')],
+);
+add(
+  'hb-b5',
+  'Bài 5',
+  21,
+  'Hai điểm lấy từ hai đầu đối xứng',
+  'Cho hình bình hành ABCD, O là giao điểm AC và BD. Trên AB lấy K, trên CD lấy I sao cho AK = CI. Chứng minh K,O,I thẳng hàng và AC,BD,KI đồng quy.',
+  (t) => [diags(Q('AK = CI')).on('K', 'AB', t).on('I', 'CD', t).equ('AK', 'CI').edge('KI')],
+);
+add(
+  'hb-b6',
+  'Bài 6',
+  22,
+  'Hai cát tuyến qua tâm',
+  'Cho hình bình hành ABCD, O = AC ∩ BD. Đường thẳng a qua O cắt hai đường thẳng AD,BC tại E,F. Đường thẳng b khác a qua O cắt AB,CD tại K,H. Các giao điểm không trùng đỉnh. Chứng minh EKFH là hình bình hành.',
+  (t) => [
+    diags(Q('Hai cát tuyến qua O'))
+      .on('E', 'AD', t)
+      .inter('F', 'EO', 'BC')
+      .on('K', 'AB', 0.27)
+      .inter('H', 'KO', 'CD')
+      .polygon('EKFH')
+      .edge('EF', 'KH'),
+  ],
+  'Nêu a và b khác nhau, các giao điểm không trùng đỉnh để tránh tứ giác suy biến.',
+);
+section = 'Hình chữ nhật';
+add(
+  'cn-v1',
+  'Ví dụ 1',
+  23,
+  'Đối xứng qua trung điểm cạnh',
+  'Cho tam giác nhọn ABC, AH ⟂ BC tại H. I là trung điểm AC. D đối xứng với H qua I. Chứng minh AHCD là hình chữ nhật.',
+  () => [
+    T('Đường cao và đối xứng')
+      .foot('H', 'A', 'BC')
+      .mid('I', 'AC')
+      .reflect('D', 'H', 'I')
+      .polygon('AHCD'),
+  ],
+  'Nêu tam giác nhọn như hình để H khác B,C và tứ giác không suy biến.',
+);
+add(
+  'cn-v2',
+  'Ví dụ 2',
+  23,
+  'Góc giữa hai trung điểm nhìn từ chân cao',
+  'Cho tam giác ABC vuông tại A; AH ⟂ BC tại H. I,K lần lượt là trung điểm AB,AC. Chứng minh ∠IHK = 90°.',
+  () => [
+    T('Hai trung điểm và chân đường cao', 'right')
+      .foot('H', 'A', 'BC')
+      .mid('I', 'AB')
+      .mid('K', 'AC')
+      .edge('IH', 'HK'),
+  ],
+);
+add(
+  'cn-v3',
+  'Ví dụ 3',
+  24,
+  'Tính chiều cao hình thang vuông',
+  'Cho tứ giác ABCD có AD ∥ BC, CD ⟂ AD; AB = 13 cm, BC = 15 cm, AD = 10 cm. A và B ở cùng phía đường CD, đoạn AD nằm phía trên BC. Tính CD.',
+  () => [
+    Q('Dữ kiện Hình chữ nhật – Ví dụ 3', 'quad', [
+      [5, 12],
+      [0, 0],
+      [15, 0],
+      [15, 12],
+    ])
+      .parallel('AD', 'BC')
+      .perp('CD', 'AD')
+      .len('AB', 13)
+      .len('BC', 15)
+      .len('AD', 10),
+  ],
+  'Đã đưa các dấu song song, góc vuông và vị trí trong hình gốc vào câu chữ.',
+);
+add(
+  'cn-b1',
+  'Bài 1',
+  24,
+  'Đáy nhỏ hình thang vuông',
+  'Cho hình thang ABCD có AB ∥ CD, AD ⟂ AB, AB > CD; AB = 9 cm, AD = 4 cm, BC = 5 cm. Tính CD.',
+  () => [
+    Q('Tìm CD khi đáy AB lớn hơn', 'quad', [
+      [0, 4],
+      [9, 4],
+      [6, 0],
+      [0, 0],
+    ])
+      .parallel('AB', 'CD')
+      .perp('AD', 'AB')
+      .len('AB', 9)
+      .len('AD', 4)
+      .len('BC', 5),
+  ],
+  'Đã chép quan hệ vị trí từ hình gốc để chọn đúng nhánh CD.',
+);
+add(
+  'cn-b2',
+  'Bài 2',
+  25,
+  'Đáy lớn hình thang vuông',
+  'Cho hình thang ABCD có AB ∥ CD, AD ⟂ AB, CD > AB; AB = 7 cm, AD = 8 cm, BC = 10 cm. Tính CD.',
+  () => [
+    Q('Tìm CD khi đáy CD lớn hơn', 'quad', [
+      [0, 8],
+      [7, 8],
+      [13, 0],
+      [0, 0],
+    ])
+      .parallel('AB', 'CD')
+      .perp('AD', 'AB')
+      .len('AB', 7)
+      .len('AD', 8)
+      .len('BC', 10),
+  ],
+);
+add(
+  'cn-b3',
+  'Bài 3',
+  25,
+  'Hình chữ nhật trong tam giác vuông cân',
+  'Cho tam giác ABC vuông cân tại C. P ∈ AC, Q ∈ CB, AP = CQ; P,Q không trùng đỉnh. Qua P kẻ PM ∥ BC, M ∈ AB. Chứng minh PCQM là hình chữ nhật.',
+  (t) => [
+    T('Tam giác vuông cân tại C', 'triangle', [
+      [0, 5],
+      [5, 0],
+      [0, 0],
+    ])
+      .perp('CA', 'CB')
+      .equ('CA', 'CB')
+      .on('P', 'AC', t)
+      .on('Q', 'CB', t)
+      .equ('AP', 'CQ')
+      .cut('M', 'P', 'BC', 'AB')
+      .edge('QM'),
+  ],
+);
+add(
+  'cn-b4',
+  'Bài 4',
+  25,
+  'Giao điểm của hai đường vuông góc và song song',
+  'Cho tam giác nhọn ABC, AI ⟂ BC tại I. Đường qua A vuông góc AC cắt đường qua B song song AC tại M. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H. a) AMBQ là hình gì? b) Chứng minh tam giác PIQ cân.',
+  () => [
+    T('Đường cao và trung điểm', 'triangle', [
+      [3, 5],
+      [0, 0],
+      [8, 0],
+    ])
+      .foot('I', 'A', 'BC')
+      .inter(
+        'M',
+        { through: 'A', of: ['A', 'C'], relation: 'perpendicular' },
+        { through: 'B', of: ['A', 'C'], relation: 'parallel' },
+      )
+      .mid('P', 'AB')
+      .inter('Q', 'MP', 'AC')
+      .inter('H', 'BQ', 'AI')
+      .polygon('AMBQ')
+      .edge('PI', 'IQ'),
+  ],
+  'Đổi mô tả tia Ax, By không chỉ rõ hướng thành hai đường thẳng như hình gốc, không tự đoán hướng tia.',
+);
+section = 'Hình thoi';
+add(
+  'th-v1',
+  'Ví dụ 1',
+  27,
+  'Song song qua điểm trên phân giác',
+  'Cho góc xOy có tia phân giác Ot. M thuộc Ot và khác O. Qua M kẻ MA ∥ Oy, A ∈ Ox; MB ∥ Ox, B ∈ Oy. Chứng minh OAMB là hình thoi.',
+  () => [
+    quad('M thuộc tia phân giác', 'quad', 'OAMB', [
+      [0, 0],
+      [4, 0],
+      [6, 2 * R(3)],
+      [2, 2 * R(3)],
+    ])
+      .parallel('AM', 'OB')
+      .parallel('BM', 'OA')
+      .edge('OM')
+      .bisector('O', 'A', 'M', 'B'),
+  ],
+  'Bản gốc dùng Ot rồi ghi M thuộc Oz; thống nhất thành Ot. Các tia Ox, Oy được biểu diễn bởi OA, OB.',
+);
+add(
+  'th-v2',
+  'Ví dụ 2',
+  27,
+  'Hai đường cao bằng nhau',
+  'Cho hình bình hành ABCD. Kẻ AH ⟂ BC tại H, AK ⟂ CD tại K; AH = AK. Chứng minh ABCD là hình thoi.',
+  () => [
+    Q('Hai đường cao bằng nhau', 'hbh', [
+      [0, 0],
+      [5, 0],
+      [8, 4],
+      [3, 4],
+    ])
+      .foot('H', 'A', 'BC')
+      .foot('K', 'A', 'CD')
+      .equ('AH', 'AK'),
+  ],
+  'Vị trí H trên đường BC và K trên đường CD được chép rõ từ hình gốc.',
+);
+add(
+  'th-v3',
+  'Ví dụ 3',
+  28,
+  'Tam giác đều trong hình thoi',
+  'Cho hình thoi ABCD có ∠B = 60°. Kẻ AE ⟂ DC tại E, AF ⟂ BC tại F. Chứng minh: a) AE = AF; b) Tam giác AEF đều.',
+  () => [
+    Q('Hình thoi có góc B 60°', 'rhomb', [
+      [0, 0],
+      [4, 0],
+      [2, 2 * R(3)],
+      [-2, 2 * R(3)],
+    ])
+      .deg('ABC', 60)
+      .foot('E', 'A', 'DC')
+      .foot('F', 'A', 'BC')
+      .edge('EF'),
+  ],
+);
+add(
+  'th-v4',
+  'Ví dụ 4',
+  28,
+  'Hai đường chéo cho trước',
+  'Cho hình thoi ABCD có AC = 16 cm, BD = 12 cm. Tính diện tích, cạnh và đường cao của hình thoi.',
+  () => [
+    diags(
+      Q('Hình thoi theo hai đường chéo', 'rhomb', [
+        [0, 8],
+        [-6, 0],
+        [0, -8],
+        [6, 0],
+      ]),
+    )
+      .len('AC', 16)
+      .len('BD', 12),
+  ],
+);
+add(
+  'th-b1',
+  'Bài 1',
+  30,
+  'Phân giác trong hình bình hành nhỏ',
+  'Cho tam giác ABC, AD là phân giác ∠BAC, D ∈ BC. Qua D kẻ DE ∥ AC, E ∈ AB; DF ∥ AB, F ∈ AC. Chứng minh EF là phân giác ∠AED.',
+  () => [
+    T('Hai đường song song qua phân giác')
+      .bisect('D', 'A', 'B', 'C', 'BC')
+      .cut('E', 'D', 'AC', 'AB')
+      .cut('F', 'D', 'AB', 'AC')
+      .edge('EF'),
+  ],
+);
+add(
+  'th-b2',
+  'Bài 2',
+  30,
+  'Tính đường chéo và góc',
+  'a) Cho hình thoi ABCD có AB = 25, AC = 14. Tính BD. b) Cho hình thoi DEFG có ∠D = 70°. Tính x = ∠DGE.',
+  () => [
+    diags(
+      Q('Ý a', 'rhomb', [
+        [0, 7],
+        [24, 0],
+        [0, -7],
+        [-24, 0],
+      ]),
+    )
+      .len('AB', 25)
+      .len('AC', 14),
+    quad('Ý b', 'rhomb', 'DEFG', [
+      [0, 0],
+      [4, 0],
+      [4 + 4 * Math.cos((70 * Math.PI) / 180), 4 * Math.sin((70 * Math.PI) / 180)],
+      [4 * Math.cos((70 * Math.PI) / 180), 4 * Math.sin((70 * Math.PI) / 180)],
+    ])
+      .deg('GDE', 70)
+      .edge('GE'),
+  ],
+);
+add(
+  'th-b3',
+  'Bài 3',
+  31,
+  'Đường chéo vuông góc cạnh',
+  'Cho hình bình hành ABCD có AC ⟂ AD. E,F lần lượt là trung điểm AB,CD. Chứng minh AECF là hình thoi.',
+  () => [
+    Q('AC vuông góc AD', 'hbh', [
+      [0, 0],
+      [6, 0],
+      [4, 2 * R(2)],
+      [-2, 2 * R(2)],
+    ])
+      .perp('AC', 'AD')
+      .mid('E', 'AB')
+      .mid('F', 'CD')
+      .polygon('AECF')
+      .edge('AC'),
+  ],
+);
+add(
+  'th-b4',
+  'Bài 4',
+  31,
+  'Độ dài cạnh hình thoi',
+  'Cho hình thoi ABCD có hai đường chéo cắt nhau tại O, AC = 8 cm và BD = 10 cm. Tính cạnh hình thoi.',
+  () => [
+    diags(
+      Q('Hai nửa đường chéo', 'rhomb', [
+        [0, 4],
+        [5, 0],
+        [0, -4],
+        [-5, 0],
+      ]),
+    )
+      .len('AC', 8)
+      .len('BD', 10),
+  ],
+);
+add(
+  'th-b5',
+  'Bài 5',
+  31,
+  'Bốn điểm lấy theo hai đỉnh đối',
+  'Cho hình thoi ABCD, O = AC ∩ BD. Trên AB,BC,CD,DA lần lượt lấy M,N,P,Q sao cho AM = CN = CP = AQ; các điểm nằm trong cạnh. Chứng minh: a) M,O,P thẳng hàng và N,O,Q thẳng hàng; b) MNPQ là hình chữ nhật.',
+  (t) => [
+    diags(Q('Bốn điểm theo độ dài bằng nhau', 'rhomb'))
+      .on('M', 'AB', t)
+      .on('N', 'CB', t)
+      .on('P', 'CD', t)
+      .on('Q', 'AD', t)
+      .equ('AM', 'CN')
+      .equ('AM', 'CP')
+      .equ('AM', 'AQ')
+      .polygon('MNPQ')
+      .edge('MP', 'NQ'),
+  ],
+);
+add(
+  'th-b6',
+  'Bài 6',
+  32,
+  'Tìm vị trí điểm tạo hình thoi',
+  'Cho tam giác ABC. D nằm trong BC. Qua D kẻ DE ∥ AB, E ∈ AC; DF ∥ AC, F ∈ AB. a) AEDF là hình gì? b) D cần ở vị trí nào để AEDF là hình thoi?',
+  (t) => [
+    T('Điểm D di chuyển')
+      .on('D', 'BC', t)
+      .cut('E', 'D', 'AB', 'AC')
+      .cut('F', 'D', 'AC', 'AB')
+      .edge('AD', 'EF'),
+  ],
+  'Ý b bản gốc ghi ADEF sai thứ tự; thống nhất AEDF với ý a và hình gốc.',
+);
+section = 'Hình vuông';
+add(
+  'hv-v1',
+  'Ví dụ 1',
+  33,
+  'Hai hình chiếu từ phân giác',
+  'Cho tam giác ABC vuông tại A. AD là phân giác ∠BAC, D ∈ BC. Kẻ DE ⟂ AB tại E, DF ⟂ AC tại F. Chứng minh AEDF là hình vuông.',
+  () => [
+    T('Phân giác góc vuông', 'right')
+      .bisect('D', 'A', 'B', 'C', 'BC')
+      .foot('E', 'D', 'AB')
+      .foot('F', 'D', 'AC'),
+  ],
+);
+add(
+  'hv-v2',
+  'Ví dụ 2',
+  34,
+  'Hai tam giác bằng nhau trong hình vuông',
+  'Cho hình vuông ABCD. E ∈ AD, F ∈ DC, AE = DF; E,F nằm trong cạnh. Chứng minh: a) ΔADF = ΔBAE; b) BE ⟂ AF.',
+  (t) => [
+    Q('Hai đoạn AE và DF', 'square')
+      .on('E', 'AD', t)
+      .on('F', 'DC', t)
+      .equ('AE', 'DF')
+      .edge('BE', 'AF'),
+  ],
+);
+add(
+  'hv-v3',
+  'Ví dụ 3',
+  34,
+  'Từ hình chữ nhật đến hình vuông',
+  'Cho tam giác ABC vuông tại A. M nằm trong BC. Qua M kẻ ME ∥ AB, E ∈ AC; MF ∥ AC, F ∈ AB. a) AFME là hình gì? b) Tìm vị trí M để AFME là hình vuông.',
+  (t) => [
+    T('Vị trí tổng quát của M', 'right')
+      .on('M', 'BC', t)
+      .cut('E', 'M', 'AB', 'AC')
+      .cut('F', 'M', 'AC', 'AB')
+      .edge('AM'),
+  ],
+);
+add(
+  'hv-b1',
+  'Bài 1',
+  34,
+  'Bốn điểm quay quanh hình vuông',
+  'Cho hình vuông ABCD. M,N,P,Q lần lượt nằm trong AB,BC,CD,DA và AM = BN = CP = DQ. Chứng minh MNPQ là hình vuông.',
+  (t) => [
+    Q('Bốn đoạn cùng độ dài', 'square')
+      .on('M', 'AB', t)
+      .on('N', 'BC', t)
+      .on('P', 'CD', t)
+      .on('Q', 'DA', t)
+      .equ('AM', 'BN')
+      .equ('AM', 'CP')
+      .equ('AM', 'DQ')
+      .polygon('MNPQ'),
+  ],
+);
+add(
+  'hv-b2',
+  'Bài 2',
+  35,
+  'Phân giác và chân đường vuông góc',
+  'Cho hình vuông ABCD. M nằm trong DC. Phân giác ∠MAD cắt CD tại I. Kẻ IH ⟂ AM tại H; tia IH cắt BC tại K. Chứng minh: a) ΔABK = ΔAHK; b) ∠IAK = 45°.',
+  (t) => [
+    Q('Phân giác của góc MAD', 'square')
+      .on('M', 'DC', t)
+      .bisect('I', 'A', 'M', 'D', 'CD')
+      .foot('H', 'I', 'AM')
+      .inter('K', 'IH', 'BC')
+      .edge('AK', 'AI', 'AM')
+      .check(
+        'K thuộc tia IH',
+        (f) =>
+          (f.p('K').x - f.p('I').x) * (f.p('H').x - f.p('I').x) +
+            (f.p('K').y - f.p('I').y) * (f.p('H').y - f.p('I').y) >
+          0,
+      ),
+  ],
+);
+add(
+  'hv-b3',
+  'Bài 3',
+  35,
+  'Hai hình vuông dựng ra ngoài',
+  'Cho hình bình hành ABCD. Dựng hai hình vuông ABEF và ADGH về phía ngoài hình bình hành. Chứng minh: a) AC = FH; b) AC ⟂ FH; c) Tam giác CEG vuông cân.',
+  () => {
+    const f = Q('Hai hình vuông ngoài hình bình hành');
+    const A = f.p('A'),
+      B = f.p('B'),
+      D = f.p('D');
+    f.put('E', xy(B.x, B.y - 6))
+      .put('F', xy(A.x, A.y - 6))
+      .put('H', xy(A.x - (D.y - A.y), A.y + (D.x - A.x)))
+      .put('G', xy(D.x - (D.y - A.y), D.y + (D.x - A.x)));
+    return [
+      f
+        .polygon('ABEF')
+        .polygon('ADGH')
+        .shape('square', 'ABEF')
+        .shape('square', 'ADGH')
+        .edge('AC', 'FH', 'CE', 'CG', 'EG'),
+    ];
+  },
+);
+add(
+  'hv-b4',
+  'Bài 4',
+  35,
+  'Hai trung điểm trong hình vuông',
+  'Cho hình vuông ABCD. E,F lần lượt là trung điểm AB,AD. Chứng minh: a) DE = CF; b) DE ⟂ CF.',
+  () => [Q('Hai trung điểm', 'square').mid('E', 'AB').mid('F', 'AD').edge('DE', 'CF')],
+);
+section = 'Tổng hợp';
+add(
+  'tt-b1',
+  'Bài 1',
+  37,
+  'Bốn bài tìm góc',
+  'Tính góc chưa biết: a) Tứ giác ABCD có A = 110°, B = 120°, C = 80°, D = x. b) Tứ giác EFGH có E = F = H = 90°, G = y. c) Tứ giác IJKL có I = 65°, J = L = 90°, K = z. d) Tứ giác MNOP có M = N = t, O = 65°, P = 95°.',
+  () => [
+    hideAngles(degrees('Hình 1', 'ABCD', [110, 120, 80, 50])),
+    hideAngles(degrees('Hình 2', 'EFGH', [90, 90, 90, 90])),
+    hideAngles(degrees('Hình 3', 'IJKL', [65, 90, 115, 90])),
+    hideAngles(degrees('Hình 4', 'MNOP', [100, 100, 65, 95])),
+  ],
+);
+add(
+  'tt-b2',
+  'Bài 2',
+  38,
+  'Đường cao và độ dài cạnh',
+  'Cho tam giác nhọn ABC. AH ⟂ BC tại H, H ∈ BC. Biết AB = 13 cm, AH = 12 cm, HC = 16 cm. Tính AC và BC.',
+  () => [
+    T('Tam giác nhọn và đường cao', 'triangle', [
+      [0, 12],
+      [-5, 0],
+      [16, 0],
+    ])
+      .foot('H', 'A', 'BC')
+      .len('AB', 13)
+      .len('AH', 12)
+      .len('HC', 16),
+  ],
+);
+add(
+  'tt-b3',
+  'Bài 3',
+  38,
+  'Chiếc thang tựa vào tường',
+  'Mô hình tường và thang là tam giác ABC vuông tại A. AB là khoảng cách chân thang đến tường, AB = 1 m; BC là thang dài 4 m; AC là chiều cao cần tìm. Tính AC, làm tròn đến 0,1 m.',
+  () => [
+    T('Mô hình chiếc thang', 'right', [
+      [0, 0],
+      [1, 0],
+      [0, R(15)],
+    ])
+      .len('AB', 1)
+      .len('BC', 4),
+  ],
+  'Bổ sung tên A,B,C cho các vị trí trong hình thực tế, không đổi số liệu.',
+);
+add(
+  'tt-b4',
+  'Bài 4',
+  38,
+  'Nẹp chéo cho khung chữ nhật',
+  'Cho khung hình chữ nhật ABCD có AD = 48 cm và CD = 36 cm. Tính chiều dài nẹp chéo AC.',
+  () => [
+    Q('Khung chữ nhật', 'rect', [
+      [0, 0],
+      [0, 36],
+      [48, 36],
+      [48, 0],
+    ])
+      .len('AD', 48)
+      .len('CD', 36)
+      .edge('AC'),
+  ],
+);
+add(
+  'tt-b5',
+  'Bài 5',
+  38,
+  'Hai cột cao khác nhau',
+  'Cho tứ giác ABDC có AC ⟂ CD, BD ⟂ CD; A,B nằm cùng phía CD. Biết AC = 6, BD = 10, CD = 8. Tính x = AB.',
+  () => [
+    quad('Dữ kiện hình ở trang 39', 'quad', 'ABDC', [
+      [0, 6],
+      [8, 10],
+      [8, 0],
+      [0, 0],
+    ])
+      .perp('AC', 'CD')
+      .perp('BD', 'CD')
+      .len('AC', 6)
+      .len('BD', 10)
+      .len('CD', 8),
+  ],
+  'Tên tứ giác theo biên hình là ABDC.',
+);
+add(
+  'tt-b6',
+  'Bài 6',
+  39,
+  'Tấm kính tam giác cân',
+  'Tấm kính có dạng tam giác ABC cân tại A, BC = 8 m, AB = AC = 10 m. Gọi H là chân đường cao từ A xuống BC. Tính AH, làm tròn đến 0,1 m.',
+  () => [
+    T('Mô hình tấm kính', 'isos', [
+      [0, R(84)],
+      [-4, 0],
+      [4, 0],
+    ])
+      .foot('H', 'A', 'BC')
+      .len('BC', 8)
+      .len('AB', 10)
+      .len('AC', 10),
+  ],
+);
+add(
+  'tt-b7',
+  'Bài 7',
+  39,
+  'Hai xuồng đi theo hai hướng vuông góc',
+  'Hai xuồng xuất phát tại A, đi theo hai hướng AB ⟂ AC. Xuồng thứ nhất đến C sau khi đi 12 km. Xuồng thứ hai đi 0,5 giờ với vận tốc 18 km/h đến B rồi đi thẳng đến C với vận tốc cũ. a) Tính thời gian đi BC theo phút. b) Tính diện tích tam giác ABC.',
+  () => [
+    T('Hai hướng vuông góc', 'right', [
+      [0, 0],
+      [9, 0],
+      [0, 12],
+    ])
+      .len('AC', 12)
+      .check('AB = 18 × 0,5 km', (f) => near(f.length('AB'), 18 * 0.5)),
+  ],
+);
+add(
+  'tt-b8',
+  'Bài 8',
+  39,
+  'Kiểm tra cách dùng định lí đảo',
+  'Cho tam giác ABC có AB = 7 cm, AC = 25 cm, BC = 24 cm. Linh so sánh AB² + AC² với BC² và kết luận tam giác không vuông. Nhật cho rằng tam giác vuông. Hãy chỉ ra lỗi trong cách kiểm tra của Linh và giải thích.',
+  () => [
+    T('Tam giác theo ba cạnh đã cho', 'triangle', [
+      [0, 7],
+      [0, 0],
+      [24, 0],
+    ])
+      .len('AB', 7)
+      .len('AC', 25)
+      .len('BC', 24),
+  ],
+);
+add(
+  'tt-b9',
+  'Bài 9',
+  40,
+  'Kích thước đường chéo màn hình',
+  'Màn hình chữ nhật ABCD có AB = 80 cm, AD = 60 cm. Biết 1 inch ≈ 2,54 cm. Hãy tính độ dài đường chéo màn hình theo inch, làm tròn đến hàng đơn vị.',
+  () => [
+    Q('Mô hình màn hình', 'rect', [
+      [0, 60],
+      [80, 60],
+      [80, 0],
+      [0, 0],
+    ])
+      .len('AB', 80)
+      .len('AD', 60)
+      .edge('AC'),
+  ],
+  'Hai kích thước 80 cm và 60 cm được đọc từ hình, không dùng số 21 inch trong phần giải thích đơn vị làm giả thiết.',
+);
+add(
+  'tt-b10',
+  'Bài 10',
+  40,
+  'Chiều dài cần cẩu',
+  'Cho mô hình cần cẩu: A,C,D thẳng hàng theo thứ tự đó; AD = 6,5 m, CD = 3 m. CB ⟂ AD, CB = 3 m. Tính AB.',
+  () => [
+    triangle(
+      'Tam giác vuông của cần cẩu',
+      'triangle',
+      [
+        [0, 6.5],
+        [3, 3],
+        [0, 0],
+      ],
+      'ABD',
+    )
+      .on('C', 'DA', 3 / 6.5)
+      .edge('CB')
+      .perp('CB', 'AD')
+      .len('AD', 6.5)
+      .len('CD', 3)
+      .len('CB', 3),
+  ],
+);
+add(
+  'tt-b11a',
+  'Bài 11 – bến tàu',
+  40,
+  'Khoảng cách giữa hai bến tàu',
+  'Cho tam giác ABC có AC = 17 km, BC = 10 km. CH ⟂ AB tại H, CH = 8 km. A,B,H thẳng hàng theo thứ tự A,B,H. Tính AB.',
+  () => [
+    T('Hai bến cùng phía chân đường cao', 'triangle', [
+      [-15, 0],
+      [-6, 0],
+      [0, 8],
+    ])
+      .foot('H', 'C', 'AB')
+      .len('AC', 17)
+      .len('BC', 10)
+      .len('CH', 8)
+      .check('B nằm giữa A và H', (f) => onSegment(f.p('B'), f.p('A'), f.p('H'))),
+  ],
+  'PDF có hai Bài 11; đặt mã riêng. Thứ tự A,B,H lấy từ hình gốc.',
+);
+add(
+  'tt-b11b',
+  'Bài 11 – đối xứng',
+  40,
+  'Đối xứng qua hai cạnh góc vuông',
+  'Cho tam giác ABC vuông tại A, M là trung điểm BC. H đối xứng với M qua đường AB; E = MH ∩ AB. K đối xứng với M qua đường AC; F = MK ∩ AC. a) Nhận biết AEMF, AMBH, AMCK. b) Chứng minh H đối xứng K qua A. c) Điều kiện để AEMF là hình vuông?',
+  () => [
+    T('Đối xứng qua hai đường', 'right')
+      .mid('M', 'BC')
+      .mirror('H', 'M', 'AB')
+      .inter('E', 'MH', 'AB')
+      .mirror('K', 'M', 'AC')
+      .inter('F', 'MK', 'AC')
+      .polygon('AEMF')
+      .polygon('AMBH')
+      .polygon('AMCK'),
+  ],
+  'Phân biệt đối xứng qua đường thẳng và đối xứng qua điểm.',
+);
+add(
+  'tt-b12',
+  'Bài 12',
+  41,
+  'Hình bình hành có cạnh gấp đôi',
+  'Cho hình bình hành ABCD có BC = 2AB và ∠A = 60°. E,F là trung điểm BC,AD; I đối xứng A qua B. a) ABEF là hình gì? b) Chứng minh AIEF là hình thang cân. c) Chứng minh BICD là hình chữ nhật. d) Tính ∠AED.',
+  () => [
+    Q('Cạnh gấp đôi và góc 60°', 'hbh', [
+      [0, 0],
+      [3, 0],
+      [6, 3 * R(3)],
+      [3, 3 * R(3)],
+    ])
+      .equ('BC', 'AB', 2)
+      .deg('DAB', 60)
+      .mid('E', 'BC')
+      .mid('F', 'AD')
+      .reflect('I', 'A', 'B')
+      .polygon('ABEF')
+      .polygon('AIEF')
+      .polygon('BICD')
+      .edge('AE', 'ED'),
+  ],
+);
+add(
+  'tt-b13',
+  'Bài 13',
+  42,
+  'Đường cao và điểm đối xứng',
+  'Cho hình thang cân ABCD có AB ∥ CD, AB < CD. Kẻ AH ⟂ CD tại H, BK ⟂ CD tại K. a) ABKH là hình gì? b) Chứng minh DH = CK. c) E đối xứng D qua H; D,E đối xứng nhau qua đường nào? d) ABCE là hình gì?',
+  () => [
+    Q('Hình thang và đối xứng', 'isoTrap')
+      .foot('H', 'A', 'CD')
+      .foot('K', 'B', 'CD')
+      .reflect('E', 'D', 'H')
+      .polygon('ABCE'),
+  ],
+);
+add(
+  'tt-b14',
+  'Bài 14',
+  42,
+  'Trung điểm và hai phép đối xứng',
+  'Cho tam giác ABC vuông tại B. E,F là trung điểm AC,BC. Qua E kẻ đường song song BC, cắt AB tại M. a) Chứng minh BMEF là hình chữ nhật. b) K đối xứng B qua E; BAKC là hình gì? c) G đối xứng E qua F; BGCE là hình gì? d) Điều kiện để BGCE là hình vuông?',
+  () => [
+    T('Hai trung điểm trong tam giác vuông', 'triangle', [
+      [0, 5],
+      [0, 0],
+      [7, 0],
+    ])
+      .perp('BA', 'BC')
+      .mid('E', 'AC')
+      .mid('F', 'BC')
+      .cut('M', 'E', 'BC', 'AB')
+      .reflect('K', 'B', 'E')
+      .reflect('G', 'E', 'F')
+      .polygon('BMEF')
+      .polygon('BAKC')
+      .polygon('BGCE'),
+  ],
+);
+add(
+  'tt-b15',
+  'Bài 15',
+  43,
+  'Hình chiếu của trung điểm cạnh huyền',
+  'Cho tam giác ABC vuông tại A, AB < AC. M là trung điểm BC. Kẻ MD ⟂ AB tại D, ME ⟂ AC tại E. a) Chứng minh AM = DE. b) Chứng minh DMCE là hình bình hành. c) Kẻ AH ⟂ BC tại H. Chứng minh DHME là hình thang cân và A đối xứng H qua đường DE.',
+  () => [
+    T('Hình chiếu và đường cao', 'right')
+      .mid('M', 'BC')
+      .foot('D', 'M', 'AB')
+      .foot('E', 'M', 'AC')
+      .foot('H', 'A', 'BC')
+      .check('AB < AC', (f) => f.length('AB') < f.length('AC'))
+      .edge('AM', 'DE', 'DH', 'HM', 'MC'),
+  ],
+);
+add(
+  'tt-b16',
+  'Bài 16',
+  43,
+  'Hình thang vuông và các giao điểm',
+  'Cho hình thang vuông ABCD có ∠A = ∠D = 90°, AB = AD = CD/2. Kẻ BH ⟂ CD tại H. a) Chứng minh ABHD là hình vuông. b) M là trung điểm BH; chứng minh A đối xứng C qua M. c) Kẻ DI ⟂ AC tại I; AH cắt DI tại P, cắt DM tại Q. Chứng minh DPBQ là hình thoi.',
+  () => [
+    Q('Hình thang vuông', 'quad', [
+      [0, 4],
+      [4, 4],
+      [8, 0],
+      [0, 0],
+    ])
+      .perp('AB', 'AD')
+      .perp('AD', 'CD')
+      .equ('AB', 'AD')
+      .equ('CD', 'AB', 2)
+      .foot('H', 'B', 'CD')
+      .mid('M', 'BH')
+      .foot('I', 'D', 'AC')
+      .inter('P', 'AH', 'DI')
+      .inter('Q', 'AH', 'DM')
+      .polygon('DPBQ'),
+  ],
+);
+add(
+  'tt-b17',
+  'Bài 17',
+  44,
+  'Một điểm trên tia đối',
+  'Cho hình vuông ABCD. E nằm trong DC. F thuộc tia đối của tia BC, BF = DE. a) Chứng minh tam giác AEF vuông cân. b) I là trung điểm EF; chứng minh I thuộc BD. c) K đối xứng A qua I; chứng minh AEKF là hình vuông.',
+  (t) => {
+    const f = Q('Điểm F trên tia đối BC', 'square').on('E', 'DC', t);
+    f.put('F', lerp(f.p('B'), f.p('C'), -t));
+    return [
+      f
+        .equ('BF', 'DE')
+        .check(
+          'F thuộc tia đối BC',
+          (g) =>
+            (g.p('F').x - g.p('B').x) * (g.p('C').x - g.p('B').x) +
+              (g.p('F').y - g.p('B').y) * (g.p('C').y - g.p('B').y) <
+            0,
+        )
+        .mid('I', 'EF')
+        .reflect('K', 'A', 'I')
+        .polygon('AEKF')
+        .edge('BD', 'AF', 'EF', 'BF'),
+    ];
+  },
+);
+add(
+  'tt-b18',
+  'Bài 18',
+  45,
+  'Đối xứng của trung điểm cạnh huyền',
+  'Cho tam giác ABC vuông tại A, M là trung điểm BC, D là trung điểm AB. E đối xứng M qua D. a) Chứng minh E đối xứng M qua đường AB. b) AEMC và AEBM là hình gì? c) Điều kiện để AEBM là hình vuông?',
+  () => [
+    T('Trung điểm và đối xứng', 'right')
+      .mid('M', 'BC')
+      .mid('D', 'AB')
+      .reflect('E', 'M', 'D')
+      .polygon('AEMC')
+      .polygon('AEBM'),
+  ],
+);
+add(
+  'tt-b19',
+  'Bài 19',
+  45,
+  'Góc 120 độ và cạnh gấp đôi',
+  'Cho hình bình hành MNPQ có MN = 2MQ, ∠M = 120°. I,K là trung điểm MN,PQ; A đối xứng Q qua M. a) MIKQ là hình gì? b) Chứng minh tam giác AMI đều. c) Chứng minh AMPN là hình chữ nhật.',
+  () => [
+    quad('Cạnh gấp đôi, góc 120°', 'hbh', 'MNPQ', [
+      [0, 0],
+      [6, 0],
+      [4.5, 1.5 * R(3)],
+      [-1.5, 1.5 * R(3)],
+    ])
+      .equ('MN', 'MQ', 2)
+      .deg('QMN', 120)
+      .mid('I', 'MN')
+      .mid('K', 'PQ')
+      .reflect('A', 'Q', 'M')
+      .polygon('MIKQ')
+      .polygon('AMI')
+      .polygon('AMPN'),
+  ],
+);
+add(
+  'tt-b20',
+  'Bài 20',
+  46,
+  'Chuỗi đường song song qua trung điểm',
+  'Cho tứ giác lồi ABCD. E là trung điểm AB. Qua E kẻ EF ∥ AC, F ∈ BC. Qua F kẻ FG ∥ BD, G ∈ CD. Qua G kẻ GH ∥ AC, H ∈ AD. a) Chứng minh EFGH là hình bình hành. b) Điều kiện của ABCD để EFGH là hình chữ nhật?',
+  () => [
+    Q('Ba phép dựng song song liên tiếp', 'quad')
+      .mid('E', 'AB')
+      .cut('F', 'E', 'AC', 'BC')
+      .cut('G', 'F', 'BD', 'CD')
+      .cut('H', 'G', 'AC', 'AD')
+      .polygon('EFGH')
+      .edge('AC', 'BD'),
+  ],
+);
+add(
+  'tt-b21',
+  'Bài 21',
+  46,
+  'Ba trung điểm và một đường song song',
+  'Cho tam giác ABC vuông tại A. E,G,F lần lượt là trung điểm AB,BC,AC. Qua E kẻ đường song song BF, cắt đường thẳng GF tại I. a) AEGF là hình gì? b) Chứng minh BEIF là hình bình hành. c) Chứng minh AGCI là hình thoi. d) Điều kiện để AGCI là hình vuông?',
+  () => [
+    T('Giao điểm trên đường GF kéo dài', 'right')
+      .mid('E', 'AB')
+      .mid('G', 'BC')
+      .mid('F', 'AC')
+      .cut('I', 'E', 'BF', 'GF')
+      .polygon('AEGF')
+      .polygon('BEIF')
+      .polygon('AGCI'),
+  ],
+  'Giữ đường thẳng GF, không đổi thành đoạn GF. Ý b trong phần giải gốc ghi nhầm BEFI; thứ tự đúng theo đề là BEIF.',
+);
 
-export const worksheetFingerprint=(s:string)=>s.normalize('NFC').replace(/\s+/g,' ').trim().replace(/\s*([,;:.!?=])\s*/g,'$1').toLocaleLowerCase('vi');
+export const worksheetFingerprint = (s: string) =>
+  s
+    .normalize('NFC')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\s*([,;:.!?=])\s*/g, '$1')
+    .toLocaleLowerCase('vi');
 /** Exact whole statement only: changed numbers or point names must never reuse a preset. */
-export function findWorksheet(problem:string){const key=worksheetFingerprint(problem);return worksheets.find(w=>worksheetFingerprint(w.problem)===key);}
-export function worksheetDrawings(w:Worksheet,t=.37):Drawing[]{return w.draw(t).map(f=>f.build());}
+export function findWorksheet(problem: string) {
+  const key = worksheetFingerprint(problem);
+  return worksheets.find((w) => worksheetFingerprint(w.problem) === key);
+}
+export function worksheetDrawings(w: Worksheet, t = 0.37): Drawing[] {
+  return w.draw(t).map((f) => f.build());
+}

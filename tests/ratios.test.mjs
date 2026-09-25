@@ -1,15 +1,101 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {loadTS} from './load-ts.mjs';
-const p=await loadTS('lib/problem-diagram.ts'),g=await loadTS('lib/geometry.ts');const {lessons}=await loadTS('lib/learning.ts');
-const q=s=>'Cho hình bình hành ABCD. M nằm trong AB sao cho '+s+'. Chứng minh CM = DM.';
-const ready=s=>{const r=p.resolveProblemDiagram(s);assert.equal(r.status,'ready',JSON.stringify(r));return r.drawing;};
-const len=(d,s)=>g.distance(d.points[s[0]],d.points[s[1]]);
-for(const [s,t] of [['2AM=AB',.5],['2 AM = AB',.5],['AB=2AM',.5],['AM=AB/2',.5],['AM=(1/2)AB',.5],['AM=1/2AB',.5],['AM=0,5AB',.5],['2×AM=AB',.5],['AM:MB=1:2',1/3],['AM/MB=1/2',1/3],['AM/AB=1/2',.5],['3AM=2MB',.4],['2BM=AB',.5],['3MA=BA',1/3]])test('ratio geometry '+s,()=>{const d=ready(q(s));assert(g.near(len(d,'AM')/len(d,'AB'),t));assert(g.onSegment(d.points.M,d.points.A,d.points.B));});
-test('120 coefficient combinations are solved, not matched to a midpoint preset',()=>{for(let a=1;a<=12;a++)for(let b=1;b<=10;b++){const d=ready(q(a+'AM='+b+'MB'));assert(g.near(len(d,'AM')/len(d,'AB'),b/(a+b)));}});
-for(const s of ['2AM=AB và 3AM=AB','AM=0AB','0AM=AB','AM=AB/0','AM=-0,5AB','-2AM=AB','2AM=XY','AM=2AB','AM:MB=1:0'])test('invalid ratio is not silently guessed: '+s,()=>assert.notEqual(p.resolveProblemDiagram(q(s)).status,'ready'));
-test('a ratio does not invent membership',()=>assert.notEqual(p.resolveProblemDiagram('Cho hình bình hành ABCD có 2AM=AB. Chứng minh CM=DM.').status,'ready'));
-test('equal-length anchors C and A retain opposite direction',()=>{const d=ready('Cho hình bình hành ABCD. Trên AB lấy P, trên CD lấy Q sao cho 2AP = CQ. Chứng minh PQ ∥ AC.');assert(g.near(2*len(d,'AP'),len(d,'CQ')));assert(g.onSegment(d.points.Q,d.points.C,d.points.D));});
-test('base ratio plus absolute length remains simultaneously true',()=>{const d=ready('Cho hình bình hành ABCD có BC = 2AB và BC = 12 cm. M thuộc AB, 2AM=AB. Chứng minh CM=DM.');assert(g.near(len(d,'BC'),12));assert(g.near(len(d,'AB'),6));assert(g.near(len(d,'AM'),3));});
-test('cm is a unit, not an undeclared point M in a coefficient',()=>{const d=ready('Cho hình vuông ABCD có AB = 3 cm. Chứng minh AC=BD.');assert(g.near(len(d,'AB'),3));assert(!d.points.M);});
-for(const s of [String.raw`$2AM=AB$`,String.raw`$AM=\frac{AB}{2}$`,String.raw`\(AM=\frac{1}{2}AB\)`])test('bounded TeX normalization retains the ratio '+s,()=>{const d=ready(q(s));assert(g.near(2*len(d,'AM'),len(d,'AB')));});
-test('changed sample ratio is newly constructed and not the old AE = AF preset',()=>{const d=ready(lessons.find(l=>l.id==='square').problem.replace('AE = AF','AE = 2AF'));assert(g.near(len(d,'AE'),2*len(d,'AF')));assert(!g.near(len(d,'AE'),len(d,'AF')));});
-test('numeric verification rejects the old wrong drawing',()=>{const s=q('2AM=AB'),d=ready(s),parsed=p.parseProblem(s);d.points.M=g.lerp(d.points.A,d.points.B,.3);assert.throws(()=>p.verifyConstraints(d,parsed.constraints));});
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { loadTS } from './load-ts.mjs';
+const p = await loadTS('lib/problem-diagram.ts'),
+  g = await loadTS('lib/geometry.ts');
+const { lessons } = await loadTS('lib/learning.ts');
+const q = (s) => 'Cho hình bình hành ABCD. M nằm trong AB sao cho ' + s + '. Chứng minh CM = DM.';
+const ready = (s) => {
+  const r = p.resolveProblemDiagram(s);
+  assert.equal(r.status, 'ready', JSON.stringify(r));
+  return r.drawing;
+};
+const len = (d, s) => g.distance(d.points[s[0]], d.points[s[1]]);
+for (const [s, t] of [
+  ['2AM=AB', 0.5],
+  ['2 AM = AB', 0.5],
+  ['AB=2AM', 0.5],
+  ['AM=AB/2', 0.5],
+  ['AM=(1/2)AB', 0.5],
+  ['AM=1/2AB', 0.5],
+  ['AM=0,5AB', 0.5],
+  ['2×AM=AB', 0.5],
+  ['AM:MB=1:2', 1 / 3],
+  ['AM/MB=1/2', 1 / 3],
+  ['AM/AB=1/2', 0.5],
+  ['3AM=2MB', 0.4],
+  ['2BM=AB', 0.5],
+  ['3MA=BA', 1 / 3],
+])
+  test('ratio geometry ' + s, () => {
+    const d = ready(q(s));
+    assert(g.near(len(d, 'AM') / len(d, 'AB'), t));
+    assert(g.onSegment(d.points.M, d.points.A, d.points.B));
+  });
+test('120 coefficient combinations are solved, not matched to a midpoint preset', () => {
+  for (let a = 1; a <= 12; a++)
+    for (let b = 1; b <= 10; b++) {
+      const d = ready(q(a + 'AM=' + b + 'MB'));
+      assert(g.near(len(d, 'AM') / len(d, 'AB'), b / (a + b)));
+    }
+});
+for (const s of [
+  '2AM=AB và 3AM=AB',
+  'AM=0AB',
+  '0AM=AB',
+  'AM=AB/0',
+  'AM=-0,5AB',
+  '-2AM=AB',
+  '2AM=XY',
+  'AM=2AB',
+  'AM:MB=1:0',
+])
+  test('invalid ratio is not silently guessed: ' + s, () =>
+    assert.notEqual(p.resolveProblemDiagram(q(s)).status, 'ready'),
+  );
+test('a ratio does not invent membership', () =>
+  assert.notEqual(
+    p.resolveProblemDiagram('Cho hình bình hành ABCD có 2AM=AB. Chứng minh CM=DM.').status,
+    'ready',
+  ));
+test('equal-length anchors C and A retain opposite direction', () => {
+  const d = ready(
+    'Cho hình bình hành ABCD. Trên AB lấy P, trên CD lấy Q sao cho 2AP = CQ. Chứng minh PQ ∥ AC.',
+  );
+  assert(g.near(2 * len(d, 'AP'), len(d, 'CQ')));
+  assert(g.onSegment(d.points.Q, d.points.C, d.points.D));
+});
+test('base ratio plus absolute length remains simultaneously true', () => {
+  const d = ready(
+    'Cho hình bình hành ABCD có BC = 2AB và BC = 12 cm. M thuộc AB, 2AM=AB. Chứng minh CM=DM.',
+  );
+  assert(g.near(len(d, 'BC'), 12));
+  assert(g.near(len(d, 'AB'), 6));
+  assert(g.near(len(d, 'AM'), 3));
+});
+test('cm is a unit, not an undeclared point M in a coefficient', () => {
+  const d = ready('Cho hình vuông ABCD có AB = 3 cm. Chứng minh AC=BD.');
+  assert(g.near(len(d, 'AB'), 3));
+  assert(!d.points.M);
+});
+for (const s of [
+  String.raw`$2AM=AB$`,
+  String.raw`$AM=\frac{AB}{2}$`,
+  String.raw`\(AM=\frac{1}{2}AB\)`,
+])
+  test('bounded TeX normalization retains the ratio ' + s, () => {
+    const d = ready(q(s));
+    assert(g.near(2 * len(d, 'AM'), len(d, 'AB')));
+  });
+test('changed sample ratio is newly constructed and not the old AE = AF preset', () => {
+  const d = ready(lessons.find((l) => l.id === 'square').problem.replace('AE = AF', 'AE = 2AF'));
+  assert(g.near(len(d, 'AE'), 2 * len(d, 'AF')));
+  assert(!g.near(len(d, 'AE'), len(d, 'AF')));
+});
+test('numeric verification rejects the old wrong drawing', () => {
+  const s = q('2AM=AB'),
+    d = ready(s),
+    parsed = p.parseProblem(s);
+  d.points.M = g.lerp(d.points.A, d.points.B, 0.3);
+  assert.throws(() => p.verifyConstraints(d, parsed.constraints));
+});

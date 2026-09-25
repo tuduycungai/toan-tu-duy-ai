@@ -1,0 +1,218 @@
+[
+  {
+    "name": "altitudes",
+    "problem": "Cho tam giác ABC có các đường cao AH và BK.",
+    "points": 6,
+    "checked": [
+      "Cho tam giác ABC có các đường cao AH và BK.",
+      "Cho tam giác ABC có các đường cao AH và BK.",
+      "Cho tam giác ABC có các đường cao AH và BK.",
+      "Cho tam giác ABC có các đường cao AH và BK."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "external-altitude",
+    "problem": "Cho tam giác tù ABC, H là chân đường cao từ A xuống BC.",
+    "points": 4,
+    "checked": [
+      "Cho tam giác tù ABC, H là chân đường cao từ A xuống BC.",
+      "Cho tam giác tù ABC, H là chân đường cao từ A xuống BC."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "medians",
+    "problem": "Cho tam giác ABC; M, N lần lượt là trung điểm BC, AC; G là trọng tâm.",
+    "points": 6,
+    "checked": [
+      "Cho tam giác ABC; M, N lần lượt là trung điểm BC, AC; G là trọng tâm.",
+      "Cho tam giác ABC; M, N lần lượt là trung điểm BC, AC; G là trọng tâm.",
+      "Cho tam giác ABC; M, N lần lượt là trung điểm BC, AC; G là trọng tâm.",
+      "Cho tam giác ABC; M, N lần lượt là trung điểm BC, AC; G là trọng tâm."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "circumcircle",
+    "problem": "Cho tam giác ABC nội tiếp đường tròn tâm O.",
+    "points": 4,
+    "checked": [
+      "Cho tam giác ABC nội tiếp đường tròn tâm O.",
+      "Cho tam giác ABC nội tiếp đường tròn tâm O."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "incircle",
+    "problem": "Cho tam giác ABC, I là tâm đường tròn nội tiếp; H, K là các tiếp điểm trên BC, AB.",
+    "points": 7,
+    "checked": [
+      "Cho tam giác ABC, I là tâm đường tròn nội tiếp; H, K là các tiếp điểm trên BC, AB.",
+      "Cho tam giác ABC, I là tâm đường tròn nội tiếp; H, K là các tiếp điểm trên BC, AB.",
+      "Cho tam giác ABC, I là tâm đường tròn nội tiếp; H, K là các tiếp điểm trên BC, AB."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "bisector",
+    "problem": "Cho tam giác ABC; BD là phân giác góc ABC, D thuộc AC.",
+    "points": 5,
+    "checked": [
+      "Cho tam giác ABC; BD là phân giác góc ABC, D thuộc AC.",
+      "Cho tam giác ABC; BD là phân giác góc ABC, D thuộc AC."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "rectangle",
+    "problem": "Cho hình chữ nhật ABCD, hai đường chéo cắt nhau tại O.",
+    "points": 5,
+    "checked": [
+      "Cho hình chữ nhật ABCD, hai đường chéo cắt nhau tại O.",
+      "Cho hình chữ nhật ABCD, hai đường chéo cắt nhau tại O.",
+      "Cho hình chữ nhật ABCD, hai đường chéo cắt nhau tại O.",
+      "Cho hình chữ nhật ABCD, hai đường chéo cắt nhau tại O.",
+      "Cho hình chữ nhật ABCD, hai đường chéo cắt nhau tại O."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "rhombus",
+    "problem": "Cho hình thoi ABCD với hai đường chéo AC, BD.",
+    "points": 4,
+    "checked": [
+      "Cho hình thoi ABCD với hai đường chéo AC, BD.",
+      "Cho hình thoi ABCD với hai đường chéo AC, BD.",
+      "Cho hình thoi ABCD với hai đường chéo AC, BD."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "trapezoid",
+    "problem": "Cho hình thang ABCD với AB song song CD; M, N là trung điểm AD, BC.",
+    "points": 6,
+    "checked": [
+      "Cho hình thang ABCD với AB song song CD; M, N là trung điểm AD, BC.",
+      "Cho hình thang ABCD với AB song song CD; M, N là trung điểm AD, BC.",
+      "Cho hình thang ABCD với AB song song CD; M, N là trung điểm AD, BC."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "tangents",
+    "problem": "Cho đường tròn tâm O qua R, từ điểm P bên ngoài kẻ các tiếp tuyến PT, PU.",
+    "points": 6,
+    "checked": [
+      "Cho đường tròn tâm O qua R, từ điểm P bên ngoài kẻ các tiếp tuyến PT, PU.",
+      "Cho đường tròn tâm O qua R, từ điểm P bên ngoài kẻ các tiếp tuyến PT, PU.",
+      "Cho đường tròn tâm O qua R, từ điểm P bên ngoài kẻ các tiếp tuyến PT, PU.",
+      "Cho đường tròn tâm O qua R, từ điểm P bên ngoài kẻ các tiếp tuyến PT, PU."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "secant",
+    "problem": "Cho đường tròn tâm O qua R, đường thẳng AB cắt đường tròn tại M và N.",
+    "points": 6,
+    "checked": [
+      "Cho đường tròn tâm O qua R, đường thẳng AB cắt đường tròn tại M và N.",
+      "Cho đường tròn tâm O qua R, đường thẳng AB cắt đường tròn tại M và N.",
+      "Cho đường tròn tâm O qua R, đường thẳng AB cắt đường tròn tại M và N.",
+      "Cho đường tròn tâm O qua R, đường thẳng AB cắt đường tròn tại M và N."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "reflection",
+    "problem": "Cho tam giác ABC, dựng tam giác DEF đối xứng qua đường thẳng XY.",
+    "points": 8,
+    "checked": [
+      "Cho tam giác ABC, dựng tam giác DEF đối xứng qua đường thẳng XY.",
+      "Cho tam giác ABC, dựng tam giác DEF đối xứng qua đường thẳng XY."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "regular",
+    "problem": "Cho lục giác đều ABCDEF tâm O.",
+    "points": 7,
+    "checked": [
+      "Cho lục giác đều ABCDEF tâm O.",
+      "Cho lục giác đều ABCDEF tâm O.",
+      "Cho lục giác đều ABCDEF tâm O.",
+      "Cho lục giác đều ABCDEF tâm O.",
+      "Cho lục giác đều ABCDEF tâm O."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "rays-eight",
+    "problem": "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+    "points": 10,
+    "checked": [
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H.",
+      "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc AC, từ B kẻ tia By song song AC. M là giao điểm hai tia. P là trung điểm AB; MP cắt AC tại Q; BQ cắt AI tại H."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "parabola",
+    "problem": "Vẽ đồ thị x^2-2*x-1",
+    "points": 0,
+    "checked": [],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "hyperbola",
+    "problem": "Vẽ đồ thị 1/x",
+    "points": 0,
+    "checked": [],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "trigonometry",
+    "problem": "Vẽ đồ thị sin(x)",
+    "points": 0,
+    "checked": [],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "root",
+    "problem": "Vẽ đồ thị sqrt(x)",
+    "points": 0,
+    "checked": [],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "cuboid",
+    "problem": "Cho hình hộp chữ nhật ABCD.EFGH có AB = 6, AD = 4, AE = 3.",
+    "points": 8,
+    "checked": [
+      "Cho hình hộp chữ nhật ABCD.EFGH có AB = 6, AD = 4, AE = 3.",
+      "Cho hình hộp chữ nhật ABCD.EFGH có AB = 6, AD = 4, AE = 3.",
+      "Cho hình hộp chữ nhật ABCD.EFGH có AB = 6, AD = 4, AE = 3.",
+      "Cho hình hộp chữ nhật ABCD.EFGH có AB = 6, AD = 4, AE = 3.",
+      "Cho hình hộp chữ nhật ABCD.EFGH có AB = 6, AD = 4, AE = 3.",
+      "Cho hình hộp chữ nhật ABCD.EFGH có AB = 6, AD = 4, AE = 3."
+    ],
+    "renderer": "geometry-v1"
+  },
+  {
+    "name": "pyramid",
+    "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông, SO vuông góc mặt đáy tại tâm O.",
+    "points": 6,
+    "checked": [
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông, SO vuông góc mặt đáy tại tâm O.",
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông, SO vuông góc mặt đáy tại tâm O.",
+      "Cho hình chóp S.ABCD có đáy ABCD là hình vuông, SO vuông góc mặt đáy tại tâm O."
+    ],
+    "renderer": "geometry-v1"
+  }
+]

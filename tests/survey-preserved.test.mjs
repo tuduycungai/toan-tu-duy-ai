@@ -1,16 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
-import {createHash} from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { sourceHash } from './source-integrity.mjs';
 
-test('survey update preserves v6.2 Gemini, class authentication, Forms transport, TikZ, learner model and Netlify configuration',()=>{
-  const hashes=JSON.parse(readFileSync(new URL('./v62-protected.json',import.meta.url),'utf8'));
-  for(const [file,expected] of Object.entries(hashes)) {
-    // V6.2.3 explicitly adds adaptive/multimodal modes; auth/transport have behavioral coverage.
-    // V6.3 changes provider configuration/routing; v630-openai tests cover auth and transport.
-    // V6.2.4 routes the existing figure through the shared, cancellable low-memory compiler.
-    if(['server/gemini.mjs','components/tikz-figure.tsx','.env.example','netlify/functions/chat.mjs'].includes(file))continue;
-    const actual=createHash('sha256').update(readFileSync(new URL('../'+file,import.meta.url))).digest('hex');
-    assert.equal(actual,expected,file);
+test('cleanup preserves survey transport, learner model and lesson data from the supplied archive', async () => {
+  const baseline = JSON.parse(
+    await readFile(new URL('./fixtures/source-baseline.json', import.meta.url), 'utf8'),
+  );
+  for (const [file, expected] of Object.entries(baseline.groups.learning)) {
+    const source = await readFile(new URL('../' + file, import.meta.url), 'utf8');
+    assert.equal(await sourceHash(file, source), expected, file);
   }
 });

@@ -1,12 +1,123 @@
-import {useId} from 'react';
-import {MathText} from './math-text';
-import {ArrowDown, GitMerge, Target, Lightbulb, ScanLine} from 'lucide-react';
-import type {Figure,Plan} from '@/lib/learning';
-export function GeometryFigure({figure,title,large=false}:{figure:Figure;title:string;large?:boolean}){
- const id=useId();const point=(name:string)=>figure.points.find(p=>p.name===name)!;
- return <svg className={`geometry-figure ${large?'large-figure':''}`} viewBox="0 0 320 250" role="img" aria-labelledby={id}><title id={id}>{title} — hình minh họa, không thay thế giả thiết</title><defs><pattern id={id+'grid'} width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="currentColor" opacity=".16"/></pattern></defs><rect width="320" height="250" fill={`url(#${id}grid)`}/><polygon points={figure.outline.map(n=>`${point(n).x},${point(n).y}`).join(' ')} className="shape-fill"/>{figure.lines.map(([a,b],i)=><line key={i} x1={point(a).x} y1={point(a).y} x2={point(b).x} y2={point(b).y} className="construction"/>)}{figure.points.map(p=><g key={p.name}><circle cx={p.x} cy={p.y} r="3" className="vertex"/><text x={p.x+7} y={p.y-8}>{p.name}</text></g>)}</svg>;
+import { useId } from 'react';
+import { MathText } from './math-text';
+import { ArrowDown, GitMerge, Target, Lightbulb, ScanLine } from 'lucide-react';
+import type { Figure, Plan } from '@/lib/learning';
+export function GeometryFigure({
+  figure,
+  title,
+  large = false,
+}: {
+  figure: Figure;
+  title: string;
+  large?: boolean;
+}) {
+  const id = useId();
+  const point = (name: string) => figure.points.find((p) => p.name === name)!;
+  return (
+    <svg
+      className={`geometry-figure ${large ? 'large-figure' : ''}`}
+      viewBox="0 0 320 250"
+      role="img"
+      aria-labelledby={id}
+    >
+      <title id={id}>{title} — hình minh họa, không thay thế giả thiết</title>
+      <defs>
+        <pattern id={id + 'grid'} width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r=".65" fill="currentColor" opacity=".16" />
+        </pattern>
+      </defs>
+      <rect width="320" height="250" fill={`url(#${id}grid)`} />
+      <polygon
+        points={figure.outline.map((n) => `${point(n).x},${point(n).y}`).join(' ')}
+        className="shape-fill"
+      />
+      {figure.lines.map(([a, b], i) => (
+        <line
+          key={i}
+          x1={point(a).x}
+          y1={point(a).y}
+          x2={point(b).x}
+          y2={point(b).y}
+          className="construction"
+        />
+      ))}
+      {figure.points.map((p) => (
+        <g key={p.name}>
+          <circle cx={p.x} cy={p.y} r="3" className="vertex" />
+          <text x={p.x + 7} y={p.y - 8}>
+            {p.name}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
 }
-export function LearningMap({plan,source='AI cập nhật'}:{plan:Plan;source?:string}){
- return <section className="learning-map" aria-label="Sơ đồ định hướng lời giải"><div className="map-title"><span><GitMerge size={18}/> Sơ đồ định hướng lời giải</span><small>{source}</small></div><div className="map-inputs"><div className="map-node given"><span><ScanLine size={15}/> GIẢ THIẾT</span><p><MathText text={plan.given}/></p></div><div className="map-node goal"><span><Target size={15}/> MỤC TIÊU</span><p><MathText text={plan.goal}/></p></div></div><div className="map-join" aria-hidden="true"><span/><ArrowDown size={18}/></div><div className="map-node bridge"><span><GitMerge size={15}/> KẾT NỐI KIẾN THỨC</span><p><MathText text={plan.bridge}/></p></div><div className="map-arrow" aria-hidden="true"><ArrowDown size={18}/></div><div className="map-node next"><span><Lightbulb size={15}/> BƯỚC EM TỰ LÀM</span><p><MathText text={plan.next}/></p></div></section>;
+export function LearningMap({ plan, source = 'AI cập nhật' }: { plan: Plan; source?: string }) {
+  return (
+    <section className="learning-map" aria-label="Sơ đồ định hướng lời giải">
+      <div className="map-title">
+        <span>
+          <GitMerge size={18} /> Sơ đồ định hướng lời giải
+        </span>
+        <small>{source}</small>
+      </div>
+      <div className="map-inputs">
+        <div className="map-node given">
+          <span>
+            <ScanLine size={15} /> GIẢ THIẾT
+          </span>
+          <p>
+            <MathText text={plan.given} />
+          </p>
+        </div>
+        <div className="map-node goal">
+          <span>
+            <Target size={15} /> MỤC TIÊU
+          </span>
+          <p>
+            <MathText text={plan.goal} />
+          </p>
+        </div>
+      </div>
+      <div className="map-join" aria-hidden="true">
+        <span />
+        <ArrowDown size={18} />
+      </div>
+      <div className="map-node bridge">
+        <span>
+          <GitMerge size={15} /> KẾT NỐI KIẾN THỨC
+        </span>
+        <p>
+          <MathText text={plan.bridge} />
+        </p>
+      </div>
+      <div className="map-arrow" aria-hidden="true">
+        <ArrowDown size={18} />
+      </div>
+      <div className="map-node next">
+        <span>
+          <Lightbulb size={15} /> BƯỚC EM TỰ LÀM
+        </span>
+        <p>
+          <MathText text={plan.next} />
+        </p>
+      </div>
+    </section>
+  );
 }
-export function TutorAvatar({large=false}:{large?:boolean}){return <span className={`tutor-avatar ${large?'avatar-large':''}`} aria-label="Gia sư AI"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M9 42c1-10 8-14 15-14s14 4 15 14" fill="#bbdbe6"/><circle cx="24" cy="20" r="12" fill="#f8d6b5"/><path d="M12 18C10 6 30 2 35 14c-9 1-12-5-13-4-2 4-5 6-10 8Z" fill="#173b59"/><path d="M14 20h8m4 0h8m-12 1h4" stroke="#173b59" strokeWidth="1.5"/><rect x="14" y="18" width="8" height="6" rx="2" stroke="#173b59"/><rect x="26" y="18" width="8" height="6" rx="2" stroke="#173b59"/><path d="M21 28q3 3 6 0" stroke="#96512f" strokeLinecap="round"/><path d="m19 34 5 6 5-6" stroke="white" strokeWidth="3"/></svg></span>;}
+export function TutorAvatar({ large = false }: { large?: boolean }) {
+  return (
+    <span className={`tutor-avatar ${large ? 'avatar-large' : ''}`} aria-label="Gia sư AI">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M9 42c1-10 8-14 15-14s14 4 15 14" fill="#bbdbe6" />
+        <circle cx="24" cy="20" r="12" fill="#f8d6b5" />
+        <path d="M12 18C10 6 30 2 35 14c-9 1-12-5-13-4-2 4-5 6-10 8Z" fill="#173b59" />
+        <path d="M14 20h8m4 0h8m-12 1h4" stroke="#173b59" strokeWidth="1.5" />
+        <rect x="14" y="18" width="8" height="6" rx="2" stroke="#173b59" />
+        <rect x="26" y="18" width="8" height="6" rx="2" stroke="#173b59" />
+        <path d="M21 28q3 3 6 0" stroke="#96512f" strokeLinecap="round" />
+        <path d="m19 34 5 6 5-6" stroke="white" strokeWidth="3" />
+      </svg>
+    </span>
+  );
+}

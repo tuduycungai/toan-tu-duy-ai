@@ -1,38 +1,20 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {createHash} from 'node:crypto';
-test('Unaffected auth, Forms, original assets and deploy files remain byte-identical',async()=>{
- const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
- // Explicitly authorized integrations are separately tested, not declared byte-identical.
- const drawingIntegration=new Set(['netlify.toml','lib/tutor.ts','app/page.tsx','app/globals.css','lib/learning.ts','components/learning-visuals.tsx','main.tsx','package.json','package-lock.json','server/gemini.mjs','tests/gemini.test.mjs','README.md']);
- // Survey labels and the continue-after-survey flow changed by request. The
- // updated UI script is not byte-identical; survey-component.test.mjs covers it.
- drawingIntegration.add('scripts/check-ui.mjs');
- // V6.3 explicitly adds OpenAI and changes the server routing/environment template.
- for(const file of ['.env.example','netlify/functions/chat.mjs','scripts/start.mjs','HUONG_DAN.md'])drawingIntegration.add(file);
- for(const [file,hash] of Object.entries(expected)){if(drawingIntegration.has(file))continue;assert.equal(createHash('sha256').update(await readFile(new URL('../'+file,import.meta.url))).digest('hex'),hash,file);}
-});
-test('Gemini authentication and transport remain unchanged after reversing documented V6.1 integrations',async()=>{
- const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
- const source=(await readFile(new URL('../server/gemini.mjs',import.meta.url),'utf8'))
- .replace("import {handleFeature,IMAGE_MODES} from './feature-api.mjs';\n",'')
- .replace('if(size>3900000)','if(size>250000)')
- .replace(" if(!IMAGE_MODES.includes(body.mode)&&size>250000)return reply({error:'Nội dung quá dài. Hãy mở bài mới.'},413);\n",'')
- .replace(" const featureImage=IMAGE_MODES.includes(body.mode);\n",'')
- .replace('if(!check&&!featureImage&&','if(!check&&')
- .replace(" if(!check&&(featureImage||body.adaptive===true))return handleFeature(body,env,model,fetcher);\n",'')
- .replace("import {DIAGRAM_PROMPT,parseDiagram} from './diagram-policy.mjs';\n","")
- .replace(" const diagram=body.mode==='diagram';\n if(!check&&(!(diagram?Array.isArray(body.messages)&&body.messages.length===1&&body.messages[0]?.role==='user'&&typeof body.messages[0].content==='string'&&body.messages[0].content.length>0&&body.messages[0].content.length<=26000:validMessages(body.messages))||!['guide','review','compare','diagram'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);\n"," if(!check&&(!validMessages(body.messages)||!['guide','review','compare'].includes(body.mode)))return reply({error:'Hội thoại không hợp lệ hoặc quá dài. Hãy mở bài mới.'},400);\n")
- .replace(" if(!check&&!diagram&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});\n"," if(!check&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});\n")
- .replace(" const generationConfig={maxOutputTokens:check?128:diagram?6000:2400};\n if(diagram){generationConfig.responseMimeType='application/json';generationConfig.responseSchema={type:'OBJECT',properties:{latex:{type:'STRING'},question:{type:'STRING'}},required:['latex','question']};}\n"," const generationConfig={maxOutputTokens:check?128:2400};\n")
- .replace(" const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({systemInstruction:{parts:[{text:check?'Reply with OK only.':diagram?DIAGRAM_PROMPT:instructions(body.mode,body.messages)}]},contents,generationConfig}),signal:AbortSignal.timeout(22000)});\n"," const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({systemInstruction:{parts:[{text:check?'Reply with OK only.':instructions(body.mode,body.messages)}]},contents,generationConfig}),signal:AbortSignal.timeout(22000)});\n")
- .replace(" if(diagram){try{return reply({...parseDiagram(text),model});}catch(e){return reply({error:'Chưa nhận được mã hình hợp lệ. Em thử vẽ lại nhé.',code:'DIAGRAM_FORMAT',repairable:true,detail:e.message},502);}}\n","")
- .replace("import { asksForAnswer, guidedFallback, guardTutorOutput } from './strict-tutor.mjs';\n",'')
- .replace(' if(!check&&asksForAnswer(body.messages))return reply({text:guidedFallback(body.messages),model});\n','')
- .replace('instructions(body.mode,body.messages)','instructions(body.mode)')
- .replace('text:guardTutorOutput(text,body.messages),model','text,model');
- assert.equal(createHash('sha256').update(source).digest('hex'),expected['server/gemini.mjs']);
-});
-test('original light/dark styles are preserved; drawing styles are appended',async()=>{
- const expected=JSON.parse(await readFile(new URL('./v2-preserved.json',import.meta.url),'utf8'));
- const css=await readFile(new URL('../app/globals.css',import.meta.url),'utf8');const original=css.split('/* Verified mathematical figures share the existing light/dark theme. */')[0];
- assert.equal(createHash('sha256').update(original).digest('hex'),expected['app/globals.css']);
-});
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { sourceHash } from './source-integrity.mjs';
+
+const baseline = JSON.parse(
+  await readFile(new URL('./fixtures/source-baseline.json', import.meta.url), 'utf8'),
+);
+// V6.3.1 intentionally repairs these surfaces. Behavioral coverage is in
+// v630-openai and v631-drawing; the original cleanup hashes remain historical.
+const updatedInV631 = new Set(['server/openai.mjs', 'server/feature-api.mjs', '.env.example']);
+for (const group of ['api', 'deployment', 'styles']) {
+  test(`V6.3.1 preserves unchanged V6.3.0 ${group} files`, async () => {
+    for (const [file, expected] of Object.entries(baseline.groups[group])) {
+      if (updatedInV631.has(file)) continue;
+      const source = await readFile(new URL('../' + file, import.meta.url), 'utf8');
+      assert.equal(await sourceHash(file, source), expected, file);
+    }
+  });
+}

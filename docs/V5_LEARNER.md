@@ -9,11 +9,11 @@ Bốn câu chẩn đoán kiểm tra bốn phương diện: đọc giả thiết/
 Không đề xuất mức mới trước khi đủ bốn câu khác nhau thuộc bốn phương diện. Trả lời lại cùng một câu không tăng số bằng chứng.
 
 | Lựa chọn đúng trong 4 câu | Mức khởi đầu đề xuất | Hỗ trợ mặc định |
-|---:|---|---:|
-| 0–1 | Mất căn bản | 3/3 |
-| 2 | Cơ bản | 2/3 |
-| 3 | Khá | 1/3 |
-| 4 | Giỏi | 0/3 |
+| ------------------------: | -------------------- | --------------: |
+|                       0–1 | Mất căn bản          |             3/3 |
+|                         2 | Cơ bản               |             2/3 |
+|                         3 | Khá                  |             1/3 |
+|                         4 | Giỏi                 |             0/3 |
 
 Đây là quy tắc sư phạm ban đầu của ứng dụng, chưa phải thang đo năng lực được nghiên cứu thực nghiệm. Bốn câu không đủ kết luận toàn diện về một học sinh. Người học/giáo viên có thể chỉnh mức; khi chỉnh thủ công, đề xuất tự động không ghi đè lựa chọn đó. Hồ sơ cũ có nhãn “Mất gốc” hoặc “Học sinh năng khiếu” được quy về mức tương ứng trong bảng hỗ trợ mới, vẫn giữ tương thích thông tin gốc.
 

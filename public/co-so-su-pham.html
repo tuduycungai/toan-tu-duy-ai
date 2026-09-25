@@ -1,163 +1,504 @@
-<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cơ sở sư phạm · Tư duy Tứ giác</title><style>body{font:17px/1.8 system-ui,sans-serif;color:#202934;background:#f4f5f6;margin:0}main{max-width:980px;margin:auto;padding:36px;background:white}h1{font-size:32px;line-height:1.3}h2{font-size:24px;margin-top:40px}a{color:#18529a;overflow-wrap:anywhere}table{border-collapse:collapse;display:block;overflow:auto;font-size:15px}td,th{border:1px solid #ccd3da;padding:12px;min-width:160px}pre{white-space:pre-wrap}blockquote{border-left:3px solid #8797a8;padding-left:20px} @media(max-width:600px){main{padding:22px}h1{font-size:27px}}@media print{body{background:white}main{max-width:none;padding:0}h2{break-after:avoid}}</style><main><a href="/">← Trở về gia sư</a><h1>Cơ sở sư phạm cho gia sư AI rèn luyện tư duy hình học tứ giác</h1>
-<h2>1. Mục đích và phạm vi</h2>
-<p>Ứng dụng được thiết kế cho học sinh đang học chương Tứ giác lớp 8, với mục đích hỗ trợ xây dựng lời chứng minh có căn cứ. Kết quả mong đợi là học sinh phân biệt được giả thiết với kết luận, biết chọn dấu hiệu phù hợp, giải thích được bước then chốt và kiểm tra lại một khẳng định. Cụm từ “phản xạ tư duy” trong tài liệu này chỉ thói quen đặt câu hỏi và kiểm chứng; không mang nghĩa học thuộc một chuỗi thao tác để áp dụng máy móc.</p>
-<p>Phạm vi nội dung gồm hình thang cân, hình bình hành, hình chữ nhật, hình thoi, hình vuông và các kiến thức tam giác cần thiết. Đường trung bình, góc, song song, vuông góc và đối xứng được sử dụng khi phục vụ bài tứ giác. Ứng dụng không mở rộng sang mọi môn học hoặc mọi chủ đề toán; chính sách gia sư yêu cầu chuyển các câu hỏi ngoài lề về mục tiêu học tập.</p>
-<p>Đây là một thiết kế ứng dụng dựa trên tài liệu, chưa phải nghiên cứu thực nghiệm về hiệu quả của chính phần mềm. Không có quá trình huấn luyện lại hoặc tinh chỉnh trọng số Gemini trong bản phát hành. Cơ sở sư phạm được chuyển thành chỉ dẫn, bài mẫu, cách phản hồi và tiêu chí kiểm tra; không được dùng thay cho kết quả đánh giá trên học sinh thật.</p>
-<h2>2. Bằng chứng và mức độ áp dụng</h2>
-<p>Tài liệu của Bộ GDĐT và Trường ĐHSP Hà Nội mô tả tư duy và lập luận toán học qua các thao tác so sánh, phân tích, tổng hợp, đặc biệt hóa, khái quát hóa, tương tự và sử dụng chứng cứ. Tài liệu cũng trình bày phương pháp và đánh giá năng lực. Đây là căn cứ phù hợp để chọn mục tiêu môn học; không phải bằng chứng thực nghiệm cho một chatbot. Xem các trang in 21–23, 58–61, 82–83.[1]</p>
-<p>Hướng dẫn IES về giải quyết vấn đề toán học lớp 4–8 xếp tự giám sát/phản tư và biểu diễn trực quan ở mức bằng chứng mạnh; nhiều chiến lược giải ở mức vừa. Vì vậy, sơ đồ và tự kiểm tra là thành phần có cơ sở để đưa vào thiết kế. Mức bằng chứng này thuộc các khuyến nghị giáo dục của tài liệu, không tự chuyển thành hiệu quả đã được chứng minh của ứng dụng.[2]</p>
-<p>Hướng dẫn IES về tổ chức học tập đề xuất xen kẽ bài giải mẫu với tự giải, kết hợp đồ họa với lời mô tả và đặt câu hỏi yêu cầu giải thích sâu. Những khuyến nghị đó gợi ý sử dụng sơ đồ ngắn kèm câu hỏi, rồi cho học sinh thực hiện một bước. Không có hàm ý rằng thêm nhiều hiệu ứng hoặc nhiều hình minh họa luôn giúp học tốt hơn.[3]</p>
-<p>Aleven và Koedinger báo cáo hai thí nghiệm lớp học trong đó học sinh được yêu cầu giải thích các bước khi dùng Cognitive Tutor thể hiện mức hiểu và chuyển giao tốt hơn nhóm không giải thích bước. Nghiên cứu có liên quan gần đến hỗ trợ học hình học bằng máy tính, nhưng Cognitive Tutor không phải Gemini. Áp dụng hợp lí là yêu cầu nêu căn cứ thay vì chỉ nhập kết quả.[4]</p>
-<p>Chi và cộng sự phân tích cách học sinh tự giải thích khi học ví dụ cơ học. Nhóm học hiểu sâu tạo ra nhiều liên hệ giữa bước giải và nguyên lí, đồng thời theo dõi chỗ mình chưa hiểu tốt hơn. Đây là nguồn bổ trợ cho hoạt động tự giải thích; bối cảnh gốc không phải chương tứ giác ở Việt Nam.[5]</p>
-<p>Hattie và Timperley chỉ ra rằng tác động của phản hồi phụ thuộc nội dung và cách phản hồi; có thể tích cực hoặc tiêu cực. Trong thiết kế này, phản hồi hướng vào bước làm và căn cứ cần sửa, tránh chỉ khen con người hoặc nói “sai rồi” mà không giúp tiến tiếp. Đánh giá hài lòng cuối buổi không được xem là bằng chứng đã đạt năng lực toán học.[6]</p>
-<p>Koedinger và Aleven bàn về sự cân bằng giữa cung cấp hỗ trợ và giữ lại thông tin để người học tự làm. Không có một mức hỗ trợ tối ưu duy nhất áp dụng cho mọi trường hợp. Quy tắc tăng dần gợi ý và giảm hỗ trợ khi học sinh trả lời có căn cứ là lựa chọn thiết kế cần tiếp tục kiểm nghiệm.[7]</p>
-<p>Một bài báo trong nước năm 2025 mô tả thiết kế tình huống về khái niệm và tính chất hình thang cân ở Toán 8. Trang tạp chí có tóm tắt nêu thực nghiệm, nhưng chưa cung cấp đủ thông tin để thẩm định mẫu, công cụ đo và độ lớn hiệu quả. Tài liệu được dùng để đối chiếu tính phù hợp chủ đề, không dùng để tuyên bố hiệu quả phần mềm.[8]</p>
-<p>Hướng dẫn UNESCO nhấn mạnh cách tiếp cận lấy con người làm trung tâm, tính phù hợp với người học và việc xem xét công cụ trong bối cảnh giáo dục. Bản thiết kế giữ giáo viên ở vai trò kiểm tra nội dung, hiển thị rõ gia sư AI và giải thích dữ liệu nào được gửi khi đánh giá.[9]</p>
-<h2>3. Chuyển mục tiêu thành hoạt động có thể quan sát</h2>
-<p>Bảng sau là khung hoạt động đề xuất cho phiên bản này. Các câu hỏi do người phát triển biên soạn để sử dụng trực tiếp trong bài tứ giác, không phải câu trích từ nghiên cứu.</p>
-<table>
-<thead>
-<tr>
-<th>Thao tác</th>
-<th>Hoạt động học sinh cần thực hiện</th>
-<th>Câu gợi mở mẫu</th>
-<th>Dấu hiệu quan sát được</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Phân tích</td>
-<td>Tách kết luận thành một điều kiện đủ nhỏ hơn</td>
-<td>Muốn kết luận AECF là hình bình hành, em định kiểm tra cặp cạnh nào?</td>
-<td>Nêu đúng đối tượng và dấu hiệu</td>
-</tr>
-<tr>
-<td>Tổng hợp</td>
-<td>Ghép các quan hệ đã chứng minh thành chuỗi lập luận</td>
-<td>Từ AE = CF và AE ∥ CF, em kết luận được gì?</td>
-<td>Mỗi suy ra có căn cứ</td>
-</tr>
-<tr>
-<td>So sánh</td>
-<td>Đối chiếu điều kiện của hai dấu hiệu hoặc hai cách giải</td>
-<td>Hai cách này cùng dùng giả thiết nào; cách nào cần ít bước phụ hơn?</td>
-<td>Phân biệt điểm giống và khác</td>
-</tr>
-<tr>
-<td>Phản ví dụ</td>
-<td>Tìm một hình thỏa giả thiết nhưng không thỏa kết luận</td>
-<td>Hai đường chéo bằng nhau và vuông góc đã bảo đảm trung điểm chưa?</td>
-<td>Kiểm tra đủ cả giả thiết và phủ định kết luận</td>
-</tr>
-<tr>
-<td>Tương tự hóa</td>
-<td>Giữ cấu trúc lời giải khi đổi tên điểm hoặc điều kiện</td>
-<td>Nếu E, F không là trung điểm nhưng AE = CF thì cách làm nào còn dùng được?</td>
-<td>Nêu lí do phần nào được chuyển sang bài mới</td>
-</tr>
-<tr>
-<td>Đặc biệt hóa</td>
-<td>Xét thêm điều kiện để hình bình hành thành hình đặc biệt</td>
-<td>Tam giác vuông ban đầu cần thêm gì để tứ giác dựng được là hình vuông?</td>
-<td>Nêu điều kiện cùng chiều suy luận</td>
-</tr>
-<tr>
-<td>Khái quát hóa</td>
-<td>Phát biểu quan hệ cho một lớp hình lớn hơn</td>
-<td>Với tứ giác lồi bất kì, bốn trung điểm còn tạo được hình bình hành không?</td>
-<td>Giữ rõ điều kiện, tránh kết luận từ một hình</td>
-</tr>
-</tbody></table>
-<p>Không suy luận rằng học sinh đã làm chủ một thao tác chỉ từ một lần trả lời đúng. Cần cho học sinh trình bày lại trong một bài có thay đổi cấu trúc bề mặt hoặc điều kiện. Các ô “Em tự kiểm tra” trong giao diện là tự nhận xét của học sinh, không phải điểm đo khách quan.</p>
-<h2>4. Cấu trúc sơ đồ định hướng</h2>
-<p>Sơ đồ có hai đầu vào song song: <strong>Giả thiết</strong> và <strong>Mục tiêu</strong>. Hai đầu vào dẫn tới <strong>Kết nối kiến thức</strong>, rồi tới <strong>Bước em tự làm</strong>. Cấu trúc này giúp phân biệt điều đã biết với điều cần tìm, đồng thời tránh một chuỗi mũi tên khiến người học nhầm kết luận là giả thiết.</p>
-<p>Khi chọn bài mẫu, sơ đồ đã được biên soạn cho bài đó. Khi học sinh nhập bài khác, ứng dụng hiển thị “Khung định hướng chung” cho đến khi có nội dung cụ thể từ gia sư. Sơ đồ được cập nhật theo phản hồi mới và có thể xem lại theo từng lượt. Không trình bày sơ đồ chung như thể AI đã phân tích xong đề bài chưa nhận được.</p>
-<p>Một sơ đồ tốt cần chỉ rõ đối tượng hình học. Ví dụ, “Xét tính chất đường chéo” quá rộng; “AD và BC là hai đường chéo của tứ giác ABDC; chúng có chung trung điểm nào?” có thể giúp học sinh bắt đầu. Ở lượt đầu, chỉ mở một mối liên hệ đủ để định hướng, chưa dựng toàn bộ lời giải thay học sinh.</p>
-<p>Sơ đồ là bản giải thích phục vụ học tập, không phải bản ghi suy nghĩ nội bộ của mô hình. Việc hiển thị trước phần hướng dẫn giúp học sinh đọc theo thứ tự: xác định nhiệm vụ rồi thực hiện một bước. Các thông tin trong sơ đồ vẫn có thể sai khi do AI tạo, nên không dùng hình vẽ hoặc sơ đồ để thay thế chứng minh.</p>
-<h2>5. Quy trình điều khiển một phiên gợi mở</h2>
-<p><strong>Tiếp nhận.</strong> Gia sư xác định bài toán có nằm trong chủ đề hay không; nếu thiếu dữ kiện hoặc thứ tự đỉnh gây nhầm lẫn, hỏi bổ sung. Với bài có nhiều ý, làm từng ý và giữ rõ mục tiêu đang xét. Một câu trả lời ngắn như “vâng” hoặc “em chưa hiểu” được đọc trong ngữ cảnh hiện tại.</p>
-<p><strong>Định hướng.</strong> Trình bày sơ đồ rồi hỏi một câu cụ thể. Chẳng hạn, với bài đối xứng qua trung điểm, chưa cần hỏi ngay “hãy chứng minh hình chữ nhật”; trước hết yêu cầu học sinh nhận diện hai đường chéo và các cặp đoạn bằng nhau.</p>
-<p><strong>Phản hồi.</strong> Nếu học sinh đúng, chỉ rõ căn cứ đã dùng đúng và chuyển sang bước kế. Nếu sai, chỉ lỗi đầu tiên có ý nghĩa; tránh sửa hết mọi dòng khiến người học không biết cần thay đổi gì. Nếu thiếu cơ sở, dùng “chưa đủ để kết luận” thay cho khẳng định bài làm hoàn toàn sai.</p>
-<p><strong>Tăng hỗ trợ.</strong> Khi học sinh chưa biết bắt đầu, lần lượt nhắc dấu hiệu, chỉ cặp đối tượng cần xét, minh họa một bước rồi giao phần còn lại. Không lặp đi lặp lại một câu hỏi để ép học sinh đoán ý gia sư. Người học được xin lời giải có căn cứ; lời giải đi kèm câu tự kiểm tra.</p>
-<p><strong>Tự kiểm tra.</strong> Sau khi hoàn thành chứng minh, học sinh giải thích bước then chốt hoặc xét một thay đổi giả thiết. “Đã đọc xong” không tự động đồng nghĩa “đã hiểu”. Nút đánh giá chủ động luôn cho phép kết thúc theo lựa chọn của học sinh, độc lập với đánh giá năng lực.</p>
-<p><strong>Kết thúc.</strong> Lời mời đánh giá tự động chỉ được phát khi gia sư đánh dấu đã hoàn tất các nhiệm vụ và phần tự kiểm tra. Ứng dụng còn yêu cầu đã có lượt trao đổi trước đó để tránh mở đánh giá ngay lượt đầu. Học sinh được đóng biểu mẫu để tiếp tục; hệ thống không ép chọn số sao cao.</p>
-<h2>6. Ba mẫu phản hồi sư phạm</h2>
-<h3>Mẫu 1: Nối trung điểm với dấu hiệu hình bình hành</h3>
-<p>Bài: Tam giác ABC vuông tại A; M là trung điểm BC; D đối xứng A qua M. Nhận biết ABDC.</p>
-<p>Học sinh: “M là trung điểm BC nên ABDC là hình bình hành.”</p>
-<p>Phản hồi đề xuất: “Em đã chỉ ra được một đường chéo bị chia đôi. Để dùng dấu hiệu nhận biết hình bình hành, ta còn cần kiểm tra đường chéo AD. Giả thiết D đối xứng với A qua M cho em điều gì về MA và MD?”</p>
-<p>Điểm cần tránh: khen kết luận đúng ngay khi lập luận còn thiếu một điều kiện. Việc kết luận đúng do đoán vẫn khác với một lời giải đủ căn cứ.</p>
-<h3>Mẫu 2: Phản ví dụ cho một kết luận quá mạnh</h3>
-<p>Bài: Hai đường chéo bằng nhau và vuông góc có đủ để là hình vuông không?</p>
-<p>Học sinh: “Có, vì đường chéo của hình vuông có hai tính chất ấy.”</p>
-<p>Phản hồi đề xuất: “Em đang dùng tính chất của hình vuông theo chiều ngược lại. Ta cần kiểm tra chiều ngược ấy có đúng không. Hãy dựng AC = BD = 4 cm, vuông góc tại O, với OA = 3 cm, OC = 1 cm, OB = OD = 2 cm. Tứ giác này có thể là hình bình hành không? Vì sao?”</p>
-<p>Điểm cần tránh: chỉ nói “sai” hoặc đưa ra một hình phản ví dụ mà không kiểm tra nó thỏa giả thiết. Khi học sinh đã nhận ra chỗ thiếu, mới hỏi điều kiện bổ sung.</p>
-<h3>Mẫu 3: Giảm hỗ trợ sau khi đã hiểu</h3>
-<p>Bài: Bốn trung điểm của tứ giác lồi tạo hình bình hành.</p>
-<p>Học sinh đã chứng minh EF ∥ HG và EF = HG bằng đường trung bình.</p>
-<p>Phản hồi đề xuất: “Em đã đủ căn cứ kết luận EFGH là hình bình hành. Bây giờ, nếu AC ⟂ BD, em hãy tự xác định một góc của EFGH và giải thích vì sao góc ấy vuông. Em cần dùng thêm quan hệ song song nào?”</p>
-<p>Điểm cần tránh: lặp nguyên lời giải phần a hoặc tự đưa toàn bộ phần b ngay khi người học đã có khả năng làm tiếp.</p>
-<h2>7. Ngân hàng bài mẫu và kiểm chứng</h2>
-<p>Sáu bài mẫu của ứng dụng được biên soạn lại theo các cấu trúc cơ bản của chương, không sao chép nguyên văn từ các bài báo. Mỗi bài có đề, hướng mở đầu, lời giải kiểm tra và câu vận dụng tiếp trong <code>lib/learning.ts</code>. Đây là nội dung biên soạn cho sản phẩm, chưa gắn nhãn “đã được hội đồng chuyên môn duyệt”.</p>
-<table>
-<thead>
-<tr>
-<th>Bài</th>
-<th>Cấu trúc toán học</th>
-<th>Điểm phải kiểm tra</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Bốn trung điểm</td>
-<td>Đường trung bình và dấu hiệu hình bình hành</td>
-<td>Tứ giác lồi, đúng cặp đường chéo tương ứng</td>
-</tr>
-<tr>
-<td>Tam giác vuông và đối xứng</td>
-<td>Hai đường chéo cùng trung điểm</td>
-<td>Đúng thứ tự đỉnh ABDC, góc BAC là góc của tứ giác</td>
-</tr>
-<tr>
-<td>Đồng quy trong hình bình hành</td>
-<td>Hai hình bình hành chung một đường chéo</td>
-<td>Xác định cùng trung điểm AC, không suy luận theo hình</td>
-</tr>
-<tr>
-<td>Hình thang cân</td>
-<td>Hai tam giác vuông bằng nhau</td>
-<td>E, F thuộc đáy; sử dụng đúng cạnh huyền và cạnh góc vuông</td>
-</tr>
-<tr>
-<td>Hai điểm trên hình vuông</td>
-<td>Cạnh–góc–cạnh và phân giác</td>
-<td>E, F nằm trong cạnh để tránh cấu hình suy biến</td>
-</tr>
-<tr>
-<td>Phản ví dụ đường chéo</td>
-<td>Phân biệt cần và đủ</td>
-<td>Đường chéo bằng nhau, vuông góc nhưng không cùng trung điểm</td>
-</tr>
-</tbody></table>
-<p>Hình SVG minh họa được dựng từ các điểm đã xác định. Một số hình không theo tỉ lệ độ dài ghi trong đề; ứng dụng ghi rõ hình không thay cho giả thiết. Thời gian trên thẻ bài là gợi ý sử dụng, không phải thời gian đã đo trên học sinh.</p>
-<p>Các bài sinh mới bằng AI vẫn cần kiểm tra. Việc có sáu bài mẫu đúng không bảo đảm mọi bài Gemini tạo đều đúng. Khi triển khai trong lớp, nên bắt đầu từ ngân hàng mẫu, sau đó cho giáo viên rà soát thêm các biến thể có điều kiện phức tạp.</p>
-<h2>8. Hồ sơ, đánh giá và dữ liệu</h2>
-<p>Trình tự sử dụng là: kết nối bằng mã lớp, điền thông tin, học với gia sư, chọn mức hài lòng và đồng ý gửi. Hồ sơ không tự gửi thành một dòng riêng ngay khi nhập; họ tên, trường, email được ghép cùng số sao và nhận xét ở lần gửi đánh giá. Cách này tránh sinh các dòng chỉ có danh tính nhưng chưa có đánh giá.</p>
-<p>Năm trường trong Google Form là họ tên, trường, email, mức độ hài lòng và nhận xét. Nếu học sinh chọn kèm tóm tắt, mục nhận xét có thêm lớp, mức độ tự khai, chủ đề, mục tiêu và các ô tự kiểm tra đã chọn. Toàn bộ hội thoại, mã truy cập và khóa API không được đưa vào Google Form.</p>
-<p>Bản ứng dụng ghi rõ đồng ý gửi trước nút gửi. Mức sao ban đầu chưa được chọn, nhằm không mặc định phản hồi tích cực. Việc ghi nhớ hồ sơ trên thiết bị là lựa chọn riêng; không cần lưu lâu dài để thực hiện một buổi học. Học sinh dùng máy chung có thể bỏ ghi nhớ hoặc xóa hồ sơ.</p>
-<p>Thông báo gửi thành công cần có xác nhận từ Google Forms, không chỉ HTTP 200. Nếu không xác nhận được, ứng dụng không tự gửi lại; mở lựa chọn biểu mẫu đã điền sẵn để học sinh kiểm tra. Chống trùng trên giao diện và trong một phiên server ấm không phải bảo đảm duy nhất toàn hệ thống, vì serverless có thể chạy nhiều instance.</p>
-<h2>9. Đánh giá hiệu quả sau triển khai</h2>
-<p>Khung đánh giá dưới đây là đề xuất kiểm nghiệm, chưa phải số liệu đã thu được. Nên phân biệt ba lớp: ứng dụng chạy đúng, học sinh thấy thuận tiện và học sinh thực sự tiến bộ trong lập luận. Số sao chỉ phản ánh lớp thứ hai, không thay thế bài kiểm tra học tập.</p>
-<p>Có thể xây dựng hai bài kiểm tra tương đương trước và sau một chuỗi buổi học: một bài chứng minh dùng trung điểm, một bài nhận biết điều kiện đủ và một bài sửa sai. Nên có thêm bài chuyển giao sau một khoảng thời gian và thực hiện không có AI để quan sát khả năng tự làm. Nếu muốn suy luận tác động, cần thiết kế nhóm so sánh và kiểm soát khác biệt ban đầu; chưa nên dùng lời khẳng định nhân quả từ một lớp tự nguyện sử dụng.</p>
-<p>Bảng tiêu chí đề xuất cho từng bài dùng các mức 0–2: đọc đúng giả thiết/kết luận; chọn dấu hiệu đủ điều kiện; trình bày liên kết có căn cứ; phát hiện giả thiết thiếu; giải thích được bước then chốt. Điểm phải do người chấm theo đáp án và tiêu chí công khai, không được gán từ số lượt chat hoặc lời tự nhận “em hiểu rồi”.</p>
-<p>Nên lưu ví dụ lỗi theo mã ẩn danh để sửa chỉ dẫn, nhưng chỉ triển khai việc thu thập hội thoại nếu có một quy trình dữ liệu riêng. Phiên bản hiện tại không tự thu thập toàn bộ hội thoại. Người phụ trách có thể dùng danh sách ca kiểm tra trong tài liệu kỹ thuật để rà soát sau mỗi lần đổi model hoặc prompt.</p>
-<h2>10. Tài liệu tham khảo và phạm vi đọc</h2>
-<p>[1] Bộ Giáo dục và Đào tạo, Trường Đại học Sư phạm Hà Nội. <strong>Tài liệu tìm hiểu chương trình môn Toán</strong> (2019). Người biên soạn: Đỗ Đức Thái, Đỗ Tiến Đạt, Nguyễn Hoài Anh, Phạm Xuân Chung, Nguyễn Sơn Hà, Phạm Sỹ Nam. Đã truy cập PDF, tập trung các phần năng lực, phương pháp và đánh giá. <a href="https://dtbdtx.hnue.edu.vn/Portals/0/Tai%20lieu%20tim%20hieu%20chuong%20trinh%20mon%20Toan.pdf">PDF tại HNUE</a>.</p>
-<p>[2] Woodward, J. và cộng sự. <strong>Improving Mathematical Problem Solving in Grades 4 Through 8</strong>. IES/What Works Clearinghouse, 2012, bản trang hướng dẫn ghi sửa đổi tháng 10/2018. Đã đọc khuyến nghị và mức bằng chứng trên trang chính thức. <a href="https://ies.ed.gov/ncee/WWC/PracticeGuide/16">Hướng dẫn IES</a>.</p>
-<p>[3] Pashler, H. và cộng sự. <strong>Organizing Instruction and Study to Improve Student Learning</strong>. IES, 2007. Đã đọc các khuyến nghị và mô tả trên trang chính thức. <a href="https://ies.ed.gov/ncee/wwc/PracticeGuide/1">Hướng dẫn IES</a>.</p>
-<p>[4] Aleven, V. A. W. M. M., &amp; Koedinger, K. R. (2002). <strong>An effective metacognitive strategy: learning by doing and explaining with a computer-based Cognitive Tutor</strong>. Cognitive Science, 26(2), 147–179. Đã đọc tóm tắt, thông tin bài và phần nội dung được cung cấp trên trang nhà xuất bản. DOI: <a href="https://doi.org/10.1207/s15516709cog2602_1">10.1207/s15516709cog2602_1</a>.</p>
-<p>[5] Chi, M. T. H., Bassok, M., Lewis, M. W., Reimann, P., &amp; Glaser, R. (1989). <strong>Self-Explanations: How Students Study and Use Examples in Learning to Solve Problems</strong>. Cognitive Science, 13(2), 145–182. Đã đọc tóm tắt trên trang nhà xuất bản. DOI: <a href="https://doi.org/10.1207/s15516709cog1302_1">10.1207/s15516709cog1302_1</a>.</p>
-<p>[6] Hattie, J., &amp; Timperley, H. (2007). <strong>The Power of Feedback</strong>. Review of Educational Research, 77(1), 81–112. Đã đọc tóm tắt, mô hình/bảng được hiển thị; không khẳng định đã truy cập toàn bộ bản trả phí. DOI: <a href="https://doi.org/10.3102/003465430298487">10.3102/003465430298487</a>.</p>
-<p>[7] Koedinger, K. R., &amp; Aleven, V. (2007). <strong>Exploring the Assistance Dilemma in Experiments with Cognitive Tutors</strong>. Educational Psychology Review, 19, 239–264. Đã đọc tóm tắt và phần công khai của nhà xuất bản. DOI: <a href="https://link.springer.com/article/10.1007/s10648-007-9049-0">10.1007/s10648-007-9049-0</a>.</p>
-<p>[8] Trương Ngọc Anh Thư &amp; Lê Minh Cường. <strong>Thiết kế tình huống dạy học chương Tứ giác cho học sinh lớp 8 theo hướng phát triển năng lực tư duy và lập luận toán học</strong>. Tạp chí Thiết bị Giáo dục, số 342, kỳ 2 tháng 11/2025. Đã đọc tóm tắt và thông tin xuất bản; trang chưa có bản toàn văn để thẩm định thực nghiệm. Dữ liệu tác giả trên trang có một hậu tố nhập liệu bất thường; hai tên tác giả được nhận diện từ dòng tên và cơ quan. <a href="https://vjol.info.vn/tctbgd/vi/article/view/135220/">Trang bài báo</a>.</p>
-<p>[9] Miao, F., &amp; Holmes, W. <strong>Guidance for generative AI in education and research</strong>. UNESCO, 2023, 44 trang. Đã đọc trang giới thiệu và hồ sơ ấn phẩm; không dùng làm tài liệu chứng minh hiệu quả học tứ giác. DOI: <a href="https://doi.org/10.54675/EWZM9535">10.54675/EWZM9535</a>. <a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research?hub=88737">Trang giới thiệu</a>.</p>
-<p><strong>Tài liệu trong nước cần đọc bổ sung khi có toàn văn:</strong> Nguyễn Thanh Hưng &amp; Ngô Tùng Nhân (2019), bài về rèn luyện các thao tác tư duy trong chương Tứ giác, Tạp chí Giáo dục, số đặc biệt tháng 4, trang 184–187. Đã xác minh thư mục qua hồ sơ tác giả tại Đại học Đà Nẵng; chưa truy cập toàn văn, không dùng để suy ra kết quả thực nghiệm. <a href="https://scv.udn.vn/nguyenthanhhung/">Hồ sơ công bố của tác giả</a>.</p>
-</main></html>
+<!doctype html>
+<html lang="vi">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Cơ sở sư phạm · Tư duy Tứ giác</title
+  ><style>
+    body {
+      font:
+        17px/1.8 system-ui,
+        sans-serif;
+      color: #202934;
+      background: #f4f5f6;
+      margin: 0;
+    }
+    main {
+      max-width: 980px;
+      margin: auto;
+      padding: 36px;
+      background: white;
+    }
+    h1 {
+      font-size: 32px;
+      line-height: 1.3;
+    }
+    h2 {
+      font-size: 24px;
+      margin-top: 40px;
+    }
+    a {
+      color: #18529a;
+      overflow-wrap: anywhere;
+    }
+    table {
+      border-collapse: collapse;
+      display: block;
+      overflow: auto;
+      font-size: 15px;
+    }
+    td,
+    th {
+      border: 1px solid #ccd3da;
+      padding: 12px;
+      min-width: 160px;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+    blockquote {
+      border-left: 3px solid #8797a8;
+      padding-left: 20px;
+    }
+    @media (max-width: 600px) {
+      main {
+        padding: 22px;
+      }
+      h1 {
+        font-size: 27px;
+      }
+    }
+    @media print {
+      body {
+        background: white;
+      }
+      main {
+        max-width: none;
+        padding: 0;
+      }
+      h2 {
+        break-after: avoid;
+      }
+    }
+  </style>
+  <main>
+    <a href="/">← Trở về gia sư</a>
+    <h1>Cơ sở sư phạm cho gia sư AI rèn luyện tư duy hình học tứ giác</h1>
+    <h2>1. Mục đích và phạm vi</h2>
+    <p>
+      Ứng dụng được thiết kế cho học sinh đang học chương Tứ giác lớp 8, với mục đích hỗ trợ xây
+      dựng lời chứng minh có căn cứ. Kết quả mong đợi là học sinh phân biệt được giả thiết với kết
+      luận, biết chọn dấu hiệu phù hợp, giải thích được bước then chốt và kiểm tra lại một khẳng
+      định. Cụm từ “phản xạ tư duy” trong tài liệu này chỉ thói quen đặt câu hỏi và kiểm chứng;
+      không mang nghĩa học thuộc một chuỗi thao tác để áp dụng máy móc.
+    </p>
+    <p>
+      Phạm vi nội dung gồm hình thang cân, hình bình hành, hình chữ nhật, hình thoi, hình vuông và
+      các kiến thức tam giác cần thiết. Đường trung bình, góc, song song, vuông góc và đối xứng được
+      sử dụng khi phục vụ bài tứ giác. Ứng dụng không mở rộng sang mọi môn học hoặc mọi chủ đề toán;
+      chính sách gia sư yêu cầu chuyển các câu hỏi ngoài lề về mục tiêu học tập.
+    </p>
+    <p>
+      Đây là một thiết kế ứng dụng dựa trên tài liệu, chưa phải nghiên cứu thực nghiệm về hiệu quả
+      của chính phần mềm. Không có quá trình huấn luyện lại hoặc tinh chỉnh trọng số Gemini trong
+      bản phát hành. Cơ sở sư phạm được chuyển thành chỉ dẫn, bài mẫu, cách phản hồi và tiêu chí
+      kiểm tra; không được dùng thay cho kết quả đánh giá trên học sinh thật.
+    </p>
+    <h2>2. Bằng chứng và mức độ áp dụng</h2>
+    <p>
+      Tài liệu của Bộ GDĐT và Trường ĐHSP Hà Nội mô tả tư duy và lập luận toán học qua các thao tác
+      so sánh, phân tích, tổng hợp, đặc biệt hóa, khái quát hóa, tương tự và sử dụng chứng cứ. Tài
+      liệu cũng trình bày phương pháp và đánh giá năng lực. Đây là căn cứ phù hợp để chọn mục tiêu
+      môn học; không phải bằng chứng thực nghiệm cho một chatbot. Xem các trang in 21–23, 58–61,
+      82–83.[1]
+    </p>
+    <p>
+      Hướng dẫn IES về giải quyết vấn đề toán học lớp 4–8 xếp tự giám sát/phản tư và biểu diễn trực
+      quan ở mức bằng chứng mạnh; nhiều chiến lược giải ở mức vừa. Vì vậy, sơ đồ và tự kiểm tra là
+      thành phần có cơ sở để đưa vào thiết kế. Mức bằng chứng này thuộc các khuyến nghị giáo dục của
+      tài liệu, không tự chuyển thành hiệu quả đã được chứng minh của ứng dụng.[2]
+    </p>
+    <p>
+      Hướng dẫn IES về tổ chức học tập đề xuất xen kẽ bài giải mẫu với tự giải, kết hợp đồ họa với
+      lời mô tả và đặt câu hỏi yêu cầu giải thích sâu. Những khuyến nghị đó gợi ý sử dụng sơ đồ ngắn
+      kèm câu hỏi, rồi cho học sinh thực hiện một bước. Không có hàm ý rằng thêm nhiều hiệu ứng hoặc
+      nhiều hình minh họa luôn giúp học tốt hơn.[3]
+    </p>
+    <p>
+      Aleven và Koedinger báo cáo hai thí nghiệm lớp học trong đó học sinh được yêu cầu giải thích
+      các bước khi dùng Cognitive Tutor thể hiện mức hiểu và chuyển giao tốt hơn nhóm không giải
+      thích bước. Nghiên cứu có liên quan gần đến hỗ trợ học hình học bằng máy tính, nhưng Cognitive
+      Tutor không phải Gemini. Áp dụng hợp lí là yêu cầu nêu căn cứ thay vì chỉ nhập kết quả.[4]
+    </p>
+    <p>
+      Chi và cộng sự phân tích cách học sinh tự giải thích khi học ví dụ cơ học. Nhóm học hiểu sâu
+      tạo ra nhiều liên hệ giữa bước giải và nguyên lí, đồng thời theo dõi chỗ mình chưa hiểu tốt
+      hơn. Đây là nguồn bổ trợ cho hoạt động tự giải thích; bối cảnh gốc không phải chương tứ giác ở
+      Việt Nam.[5]
+    </p>
+    <p>
+      Hattie và Timperley chỉ ra rằng tác động của phản hồi phụ thuộc nội dung và cách phản hồi; có
+      thể tích cực hoặc tiêu cực. Trong thiết kế này, phản hồi hướng vào bước làm và căn cứ cần sửa,
+      tránh chỉ khen con người hoặc nói “sai rồi” mà không giúp tiến tiếp. Đánh giá hài lòng cuối
+      buổi không được xem là bằng chứng đã đạt năng lực toán học.[6]
+    </p>
+    <p>
+      Koedinger và Aleven bàn về sự cân bằng giữa cung cấp hỗ trợ và giữ lại thông tin để người học
+      tự làm. Không có một mức hỗ trợ tối ưu duy nhất áp dụng cho mọi trường hợp. Quy tắc tăng dần
+      gợi ý và giảm hỗ trợ khi học sinh trả lời có căn cứ là lựa chọn thiết kế cần tiếp tục kiểm
+      nghiệm.[7]
+    </p>
+    <p>
+      Một bài báo trong nước năm 2025 mô tả thiết kế tình huống về khái niệm và tính chất hình thang
+      cân ở Toán 8. Trang tạp chí có tóm tắt nêu thực nghiệm, nhưng chưa cung cấp đủ thông tin để
+      thẩm định mẫu, công cụ đo và độ lớn hiệu quả. Tài liệu được dùng để đối chiếu tính phù hợp chủ
+      đề, không dùng để tuyên bố hiệu quả phần mềm.[8]
+    </p>
+    <p>
+      Hướng dẫn UNESCO nhấn mạnh cách tiếp cận lấy con người làm trung tâm, tính phù hợp với người
+      học và việc xem xét công cụ trong bối cảnh giáo dục. Bản thiết kế giữ giáo viên ở vai trò kiểm
+      tra nội dung, hiển thị rõ gia sư AI và giải thích dữ liệu nào được gửi khi đánh giá.[9]
+    </p>
+    <h2>3. Chuyển mục tiêu thành hoạt động có thể quan sát</h2>
+    <p>
+      Bảng sau là khung hoạt động đề xuất cho phiên bản này. Các câu hỏi do người phát triển biên
+      soạn để sử dụng trực tiếp trong bài tứ giác, không phải câu trích từ nghiên cứu.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Thao tác</th>
+          <th>Hoạt động học sinh cần thực hiện</th>
+          <th>Câu gợi mở mẫu</th>
+          <th>Dấu hiệu quan sát được</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Phân tích</td>
+          <td>Tách kết luận thành một điều kiện đủ nhỏ hơn</td>
+          <td>Muốn kết luận AECF là hình bình hành, em định kiểm tra cặp cạnh nào?</td>
+          <td>Nêu đúng đối tượng và dấu hiệu</td>
+        </tr>
+        <tr>
+          <td>Tổng hợp</td>
+          <td>Ghép các quan hệ đã chứng minh thành chuỗi lập luận</td>
+          <td>Từ AE = CF và AE ∥ CF, em kết luận được gì?</td>
+          <td>Mỗi suy ra có căn cứ</td>
+        </tr>
+        <tr>
+          <td>So sánh</td>
+          <td>Đối chiếu điều kiện của hai dấu hiệu hoặc hai cách giải</td>
+          <td>Hai cách này cùng dùng giả thiết nào; cách nào cần ít bước phụ hơn?</td>
+          <td>Phân biệt điểm giống và khác</td>
+        </tr>
+        <tr>
+          <td>Phản ví dụ</td>
+          <td>Tìm một hình thỏa giả thiết nhưng không thỏa kết luận</td>
+          <td>Hai đường chéo bằng nhau và vuông góc đã bảo đảm trung điểm chưa?</td>
+          <td>Kiểm tra đủ cả giả thiết và phủ định kết luận</td>
+        </tr>
+        <tr>
+          <td>Tương tự hóa</td>
+          <td>Giữ cấu trúc lời giải khi đổi tên điểm hoặc điều kiện</td>
+          <td>Nếu E, F không là trung điểm nhưng AE = CF thì cách làm nào còn dùng được?</td>
+          <td>Nêu lí do phần nào được chuyển sang bài mới</td>
+        </tr>
+        <tr>
+          <td>Đặc biệt hóa</td>
+          <td>Xét thêm điều kiện để hình bình hành thành hình đặc biệt</td>
+          <td>Tam giác vuông ban đầu cần thêm gì để tứ giác dựng được là hình vuông?</td>
+          <td>Nêu điều kiện cùng chiều suy luận</td>
+        </tr>
+        <tr>
+          <td>Khái quát hóa</td>
+          <td>Phát biểu quan hệ cho một lớp hình lớn hơn</td>
+          <td>Với tứ giác lồi bất kì, bốn trung điểm còn tạo được hình bình hành không?</td>
+          <td>Giữ rõ điều kiện, tránh kết luận từ một hình</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Không suy luận rằng học sinh đã làm chủ một thao tác chỉ từ một lần trả lời đúng. Cần cho học
+      sinh trình bày lại trong một bài có thay đổi cấu trúc bề mặt hoặc điều kiện. Các ô “Em tự kiểm
+      tra” trong giao diện là tự nhận xét của học sinh, không phải điểm đo khách quan.
+    </p>
+    <h2>4. Cấu trúc sơ đồ định hướng</h2>
+    <p>
+      Sơ đồ có hai đầu vào song song: <strong>Giả thiết</strong> và <strong>Mục tiêu</strong>. Hai
+      đầu vào dẫn tới <strong>Kết nối kiến thức</strong>, rồi tới <strong>Bước em tự làm</strong>.
+      Cấu trúc này giúp phân biệt điều đã biết với điều cần tìm, đồng thời tránh một chuỗi mũi tên
+      khiến người học nhầm kết luận là giả thiết.
+    </p>
+    <p>
+      Khi chọn bài mẫu, sơ đồ đã được biên soạn cho bài đó. Khi học sinh nhập bài khác, ứng dụng
+      hiển thị “Khung định hướng chung” cho đến khi có nội dung cụ thể từ gia sư. Sơ đồ được cập
+      nhật theo phản hồi mới và có thể xem lại theo từng lượt. Không trình bày sơ đồ chung như thể
+      AI đã phân tích xong đề bài chưa nhận được.
+    </p>
+    <p>
+      Một sơ đồ tốt cần chỉ rõ đối tượng hình học. Ví dụ, “Xét tính chất đường chéo” quá rộng; “AD
+      và BC là hai đường chéo của tứ giác ABDC; chúng có chung trung điểm nào?” có thể giúp học sinh
+      bắt đầu. Ở lượt đầu, chỉ mở một mối liên hệ đủ để định hướng, chưa dựng toàn bộ lời giải thay
+      học sinh.
+    </p>
+    <p>
+      Sơ đồ là bản giải thích phục vụ học tập, không phải bản ghi suy nghĩ nội bộ của mô hình. Việc
+      hiển thị trước phần hướng dẫn giúp học sinh đọc theo thứ tự: xác định nhiệm vụ rồi thực hiện
+      một bước. Các thông tin trong sơ đồ vẫn có thể sai khi do AI tạo, nên không dùng hình vẽ hoặc
+      sơ đồ để thay thế chứng minh.
+    </p>
+    <h2>5. Quy trình điều khiển một phiên gợi mở</h2>
+    <p>
+      <strong>Tiếp nhận.</strong> Gia sư xác định bài toán có nằm trong chủ đề hay không; nếu thiếu
+      dữ kiện hoặc thứ tự đỉnh gây nhầm lẫn, hỏi bổ sung. Với bài có nhiều ý, làm từng ý và giữ rõ
+      mục tiêu đang xét. Một câu trả lời ngắn như “vâng” hoặc “em chưa hiểu” được đọc trong ngữ cảnh
+      hiện tại.
+    </p>
+    <p>
+      <strong>Định hướng.</strong> Trình bày sơ đồ rồi hỏi một câu cụ thể. Chẳng hạn, với bài đối
+      xứng qua trung điểm, chưa cần hỏi ngay “hãy chứng minh hình chữ nhật”; trước hết yêu cầu học
+      sinh nhận diện hai đường chéo và các cặp đoạn bằng nhau.
+    </p>
+    <p>
+      <strong>Phản hồi.</strong> Nếu học sinh đúng, chỉ rõ căn cứ đã dùng đúng và chuyển sang bước
+      kế. Nếu sai, chỉ lỗi đầu tiên có ý nghĩa; tránh sửa hết mọi dòng khiến người học không biết
+      cần thay đổi gì. Nếu thiếu cơ sở, dùng “chưa đủ để kết luận” thay cho khẳng định bài làm hoàn
+      toàn sai.
+    </p>
+    <p>
+      <strong>Tăng hỗ trợ.</strong> Khi học sinh chưa biết bắt đầu, lần lượt nhắc dấu hiệu, chỉ cặp
+      đối tượng cần xét, minh họa một bước rồi giao phần còn lại. Không lặp đi lặp lại một câu hỏi
+      để ép học sinh đoán ý gia sư. Người học được xin lời giải có căn cứ; lời giải đi kèm câu tự
+      kiểm tra.
+    </p>
+    <p>
+      <strong>Tự kiểm tra.</strong> Sau khi hoàn thành chứng minh, học sinh giải thích bước then
+      chốt hoặc xét một thay đổi giả thiết. “Đã đọc xong” không tự động đồng nghĩa “đã hiểu”. Nút
+      đánh giá chủ động luôn cho phép kết thúc theo lựa chọn của học sinh, độc lập với đánh giá năng
+      lực.
+    </p>
+    <p>
+      <strong>Kết thúc.</strong> Lời mời đánh giá tự động chỉ được phát khi gia sư đánh dấu đã hoàn
+      tất các nhiệm vụ và phần tự kiểm tra. Ứng dụng còn yêu cầu đã có lượt trao đổi trước đó để
+      tránh mở đánh giá ngay lượt đầu. Học sinh được đóng biểu mẫu để tiếp tục; hệ thống không ép
+      chọn số sao cao.
+    </p>
+    <h2>6. Ba mẫu phản hồi sư phạm</h2>
+    <h3>Mẫu 1: Nối trung điểm với dấu hiệu hình bình hành</h3>
+    <p>Bài: Tam giác ABC vuông tại A; M là trung điểm BC; D đối xứng A qua M. Nhận biết ABDC.</p>
+    <p>Học sinh: “M là trung điểm BC nên ABDC là hình bình hành.”</p>
+    <p>
+      Phản hồi đề xuất: “Em đã chỉ ra được một đường chéo bị chia đôi. Để dùng dấu hiệu nhận biết
+      hình bình hành, ta còn cần kiểm tra đường chéo AD. Giả thiết D đối xứng với A qua M cho em
+      điều gì về MA và MD?”
+    </p>
+    <p>
+      Điểm cần tránh: khen kết luận đúng ngay khi lập luận còn thiếu một điều kiện. Việc kết luận
+      đúng do đoán vẫn khác với một lời giải đủ căn cứ.
+    </p>
+    <h3>Mẫu 2: Phản ví dụ cho một kết luận quá mạnh</h3>
+    <p>Bài: Hai đường chéo bằng nhau và vuông góc có đủ để là hình vuông không?</p>
+    <p>Học sinh: “Có, vì đường chéo của hình vuông có hai tính chất ấy.”</p>
+    <p>
+      Phản hồi đề xuất: “Em đang dùng tính chất của hình vuông theo chiều ngược lại. Ta cần kiểm tra
+      chiều ngược ấy có đúng không. Hãy dựng AC = BD = 4 cm, vuông góc tại O, với OA = 3 cm, OC = 1
+      cm, OB = OD = 2 cm. Tứ giác này có thể là hình bình hành không? Vì sao?”
+    </p>
+    <p>
+      Điểm cần tránh: chỉ nói “sai” hoặc đưa ra một hình phản ví dụ mà không kiểm tra nó thỏa giả
+      thiết. Khi học sinh đã nhận ra chỗ thiếu, mới hỏi điều kiện bổ sung.
+    </p>
+    <h3>Mẫu 3: Giảm hỗ trợ sau khi đã hiểu</h3>
+    <p>Bài: Bốn trung điểm của tứ giác lồi tạo hình bình hành.</p>
+    <p>Học sinh đã chứng minh EF ∥ HG và EF = HG bằng đường trung bình.</p>
+    <p>
+      Phản hồi đề xuất: “Em đã đủ căn cứ kết luận EFGH là hình bình hành. Bây giờ, nếu AC ⟂ BD, em
+      hãy tự xác định một góc của EFGH và giải thích vì sao góc ấy vuông. Em cần dùng thêm quan hệ
+      song song nào?”
+    </p>
+    <p>
+      Điểm cần tránh: lặp nguyên lời giải phần a hoặc tự đưa toàn bộ phần b ngay khi người học đã có
+      khả năng làm tiếp.
+    </p>
+    <h2>7. Ngân hàng bài mẫu và kiểm chứng</h2>
+    <p>
+      Sáu bài mẫu của ứng dụng được biên soạn lại theo các cấu trúc cơ bản của chương, không sao
+      chép nguyên văn từ các bài báo. Mỗi bài có đề, hướng mở đầu, lời giải kiểm tra và câu vận dụng
+      tiếp trong <code>lib/learning.ts</code>. Đây là nội dung biên soạn cho sản phẩm, chưa gắn nhãn
+      “đã được hội đồng chuyên môn duyệt”.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Bài</th>
+          <th>Cấu trúc toán học</th>
+          <th>Điểm phải kiểm tra</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bốn trung điểm</td>
+          <td>Đường trung bình và dấu hiệu hình bình hành</td>
+          <td>Tứ giác lồi, đúng cặp đường chéo tương ứng</td>
+        </tr>
+        <tr>
+          <td>Tam giác vuông và đối xứng</td>
+          <td>Hai đường chéo cùng trung điểm</td>
+          <td>Đúng thứ tự đỉnh ABDC, góc BAC là góc của tứ giác</td>
+        </tr>
+        <tr>
+          <td>Đồng quy trong hình bình hành</td>
+          <td>Hai hình bình hành chung một đường chéo</td>
+          <td>Xác định cùng trung điểm AC, không suy luận theo hình</td>
+        </tr>
+        <tr>
+          <td>Hình thang cân</td>
+          <td>Hai tam giác vuông bằng nhau</td>
+          <td>E, F thuộc đáy; sử dụng đúng cạnh huyền và cạnh góc vuông</td>
+        </tr>
+        <tr>
+          <td>Hai điểm trên hình vuông</td>
+          <td>Cạnh–góc–cạnh và phân giác</td>
+          <td>E, F nằm trong cạnh để tránh cấu hình suy biến</td>
+        </tr>
+        <tr>
+          <td>Phản ví dụ đường chéo</td>
+          <td>Phân biệt cần và đủ</td>
+          <td>Đường chéo bằng nhau, vuông góc nhưng không cùng trung điểm</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Hình SVG minh họa được dựng từ các điểm đã xác định. Một số hình không theo tỉ lệ độ dài ghi
+      trong đề; ứng dụng ghi rõ hình không thay cho giả thiết. Thời gian trên thẻ bài là gợi ý sử
+      dụng, không phải thời gian đã đo trên học sinh.
+    </p>
+    <p>
+      Các bài sinh mới bằng AI vẫn cần kiểm tra. Việc có sáu bài mẫu đúng không bảo đảm mọi bài
+      Gemini tạo đều đúng. Khi triển khai trong lớp, nên bắt đầu từ ngân hàng mẫu, sau đó cho giáo
+      viên rà soát thêm các biến thể có điều kiện phức tạp.
+    </p>
+    <h2>8. Hồ sơ, đánh giá và dữ liệu</h2>
+    <p>
+      Trình tự sử dụng là: kết nối bằng mã lớp, điền thông tin, học với gia sư, chọn mức hài lòng và
+      đồng ý gửi. Hồ sơ không tự gửi thành một dòng riêng ngay khi nhập; họ tên, trường, email được
+      ghép cùng số sao và nhận xét ở lần gửi đánh giá. Cách này tránh sinh các dòng chỉ có danh tính
+      nhưng chưa có đánh giá.
+    </p>
+    <p>
+      Năm trường trong Google Form là họ tên, trường, email, mức độ hài lòng và nhận xét. Nếu học
+      sinh chọn kèm tóm tắt, mục nhận xét có thêm lớp, mức độ tự khai, chủ đề, mục tiêu và các ô tự
+      kiểm tra đã chọn. Toàn bộ hội thoại, mã truy cập và khóa API không được đưa vào Google Form.
+    </p>
+    <p>
+      Bản ứng dụng ghi rõ đồng ý gửi trước nút gửi. Mức sao ban đầu chưa được chọn, nhằm không mặc
+      định phản hồi tích cực. Việc ghi nhớ hồ sơ trên thiết bị là lựa chọn riêng; không cần lưu lâu
+      dài để thực hiện một buổi học. Học sinh dùng máy chung có thể bỏ ghi nhớ hoặc xóa hồ sơ.
+    </p>
+    <p>
+      Thông báo gửi thành công cần có xác nhận từ Google Forms, không chỉ HTTP 200. Nếu không xác
+      nhận được, ứng dụng không tự gửi lại; mở lựa chọn biểu mẫu đã điền sẵn để học sinh kiểm tra.
+      Chống trùng trên giao diện và trong một phiên server ấm không phải bảo đảm duy nhất toàn hệ
+      thống, vì serverless có thể chạy nhiều instance.
+    </p>
+    <h2>9. Đánh giá hiệu quả sau triển khai</h2>
+    <p>
+      Khung đánh giá dưới đây là đề xuất kiểm nghiệm, chưa phải số liệu đã thu được. Nên phân biệt
+      ba lớp: ứng dụng chạy đúng, học sinh thấy thuận tiện và học sinh thực sự tiến bộ trong lập
+      luận. Số sao chỉ phản ánh lớp thứ hai, không thay thế bài kiểm tra học tập.
+    </p>
+    <p>
+      Có thể xây dựng hai bài kiểm tra tương đương trước và sau một chuỗi buổi học: một bài chứng
+      minh dùng trung điểm, một bài nhận biết điều kiện đủ và một bài sửa sai. Nên có thêm bài
+      chuyển giao sau một khoảng thời gian và thực hiện không có AI để quan sát khả năng tự làm. Nếu
+      muốn suy luận tác động, cần thiết kế nhóm so sánh và kiểm soát khác biệt ban đầu; chưa nên
+      dùng lời khẳng định nhân quả từ một lớp tự nguyện sử dụng.
+    </p>
+    <p>
+      Bảng tiêu chí đề xuất cho từng bài dùng các mức 0–2: đọc đúng giả thiết/kết luận; chọn dấu
+      hiệu đủ điều kiện; trình bày liên kết có căn cứ; phát hiện giả thiết thiếu; giải thích được
+      bước then chốt. Điểm phải do người chấm theo đáp án và tiêu chí công khai, không được gán từ
+      số lượt chat hoặc lời tự nhận “em hiểu rồi”.
+    </p>
+    <p>
+      Nên lưu ví dụ lỗi theo mã ẩn danh để sửa chỉ dẫn, nhưng chỉ triển khai việc thu thập hội thoại
+      nếu có một quy trình dữ liệu riêng. Phiên bản hiện tại không tự thu thập toàn bộ hội thoại.
+      Người phụ trách có thể dùng danh sách ca kiểm tra trong tài liệu kỹ thuật để rà soát sau mỗi
+      lần đổi model hoặc prompt.
+    </p>
+    <h2>10. Tài liệu tham khảo và phạm vi đọc</h2>
+    <p>
+      [1] Bộ Giáo dục và Đào tạo, Trường Đại học Sư phạm Hà Nội.
+      <strong>Tài liệu tìm hiểu chương trình môn Toán</strong> (2019). Người biên soạn: Đỗ Đức Thái,
+      Đỗ Tiến Đạt, Nguyễn Hoài Anh, Phạm Xuân Chung, Nguyễn Sơn Hà, Phạm Sỹ Nam. Đã truy cập PDF,
+      tập trung các phần năng lực, phương pháp và đánh giá.
+      <a
+        href="https://dtbdtx.hnue.edu.vn/Portals/0/Tai%20lieu%20tim%20hieu%20chuong%20trinh%20mon%20Toan.pdf"
+        >PDF tại HNUE</a
+      >.
+    </p>
+    <p>
+      [2] Woodward, J. và cộng sự.
+      <strong>Improving Mathematical Problem Solving in Grades 4 Through 8</strong>. IES/What Works
+      Clearinghouse, 2012, bản trang hướng dẫn ghi sửa đổi tháng 10/2018. Đã đọc khuyến nghị và mức
+      bằng chứng trên trang chính thức.
+      <a href="https://ies.ed.gov/ncee/WWC/PracticeGuide/16">Hướng dẫn IES</a>.
+    </p>
+    <p>
+      [3] Pashler, H. và cộng sự.
+      <strong>Organizing Instruction and Study to Improve Student Learning</strong>. IES, 2007. Đã
+      đọc các khuyến nghị và mô tả trên trang chính thức.
+      <a href="https://ies.ed.gov/ncee/wwc/PracticeGuide/1">Hướng dẫn IES</a>.
+    </p>
+    <p>
+      [4] Aleven, V. A. W. M. M., &amp; Koedinger, K. R. (2002).
+      <strong
+        >An effective metacognitive strategy: learning by doing and explaining with a computer-based
+        Cognitive Tutor</strong
+      >. Cognitive Science, 26(2), 147–179. Đã đọc tóm tắt, thông tin bài và phần nội dung được cung
+      cấp trên trang nhà xuất bản. DOI:
+      <a href="https://doi.org/10.1207/s15516709cog2602_1">10.1207/s15516709cog2602_1</a>.
+    </p>
+    <p>
+      [5] Chi, M. T. H., Bassok, M., Lewis, M. W., Reimann, P., &amp; Glaser, R. (1989).
+      <strong
+        >Self-Explanations: How Students Study and Use Examples in Learning to Solve
+        Problems</strong
+      >. Cognitive Science, 13(2), 145–182. Đã đọc tóm tắt trên trang nhà xuất bản. DOI:
+      <a href="https://doi.org/10.1207/s15516709cog1302_1">10.1207/s15516709cog1302_1</a>.
+    </p>
+    <p>
+      [6] Hattie, J., &amp; Timperley, H. (2007). <strong>The Power of Feedback</strong>. Review of
+      Educational Research, 77(1), 81–112. Đã đọc tóm tắt, mô hình/bảng được hiển thị; không khẳng
+      định đã truy cập toàn bộ bản trả phí. DOI:
+      <a href="https://doi.org/10.3102/003465430298487">10.3102/003465430298487</a>.
+    </p>
+    <p>
+      [7] Koedinger, K. R., &amp; Aleven, V. (2007).
+      <strong>Exploring the Assistance Dilemma in Experiments with Cognitive Tutors</strong>.
+      Educational Psychology Review, 19, 239–264. Đã đọc tóm tắt và phần công khai của nhà xuất bản.
+      DOI:
+      <a href="https://link.springer.com/article/10.1007/s10648-007-9049-0"
+        >10.1007/s10648-007-9049-0</a
+      >.
+    </p>
+    <p>
+      [8] Trương Ngọc Anh Thư &amp; Lê Minh Cường.
+      <strong
+        >Thiết kế tình huống dạy học chương Tứ giác cho học sinh lớp 8 theo hướng phát triển năng
+        lực tư duy và lập luận toán học</strong
+      >. Tạp chí Thiết bị Giáo dục, số 342, kỳ 2 tháng 11/2025. Đã đọc tóm tắt và thông tin xuất
+      bản; trang chưa có bản toàn văn để thẩm định thực nghiệm. Dữ liệu tác giả trên trang có một
+      hậu tố nhập liệu bất thường; hai tên tác giả được nhận diện từ dòng tên và cơ quan.
+      <a href="https://vjol.info.vn/tctbgd/vi/article/view/135220/">Trang bài báo</a>.
+    </p>
+    <p>
+      [9] Miao, F., &amp; Holmes, W.
+      <strong>Guidance for generative AI in education and research</strong>. UNESCO, 2023, 44 trang.
+      Đã đọc trang giới thiệu và hồ sơ ấn phẩm; không dùng làm tài liệu chứng minh hiệu quả học tứ
+      giác. DOI: <a href="https://doi.org/10.54675/EWZM9535">10.54675/EWZM9535</a>.
+      <a
+        href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research?hub=88737"
+        >Trang giới thiệu</a
+      >.
+    </p>
+    <p>
+      <strong>Tài liệu trong nước cần đọc bổ sung khi có toàn văn:</strong> Nguyễn Thanh Hưng &amp;
+      Ngô Tùng Nhân (2019), bài về rèn luyện các thao tác tư duy trong chương Tứ giác, Tạp chí Giáo
+      dục, số đặc biệt tháng 4, trang 184–187. Đã xác minh thư mục qua hồ sơ tác giả tại Đại học Đà
+      Nẵng; chưa truy cập toàn văn, không dùng để suy ra kết quả thực nghiệm.
+      <a href="https://scv.udn.vn/nguyenthanhhung/">Hồ sơ công bố của tác giả</a>.
+    </p>
+  </main>
+</html>

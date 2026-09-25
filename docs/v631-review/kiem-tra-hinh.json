@@ -1,0 +1,48 @@
+{
+  "problem": "Cho tam giác ABC có đường cao AI. Từ A kẻ tia Ax vuông góc với AC, từ B kẻ tia By song song với AC. Gọi M là giao điểm của tia Ax và tia By. Nối M với trung điểm P của AB, đường MP cắt AC tại Q và BQ cắt AI tại H. a) Tứ giác AMBQ là hình gì?",
+  "status": "verified",
+  "checks": [
+    "Tam giác ABC",
+    "AI ⟂ BC",
+    "P là trung điểm AB",
+    "Ax qua A và ⟂ AC",
+    "By qua B và ∥ AC",
+    "M = Ax ∩ By",
+    "Q = MP ∩ AC",
+    "H = BQ ∩ AI"
+  ],
+  "points": {
+    "A": {
+      "x": 0,
+      "y": 3.8
+    },
+    "B": {
+      "x": -2,
+      "y": 0
+    },
+    "C": {
+      "x": 4,
+      "y": 0
+    },
+    "I": {
+      "x": 0,
+      "y": 0
+    },
+    "P": {
+      "x": -1,
+      "y": 1.9
+    },
+    "M": {
+      "x": -2.846254927726675,
+      "y": 0.8039421813403416
+    },
+    "Q": {
+      "x": 0.8462549277266751,
+      "y": 2.9960578186596583
+    },
+    "H": {
+      "x": 4.440892098500626e-16,
+      "y": 2.105263157894737
+    }
+  }
+}

@@ -14,11 +14,21 @@ Bản V5 mở rộng bộ dựng hình của dự án gốc. Các công thức, 
 
 ```ts
 GeometryModel = {
-  version, original, normalized,
-  entities, relations, givens, goal, auxiliaryLines,
-  assumptions, missingData, questions, confidence,
-  status: 'verified' | 'provisional', drawing
-}
+  version,
+  original,
+  normalized,
+  entities,
+  relations,
+  givens,
+  goal,
+  auxiliaryLines,
+  assumptions,
+  missingData,
+  questions,
+  confidence,
+  status: 'verified' | 'provisional',
+  drawing,
+};
 ```
 
 `confidence` là chỉ báo theo nhánh xử lý (1; 0,6; 0,5; 0,15...), không phải xác suất thống kê đã hiệu chuẩn. `verified` xác nhận hình thỏa các giả thiết đã đọc trong cấu hình được hỗ trợ; không có nghĩa đã chứng minh mục tiêu hoặc đã chấm đúng lời giải học sinh.
@@ -27,15 +37,15 @@ GeometryModel = {
 
 “E và F theo thứ tự là trung điểm OD và OB” được ghép theo đúng thứ tự E–OD, F–OB. “ABCD tâm O” xác định O bằng giao AC và BD. Với hệ tọa độ minh họa:
 
-| Điểm | x | y |
-|---|---:|---:|
-| A | 0 | 0 |
-| B | 6 | 0 |
-| C | 7,4 | 3,5 |
-| D | 1,4 | 3,5 |
-| O | 3,7 | 1,75 |
-| E | 2,55 | 2,625 |
-| F | 4,85 | 0,875 |
+| Điểm |    x |     y |
+| ---- | ---: | ----: |
+| A    |    0 |     0 |
+| B    |    6 |     0 |
+| C    |  7,4 |   3,5 |
+| D    |  1,4 |   3,5 |
+| O    |  3,7 |  1,75 |
+| E    | 2,55 | 2,625 |
+| F    | 4,85 | 0,875 |
 
 Các tọa độ trên kiểm tra được O = AC ∩ BD, E = (O + D)/2, F = (O + B)/2. AE và CF được vẽ vì đã có các đầu mút. Kết luận AE ∥ CF không được giả định trong quá trình dựng. Kiểm tra song song bằng số trong ca kiểm thử chỉ xác minh hình minh họa, không thay thế bài chứng minh tổng quát.
 

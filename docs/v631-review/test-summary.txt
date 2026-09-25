@@ -1,0 +1,5 @@
+Tư duy Toán học 6.3.1
+527 tests: 526 passed, 0 failed, 1 skipped (live external API).
+TypeScript, ESLint, Prettier, production build: passed.
+Live website login and original failure reproduced.
+New API behavior verified with mocks; source update not yet deployed.

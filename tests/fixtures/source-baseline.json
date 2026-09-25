@@ -1,0 +1,41 @@
+{
+  "sourceArchive": "sản phẩm KHKT 2627(1).rar",
+  "sourceSha256": "ba8da0046267a03c02d3d250e2f4693bb9c14930e7590846bd3701e2e09a2c3a",
+  "normalization": "TypeScript transpilation without comments + Prettier 3.6.2; JSON parsed; CSS formatted; configuration bytes unchanged.",
+  "groups": {
+    "api": {
+      "server/gemini.mjs": "fee4ab6551367a00a04727db77c42e95514f0607b5f55d7ebcb6c355fecd8533",
+      "server/openai.mjs": "2587c0aeecdbf5724218849e69b31ce3049cf1ff752d20ac313f0c4106ca2c4d",
+      "server/chat.mjs": "d474fed957c12dd3ad4a042c3bdff9bac65974d70184c1071c37bf41b4f1f58c",
+      "server/feature-api.mjs": "4c0a37073aa20afd1434c5d94f73dabd1375d9313bea1d669eed09bfb6547451",
+      "server/signed-state.mjs": "cb46689520c0e5ab7b97a63207ccb4b5d2bd84e7e2472a8d8fd2422ae1cf8001"
+    },
+    "deployment": {
+      ".env.example": "7752307f2025bb5c392efe855dca0c649b7b34f103068f2aac7d8abf0106df5d",
+      "netlify.toml": "a34110efd4bdbc996f4940ea1690f6a92eac5a5e15716356a27a2b9837fbbc0d",
+      "netlify/functions/chat.mjs": "bc5c7ec307a89164c6abeb622ed5b6dd37bbfb30b97035f2c033ff2cd1629e08",
+      "netlify/functions/feedback.mjs": "3d4fb1e3a3ee0c5e24a164c437f813833515157d267513d4e2ef7372a63eebd6"
+    },
+    "styles": {
+      "app/globals.css": "0baa7ab2a03501ecbf495a9d855e7b0ada28225a379f498ea62baca917e2eb72",
+      "app/enhancements.css": "d451c6ddd55de9efe39126cab2e59a177d041a54079184bd6efe572c2982c790"
+    },
+    "learning": {
+      "lib/learning.ts": "4570fc73fb9e96b8b6bf0427f5f1e4ee7b3ac3aa65d2048ead4e52b57c1de21d",
+      "lib/adaptive-learning.ts": "89d9dc896d8b05c55a3e69c45ae0731022db949d2542cbc07029a3903e1dcc76",
+      "lib/tutor.ts": "42f1bb8d64a0c6c795feff9514f93665e49c8917a55c31f66ec37deb4eb51c45",
+      "lib/survey.ts": "5c412f582143dabbd6ea43995402a9fab5548cb2b4200668a40be8366fb7058f",
+      "lib/use-survey-reminder.ts": "601becc6c6c466d5d217f7a6c5ec523ac9b74f1247e1ef797fbb27b70a394cdf",
+      "lib/form-config.json": "258872dc2ab3d3be3c77d46a92d4f909ee86d909abc15a67d13fcb7fd1b56d38",
+      "lib/feedback.ts": "699f26edb262fada14abf58a31bdd04d0c7d0a2065c328eb293ae86d7aadaa8b",
+      "server/feedback.mjs": "3293b452f28b1b4ae736e80bafbbb6f79a0844a16d6064522b93324e1e8550b7",
+      "server/adaptive-policy.mjs": "f1f4b9c452be75e229d7c88f5b80a0c6330e2be908968bc5c5bee7d7ae51e1c8",
+      "server/learner-guidance.mjs": "4dd29bc7cdd4ef2ca0df9f6647bb53ca0c877e3b987825d4d97ff5db4a9266fd",
+      "server/research-pedagogy.mjs": "7d2f0d35a8905cb9644fe2faf8982e1f71b6f1143c32cc4c96a0cb34beccdd14",
+      "server/review-compare-policy.mjs": "d05fdba51c1c85e223f725a9143284fd64c84441a633eaf41ff80dc5ec4b3275"
+    }
+  },
+  "intentionalCodeChanges": {
+    "server/policy.mjs": "Removed unused DIAGRAM_POLICY import; full guide prompt remains protected by review-compare.test.mjs."
+  }
+}
