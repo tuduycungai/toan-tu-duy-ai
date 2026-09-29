@@ -135,8 +135,6 @@ export function ProblemFigure({
     return () => {
       c.abort();
     };
-    // Sending a chat turn does not cancel, clear or restart a drawing. suspended
-    // only disables the redraw controls; it is deliberately not a job dependency.
   }, [problem, accessCode, revision, redrawToken, manual, mobile]);
   useEffect(() => {
     const pause = () => {

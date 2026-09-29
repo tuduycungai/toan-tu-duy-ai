@@ -86,7 +86,6 @@ function entitiesOf(d: Drawing): GeometryEntity[] {
   ];
 }
 
-/** An explicit provisional layout. Coordinates are never promoted to givens or proof. */
 function scaffold(source: string): Drawing {
   const names = namesIn(source).slice(0, 24),
     points: Record<string, XY> = {};
@@ -111,22 +110,18 @@ function partialDrawing(
     try {
       return { drawing: satisfy(parsed), validated: true };
     } catch (e) {
-      // Preserve only a valid base when a relation conflicts or refers to an undefined point.
       try {
         return {
           drawing: construct({ ...parsed.recipe, points: [], segments: [], marks: [], guides: [] }),
           validated: false,
           error: String((e as Error).message),
         };
-      } catch {
-        /* show named objects below */
-      }
+      } catch {}
     }
   }
   return { drawing: scaffold(source), validated: false };
 }
 
-/** Deterministic circle/radius/diameter/tangent construction, with an unconsumed-text check. */
 function circleModel(
   source: string,
 ): { drawing: Drawing; rest: string; assumptions: string[]; relations: GeometryRelation[] } | null {
@@ -388,7 +383,7 @@ export function compileGeometry(problem: string, reply = ''): GeometryModel {
     if (model.drawing.points[s[0]] && model.drawing.points[s[1]])
       (model.drawing.rays ??= []).push({ from: s[0], through: s[1] });
   }
-  // Only draw goals whose endpoints already exist, never solve their relations.
+
   for (const m of goal.matchAll(/(?<![A-Z])[A-Z]{2}(?![A-Z])/g)) {
     const pair = m[0].split('') as Segment;
     if (
@@ -398,7 +393,7 @@ export function compileGeometry(problem: string, reply = ''): GeometryModel {
     )
       model.drawing.segments.push(pair);
   }
-  // Right-angle marks require a numerically verified given, never a goal.
+
   for (const relation of model.relations) {
     const c = relation.data as { type?: string; a?: Segment; b?: Segment } | undefined;
     if (c?.type !== 'perpendicular' || !c.a || !c.b) continue;

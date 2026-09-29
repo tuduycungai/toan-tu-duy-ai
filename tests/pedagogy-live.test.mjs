@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { handleChat } from '../server/gemini.mjs';
 import { cases } from './pedagogy-cases.mjs';
-// Explicit opt-in: uses real quota. No Google Forms calls; synthetic pupils only.
+
 const enabled = process.env.RUN_PEDAGOGY_LIVE === '1' && !!process.env.GEMINI_API_KEY;
 test(
   'live Gemini pedagogical acceptance (opt-in; semantic review required)',

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+<title id="title">Luồng dữ liệu AI Tutor V6.5.0</title><desc id="desc">Học sinh gửi qua Netlify. Apps Script kiểm tra chữ ký và ghi Google Sheets. Hồ sơ rút gọn và mẫu được giáo viên duyệt quay lại ngữ cảnh AI để tạo câu gợi mở.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#327a65"/></marker></defs>
+<rect width="1000" height="600" rx="20" fill="#f1f7f1"/>
+<g fill="none" stroke="#327a65" stroke-width="2.5" marker-end="url(#arrow)">
+<path d="M265 92 H380"/><path d="M505 135 V245"/><path d="M380 115 H310 V292 H265"/><path d="M150 245 V135"/>
+<path d="M380 310 H340 V490 H285"/><path d="M160 445 V398 H305 V167 H435 V135"/>
+<path d="M630 295 H720"/><path d="M840 350 V445"/><path d="M945 445 V185 H580 V135"/>
+</g>
+<g font-family="Arial, sans-serif" font-size="14" fill="#41695c"><text x="281" y="79">Đồng ý</text><text x="520" y="185">Ghi qua HMAC</text><text x="520" y="207">Khóa + batch</text><text x="45" y="193">Câu gợi mở</text><text x="354" y="390">Tóm tắt</text><text x="640" y="282">Chờ duyệt</text><text x="850" y="390">Sửa / duyệt</text><text x="720" y="170">Chỉ bản đã được duyệt</text></g>
+<g fill="#ffffff" stroke="#82ad98" stroke-width="1.5">
+<rect x="35" y="50" width="230" height="85" rx="13"/><rect x="380" y="50" width="250" height="85" rx="13"/>
+<rect x="35" y="245" width="230" height="105" rx="13"/><rect x="380" y="245" width="250" height="105" rx="13"/>
+<rect x="35" y="445" width="250" height="105" rx="13"/><rect x="720" y="245" width="240" height="105" rx="13"/><rect x="720" y="445" width="240" height="90" rx="13"/>
+</g>
+<g font-family="Arial, sans-serif" fill="#173b43" text-anchor="middle">
+<text x="150" y="83" font-size="22" font-weight="700">Học sinh</text><text x="150" y="112" font-size="16">Mã riêng · không Google login</text>
+<text x="505" y="84" font-size="22" font-weight="700">Netlify Functions</text><text x="505" y="113" font-size="16">Xác thực · truy xuất · đánh giá</text>
+<text x="150" y="277" font-size="22" font-weight="700">AI hiện có</text><text x="150" y="307" font-size="16">OpenAI hoặc Gemini</text><text x="150" y="331" font-size="16">Giữ 8 giai đoạn gợi mở</text>
+<text x="505" y="277" font-size="22" font-weight="700">Google Sheets</text><text x="505" y="307" font-size="16">Qua cổng Apps Script</text><text x="505" y="331" font-size="16">Lượt học · hồ sơ · khảo sát</text>
+<text x="160" y="478" font-size="21" font-weight="700">Hồ sơ tiến bộ</text><text x="160" y="508" font-size="16">Dự đoán ≠ bước đã củng cố</text><text x="160" y="531" font-size="16">Ngữ cảnh rút gọn</text>
+<text x="840" y="279" font-size="22" font-weight="700">Giáo viên</text><text x="840" y="310" font-size="16">Xem · sửa · duyệt · bác bỏ</text><text x="840" y="333" font-size="16">Khóa quản trị riêng</text>
+<text x="840" y="480" font-size="21" font-weight="700">Kho ví dụ chung</text><text x="840" y="511" font-size="16">Có phiên bản và rollback</text>
+</g></svg>

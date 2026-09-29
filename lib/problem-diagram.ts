@@ -175,7 +175,7 @@ export function verifyConstraints(d: Drawing, cs: Constraint[]): string[] {
 export function problemParts(problem: string) {
   const full = normalizeProblem(problem);
   let given = full.split(/\bchứng\s+minh\b|\bcmr\b|\ba\)\s*|\btính\b|\bhãy\s+kiểm\s+tra\b/iu)[0];
-  // Later subquestions can introduce real data too (e.g. b) Biết AB = 8, CD = 14).
+
   let tail = full.slice(given.length);
   tail = tail.replace(
     /\b(biết|gọi)\s+(.+?)(?=\b(?:tính|chứng minh|cmr)\b|\b[a-e]\)|$)/giu,
@@ -189,7 +189,6 @@ export function problemParts(problem: string) {
   return { full, given, extraConditions };
 }
 
-/** Only consumes understood givens. Unknown text is retained and prevents drawing. */
 export function parseProblem(problem: string): ParsedProblem | null {
   const { full, given, extraConditions } = problemParts(problem);
   let rest = given;
@@ -285,7 +284,7 @@ export function parseProblem(problem: string): ParsedProblem | null {
       inter(n, a ? pair(a) : [vertices[0], vertices[2]], b ? pair(b) : [vertices[1], vertices[3]]);
     },
   );
-  // A center belongs to both diagonals; this is a given, never inferred from the goal.
+
   consume(/(?<![\p{L}])(?:có\s+)?tâm\s+([A-Z])(?![\p{L}])/giu, (n) => {
     if (!['parallelogram', 'rectangle', 'rhombus', 'square'].includes(recipe.kind))
       throw Error('Cần làm rõ loại tâm của hình.');
@@ -345,7 +344,7 @@ export function parseProblem(problem: string): ParsedProblem | null {
     /([A-Z])\s+(?:nằm\s+(?:trên|trong)\s+(?:cạnh\s+|đoạn(?: thẳng)?\s+)?|thuộc\s+(?:cạnh\s+|đoạn(?: thẳng)?\s+)?|∈\s*)([A-Z]{2})/giu,
     on,
   );
-  // A point declared on a side and perpendicular from a known vertex is a projection.
+
   const feet = [...rest.matchAll(/([A-Z]{2})\s*(?:⟂|vuông góc(?: với)?)\s*([A-Z]{2})/giu)];
   for (const m of feet) {
     const line = pair(m[1]),
@@ -372,7 +371,7 @@ export function parseProblem(problem: string): ParsedProblem | null {
   const ratioReading = readRatios(rest);
   rest = ratioReading.text;
   constraints.push(...ratioReading.ratios);
-  // Explicit segment equalities retain endpoint order; CI measures from C, never D.
+
   consume(/([A-Z]{2})\s*(?:=|bằng)\s*([A-Z]{2})/giu, (a, b) =>
     constraints.push({ type: 'equal', a: pair(a), b: pair(b) }),
   );
@@ -394,12 +393,12 @@ export function parseProblem(problem: string): ParsedProblem | null {
   consume(/([A-Z]{2})\s*<\s*([A-Z]{2})/giu, (a, b) =>
     constraints.push({ type: 'less', a: pair(a), b: pair(b) }),
   );
-  // Consume connective language only. Any unrecognized condition blocks display.
+
   rest = rest
     .replace(/(?<![\p{L}\p{N}])(?:cho|gọi|có|và|sao cho|lấy|kẻ|biết|điểm)(?![\p{L}\p{N}])/giu, ' ')
     .replace(/[\s.,;:()]+/g, ' ')
     .trim();
-  // Named segments/polygons in the question may be drawn, but are NEVER constraints.
+
   const names = new Set([...recipe.vertices, ...recipe.points.map((p) => p.name)]);
   for (const m of full.matchAll(/(?<![A-Z])[A-Z]{2,4}(?![A-Z])/g)) {
     const ns = m[0].split('');
@@ -408,8 +407,7 @@ export function parseProblem(problem: string): ParsedProblem | null {
       if (ns.length > 2) recipe.segments.push([ns.at(-1)!, ns[0]]);
     }
   }
-  // Lowercase segment names in an explicit relation still name drawable objects.
-  // This only adds strokes; a relation in the conclusion is never a given.
+
   for (const m of full.matchAll(
     /(?<![\p{L}\p{N}])([A-Z]{2})\s*(?:=|⟂|∥|bằng|song song(?: với)?|vuông góc(?: với)?)\s*([A-Z]{2})(?![\p{L}\p{N}])/giu,
   )) {
@@ -470,7 +468,7 @@ export function satisfy(parsed: ParsedProblem): Drawing {
           ]
     ).map(([x, y]) => ({ x, y }));
   }
-  // Two given bases determine the horizontal dimensions of an isosceles trapezoid.
+
   if (r.kind === 'isosceles-trapezoid') {
     const lengthOf = (s: Segment) =>
       cs.find((c) => c.type === 'length' && unordered(c.of) === unordered(s));
@@ -493,7 +491,7 @@ export function satisfy(parsed: ParsedProblem): Drawing {
       ].map(([x, y]) => ({ x, y }));
     }
   }
-  // Adjacent base lengths in a parallelogram: preserve the angle, scale the second side.
+
   if (r.kind === 'parallelogram' && !diagEqual && !diagPerp) {
     for (const c of cs) {
       if (c.type !== 'ratio' || ![...c.a, ...c.b].every((n) => v.includes(n))) continue;
@@ -518,7 +516,7 @@ export function satisfy(parsed: ParsedProblem): Drawing {
       }
     }
   }
-  // Scale after solving base proportions: otherwise BC = 2AB could undo a given BC = 12.
+
   const length = cs.find((c) => c.type === 'length' && c.of.every((n) => v.includes(n)));
   if (length?.type === 'length') {
     const seed = r.coords || defaults[r.kind].map(([x, y]) => ({ x, y }));
@@ -529,7 +527,7 @@ export function satisfy(parsed: ParsedProblem): Drawing {
       r.coords = seed.map((p) => ({ x: p.x * k, y: p.y * k }));
     }
   }
-  // Solve ratios along a declared segment, or bind a length from its explicit endpoint.
+
   for (const c of cs) {
     if (c.type !== 'ratio') continue;
     let assigned = false;
@@ -581,7 +579,7 @@ export function satisfy(parsed: ParsedProblem): Drawing {
         factor: target.factor,
       };
   }
-  // Bind a free point to an already defined length, measured from its explicit anchor.
+
   for (const c of cs) {
     if (c.type !== 'equal') continue;
     const candidates: { index: number; anchor: string; other: string; length: Segment }[] = [];
@@ -614,7 +612,7 @@ export function satisfy(parsed: ParsedProblem): Drawing {
         length: t.length,
       };
   }
-  // Include only named objects, not conclusions as constraints.
+
   for (const c of cs) {
     if (['equal', 'parallel', 'perpendicular'].includes(c.type) && 'a' in c)
       r.segments.push(c.a, c.b);
@@ -624,7 +622,7 @@ export function satisfy(parsed: ParsedProblem): Drawing {
   if (free.length === 2) r.segments.push([free[0].name, free[1].name]);
   const d = construct(r);
   d.checks = [baseLabel(r.kind, r.vertices), ...verifyConstraints(d, cs)];
-  // Marks only reflect explicitly supplied relations. They are numerically rechecked by construct.
+
   for (const c of cs) {
     if (c.type === 'midpoint')
       r.marks.push({
@@ -657,7 +655,6 @@ const baseLabel = (kind: Shape, v: string[]) =>
   ' ' +
   v.join('');
 
-/** Reviewed recipes are used only for a complete matching problem, never for a keyword match. */
 export function lessonDrawing(id: string): Drawing {
   const r: Recipe = {
     title: 'Hình vẽ theo đề bài',
@@ -843,7 +840,7 @@ export function resolveProblemDiagram(problem: string): DiagramResult {
     };
   }
 }
-/** Bind each response to its own original problem. A new task must not reuse a previous figure. */
+
 export function problemForTurn(text: string, previous = ''): string {
   const t = normalizeProblem(text);
   if (findWorksheet(t)) return t;

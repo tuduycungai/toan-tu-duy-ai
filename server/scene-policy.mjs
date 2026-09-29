@@ -74,7 +74,6 @@ Không khẳng định đã kiểm tra mọi ý của ngôn ngữ đề. Máy s�
 
 const normal = (s) => s.normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase();
 export function givenText(problem) {
-  // Point A followed by a full stop is not exercise marker a).
   const goal = problem.match(
     /(?:^|[\s.;:])(?:(?:hãy\s+)?chứng minh|(?:hãy\s+)?tính\b|cần tìm|tìm\s+(?:độ dài|số đo|diện tích|chu vi)|hỏi\s)/iu,
   );
@@ -126,7 +125,7 @@ export async function generateScene(
       };
     checkSceneSources(scene, problem);
     const result = renderScene(scene);
-    // Do not send an unused large SVG: browser regenerates from the checked scene.
+
     const response = { ...result };
     delete response.svg;
     return { ...response, question: '' };

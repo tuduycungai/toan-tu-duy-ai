@@ -1,4 +1,3 @@
-/** Optional live acceptance suite. No fixture response can count as live OCR. */
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { handleChat } from '../server/gemini.mjs';
 import { unseal } from '../server/signed-state.mjs';
@@ -51,7 +50,7 @@ if (!process.env.GEMINI_API_KEY || process.env.RUN_LIVE_GEMINI !== '1') {
       .replace(/2\s*A\s*M/g, '2AM');
     const pass =
       status === 200 && (expected ? normalized.includes(expected) : data.reading?.ready === false);
-    // A reviewer must still check literal OCR, figure labels and all geometry.
+
     results.push({
       file,
       status: pass ? 'PASS_BASIC_CHECK' : 'FAIL',

@@ -1,6 +1,5 @@
 export type ExerciseChoice = { number: number; problem: string };
 
-/** Reads the numbered, unsolved set returned by the server, not tutor proof steps. */
 export function exerciseChoices(text: string): ExerciseChoice[] {
   const body = text.replace(/\[SO_DO\][\s\S]*?\[\/SO_DO\]/g, '');
   const starts = [...body.matchAll(/^Câu (\d{1,2}):\s*/gm)];
@@ -26,7 +25,7 @@ export function selectedExercise(
       /^(?:(?:em\s+)?(?:chọn|làm|bắt đầu(?: với)?)\s+)?(?:(?:câu|bài)\s+)?(10|[1-9])\s*[.!]?$/iu,
     )?.[1];
   if (!number) return undefined;
-  // Only the most recent set is selectable; do not reopen a stale set after tutoring starts.
+
   const latest = messages.filter((m) => m.role === 'assistant').at(-1)?.content || '';
   return exerciseChoices(latest).find((c) => c.number === Number(number));
 }

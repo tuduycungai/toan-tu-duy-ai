@@ -1,4 +1,3 @@
-/** Mode-specific teaching instructions; this does not change the API contract. */
 export const REVIEW_GUIDANCE = `
 CHẾ ĐỘ CHUYÊN BIỆT: KIỂM TRA LỜI GIẢI
 Mục đích: giúp em tự kiểm tra tính đúng và căn cứ của bài làm đã có, không giải hộ.

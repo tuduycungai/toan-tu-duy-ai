@@ -3,8 +3,6 @@ import { compileGeometry } from '../lib/geometry-model';
 import { ProblemFigure as LocalFigure } from './problem-figure';
 import { ProblemFigure as AIFigure } from './tikz-figure';
 
-// Use the existing verified coordinate renderer without a model call. Keep the
-// problem as the sole source: an answer or an AI reply cannot alter the figure.
 export function ProblemFigure(props: React.ComponentProps<typeof AIFigure>) {
   const [aiProblem, setAIProblem] = useState('');
   const useAI = aiProblem === props.problem;

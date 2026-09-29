@@ -47,13 +47,13 @@ Giới hạn mỗi hình: 64 điểm, 128 nét, 128 quan hệ, tối đa 8 đồ
 
 Hình đã hoàn tất và phần đối chiếu của nó được giữ khi vẽ lại thất bại. Khi sửa cách dựng cho cùng bản chép đề ảnh, hình trước cũng được giữ trong lúc chờ. Đổi sang đề khác sẽ bỏ hình của đề cũ. Bộ nhớ hình mới không tự dùng lại bộ nhớ của phiên bản trước.
 
-## Kiểm chứng bản bàn giao
+## Kiểm thử và tái tạo hình mẫu
 
 Bộ mẫu ở `tests/fixtures/scene-cases.mjs` gồm **20 nhóm**: đường cao, chân đường cao ngoài cạnh, trung tuyến, ngoại tiếp, nội tiếp, phân giác, chữ nhật, thoi, thang, tiếp tuyến, cát tuyến, đối xứng, đa giác đều, tia và nhiều giao điểm, parabol, hyperbol, lượng giác, căn bậc hai, hình hộp và hình chóp.
 
-Các kiểm thử còn đổi tên điểm, xoay, tịnh tiến, thay kích thước; kiểm tra độc lập tiếp tuyến/trọng tâm; từ chối hình sai/suy biến, vòng phụ thuộc, biểu thức không an toàn; kiểm tra xác nhận ảnh, truyền token sửa và giữ hình cũ khi mạng lỗi. `docs/v640-review` chứa SVG tạo bởi chính bộ dựng dùng trong ứng dụng và danh sách quan hệ được kiểm tra.
+Các kiểm thử còn đổi tên điểm, xoay, tịnh tiến, thay kích thước; kiểm tra độc lập tiếp tuyến/trọng tâm; từ chối hình sai/suy biến, vòng phụ thuộc, biểu thức không an toàn; kiểm tra xác nhận ảnh, truyền token sửa và giữ hình cũ khi mạng lỗi. Lệnh `npm run review:figures` tạo SVG bằng chính bộ dựng dùng trong ứng dụng và danh sách quan hệ được kiểm tra trong `docs/v640-review`.
 
-Kết quả kiểm tra cuối được ghi trong `docs/V6_4_0_KET_QUA_KIEM_TRA.json`. Lệnh chạy lại:
+Kết quả rà soát và hình xuất có thể tạo lại, không nằm trong gói mã nguồn. Lệnh kiểm tra:
 
 ```sh
 npm ci
@@ -65,7 +65,7 @@ npm run build
 npm run review:figures
 ```
 
-Kiểm thử API dùng phản hồi OpenAI giả lập; chúng chứng minh hợp đồng dữ liệu và xử lý lỗi, không đo tỉ lệ Luna đọc đúng đề thật. Kiểm tra giao diện dùng component React. Trình duyệt kiểm tra trực tiếp bản mới trên localhost bị môi trường chặn, nên không có kết quả kiểm thử trình duyệt đầy đủ cho bản mới. Chưa kiểm thử GPT-6 Luna thật với giao thức mới và chưa triển khai bản này lên website.
+Kiểm thử API dùng phản hồi OpenAI giả lập để kiểm tra hợp đồng dữ liệu và xử lý lỗi, không đo tỉ lệ mô hình đọc đúng đề thật. Kiểm tra thành phần giao diện dùng React; kiểm thử trình duyệt dùng các lệnh Playwright trong `README.md`. Cần kiểm tra API thật trên môi trường triển khai.
 
 ## Cập nhật Netlify
 
@@ -75,7 +75,5 @@ Kiểm thử API dùng phản hồi OpenAI giả lập; chúng chứng minh hợ
 4. Giữ khóa và mã lớp thật trong biến môi trường Functions. Không chép khóa vào mã nguồn/gói ZIP. Cấu hình đề nghị: `AI_PROVIDER=openai`, `OPENAI_MODEL=gpt-6-luna`, `OPENAI_REASONING_EFFORT=medium`, `OPENAI_DIAGRAM_REASONING_EFFORT=low`, `OPENAI_TIMEOUT_MS=50000`.
 5. Triển khai lại, mở trang hướng dẫn API để xác nhận phiên bản 6.4.0, kết nối bằng mã lớp hiện có.
 6. Kiểm tra đề gốc, ít nhất một đề đường tròn mới và một ảnh đề chưa nằm trong bộ mẫu. Kiểm tra hình, nhãn, giao điểm và chức năng vẽ lại khi mất mạng. Đối chiếu log Functions nếu API thật báo lỗi.
-
-Việc truy cập trang quản trị Netlify trong phiên trước đã bị hệ thống duyệt tự động từ chối vì cần sự cho phép rõ cho tài khoản quản trị triển khai. Gói này là bản đã sửa để xem xét và triển khai; website đang chạy chưa được thay đổi.
 
 Tài liệu nền: [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs), [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna), [Netlify Functions configuration](https://docs.netlify.com/build/functions/configuration/).

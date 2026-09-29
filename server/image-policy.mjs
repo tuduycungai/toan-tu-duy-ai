@@ -244,7 +244,7 @@ export function validateReading(input) {
       question: 'Phần đề yêu cầu chứng minh, tính hoặc vẽ điều gì?',
       critical: true,
     });
-  // Preserve the most error-prone literal ratio independently of model confidence.
+
   for (const m of d.transcription.matchAll(/\b2\s*([A-Z])([A-Z])\s*=\s*([A-Z])([A-Z])\b/g)) {
     const items = [m[1], m[2], m[3], m[4]];
     if (
@@ -270,7 +270,6 @@ export function validateReading(input) {
   return d;
 }
 
-/** A schema failure does not mean that the student's photo is unclear. */
 export function recoverTranscription(value, issue = '') {
   if (
     typeof value?.transcription !== 'string' ||

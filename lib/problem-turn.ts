@@ -1,6 +1,5 @@
 import { problemForTurn } from './problem-diagram';
 
-/** A student's conclusion is not a new statement of the problem. */
 export function problemForConversation(text: string, previous = ''): string {
   const t = text.trim().normalize('NFC');
   if (!previous) return problemForTurn(t);

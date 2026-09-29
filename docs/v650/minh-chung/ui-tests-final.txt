@@ -1,0 +1,8 @@
+PASS: Không tự ghi dữ liệu; nút đồng ý mặc định chưa chọn.
+PASS: Học được khi bỏ trống họ tên, trường và email.
+PASS: Đồng ý tạo mã riêng, cookie HttpOnly; hộp thoại không tràn ngang ở 390 px.
+PASS: Chat thật trong trình duyệt gọi hai lớp máy chủ mô phỏng, lưu 3 lượt, tạo hàng đợi từ lỗi lặp.
+PASS: Xuất dữ liệu tải được tệp JSON; khảo sát vào Sheets không yêu cầu tên/email.
+PASS: Nút ngừng ghi cập nhật phía máy chủ và giữ buổi học hoạt động.
+PASS: Giáo viên duyệt mẫu, phiên bản mới xuất hiện; rollback về base hoạt động.
+PASS: Xóa dữ liệu theo danh tính xác thực; mẫu giáo viên đã khái quát hóa còn trong lịch sử phiên bản.

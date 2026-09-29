@@ -2331,7 +2331,6 @@ legend {
   }
 }
 
-/* V2.1: new identity; mint light surfaces. Dark palette is unchanged. */
 .brand {
   min-width: 0;
   flex: 1;
@@ -2382,7 +2381,7 @@ legend {
     flex: 1;
   }
 }
-/* Verified mathematical figures share the existing light/dark theme. */
+
 .problem-figure {
   margin: 14px 0 18px;
   border: 1px solid var(--line);

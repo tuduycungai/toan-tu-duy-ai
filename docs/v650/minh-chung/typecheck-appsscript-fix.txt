@@ -1,0 +1,5 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> toan-tu-duy-ai-netlify@6.5.0 typecheck
+> tsc --noEmit
+

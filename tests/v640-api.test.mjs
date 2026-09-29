@@ -101,7 +101,7 @@ test('invalid coordinates return a repairable error, never fallback/unchecked ma
   const c = cases()[0],
     bad = structuredClone(c.scene);
   bad.nodes[0].values = [0, 0];
-  // An explicitly false given cannot be passed through SVG or legacy TikZ.
+
   bad.constraints.push(constraint('length', ['A', 'B'], 99, c.problem));
   const r = await handleChat(request(bodyFor(c)), env, async () => response(bad));
   assert.equal(r.status, 502);

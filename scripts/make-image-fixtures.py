@@ -1,4 +1,3 @@
-"""Authored QA images, not photographs or live Gemini results."""
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from pathlib import Path
 root=Path('tests/fixtures/images');root.mkdir(parents=True,exist_ok=True)

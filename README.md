@@ -1,10 +1,36 @@
+# V6.5.0 — Bộ nhớ học tập và kho gợi mở do giáo viên duyệt
+
+**Bản sửa lỗi Apps Script ngày 29/09/2026:** đã thay hai phép gán `||=` trong `Domain.gs` để xử lý lỗi `ParseError: Unexpected token =` khi lưu trên Google. Mã nguồn Node và mã Apps Script đã được đồng bộ; có kiểm tra cú pháp ES2020. Xem `docs/v650/SUA_LOI_APPS_SCRIPT.md`.
+
+Bản nâng cấp từ mã V6.4.0 đính kèm; giữ Vite/React, Netlify Functions, OpenAI/Gemini và chức năng dựng hình.
+
+**Bắt đầu:** đọc [hướng dẫn kết nối Google Sheets](docs/v650/HUONG_DAN_GOOGLE_SHEETS.md). Khi chưa điền biến lưu trữ, ứng dụng vẫn học được nhưng không ghi dữ liệu thật vào Google Sheets.
+
+- [Khảo sát mã nguồn và luồng dữ liệu](docs/v650/KHAO_SAT_MA_NGUON.md)
+- [Sơ đồ dữ liệu](docs/v650/SO_DO_DU_LIEU.md)
+- [Đối chiếu yêu cầu](docs/v650/DOI_CHIEU_YEU_CAU.md)
+- [Kết quả kiểm thử](docs/v650/KET_QUA_KIEM_THU.md)
+
+```bash
+npm ci
+npm start
+```
+
+Kiểm tra: `npm test`, `npm run typecheck`, `npm run lint`, `npm run build`. Kiểm tra riêng bộ nhớ: `npm run test:learning`. Kiểm tra trình duyệt sau build: `npm run test:ui:v650` (cần Chromium của Playwright hoặc biến CHROMIUM_EXECUTABLE). Tất cả kiểm tra V6.5 dùng dịch vụ mô phỏng.
+
+Cập nhật mã Google sau khi sửa domain/engine: `npm run build:gateway`, rồi cập nhật Domain.gs và tạo deployment Apps Script phiên bản mới. Không sửa Domain.gs độc lập.
+
+Phần dưới là tài liệu kế thừa V6.4.0. Khi hướng dẫn cũ khác phần thiết lập bộ nhớ V6.5, dùng tài liệu V6.5 ở trên.
+
+---
+
 # Tư duy Toán học — V6.4.0
 
-Bản nâng cấp dựng hình tổng quát ngày 24/09/2026, phát triển từ gói mã nguồn đã cung cấp. Giữ React + TypeScript + Vite, cấu hình OpenAI/Gemini và Netlify.
+Ứng dụng học hình học với React, TypeScript và Vite; hỗ trợ API OpenAI/Gemini và triển khai Netlify.
 
 **V6.4.0:** AI diễn giải đề thành các phép dựng; ứng dụng tính tọa độ, kiểm tra quan hệ và xuất SVG trực tiếp. Áp dụng cho đề nhập và đề ảnh đã xác nhận, tiếp tục dùng `gpt-6-luna`. Bộ dựng cục bộ và công cụ TikZ mở rộng vẫn được sử dụng khi phù hợp.
 
-Xem [phạm vi, kiểm chứng và cách cập nhật](docs/V6_4_0_DUNG_HINH_TONG_QUAT.md), [20 nhóm hình kiểm chứng](docs/v640-review/checks.json) và [bảng hình mẫu](docs/v640-review/gallery.svg). Bộ kiểm tra này đánh giá phép dựng và tích hợp bằng API giả lập; không bảo đảm AI diễn giải đúng mọi đề tự nhiên. Bản mới cần triển khai rồi kiểm tra API thật.
+Xem [phạm vi, kiểm thử và cách cập nhật](docs/V6_4_0_DUNG_HINH_TONG_QUAT.md). Chạy `npm run review:figures` để tạo hình mẫu và kết quả đối chiếu của 20 nhóm hình trong `docs/v640-review/`. Bộ kiểm tra dùng API giả lập; cần kiểm tra API thật sau khi triển khai.
 
 ## Chạy trên máy
 
@@ -36,7 +62,7 @@ Cấu hình API cho bản 6.4.0:
 | `ACCESS_CODE`                     | Mã lớp, mặc định `HOCGIOITOAN`                                      |
 | `STATE_SIGNING_KEY`               | Khóa ký trạng thái tùy chọn; xem `.env.example`                     |
 
-Giữ khóa ngoài mã nguồn, không đặt trong biến `VITE_*`. Quyền truy cập mô hình và hạn mức cần kiểm tra trên tài khoản API thực tế. Trong phiên kiểm tra ngày 24/09/2026, website đang chạy đã kết nối thành công và hiển thị `gpt-6-luna`; yêu cầu vẽ bài trong ảnh tái hiện lỗi mạng/hết thời gian. Bản sửa đã kiểm thử API bằng phản hồi giả lập; cần kiểm tra API thật sau khi triển khai.
+Giữ khóa ngoài mã nguồn, không đặt trong biến `VITE_*`. Quyền truy cập mô hình và hạn mức cần kiểm tra trên tài khoản API thực tế. Có thể đặt `STATE_SIGNING_KEY` trong biến môi trường máy chủ để giữ khóa ký trạng thái ổn định khi đổi khóa API hoặc nhà cung cấp.
 
 ## Triển khai Netlify
 
@@ -98,4 +124,4 @@ Trọng tâm nội dung là hình học THCS, nhất là tứ giác lớp 8. Gi�
 | `docs`                        | Ghi chú bảo trì mô-đun                                       |
 | `THIRD_PARTY`, `vendor`       | Giấy phép, ghi công và tài nguyên thư viện                   |
 
-Không đóng gói `node_modules`, `dist`, `public/tikz`, log, ảnh chụp kiểm thử hoặc dữ liệu phiên người dùng. Giữ thông tin ghi công của dự án và thư viện; không thay đổi tuyên bố tác giả hoặc nguồn gốc.
+Không đóng gói `node_modules`, `dist`, `public/tikz`, các thư mục kết quả `docs/v631-review`, `docs/v640-review`, log, ảnh chụp kiểm thử hoặc dữ liệu phiên người dùng. Giữ dữ liệu mẫu trong `tests/fixtures` để tái lập kiểm thử; giữ giấy phép và ghi công trong `THIRD_PARTY`, `vendor`.

@@ -25,7 +25,7 @@ export const angle = (a: XY, o: XY, b: XY) =>
     180) /
   Math.PI;
 const seg = (s: string): Segment => s.split('') as Segment;
-/** Trusted curriculum constructions; all relations are checked again on the resulting points. */
+
 export class WorksheetFigure {
   points: Record<string, XY> = Object.create(null);
   outline: string[];
@@ -344,7 +344,7 @@ export function triangle(title: string, kind = 'triangle', coords?: number[][], 
             ]),
   ).shape(kind);
 }
-/** Realize a convex quadrilateral with prescribed interior angles without assuming it is cyclic. */
+
 export function angleQuad(title: string, names: string, degrees: number[]) {
   if (
     !near(
@@ -360,7 +360,7 @@ export function angleQuad(title: string, names: string, degrees: number[]) {
     rayD = xy(Math.cos((degrees[0] * Math.PI) / 180), Math.sin((degrees[0] * Math.PI) / 180));
   let result: XY[] | undefined,
     quality = -1;
-  // Keep the given angles exact, and choose legible proportions instead of the first thin candidate.
+
   for (const t of [0.3, 0.5, 0.8, 1, 1.3, 2, 3, 4, 5, 6, 8, 10, 12, 20]) {
     const C = xy(5 + t * Math.cos(theta), t * Math.sin(theta)),
       phi = theta + ((180 - degrees[2]) * Math.PI) / 180;

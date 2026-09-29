@@ -161,7 +161,7 @@ export function checkGeometryCode(latex, reading) {
       throw Error('Tọa độ chưa thỏa loại ' + shape + ' trong đề.');
     checked.push(shape + ' ' + o.name);
   }
-  // The coordinates are checked, not a formal verification of arbitrary drawing paths.
+
   return {
     checked,
     unverified,

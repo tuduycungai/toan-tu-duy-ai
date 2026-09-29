@@ -130,7 +130,6 @@ add(
   'Góc còn lại của vùng đất tứ giác',
   'Mô hình vùng đất Long Xuyên là tứ giác lồi ABCD, có ∠ADC = 100°, ∠ABC = 120°, ∠DCA = 45°, ∠ACB = 33°. Tính ∠DAB.',
   () => {
-    // Positions below are determined by the given triangle angles.
     const Bx =
         (6 * Math.sin((33 * Math.PI) / 180) * Math.cos((27 * Math.PI) / 180)) /
         Math.sin((120 * Math.PI) / 180),
@@ -1475,7 +1474,7 @@ export const worksheetFingerprint = (s: string) =>
     .trim()
     .replace(/\s*([,;:.!?=])\s*/g, '$1')
     .toLocaleLowerCase('vi');
-/** Exact whole statement only: changed numbers or point names must never reuse a preset. */
+
 export function findWorksheet(problem: string) {
   const key = worksheetFingerprint(problem);
   return worksheets.find((w) => worksheetFingerprint(w.problem) === key);

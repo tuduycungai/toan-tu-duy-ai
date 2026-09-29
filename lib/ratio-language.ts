@@ -25,7 +25,7 @@ export function readRatios(text: string) {
     new RegExp(`${start}${edge}\\s*=\\s*\\(?(${N})\\s*/\\s*(${N})\\)?\\s*[*×·]?\\s*${edge}`, 'giu'),
     (_m, a, n, d, b) => save(a, b, num(n) / num(d)),
   );
-  // Both sides remain in one match, so 2AM=AB cannot be mistaken for AM=AB.
+
   text = text.replace(
     new RegExp(
       `${start}(?:(${N})\\s*[*×·]?\\s*)?${edge}\\s*=\\s*(?:(${N})\\s*[*×·]?\\s*)?${edge}`,

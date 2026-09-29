@@ -142,7 +142,7 @@ try {
   assert.equal(await p.locator('.current-problem img.tikz-result').getAttribute('src'), src);
   record('UI630-05', 'Hết hạn mức không đăng xuất mã lớp và không làm mất hình.');
   await p.locator('.current-problem').screenshot({ path: out + '/giu-hinh-desktop.png' });
-  // Trigger pagehide so the production session-saving path runs before reload.
+
   await p.evaluate(() => dispatchEvent(new Event('pagehide')));
   await p.reload();
   await p.locator('.current-problem img.tikz-result').waitFor();

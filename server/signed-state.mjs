@@ -1,6 +1,5 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
-// Purpose-separated authentication, using the existing server secret. No extra env var.
 export function seal(value, secret, purpose) {
   const data = Buffer.from(
     JSON.stringify({ v: 1, expires: Date.now() + 12 * 3600000, value }),

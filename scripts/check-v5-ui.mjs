@@ -1,4 +1,3 @@
-// Real Chromium UI and image-export checks. AI / feedback requests are explicitly mocked.
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -88,7 +87,7 @@ try {
   report('Read and construct screenshot problem without API');
   await page.locator('.current-problem').screenshot({ path: out + '/01-hinh-binh-hanh.png' });
   await page.screenshot({ path: out + '/02-desktop-light.png', fullPage: true });
-  // Labels may not overlap each other; check rendered boxes, not just coordinates.
+
   const labels = await page.locator('.current-problem .problem-label').evaluateAll((es) =>
     es.map((e) => {
       const b = e.getBoundingClientRect();

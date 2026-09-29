@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { streamCoreToMemory } from '../scripts/tikz-core-stream.mjs';
 import { patchWorkerMemory } from '../scripts/patch-tikz-memory.mjs';
 import { saveImageSession, readImageSession, clearImageSession } from '../lib/image-session.ts';
-// Controlled chunk producer checks bounded writes; real gzip/TeX runs in browser tests.
+
 function producer() {
   return {
     err: 0,

@@ -1,4 +1,3 @@
-/* V4.4 additions only: inherited light-green and dark palettes are unchanged. */
 .theory-panel {
   margin: 12px 0 18px;
   padding: 16px;
@@ -182,7 +181,6 @@
   }
 }
 
-/* V5 additions inherit the existing theme and keep all original modes. */
 .chat-column {
   height: auto;
   min-height: 0;
@@ -521,7 +519,7 @@
     white-space: normal;
   }
 }
-/* A clipped skip link stays available to keyboards without appearing over scrolled screenshots. */
+
 .skip-link:not(:focus) {
   width: 1px;
   height: 1px;
@@ -593,7 +591,6 @@
   color: var(--muted);
 }
 
-/* V6.2.3: image workflow reuses the existing theme and typography. */
 .image-problem {
   border: 1px solid var(--line, #d8e4ed);
   background: var(--surface, #fff);

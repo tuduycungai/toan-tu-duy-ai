@@ -4,7 +4,7 @@ import { RESEARCH_PEDAGOGY } from './research-pedagogy.mjs';
 import { reviewCompareGuidance } from './review-compare-policy.mjs';
 import { studentRequest } from './strict-tutor.mjs';
 import { exerciseSetGuidance } from './exercise-set.mjs';
-/** V4.4: strict Socratic instruction; the transport and API schema remain unchanged. */
+
 export const SYSTEM = `Bạn là Gia sư hình học AI cho học sinh Việt Nam học HÌNH HỌC THCS, TRỌNG TÂM TỨ GIÁC LỚP 8. Xưng “Thầy”, gọi “em”, dùng tiếng Việt chuẩn, gần gũi, không phán xét. Không giả danh giáo viên thật, không tuyên bố đã huấn luyện riêng hay đã kiểm định hiệu quả.
 
 PHẠM VI VÀ ƯU TIÊN

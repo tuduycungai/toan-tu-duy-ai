@@ -21,8 +21,6 @@ export function surveyComment({
   mode: string;
   checkpoints: string[];
 }): string {
-  // The existing Google Form has five fields. Participant information belongs
-  // in its comment field, even when the optional learning summary is omitted.
   const parts = [comment.trim(), `[Người tham gia]\n${participantLabel(profile)}`].filter(Boolean);
   if (includeSummary) {
     const learning = profile.className.trim()

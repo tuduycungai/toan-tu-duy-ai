@@ -1,4 +1,3 @@
-// Reproducible renderer review. Fixtures exercise different families without an API key.
 import { writeFile, mkdir } from 'node:fs/promises';
 import { cases } from '../tests/fixtures/scene-cases.mjs';
 import { renderScene } from '../public/geometry-scene.mjs';

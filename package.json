@@ -1,6 +1,6 @@
 {
   "name": "toan-tu-duy-ai-netlify",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -33,7 +33,10 @@
     "test:start": "node scripts/check-start.mjs",
     "pretest": "node scripts/prepare-tikz.mjs",
     "test:v640": "node --test tests/v640-*.test.mjs tests/v61-component.test.mjs",
-    "review:figures": "node scripts/render-v640-review.mjs"
+    "review:figures": "node scripts/render-v640-review.mjs",
+    "build:gateway": "node scripts/build-learning-gateway.mjs",
+    "test:learning": "node --test tests/v650-*.test.mjs",
+    "test:ui:v650": "node scripts/check-v650-ui.mjs"
   },
   "dependencies": {
     "@rod2ik/tikzjax": "1.6.0",
@@ -53,6 +56,7 @@
     "@types/react-dom": "19.2.3",
     "@typescript-eslint/parser": "8.70.1",
     "@vitejs/plugin-react": "6.0.2",
+    "acorn": "8.18.0",
     "eslint": "10.11.0",
     "playwright": "1.62.1",
     "prettier": "3.6.2",

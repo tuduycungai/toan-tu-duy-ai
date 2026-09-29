@@ -1,4 +1,3 @@
-"""Read-only PDF inspection: render already compiled TikZ PDFs as contact sheets."""
 from pathlib import Path
 import fitz
 from PIL import Image, ImageDraw

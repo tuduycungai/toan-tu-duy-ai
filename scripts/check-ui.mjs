@@ -1,4 +1,3 @@
-// Optional Playwright checks: all outbound AI/Form writes are mocked.
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
 import { mkdir } from 'node:fs/promises';

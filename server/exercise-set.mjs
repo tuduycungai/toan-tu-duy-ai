@@ -1,4 +1,3 @@
-/** Formatting of a requested set of problems, never a list of solved steps. */
 export function requestedExerciseCount(student) {
   const n = student
     .trim()
@@ -19,7 +18,6 @@ export function exercisePlan(count) {
   return `[SO_DO]\nDU_KIEN: Bộ ${count} bài tập độc lập; mỗi bài có giả thiết riêng.\nMUC_TIEU: Chọn một bài để bắt đầu.\nCAU_NOI: Phân biệt điều đề cho với điều cần lập luận.\nBUOC_TIEP: Chọn số của một câu trong bộ đề.\n[/SO_DO]\nThao tác tư duy: Phân tích — tập trung vào một nhiệm vụ trước khi giải.`;
 }
 
-/** Accept common numbered-list formatting; do not invent missing problems. */
 export function normalizeExerciseSet(text, count) {
   if (
     !count ||

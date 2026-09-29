@@ -1,4 +1,3 @@
-// Local browser regression; never sends real pupil data to Gemini or Google Forms.
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -113,7 +112,7 @@ try {
     await card.scrollIntoViewIfNeeded();
     await card.screenshot({ path: output + '/sample-' + l.id + '.png' });
   }
-  // Exact follow-up screenshot: a common Vietnamese midpoint phrase must render normally.
+
   await newChat();
   await send(
     'Cho hình bình hành ABCD . Gọi K , I lần lượt là trung điểm các cạnh AB và CD . Chứng minh: AI=CK',

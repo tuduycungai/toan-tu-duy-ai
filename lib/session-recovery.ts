@@ -78,7 +78,5 @@ export function saveSession(s: Snapshot) {
         savedAt: Date.now(),
       }),
     );
-  } catch {
-    /* Private mode or full storage must never crash the lesson. */
-  }
+  } catch {}
 }

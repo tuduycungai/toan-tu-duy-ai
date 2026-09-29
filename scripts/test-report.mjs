@@ -1,5 +1,5 @@
 import { relative } from 'node:path';
-/** Structured evidence from node:test events. No provider responses are recorded. */
+
 export default async function* report(events) {
   for await (const event of events) {
     if (!['test:pass', 'test:fail'].includes(event.type)) continue;

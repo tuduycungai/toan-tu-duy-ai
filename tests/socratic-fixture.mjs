@@ -1,4 +1,3 @@
-// Mock provider content for transport tests. This is NOT a recorded Gemini response.
 export const socratic = `[SO_DO]
 DU_KIEN: ABCD là hình bình hành; AC ⟂ BD.
 MUC_TIEU: Chọn dấu hiệu đủ để nhận biết hình thoi.

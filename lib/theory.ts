@@ -227,7 +227,7 @@ export function dynamicTheoryForProblem(
     );
     if (!triangle) cards = cards.filter((c) => c.id !== 'midline');
   }
-  // Rank from actual parsed relations; this works for new problems and provisional figures.
+
   const priorities = model?.relations.map((r) => r.type) || [];
   const score = (id: string) =>
     (id === 'parallelogram' &&

@@ -6,7 +6,6 @@ import { instructions } from './policy.mjs';
 import { generateScene } from './scene-policy.mjs';
 import { asksForAnswer, guidedFallback, guardTutorOutput } from './strict-tutor.mjs';
 
-// Model selection is server-only: a student cannot select a more expensive model.
 export const OPENAI_MODELS = ['gpt-6-luna', 'gpt-6-sol', 'gpt-6-astra'];
 const reply = (data, status = 200) =>
   Response.json(data, {
@@ -59,8 +58,6 @@ export function openAIConfig(env) {
   };
 }
 
-// The existing pedagogical schemas are also used by Gemini. Translate their
-// types to JSON Schema and close every object for Responses strict outputs.
 export function strictSchema(schema) {
   const result = { type: schema.type.toLowerCase() };
   if (schema.enum) result.enum = [...schema.enum];
@@ -123,8 +120,7 @@ export async function generateOpenAI(
         }
       : {}),
   };
-  // One shared deadline includes response-body reading and any format repair.
-  // Keep the entire handler below Netlify's synchronous execution limit.
+
   const remaining = Math.min(
     config.timeoutMs || 50000,
     (config.deadlineAt || Date.now() + 52000) - Date.now(),
@@ -153,7 +149,6 @@ export async function generateOpenAI(
       data = await response.json();
     } catch {
       if (timeoutSignal.aborted) throw timeoutError();
-      /* Never display raw provider errors or credentials. */
     }
     const code = data?.error?.code || data?.error?.type;
     if (response.status === 429)
@@ -287,11 +282,18 @@ export async function handleOpenAI(request, env, fetcher = fetch) {
       fetcher,
     );
   if (!check && (featureImage || body.adaptive === true))
-    return handleFeature(body, env, model, fetcher, {
-      name: 'OpenAI',
-      secret: config.secret,
-      generate,
-    });
+    return handleFeature(
+      body,
+      env,
+      model,
+      fetcher,
+      {
+        name: 'OpenAI',
+        secret: config.secret,
+        generate,
+      },
+      request,
+    );
   if (!check && !diagram && asksForAnswer(body.messages))
     return reply({ text: guidedFallback(body.messages), model, provider: 'openai' });
   try {

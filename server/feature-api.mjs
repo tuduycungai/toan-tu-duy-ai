@@ -1,3 +1,4 @@
+import { prepareMemory, recordMemory } from './learning/integration.mjs';
 import {
   ADAPTIVE_SCHEMA,
   adaptiveInstructions,
@@ -33,7 +34,14 @@ export const IMAGE_MODES = [
   'image-diagram',
   'image-restore',
 ];
-export async function handleFeature(body, env, model, fetcher = fetch, provider = null) {
+export async function handleFeature(
+  body,
+  env,
+  model,
+  fetcher = fetch,
+  provider = null,
+  request = null,
+) {
   const secret = provider?.secret || env.STATE_SIGNING_KEY?.trim() || env.GEMINI_API_KEY.trim();
   async function generate(prompt, contents, schema, maxOutputTokens = 6000) {
     if (provider) return provider.generate(prompt, contents, schema, maxOutputTokens);
@@ -46,7 +54,10 @@ export async function handleFeature(body, env, model, fetcher = fetch, provider 
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': secret },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': env.GEMINI_API_KEY.trim(),
+        },
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: prompt }] },
           contents,
@@ -90,20 +101,23 @@ export async function handleFeature(body, env, model, fetcher = fetch, provider 
         role: m.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: m.content }],
       }));
+      const memory = await prepareMemory(body, request, env, fetcher);
+      if (!body.tutorToken && memory.data?.profile)
+        state.hintLevel = memory.data.profile.supportLevel;
       let correction = '';
-      // At most one format/repetition repair. Failed provider calls are never retried automatically.
+
       for (let attempt = 0; attempt < 2; attempt++) {
         const raw = await generate(
-          adaptiveInstructions(state, body.mode, body.messages) + correction,
+          adaptiveInstructions(state, body.mode, body.messages) + memory.context + correction,
           contents,
           ADAPTIVE_SCHEMA,
           4800,
         );
         try {
-          return reply({
-            ...tutorResponse(applyTutorTurn(state, JSON.parse(raw), body.messages), secret),
-            model,
-          });
+          const result = applyTutorTurn(state, JSON.parse(raw), body.messages);
+          const response = tutorResponse(result, secret);
+          const learning = await recordMemory(memory, body, state, result, env, fetcher);
+          return reply({ ...response, model, learning });
         } catch (e) {
           if (attempt === 1)
             throw fail(

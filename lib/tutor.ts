@@ -102,8 +102,7 @@ export function requestMessages(
 export function readProfile(): Profile | null {
   try {
     const p = JSON.parse(localStorage.getItem('ai-tutor-profile-v1') || 'null');
-    if (!p || !p.name || !p.school || !levels.includes(p.level) || !Array.isArray(p.difficulties))
-      return null;
+    if (!p || !levels.includes(p.level) || !Array.isArray(p.difficulties)) return null;
     return { ...emptyProfile, ...p };
   } catch {
     return null;

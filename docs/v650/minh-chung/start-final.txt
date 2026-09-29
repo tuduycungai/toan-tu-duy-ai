@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> toan-tu-duy-ai-netlify@6.5.0 test:start
+> node scripts/check-start.mjs
+
+{"command":"npm start","startedAt":"2026-09-29T07:49:05.695Z","finishedAt":"2026-09-29T07:49:06.335Z","durationMs":640.13008,"ok":true,"rootStatus":200,"rootHasApp":true,"chatWithoutKeyStatus":503,"chatError":"Giáo viên cần đặt OPENAI_API_KEY trong biến môi trường của máy chủ, rồi triển khai lại. ChatGPT Plus không bao gồm phí API.","feedbackGetStatus":405,"scope":"Khởi động cục bộ không có .env: HTTP giao diện và API. Không gọi Gemini thật; không gửi Google Forms."}

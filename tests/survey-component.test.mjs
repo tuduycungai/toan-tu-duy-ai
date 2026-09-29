@@ -1,5 +1,3 @@
-// React integration checks. Rendering-only children are replaced; profile,
-// survey, timer and HTTP request code run unchanged. No browser or live writes.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -41,6 +39,17 @@ function compile(path, mocks = {}) {
 const feedback = compile('lib/feedback.ts');
 const container = ({ children, ...props }) => h('div', props, children);
 const App = compile('app/page.tsx', {
+  '@/lib/learning-memory': {
+    useLearningMemory: () => ({
+      enabled: false,
+      studentId: '',
+      request: () => ({}),
+      accept() {},
+      newSession() {},
+    }),
+  },
+  '@/components/learning-memory-panel': { LearningMemoryPanel: none },
+  './learning-memory.css': {},
   '@/components/image-problem': { ImageProblem: none },
   '@/lib/image-session': imageSession,
   '@/lib/tutor': tutor,
@@ -263,7 +272,7 @@ test('student class is preserved and an unfinished survey keeps its rating and c
 
 test('unconfirmed delivery retains its original prefilled Form and never retries on a timer', async (t) => {
   const r = await setup(t);
-  // Force an uncertain delivery without any real network request.
+
   globalThis.fetch = async (url, options) => {
     r.requests.push({ url, body: JSON.parse(options.body) });
     return Response.json({

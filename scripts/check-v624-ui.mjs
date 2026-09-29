@@ -172,7 +172,7 @@ try {
     'Tải lại trang sau dựng hình',
     'Khôi phục bản đề và token qua máy chủ; không tự nạp TeX khi tải lại.',
   );
-  // Three consecutive compiles also exercise cancellation and object URL replacement.
+
   for (let i = 0; i < 3; i++) {
     await page.getByRole('button', { name: 'Xác nhận và vẽ hình', exact: true }).click();
     await waitFigure(page);

@@ -2,13 +2,12 @@ import type { Segment } from './geometry';
 
 export type MidpointDescription = { point: string; segment: Segment };
 
-/** Read equivalent Vietnamese midpoint descriptions without weakening geometry checks. */
 export function readMidpointDescriptions(text: string): {
   text: string;
   items: MidpointDescription[];
 } {
   const items: MidpointDescription[] = [];
-  // Unicode word boundaries protect point names from matching the end of a word or a primed name.
+
   const start = String.raw`(?<![\p{L}\p{N}'′])`;
   const end = String.raw`(?![\p{L}\p{N}'′])`;
   const point = String.raw`[A-Z]${end}`;
@@ -41,8 +40,7 @@ export function readMidpointDescriptions(text: string): {
       throw Error('Số trung điểm và số đoạn thẳng chưa khớp; em hãy kiểm tra lại từng cặp.');
     names.forEach((n, i) => items.push({ point: n, segment: [segments[i][0], segments[i][1]] }));
   }
-  // K, I lần lượt là trung điểm các cạnh AB và CD.
-  // K và I là trung điểm của hai đoạn thẳng AB, CD.
+
   const forward = new RegExp(
     String.raw`${start}${pointPrefix}(${pointList})\s+${relation}\s+${description}(${segmentList})`,
     'giu',
@@ -51,7 +49,7 @@ export function readMidpointDescriptions(text: string): {
     record(names, segments, clause);
     return ' ';
   });
-  // Trung điểm của các cạnh AB, CD lần lượt là K và I.
+
   const reverse = new RegExp(
     String.raw`${start}(?:các\s+)?trung\s+điểm\s+${description}(${segmentList})\s+(?:(?:lần\s+lượt|tương\s+ứng|theo\s+thứ\s+tự)\s+)?là\s+${pointPrefix}(${pointList})`,
     'giu',
@@ -60,7 +58,7 @@ export function readMidpointDescriptions(text: string): {
     record(names, segments, clause);
     return ' ';
   });
-  // AB và CD lần lượt có trung điểm là K và I.
+
   const have = new RegExp(
     String.raw`${start}(?:${noun}\s+)?(${segmentList})\s+(?:(?:lần\s+lượt|tương\s+ứng|theo\s+thứ\s+tự)\s+)?có\s+(?:các\s+)?trung\s+điểm\s+(?:(?:lần\s+lượt|theo\s+thứ\s+tự)\s+)?(?:là\s+)?${pointPrefix}(${pointList})`,
     'giu',

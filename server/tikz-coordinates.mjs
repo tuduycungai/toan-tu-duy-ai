@@ -1,4 +1,3 @@
-/** Small numerical interpreter, not eval/TeX execution. Mirrors supported TikZ coordinate forms. */
 export function scalar(source) {
   const text = String(source).replaceAll('{', '(').replaceAll('}', ')').replace(/\s+/g, '');
   if (!text || text.length > 200) throw Error('Biểu thức tọa độ quá dài hoặc trống.');
@@ -71,7 +70,7 @@ export function coordinateMap(clean) {
   const definitions = new Map(),
     points = new Map(),
     pending = new Set();
-  // A coordinate command ends at its semicolon. Expressions cannot contain a semicolon.
+
   const pattern = new RegExp(
     '\\\\coordinate\\s*\\((' + pointName + ')\\)\\s+at\\s*([\\s\\S]*?);',
     'g',

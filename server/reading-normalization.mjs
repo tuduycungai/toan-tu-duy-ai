@@ -1,4 +1,3 @@
-/** Normalize notation and JSON representation only; never infer a new geometric fact. */
 export function mathText(value = '') {
   return String(value)
     .normalize('NFC')
@@ -60,7 +59,7 @@ const arity = {
 export function normalizeReading(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
   const d = structuredClone(value);
-  // Server-only readiness flags may not be supplied by the model.
+
   delete d.ready;
   delete d.structureStatus;
   delete d.structureIssue;
@@ -72,7 +71,7 @@ export function normalizeReading(value) {
     if (typeof s !== 'string') return [s];
     const name = point(s);
     if (d.points.includes(name)) return [name];
-    // A segment may be represented as "AD"; accept only one unambiguous split into known points.
+
     const pairs = d.points.flatMap((a) =>
       d.points.filter((b) => a + b === name).map((b) => [a, b]),
     );
@@ -117,7 +116,6 @@ export function normalizeReading(value) {
   return d;
 }
 export function explicitGoals(transcription) {
-  // Copy a stated task, do not manufacture a missing conclusion.
   const m = transcription.match(
     /(?:^|[.!?\n]\s*)((?:Hãy\s+)?(?:Chứng minh|Tính|Xác định|Tìm|Dựng|Vẽ)(?=\s|:|$)[^]+)$/iu,
   );

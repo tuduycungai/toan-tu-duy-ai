@@ -7,7 +7,6 @@ import { handleChat } from '../server/gemini.mjs';
 import { exerciseChoices, selectedExercise } from '../lib/exercise-choice.ts';
 import { socratic } from './socratic-fixture.mjs';
 
-// Authored provider-format fixtures, not recordings or evidence of model accuracy.
 export const problems = [
   'Cho hình bình hành ABCD. M và N lần lượt là trung điểm AB và CD. Chứng minh AMCN là hình bình hành.',
   'Cho hình bình hành ABCD, tâm O. E và F lần lượt là trung điểm OD và OB. Chứng minh AE ∥ CF.',

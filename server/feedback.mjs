@@ -1,4 +1,3 @@
-// Additive feedback endpoint. The Gemini handler and its contract remain unchanged.
 import { timingSafeEqual, createHash } from 'node:crypto';
 import config from '../lib/form-config.json' with { type: 'json' };
 const submitted = new Map();
@@ -92,7 +91,7 @@ export async function handleFeedback(request, env, fetcher = fetch) {
         signal: AbortSignal.timeout(15000),
       });
       const html = await r.text();
-      // An HTTP 200 alone can be a validation/login page; never treat it as delivery proof.
+
       const validationForm = /<form[^>]*action=["'][^"']*formResponse|name=["']entry\./i.test(html);
       const confirmation =
         !validationForm &&

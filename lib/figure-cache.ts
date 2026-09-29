@@ -83,7 +83,5 @@ export function saveFigure(problem: string, figure: SavedFigure) {
     const entries = [...memory].filter(([, v]) => v.svg.length <= 700000);
     while (entries.length && JSON.stringify(entries).length > 1500000) entries.shift();
     sessionStorage.setItem(KEY, JSON.stringify({ version: 1, savedAt: Date.now(), entries }));
-  } catch {
-    /* A full or disabled session store must not remove the displayed figure. */
-  }
+  } catch {}
 }

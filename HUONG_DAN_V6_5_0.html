@@ -1,0 +1,692 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hướng dẫn bàn giao AI Tutor V6.5.0</title><style>
+:root{color-scheme:light;font-family:Arial,"Segoe UI",sans-serif;color:#173b43;background:#e8f1e7}*{box-sizing:border-box}body{margin:0}main{max-width:1120px;margin:auto;padding:35px 24px 70px}.hero{padding:28px;background:#19483d;border-radius:20px;color:#fff}.tag{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#c8e8d1}h1{font-size:34px;line-height:1.2;margin:14px 0}h2{margin:30px 0 14px;font-size:25px}h3{font-size:20px}p,li{line-height:1.65}a{color:#126150}a:hover{text-decoration:underline}.hero p{color:#d4e8dc}.status{padding:16px 20px;background:#fff4cb;border-left:5px solid #b58613;border-radius:8px;margin:20px 0}.diagram{border-radius:16px;background:#f1f7f1;overflow:auto;margin:20px 0}.diagram svg{display:block;width:100%;min-width:650px;height:auto}nav{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}nav a{border:1px solid #a2bba6;padding:8px 13px;border-radius:20px;text-decoration:none;background:#f7fbf6}details{background:#fbfdf9;border:1px solid #c1d5c2;border-radius:14px;margin:16px 0;padding:0 20px}summary{font-size:20px;font-weight:bold;cursor:pointer;padding:20px 0}article{padding:0 6px 24px}article>h1{font-size:28px;border-bottom:1px solid #c2d8c5;padding-bottom:15px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.5}th,td{text-align:left;vertical-align:top;padding:11px 12px;border:1px solid #c3d4c7}th{background:#ddebdc}tr:nth-child(even){background:#f0f5ec}.table-wrap{overflow:auto;margin:18px 0}code{overflow-wrap:anywhere;background:#e6ede4;border-radius:4px;padding:2px 4px;font-family:Consolas,monospace;font-size:.9em}pre{overflow:auto;background:#193e36;color:#edf8ef;padding:18px;border-radius:10px}pre code{background:none;color:inherit;padding:0}blockquote{border-left:4px solid #96bba2;margin-left:0;padding-left:20px}li{margin:7px 0}footer{font-size:13px;padding-top:20px;color:#506b5e}@media(max-width:650px){main{padding:18px 12px 40px}.hero{padding:20px}h1{font-size:27px}details{padding:0 12px}summary{font-size:18px}article{padding:0 0 20px}article>h1{font-size:24px}table{min-width:650px}}@media print{body{background:#fff}main{padding:0}.hero{color:#111;background:#fff;border:1px solid #aaa}.hero p{color:#333}summary{font-size:24px}details{border:none;break-before:page}details:not([open])>article{display:block}nav{display:none}.table-wrap{overflow:visible}table{font-size:10px}pre{white-space:pre-wrap}a{color:inherit}}
+</style><main><header class="hero"><div class="tag">Tư duy Toán học · Bàn giao V6.5.0</div><h1>Bộ nhớ học tập có kiểm soát</h1><p>Hồ sơ theo học sinh · Google Sheets do thầy sở hữu · Giáo viên duyệt mẫu trước khi dùng chung</p></header><div class="status"><strong>Đã hoàn thiện mã và kiểm thử mô phỏng.</strong> Chưa kết nối tài khoản Google/Netlify thật. Thầy cần thực hiện phần thiết lập trước khi dữ liệu được ghi vào Drive của mình.</div><nav><a href="#ket-noi">Hướng dẫn Google Sheets và Netlify</a><a href="#kiem-thu">Kết quả kiểm thử và giới hạn đã xác định</a><a href="#doi-chieu">Bảng đối chiếu từng yêu cầu</a><a href="#khao-sat">Khảo sát mã nguồn ban đầu</a></nav><h2>Dữ liệu đi đâu?</h2><div class="diagram"><svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+<title id="title">Luồng dữ liệu AI Tutor V6.5.0</title><desc id="desc">Học sinh gửi qua Netlify. Apps Script kiểm tra chữ ký và ghi Google Sheets. Hồ sơ rút gọn và mẫu được giáo viên duyệt quay lại ngữ cảnh AI để tạo câu gợi mở.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#327a65"/></marker></defs>
+<rect width="1000" height="600" rx="20" fill="#f1f7f1"/>
+<g fill="none" stroke="#327a65" stroke-width="2.5" marker-end="url(#arrow)">
+<path d="M265 92 H380"/><path d="M505 135 V245"/><path d="M380 115 H310 V292 H265"/><path d="M150 245 V135"/>
+<path d="M380 310 H340 V490 H285"/><path d="M160 445 V398 H305 V167 H435 V135"/>
+<path d="M630 295 H720"/><path d="M840 350 V445"/><path d="M945 445 V185 H580 V135"/>
+</g>
+<g font-family="Arial, sans-serif" font-size="14" fill="#41695c"><text x="281" y="79">Đồng ý</text><text x="520" y="185">Ghi qua HMAC</text><text x="520" y="207">Khóa + batch</text><text x="45" y="193">Câu gợi mở</text><text x="354" y="390">Tóm tắt</text><text x="640" y="282">Chờ duyệt</text><text x="850" y="390">Sửa / duyệt</text><text x="720" y="170">Chỉ bản đã được duyệt</text></g>
+<g fill="#ffffff" stroke="#82ad98" stroke-width="1.5">
+<rect x="35" y="50" width="230" height="85" rx="13"/><rect x="380" y="50" width="250" height="85" rx="13"/>
+<rect x="35" y="245" width="230" height="105" rx="13"/><rect x="380" y="245" width="250" height="105" rx="13"/>
+<rect x="35" y="445" width="250" height="105" rx="13"/><rect x="720" y="245" width="240" height="105" rx="13"/><rect x="720" y="445" width="240" height="90" rx="13"/>
+</g>
+<g font-family="Arial, sans-serif" fill="#173b43" text-anchor="middle">
+<text x="150" y="83" font-size="22" font-weight="700">Học sinh</text><text x="150" y="112" font-size="16">Mã riêng · không Google login</text>
+<text x="505" y="84" font-size="22" font-weight="700">Netlify Functions</text><text x="505" y="113" font-size="16">Xác thực · truy xuất · đánh giá</text>
+<text x="150" y="277" font-size="22" font-weight="700">AI hiện có</text><text x="150" y="307" font-size="16">OpenAI hoặc Gemini</text><text x="150" y="331" font-size="16">Giữ 8 giai đoạn gợi mở</text>
+<text x="505" y="277" font-size="22" font-weight="700">Google Sheets</text><text x="505" y="307" font-size="16">Qua cổng Apps Script</text><text x="505" y="331" font-size="16">Lượt học · hồ sơ · khảo sát</text>
+<text x="160" y="478" font-size="21" font-weight="700">Hồ sơ tiến bộ</text><text x="160" y="508" font-size="16">Dự đoán ≠ bước đã củng cố</text><text x="160" y="531" font-size="16">Ngữ cảnh rút gọn</text>
+<text x="840" y="279" font-size="22" font-weight="700">Giáo viên</text><text x="840" y="310" font-size="16">Xem · sửa · duyệt · bác bỏ</text><text x="840" y="333" font-size="16">Khóa quản trị riêng</text>
+<text x="840" y="480" font-size="21" font-weight="700">Kho ví dụ chung</text><text x="840" y="511" font-size="16">Có phiên bản và rollback</text>
+</g></svg>
+</div><p>Lưu trữ và truy xuất trí nhớ giúp điều chỉnh gợi mở; không đồng nghĩa huấn luyện lại trọng số AI.</p><details id="ket-noi" open><summary>Hướng dẫn Google Sheets và Netlify</summary><article><h1>Tư duy Toán học V6.5.0 — Kết nối bộ nhớ học tập</h1>
+<p><strong>Bản sửa lỗi Apps Script ngày 29/09/2026:</strong> đã thay hai phép gán <code>||=</code> trong <code>Domain.gs</code> để xử lý lỗi <code>ParseError: Unexpected token =</code> khi lưu trên Google. Mã nguồn Node và mã Apps Script đã được đồng bộ; có kiểm tra cú pháp ES2020. Xem <code>docs/v650/SUA_LOI_APPS_SCRIPT.md</code>.</p>
+<p>Bản này nâng cấp trực tiếp dự án V6.4.0 trong <code>TU-DUY-TOAN-HOC-V6_4_0-LAM-SACH(2).zip</code> được đính kèm. Hậu tố của tệp thực tế là (2), khác với (1) trong phần mô tả yêu cầu. Đây vẫn là ứng dụng Vite/React và Netlify Functions; không chuyển sang nền tảng triển khai khác.</p>
+<p><strong>Trạng thái bàn giao:</strong> mã nguồn, trang giáo viên, cổng Google Apps Script và kiểm thử mô phỏng đã được hoàn thiện. Chưa kết nối Google/Netlify của thầy và chưa ghi dữ liệu thật. Phải hoàn tất các bước 1–6 dưới đây để ghi thật.</p>
+<h2>1. Chuẩn bị bảng tính do thầy sở hữu</h2>
+<ol>
+<li>Đăng nhập Google Drive bằng tài khoản thầy muốn dùng để quản lý dữ liệu.</li>
+<li>Tạo thư mục riêng, chẳng hạn <strong>AI Tutor — Dữ liệu học tập</strong>. Tạo Google Sheets trống bên trong, đặt tên <strong>Tư duy Toán học — Tiến bộ học sinh</strong>.</li>
+<li>Giữ chế độ chia sẻ <strong>Restricted / Bị hạn chế</strong>. Chỉ thêm những giáo viên thực sự được phép xem dữ liệu. Không cấp quyền cho học sinh và không chọn “bất kỳ ai có liên kết” cho bảng tính.</li>
+<li>Sao chép ID nằm giữa <code>/d/</code> và <code>/edit</code> trong địa chỉ bảng tính. Không dùng toàn bộ URL làm ID.</li>
+<li>Các trang tính dữ liệu sẽ được tạo tự động ở bước 3; thầy không cần tự gõ cột.</li>
+</ol>
+<p>Cấu hình được chọn <strong>không dùng tài khoản dịch vụ để tạo tệp</strong>. Bảng tính do chính thầy tạo, nên nằm trong Drive của thầy, và thầy có quyền sở hữu, xem, chia sẻ, tải xuống Excel hoặc xuất dữ liệu. Chưa cần Drive API hay thư mục lưu ảnh: bản này không lưu ảnh đề hay tệp minh chứng; câu trả lời chỉ giữ bản rút gọn. Vì vậy không yêu cầu quyền Drive rộng.</p>
+<h2>2. Chuẩn bị ba khóa bí mật khác nhau</h2>
+<p>Cần ba chuỗi ngẫu nhiên độc lập, mỗi chuỗi tối thiểu 32 ký tự:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Khóa</th>
+<th>Nơi đặt</th>
+<th>Công dụng</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GATEWAY_SECRET</code> / <code>LEARNING_GATEWAY_SECRET</code></td>
+<td>Cùng một giá trị ở Apps Script và Netlify</td>
+<td>Ký HMAC các yêu cầu giữa hai máy chủ</td>
+</tr>
+<tr>
+<td><code>LEARNING_SIGNING_KEY</code></td>
+<td>Chỉ Netlify</td>
+<td>Ký phiếu gửi lại lượt học, hiệu lực tối đa 24 giờ</td>
+</tr>
+<tr>
+<td><code>TEACHER_ADMIN_KEY</code></td>
+<td>Chỉ Netlify; thầy giữ riêng để đăng nhập</td>
+<td>Quyền giáo viên, hoàn toàn khác mã lớp</td>
+</tr>
+</tbody></table></div>
+<p>Có thể tạo mỗi chuỗi bằng trình quản lý mật khẩu. Nếu máy có Node.js, chạy lệnh dưới đây <strong>ba lần</strong> và cất kết quả riêng:</p>
+<pre><code class="language-bash">node -e &quot;console.log(require(&#39;node:crypto&#39;).randomBytes(32).toString(&#39;base64url&#39;))&quot;
+</code></pre>
+<p>Không dùng HOCGIOITOAN làm bất cứ khóa bí mật nào. Không dán khóa vào <code>app/</code>, <code>lib/</code>, GitHub hoặc tệp ZIP bàn giao. Không đặt tiền tố <code>VITE_</code> cho các khóa máy chủ.</p>
+<p><code>STATE_SIGNING_KEY</code> là biến sẵn có của dự án để bảo vệ trạng thái gia sư/dựng hình; có thể đặt một khóa riêng thứ tư. Đổi khóa này sẽ làm các trạng thái gia sư cũ hết hiệu lực. V6.5 đã sửa lỗi nhầm khóa ký trạng thái với khóa API khi dùng Gemini: Gemini vẫn nhận <code>GEMINI_API_KEY</code> riêng.</p>
+<h2>3. Cài cổng ghi Google Sheets</h2>
+<ol>
+<li>Trong bảng tính, chọn <strong>Extensions → Apps Script</strong>.</li>
+<li>Mở <code>google-apps-script/Code.gs</code> trong ZIP bằng trình soạn thảo. Chép <strong>toàn bộ nội dung</strong> vào <code>Code.gs</code> trong Apps Script.</li>
+<li>Tạo tệp script mới tên <code>Domain</code> và chép toàn bộ <code>google-apps-script/Domain.gs</code> vào đó. Cần <strong>cả hai tệp</strong>, không chỉ Code.gs.</li>
+<li>Mở <strong>Project Settings</strong>, bật hiển thị tệp manifest <code>appsscript.json</code>. Thay nội dung bằng tệp <code>google-apps-script/appsscript.json</code> trong ZIP.</li>
+<li>Kiểm tra mục <strong>Services</strong> có <strong>Google Sheets API v4</strong>, tên dùng trong mã là <code>Sheets</code>. Nếu chưa có, bấm dấu <strong>+</strong>, chọn Google Sheets API và thêm. Với dự án Google Cloud tiêu chuẩn tự liên kết, cần bật Sheets API trong dự án đó.</li>
+<li>Trong <strong>Project Settings → Script Properties</strong>, thêm:<ul>
+<li><code>SPREADSHEET_ID</code>: ID bảng tính ở bước 1.</li>
+<li><code>GATEWAY_SECRET</code>: khóa đã tạo ở bước 2.</li>
+</ul>
+</li>
+<li>Chọn hàm <code>setup</code>, bấm <strong>Run</strong>, cấp quyền bằng đúng tài khoản sở hữu bảng tính. Chỉ cấp quyền sau khi đối chiếu đúng dự án do thầy vừa tạo; nếu chính sách tài khoản trường chặn, cần quản trị viên trường cho phép.</li>
+<li>Quay lại Sheets, xác nhận có các tab: <code>Students</code>, <code>Sessions</code>, <code>Turns</code>, <code>Profiles</code>, <code>Surveys</code>, <code>ReviewQueue</code>, <code>Versions</code>, <code>Settings</code>, <code>Audit</code>.</li>
+<li>Trong Apps Script, mở <strong>Triggers</strong> (biểu tượng đồng hồ) → <strong>Add trigger</strong> → chọn <code>purgeExpired</code> → <strong>Time-driven → Day timer</strong>, một lần mỗi ngày. Giữ thông báo khi trigger lỗi. Không cần thêm quyền quản lý trigger vào mã: thầy thiết lập bằng giao diện.</li>
+</ol>
+<p>Manifest chỉ yêu cầu phạm vi <code>https://www.googleapis.com/auth/spreadsheets</code>. Google mô tả quyền này áp dụng cho bảng tính mà danh tính được cấp quyền có thể truy cập; nó <strong>không phải</strong> quyền giới hạn từng tab hay chỉ một bảng tính. Cấu hình này cần Sheets API và <code>openById</code>; mã cố định đích bằng <code>SPREADSHEET_ID</code> phía máy chủ, không nhận ID bảng tính do học sinh gửi. Không yêu cầu Gmail, danh bạ, Drive API hay ủy quyền toàn miền. Không tuyên bố OAuth được giới hạn vào một tệp nếu màn hình Google cấp phạm vi rộng hơn.</p>
+<h2>4. Triển khai Apps Script</h2>
+<ol>
+<li>Chọn <strong>Deploy → New deployment → Web app</strong>.</li>
+<li><strong>Execute as:</strong> chọn <strong>Me / Tôi</strong> (tài khoản của thầy).</li>
+<li><strong>Who has access:</strong> chọn <strong>Anyone / Bất kỳ ai</strong>, để Netlify gọi máy chủ mà không yêu cầu học sinh đăng nhập Google. Đây là quyền gọi cổng Apps Script, <strong>không phải</strong> công khai bảng tính. Cổng chỉ xử lý POST có HMAC hợp lệ; gọi không có chữ ký không đọc/ghi được dữ liệu.</li>
+<li>Bấm Deploy và sao chép URL kết thúc bằng <strong><code>/exec</code></strong>.</li>
+<li>Cất URL này trong biến Netlify ở bước 5. Không đưa URL vào trình duyệt hay gửi cho học sinh. Mở URL bằng trình duyệt thường không phải phép thử ghi hợp lệ vì cổng không có <code>doGet</code> công khai.</li>
+<li>Khi sửa <code>Code.gs</code> hoặc <code>Domain.gs</code>, chọn <strong>Manage deployments → Edit → New version → Deploy</strong>. Chỉ lưu tệp trong trình soạn thảo chưa cập nhật phiên bản <code>/exec</code> đang chạy.</li>
+</ol>
+<p>Nếu tài khoản Workspace không có lựa chọn Anyone, cấu hình này đang bị chính sách tổ chức chặn. Cần quản trị viên cho phép triển khai phù hợp hoặc dùng một tài khoản được tổ chức cho phép để sở hữu bảng dữ liệu. Không đổi sang “User accessing the web app”, vì cách đó yêu cầu xác thực Google ở người gọi.</p>
+<p>Chỉ dùng <strong>một dự án Apps Script</strong> cho một bảng dữ liệu. Nhiều bản triển khai thuộc cùng dự án dùng chung ScriptLock; nhiều dự án khác nhau ghi chung một Sheet không dùng chung khóa này. Không sửa/xóa hàng hoặc sắp xếp trực tiếp các tab hệ thống trong lúc lớp đang học. Khi cần xem theo tiêu chí, dùng filter view hoặc một bản sao chỉ dành cho báo cáo.</p>
+<h2>5. Thiết lập Netlify và triển khai V6.5.0</h2>
+<p>Giải nén ZIP. Thư mục gốc triển khai là thư mục chứa <code>package.json</code> và <code>netlify.toml</code>, không phải thư mục cha bên ngoài.</p>
+<ol>
+<li>Sao lưu bản V6.4.0 thầy đang dùng. Cập nhật kho mã nguồn đã nối với Netlify bằng nội dung V6.5.0, giữ cấu hình bí mật hiện tại trên Netlify.</li>
+<li>Trong Netlify, mở dự án → <strong>Project configuration / Site configuration → Environment variables</strong>.</li>
+<li>Giữ các biến AI hiện đang hoạt động. Có thể dùng <strong>một trong hai nhà cung cấp</strong>:</li>
+</ol>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Biến</th>
+<th>Giá trị</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>AI_PROVIDER</code></td>
+<td><code>openai</code> hoặc <code>gemini</code>, giữ lựa chọn đang chạy của thầy</td>
+</tr>
+<tr>
+<td><code>OPENAI_API_KEY</code></td>
+<td>Khóa thật của thầy nếu dùng OpenAI</td>
+</tr>
+<tr>
+<td><code>OPENAI_MODEL</code></td>
+<td>Giữ mô hình đang chạy; mã gốc dùng mặc định <code>gpt-6-luna</code></td>
+</tr>
+<tr>
+<td><code>OPENAI_REASONING_EFFORT</code></td>
+<td>Mã gốc mặc định <code>medium</code></td>
+</tr>
+<tr>
+<td><code>OPENAI_DIAGRAM_REASONING_EFFORT</code></td>
+<td>Mã gốc mặc định <code>low</code></td>
+</tr>
+<tr>
+<td><code>OPENAI_TIMEOUT_MS</code></td>
+<td>Mã gốc mặc định <code>50000</code></td>
+</tr>
+<tr>
+<td><code>GEMINI_API_KEY</code></td>
+<td>Khóa thật của thầy nếu dùng Gemini</td>
+</tr>
+<tr>
+<td><code>GEMINI_MODEL</code></td>
+<td>Giữ mô hình đang chạy; cấu hình mẫu gốc là <code>gemini-2.5-flash</code></td>
+</tr>
+<tr>
+<td><code>ACCESS_CODE</code></td>
+<td><code>HOCGIOITOAN</code></td>
+</tr>
+<tr>
+<td><code>STATE_SIGNING_KEY</code></td>
+<td>Khóa ký trạng thái riêng nếu sử dụng</td>
+</tr>
+</tbody></table></div>
+<p>Không khẳng định tài khoản của thầy có quyền dùng mọi mô hình ghi trong mã. V6.5 giữ danh sách và bộ điều hợp hiện có, chưa kiểm tra quyền tài khoản thật.</p>
+<ol start="4">
+<li>Thêm bốn biến của bộ nhớ:</li>
+</ol>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Biến</th>
+<th>Giá trị cần điền</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>LEARNING_GATEWAY_URL</code></td>
+<td>URL Apps Script <code>https://script.google.com/macros/s/…/exec</code></td>
+</tr>
+<tr>
+<td><code>LEARNING_GATEWAY_SECRET</code></td>
+<td>Trùng <strong>chính xác</strong> <code>GATEWAY_SECRET</code> ở Apps Script</td>
+</tr>
+<tr>
+<td><code>LEARNING_SIGNING_KEY</code></td>
+<td>Khóa ký phiếu gửi lại riêng</td>
+</tr>
+<tr>
+<td><code>TEACHER_ADMIN_KEY</code></td>
+<td>Khóa quản trị riêng</td>
+</tr>
+</tbody></table></div>
+<p>Nếu Netlify có lựa chọn phạm vi, cho các biến này dùng trong <strong>Functions</strong> và đúng môi trường Production. Tệp <code>.env.example</code> chỉ là mẫu rỗng, không thay thế biến Netlify.</p>
+<ol start="5">
+<li>Giữ build command <strong><code>npm run build</code></strong>, publish directory <strong><code>dist</code></strong>, functions directory <strong><code>netlify/functions</code></strong>, Node <strong>22</strong>. Các đường dẫn <code>/api/chat</code>, <code>/api/learning</code>, <code>/api/teacher</code> được khai báo trong config của Functions; khảo sát cũ vẫn ở <code>/.netlify/functions/feedback</code>.</li>
+<li>Trigger deploy mới. Xem build log và danh sách Functions. Phải có <code>chat</code>, <code>feedback</code>, <code>learning</code>, <code>teacher</code>.</li>
+<li><strong>Không chỉ kéo thư mục dist vào Netlify Drop</strong>: gói giao diện tĩnh không tự triển khai các Functions máy chủ. Dùng kho mã nguồn đã liên kết với Netlify và build dự án đầy đủ.</li>
+</ol>
+<p>Chạy trên máy cá nhân (Node 22.13 trở lên):</p>
+<pre><code class="language-bash">npm ci
+npm start
+</code></pre>
+<p>Nếu muốn thử với cấu hình thật trên máy, chép <code>.env.example</code> thành <code>.env</code> và tự điền. <code>npm start</code> có cả API máy chủ. <code>npm run dev</code> chỉ là Vite; không tự cấp API. Không đưa <code>.env</code> vào Git hoặc ZIP.</p>
+<h2>6. Kiểm tra một bản ghi thật</h2>
+<ol>
+<li>Vào website đã triển khai, bấm <strong>Kết nối AI</strong>, nhập HOCGIOITOAN. Kiểm tra kết nối này dùng API AI thật theo cấu hình của thầy.</li>
+<li>Ở hồ sơ học tập, có thể để trống tên, trường và email. Chọn mức độ học phù hợp.</li>
+<li>Mở <strong>Bộ nhớ học tập</strong>, đọc thông báo, tích hai xác nhận khi thực sự phù hợp rồi bấm <strong>Bật lưu tiến bộ</strong>. Cất mã khôi phục riêng. Không gửi mã này vào nhóm lớp.</li>
+<li>Trong Sheet, tab Students phải xuất hiện mã <code>s_…</code> cùng phiên bản đồng ý. Không có cột tên hay email dùng để ghép học sinh.</li>
+<li>Gửi một đề: “Cho tam giác ABC vuông tại A. M thuộc đoạn AB và 2AM = AB. Chứng minh M là trung điểm AB.” Đợi câu hỏi của AI. <strong>Đề mở đầu không tính là bằng chứng học sinh đã hiểu.</strong></li>
+<li>Trả lời câu gợi mở bằng một bước toán học. Khi giao diện báo <strong>Google Sheets đã xác nhận lưu lượt học</strong>, kiểm tra tab Turns có một dòng, Profiles có hồ sơ mã tương ứng, Sessions có phiên tương ứng.</li>
+<li>Xem các cột <code>question</code>, <code>answer</code>, <code>verdict</code>, <code>errorKind</code>, <code>hintLevel</code>, <code>nextAction</code>, <code>ruleVersion</code>, <code>exampleVersion</code>. Cột <code>data</code> giữ bản JSON đầy đủ; những cột còn lại là cột xem nhanh, không sửa trực tiếp để thay đổi quy tắc.</li>
+<li>Mở Bộ nhớ học tập → <strong>Xuất dữ liệu của em</strong>. Tệp JSON phải chỉ chứa dữ liệu của mã này, không chứa khóa khôi phục hay khóa máy chủ.</li>
+<li>Bấm <strong>Ngừng ghi dữ liệu</strong>, chờ xác nhận máy chủ, trả lời thêm một lượt: Turns không được tăng. Phiên học vẫn tiếp tục.</li>
+<li>Khi kiểm tra xong, dùng <strong>Yêu cầu xóa dữ liệu</strong> cho mã thử để không lẫn với dữ liệu lớp.</li>
+</ol>
+<p>Nếu thấy “Chưa xác nhận lưu”, <strong>không kết luận đã lưu</strong> chỉ vì AI vẫn trả lời. Mở lại Bộ nhớ học tập → Gửi lại lượt chờ. Phiếu gửi lại được ký ở máy chủ; cùng một phiếu không tạo thêm bản ghi. Nếu ngay bước đọc hồ sơ thất bại, lượt đó vẫn học được nhưng không tạo phiếu lưu: ứng dụng thông báo rõ lượt đó không được ghi.</p>
+<h2>7. Giáo viên xem, sửa, duyệt và quay lại phiên bản</h2>
+<ul>
+<li>Mở <strong>Bộ nhớ học tập → Khu vực giáo viên</strong> (hoặc thêm <code>?teacher=1</code> sau địa chỉ website).</li>
+<li>Đăng nhập bằng <strong>TEACHER_ADMIN_KEY</strong>, không dùng mã lớp. Khóa chỉ nhập lúc đăng nhập, không được lưu trong localStorage. Phiên quản trị dùng cookie HttpOnly, SameSite=Strict, Secure trên HTTPS và hết hạn sau 8 giờ.</li>
+<li>Các trường hợp được đưa vào hàng đợi: lỗi lặp lại; một gợi mở dẫn tới bước tự sửa; học sinh bấm “Báo gợi mở chưa phù hợp”. Hàng đợi phân trang 100 trường hợp.</li>
+<li>Đọc câu hỏi/câu trả lời, tự viết lại <strong>mẫu gợi mở khái quát</strong> và <strong>câu kiểm tra bước tiếp theo</strong>. Có thể lưu bản sửa nhưng chưa xuất bản.</li>
+<li>Chỉ bấm duyệt khi đã kiểm tra toán học và loại thông tin cá nhân. Mẫu đã duyệt không chứa mã học sinh hoặc trích dẫn bài làm tự động. Bác bỏ sẽ giữ trường hợp khỏi kho dùng chung.</li>
+<li>Mỗi lần duyệt hoặc sửa/xuất bản kho tạo một phiên bản. Chọn bản trước rồi bấm <strong>Dùng lại phiên bản đã chọn</strong> để rollback. Lượt yêu cầu tiếp theo đọc phiên bản đang có; một lượt đã bắt đầu trước rollback có thể hoàn tất theo bản đã đọc, và log vẫn ghi đúng phiên bản đó.</li>
+<li>Không tự chỉnh tên tab, ID hay cột JSON để “duyệt”. Dùng trang giáo viên để giữ kiểm tra và lịch sử Audit nhất quán.</li>
+</ul>
+<h2>8. Cách hệ thống điều chỉnh gợi mở</h2>
+<p>Không huấn luyện lại trọng số. Sau khi người học đồng ý, mỗi lượt gia sư đọc hồ sơ rút gọn và tối đa 3 mẫu cùng kỹ năng. Phần dữ liệu bổ sung có giới hạn 5.200 ký tự, cộng đoạn hướng dẫn cố định. Không nạp toàn bộ Drive và không thêm một lần gọi AI riêng để chấm.</p>
+<p>Đánh giá có cấu trúc từ API hiện tại đi qua các kiểm tra sẵn có: câu trích phải thuộc câu trả lời mới nhất, có căn cứ; yêu cầu xin đáp án không được mở khóa lời giải. Kết quả đúng có bằng chứng mới được tăng <code>predicted</code>. Chỉ tăng <code>corroborated</code> khi một câu trả lời khác, trong cùng phiên, cùng kỹ năng, trả lời đúng câu gợi mở tiếp theo và có bằng chứng. Đây vẫn là <strong>AI nhận định về các bước quan sát được</strong>, không phải xác nhận thành thạo của giáo viên hay kiểm chứng toán học tuyệt đối.</p>
+<p>Sai làm tăng hỗ trợ; bước được củng cố làm giảm hỗ trợ trong khoảng 0–4. Hồ sơ lưu sai lầm lặp lại, các bước đã thể hiện, thống kê tám giai đoạn và 20 phiên gần đây. Các lượt gửi lại đến muộn không ghi đè trạng thái mới hơn hay tạo củng cố giả theo thứ tự đến mạng.</p>
+<p>Ba chỉ số xem trên trang giáo viên:</p>
+<ol>
+<li>Tỷ lệ hoàn thành bước có bằng chứng khi mức gợi mở 0–1 trên tổng bước được quan sát; đây là chỉ số gần đúng về tự làm, cần giáo viên kiểm tra mẫu.</li>
+<li>Mức gợi mở trung bình trên một bước và số lần lỗi xuất hiện lại.</li>
+<li>So sánh số bước tự làm, hỗ trợ và lỗi giữa các buổi gần nhau, trên bài có kỹ năng và độ khó tương đương.</li>
+</ol>
+<p>Để đánh giá hiệu quả giáo dục, nên có bài kiểm tra trước/sau cùng ma trận, chấm độc lập một mẫu câu trả lời, và so sánh nhóm/buổi tương đương. Chưa có kết quả thực nghiệm thật trong gói này.</p>
+<h2>9. Lưu trữ, quyền riêng tư và giới hạn vận hành</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Thành phần</th>
+<th>Chính sách trong mã</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nhật ký, khảo sát, trường hợp chờ duyệt</td>
+<td>Hết thời hạn 90 ngày thì không truy xuất; trigger hằng ngày xóa các ô dữ liệu hết hạn</td>
+</tr>
+<tr>
+<td>Hồ sơ tiến bộ</td>
+<td>Hết hạn sau 90 ngày từ lần cập nhật tiến bộ gần nhất; không xem là trí nhớ vĩnh viễn</td>
+</tr>
+<tr>
+<td>Mã khôi phục</td>
+<td>Dùng mã học sinh + bí mật ngẫu nhiên; phía Google chỉ lưu băm bí mật; ID học sinh đơn lẻ không đủ quyền</td>
+</tr>
+<tr>
+<td>Mẫu khái quát do giáo viên duyệt</td>
+<td>Không chứa liên kết trực tiếp tới học sinh; giữ các phiên bản để rollback</td>
+</tr>
+<tr>
+<td>Hàng chờ trên thiết bị</td>
+<td>Tối đa 20 lượt, 24 giờ, tối đa 8 lần thử; ngừng ghi xóa ngay hàng chờ</td>
+</tr>
+<tr>
+<td>Giới hạn lưu</td>
+<td>150 lượt/phiên; 300 lượt/ngày UTC/học sinh; 30 thao tác/phút/học sinh ở cổng Google</td>
+</tr>
+<tr>
+<td>Dung lượng an toàn chủ động</td>
+<td>500 hồ sơ; 20.000 dòng/tab dữ liệu thông thường; 300 phiên bản; 40 mẫu/phiên bản</td>
+</tr>
+<tr>
+<td>Đầu vào máy chủ</td>
+<td>JSON giới hạn kích thước; kiểm tra nguồn yêu cầu, chữ ký, quyền, mã phiên và kiểu dữ liệu</td>
+</tr>
+<tr>
+<td>Ghi Sheets</td>
+<td>ScriptLock dùng chung + một <code>spreadsheets.batchUpdate</code> nguyên tử; chuỗi ghi bằng <code>stringValue</code>, không thực thi công thức</td>
+</tr>
+</tbody></table></div>
+<p>Các giới hạn số dòng là hàng rào của bản triển khai, <strong>không phải</strong> số đo tải thực tế hay hạn mức tối đa Google. Apps Script/Sheets có hạn mức và độ trễ riêng; nhiều lượt đồng thời có thể vào hàng chờ. Không được khẳng định đã kiểm thử tải toàn trường bằng các test mô phỏng. Khi vượt giới hạn, xuất dữ liệu, dọn dữ liệu hết hạn hoặc cân nhắc thay lớp lưu trữ bằng cơ sở dữ liệu có giao dịch; không bỏ cơ chế chống trùng.</p>
+<p>Bộ lọc ẩn các mẫu email, số điện thoại, liên kết và một số cách khai tên. Không có bộ lọc nào ở đây bảo đảm nhận ra mọi thông tin cá nhân tự do; học sinh được nhắc chỉ gửi nội dung Toán, giáo viên phải kiểm tra trước khi dùng chung. Ảnh không được ghi vào Sheets; tính năng đọc/dựng hình gốc vẫn gửi ảnh tới nhà cung cấp AI theo luồng đã có.</p>
+<p>“Xóa” nghĩa là xóa dữ liệu đang dùng trong các tab hoạt động, hàng chờ và giao diện theo mã học sinh. Google có thể giữ lịch sử phiên bản, bản sao và chính sách lưu nội bộ riêng; ứng dụng không thể bảo đảm xóa mọi lịch sử Google. Chủ sở hữu cần quản lý bản sao/xuất dữ liệu và chính sách nhà trường. Trigger phải được tạo và theo dõi để việc dọn dữ liệu vật lý thực sự chạy.</p>
+<p>Khảo sát Google Form cũ vẫn tồn tại độc lập khi chưa bật bộ nhớ: có yêu cầu tên/trường/email và đồng ý gửi riêng. Khảo sát khi bộ nhớ đang bật được gửi vào Surveys theo mã học sinh, không tự gửi thêm sang Form. Dữ liệu Form cũ không được tự nhập vào hồ sơ mới và không thuộc phạm vi xóa theo mã học sinh mới.</p>
+<h2>10. Xử lý lỗi thường gặp</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Thông báo/triệu chứng</th>
+<th>Kiểm tra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chưa kết nối Google Sheets</td>
+<td>Đủ bốn biến Netlify chưa; biến dùng cho Functions; đã deploy lại chưa</td>
+</tr>
+<tr>
+<td>Google chưa xác nhận / cổng trả trang đăng nhập</td>
+<td>Dùng <code>/exec</code>, deploy Execute as Me, quyền gọi Anyone; kiểm tra chính sách Workspace</td>
+</tr>
+<tr>
+<td>Chưa sẵn sàng ngay sau setup</td>
+<td>Có cả Domain.gs, Code.gs, manifest và dịch vụ Sheets v4; SPREADSHEET_ID đúng; đã chạy setup</td>
+</tr>
+<tr>
+<td>AI chạy nhưng không có Turns</td>
+<td>Đã đồng ý chưa; đây có phải đề mở đầu/xin đáp án/nội dung ngoài phạm vi không; xem trạng thái ghi cụ thể</td>
+</tr>
+<tr>
+<td>Lượt chờ không gửi lại sau ngừng ghi</td>
+<td>Đúng thiết kế: phiên bản đồng ý đã đổi, phiếu cũ không còn quyền ghi</td>
+</tr>
+<tr>
+<td>Nhận 429</td>
+<td>Giới hạn thao tác hoặc số lượt; chờ rồi thử, xem dung lượng tab và Google quotas</td>
+</tr>
+<tr>
+<td>Đăng nhập giáo viên thất bại</td>
+<td>Khóa quản trị đủ dài, khác mã lớp; không dùng tên/vai trò tự khai làm quyền</td>
+</tr>
+<tr>
+<td>Không thấy bộ nhớ trên máy khác</td>
+<td>Cần mã khôi phục riêng; tên/email không tự ghép hồ sơ; không chia sẻ mã của học sinh khác</td>
+</tr>
+<tr>
+<td>Phiên bản kho vừa thay đổi</td>
+<td>Tải lại trước khi duyệt; đây là kiểm tra tránh ghi đè thay đổi của giáo viên khác</td>
+</tr>
+</tbody></table></div>
+<h2>11. Việc thầy cần tự làm trước khi dùng thật</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Tạo Sheet riêng trong Drive bằng đúng tài khoản muốn sở hữu.</li>
+<li><input disabled="" type="checkbox"> Cài ba tệp Apps Script, bật Sheets v4, đặt SPREADSHEET_ID và GATEWAY_SECRET, chạy setup.</li>
+<li><input disabled="" type="checkbox"> Tạo trigger purgeExpired mỗi ngày và theo dõi lỗi.</li>
+<li><input disabled="" type="checkbox"> Deploy Apps Script đúng chế độ; lấy URL /exec.</li>
+<li><input disabled="" type="checkbox"> Tạo và đặt khóa riêng cùng URL vào Netlify; giữ cấu hình nhà cung cấp AI đang chạy.</li>
+<li><input disabled="" type="checkbox"> Deploy toàn bộ dự án qua kho mã nguồn; xác nhận đủ bốn Functions.</li>
+<li><input disabled="" type="checkbox"> Thực hiện phép thử ở mục 6 bằng một mã thử, kiểm tra trực tiếp bản ghi trong Sheet rồi xóa mã thử.</li>
+<li><input disabled="" type="checkbox"> Thống nhất thông báo và việc đồng ý với nhà trường/phụ huynh phù hợp; hạn chế người có quyền Sheet và khóa quản trị.</li>
+</ul>
+<h2>Tài liệu kỹ thuật chính thức đã đối chiếu</h2>
+<ul>
+<li><a href="https://developers.google.com/apps-script/guides/web">Google Apps Script — Web apps</a>: thực thi theo người triển khai, quyền truy cập, URL /exec.</li>
+<li><a href="https://developers.google.com/apps-script/guides/bound">Google — Container-bound scripts</a>: khác biệt khi mã chạy dạng web app.</li>
+<li><a href="https://developers.google.com/workspace/sheets/api/scopes">Google — OAuth scopes cho Sheets</a>: phạm vi cấp quyền ở cấp bảng tính, không giới hạn từng tab.</li>
+<li><a href="https://developers.google.com/apps-script/reference/lock/lock-service">Google — LockService</a>: đồng bộ truy cập tài nguyên chung.</li>
+<li><a href="https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/batchUpdate">Google — spreadsheets.batchUpdate</a>: các yêu cầu trong một batch được áp dụng nguyên tử.</li>
+<li><a href="https://developers.google.com/apps-script/guides/services/quotas">Google — Apps Script quotas</a>: giới hạn theo dịch vụ/tài khoản, có thể thay đổi.</li>
+<li><a href="https://docs.netlify.com/manage/security/secure-access-to-sites/rate-limiting/">Netlify — Rate limiting</a>: config theo đường dẫn và giới hạn theo IP/domain, thực thi có độ trễ.</li>
+</ul>
+<p>Đối chiếu tài liệu ngày 29/09/2026. Hướng dẫn quyền/vận hành là mô tả cấu hình phần mềm; không phải kết luận tuân thủ pháp lý hay cam kết dịch vụ Google/Netlify.</p>
+</article></details>
+<details id="kiem-thu" ><summary>Kết quả kiểm thử và giới hạn đã xác định</summary><article><h1>Kết quả kiểm thử V6.5.0</h1>
+<h2>Kết quả thực chạy</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Lệnh / hạng mục</th>
+<th>Kết quả</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>npm ci --ignore-scripts</code></td>
+<td>Cài thành công 274 gói theo package-lock; các bước prepare được chạy ở build/test/start</td>
+</tr>
+<tr>
+<td><code>npm test</code></td>
+<td><strong>668 kiểm thử: 667 đạt, 0 lỗi, 1 bỏ qua</strong></td>
+</tr>
+<tr>
+<td>Nhóm <code>tests/v650-*.test.mjs</code> nằm trong bộ trên</td>
+<td><strong>33 kiểm thử mới đạt</strong>: domain, HTTP API, gateway, Apps Script, hook trình duyệt và tích hợp AI</td>
+</tr>
+<tr>
+<td><code>npm run typecheck</code></td>
+<td>Đạt, không có lỗi TypeScript</td>
+</tr>
+<tr>
+<td><code>npm run lint</code></td>
+<td>Đạt, không có lỗi ESLint</td>
+</tr>
+<tr>
+<td><code>npm run build</code></td>
+<td>Đạt, tạo dist bằng Vite; có prepare TikZ</td>
+</tr>
+<tr>
+<td><code>npm run test:ui:v650</code></td>
+<td><strong>8 nhóm thao tác đạt</strong>, không có pageerror trong Chromium</td>
+</tr>
+<tr>
+<td><code>PORT=3199 npm run test:start</code></td>
+<td>Đạt: giao diện 200; API AI chưa khóa báo 503; feedback GET báo 405; khởi động/đóng máy chủ cục bộ được</td>
+</tr>
+</tbody></table></div>
+<p><strong>Một test bỏ qua</strong> là <code>live Gemini pedagogical acceptance</code>: cần khóa và bật kiểm thử thật chủ động. Không có khóa được cung cấp trong yêu cầu này nên không gọi dịch vụ AI thật. Các test mang tên “live regression” khác chỉ là bộ dữ liệu lỗi cũ được mô phỏng, không có nghĩa đã gọi API trực tiếp.</p>
+<p>Môi trường thực chạy: Node.js 24.19.0 trên Linux; dự án giữ engines &gt;=22.13 và Netlify Node 22 như bản gốc. Kiểm thử trình duyệt dùng Chromium 153, Playwright 1.62.1; giả lập kích thước máy tính 1440×1000 và điện thoại 390×844. Đây không phải kiểm thử trên iPhone thật hay Safari.</p>
+<h2>Bản sửa lỗi trình soạn thảo Apps Script</h2>
+<p>Ảnh người dùng ngày 29/09/2026 cho thấy Google từ chối cú pháp <code>||=</code> trong Domain.gs. Kiểm thử VM trước đó chạy bằng Node mới nên chưa phát hiện giới hạn cú pháp này. Đã thay hai vị trí bằng phép gán và phép OR thông thường, sinh lại Domain.gs, thêm Acorn 8.18.0 làm phụ thuộc kiểm thử trực tiếp và phân tích toàn bộ Code.gs + Domain.gs theo cú pháp ES2020. Mã cũ tái hiện lỗi ở (68:41); mã sửa vượt qua kiểm tra. Điều này không thay thế kiểm thử trực tiếp mọi API trên Google.</p>
+<p>Đợt sửa này đã chạy lại toàn bộ 668 test, typecheck, lint và build. Kết quả giao diện tám nhóm và test:start ở trên thuộc lần kiểm tra trước; không chạy lại vì lần sửa này chỉ đổi cú pháp trong mô-đun học tập và cổng Google. Chạy test và build nối tiếp vì cả hai chuẩn bị cùng thư mục public/tikz. Log mới: <code>*-appsscript-fix.txt</code>.</p>
+<h2>Các tình huống mới đã kiểm tra</h2>
+<ul>
+<li>Không gửi/lưu trước khi đồng ý; thiếu xác nhận phù hợp không tạo Students.</li>
+<li>Cookie học sinh HttpOnly; ID đơn lẻ, cookie giả hoặc mã lớp không xuất dữ liệu.</li>
+<li>Năm yêu cầu cùng ID chỉ có một lượt và một lần cộng tiến bộ.</li>
+<li>Mất xác nhận sau khi máy chủ đã ghi → pending có phiếu ký → gửi lại nhận duplicate, không cộng lại.</li>
+<li>Chữ ký HMAC sai, chữ ký phiếu sửa, sai mục đích, URL không thuộc cổng Google, nguồn khác và JSON quá lớn đều bị chặn.</li>
+<li>Tắt consent trong lúc có phiếu chờ và bật lại sau đó vẫn chặn phiếu cũ.</li>
+<li>Ghi event và profile cùng một batch; mô phỏng batch thất bại không để event không có profile.</li>
+<li>Chạy <strong>mã Code.gs/Domain.gs thật trong VM với dịch vụ Google giả lập</strong>, kiểm tra ScriptLock bận, ghi stringValue, khôi phục sau lỗi, chống trùng giữa hai instance script.</li>
+<li>Đúng có căn cứ tăng predicted; bước tiếp theo khác có căn cứ mới tăng corroborated; nhận định chưa chắc không tăng bằng chứng đúng.</li>
+<li>Sự kiện gửi lại muộn không ghi đè trạng thái gần đây hoặc tạo củng cố giả.</li>
+<li>Lỗi lặp tạo hàng đợi; bản nháp/chưa duyệt không xuất hiện trong ngữ cảnh. Giáo viên phải xác nhận trước khi duyệt.</li>
+<li>Duyệt tạo phiên bản, kiểm tra xung đột revision, rollback và dùng lại phiên bản trước.</li>
+<li>Đầu vào hướng dẫn nguy hiểm/thông tin cá nhân mẫu bị chặn tại kiểm duyệt; ngữ cảnh giới hạn 3 ví dụ.</li>
+<li>Khảo sát theo mã riêng tách bảng, chống trùng; xuất dữ liệu có phân trang và loại bí mật xác thực; xóa làm mã khôi phục mất hiệu lực.</li>
+<li>TTL loại dữ liệu cũ khỏi truy xuất ngay cả trước khi dọn; purge giữ kho mẫu khái quát đã được duyệt.</li>
+<li>Giới hạn phút/ngày/phiên; HTML trả HTTP 200 hoặc ACK không đúng không được báo thành công.</li>
+<li>Hai provider OpenAI/Gemini đi qua handler thực với schema, hồ sơ rút gọn và ghi kết quả đã kiểm tra.</li>
+<li>Google lỗi vẫn trả câu gợi mở; yêu cầu phá quy tắc/xin đáp án không đưa vào dữ liệu học chung.</li>
+<li>Hook UI không đính metadata khi tắt; pending hiển thị đúng; ngừng ghi xóa hàng chờ; phản hồi cũ sau khi tắt không ghi đè trạng thái mới.</li>
+<li>Hồ sơ tự khai có thể ghi nhớ mà không cần tên, trường hoặc email.</li>
+</ul>
+<h2>Kiểm thử giao diện tám nhóm</h2>
+<ol>
+<li>Mặc định không tạo dữ liệu; nút đồng ý chưa chọn.</li>
+<li>Kết nối AI mô phỏng và học khi bỏ trống tên, trường, email.</li>
+<li>Bật ghi, nhận mã khôi phục và cookie; hộp thoại vừa màn hình 390 px, có cuộn nội dung.</li>
+<li>Chat ba câu trả lời qua handler thực; ghi ba lượt và tạo hàng đợi lỗi lặp.</li>
+<li>Xuất JSON bằng nút tải xuống; đánh giá gửi Surveys không yêu cầu thông tin cá nhân.</li>
+<li>Ngừng ghi được máy chủ xác nhận, buổi học vẫn hoạt động.</li>
+<li>Giáo viên đăng nhập, duyệt mẫu và rollback kho.</li>
+<li>Xóa dữ liệu cá nhân qua giao diện; bản mẫu đã khái quát hóa vẫn giữ lịch sử phiên bản.</li>
+</ol>
+<p>Log và ảnh chụp ở <code>docs/v650/minh-chung/</code>. Các mã và nội dung trong ảnh là dữ liệu kiểm thử mô phỏng, không phải học sinh thật. <code>DOI_CHIEU_TEP_GOC.json</code> ghi những tệp gốc được thay đổi; không sửa baseline cũ để giả vờ toàn bộ mã không thay đổi.</p>
+<h2>Chưa được kiểm chứng trực tiếp</h2>
+<ul>
+<li>Quyền Apps Script, Google Sheet thật, quotas của tài khoản thầy; chưa có tệp nào được ghi vào Drive của thầy.</li>
+<li>Deploy Netlify Production, domain, cookie trên thiết bị thật và rate limit của hạ tầng Netlify.</li>
+<li>Quyền mô hình/khóa AI thật; độ đúng sư phạm và toán học của phản hồi trực tiếp trên tập học sinh thật.</li>
+<li>Khả năng tải nhiều lớp đồng thời; tác động tới điểm số hay năng lực học sinh.</li>
+</ul>
+<p>Những phần này có quy trình kiểm tra ở hướng dẫn kết nối và cần chủ tài khoản thực hiện. Không lấy kết quả mô phỏng làm số liệu hiệu quả thực nghiệm.</p>
+</article></details>
+<details id="doi-chieu" ><summary>Bảng đối chiếu từng yêu cầu</summary><article><h1>Đối chiếu yêu cầu — V6.5.0</h1>
+<p>“Đạt” trong bảng là kết quả kiểm thử cục bộ và mô phỏng dịch vụ, không phải xác nhận đã triển khai vào tài khoản Google/Netlify thật.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Yêu cầu</th>
+<th>Tệp thực hiện / khảo sát</th>
+<th>Kiểm chứng</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nâng cấp tiếp V6.4.0; xác định đúng nền tảng</td>
+<td>package.json, netlify.toml; KHAO_SAT_MA_NGUON.md</td>
+<td>Vite build; kiểm thử bảo toàn dữ liệu/lý thuyết/dựng hình gốc</td>
+</tr>
+<tr>
+<td>Dùng cả OpenAI và Gemini theo cấu hình hiện có</td>
+<td>server/openai.mjs, server/gemini.mjs, server/feature-api.mjs</td>
+<td>v650-integration: chạy handler thật của cả hai với phản hồi AI mô phỏng</td>
+</tr>
+<tr>
+<td>Giữ 8 giai đoạn, chống xin lời giải và kiểm tra căn cứ</td>
+<td>server/adaptive-tutor.mjs được tái sử dụng, không thay bộ quy tắc</td>
+<td>Bộ kiểm thử gốc v623-adaptive, strict-tutor, pedagogy; kiểm thử nội dung phá quy tắc</td>
+</tr>
+<tr>
+<td>Phân biệt dữ liệu trình duyệt và Google Form</td>
+<td>KHAO_SAT_MA_NGUON.md; khảo sát lib/adaptive-learning.ts, feedback.ts, survey.ts</td>
+<td>Các test khảo sát gốc vẫn đạt; Form không gửi tự động</td>
+</tr>
+<tr>
+<td>Mã học sinh và phiên không dựa vào tên/email</td>
+<td>server/learning/security.mjs, api.mjs; lib/learning-memory.ts</td>
+<td>Tạo mã ngẫu nhiên, khôi phục bằng bí mật; ID đơn lẻ không xuất dữ liệu được</td>
+</tr>
+<tr>
+<td>Lưu đủ trường lượt học</td>
+<td>server/learning/integration.mjs; google-apps-script/Code.gs</td>
+<td>Handler tạo event từ trạng thái đã kiểm tra; Turns có các cột xem nhanh và JSON</td>
+</tr>
+<tr>
+<td>Hồ sơ liên buổi</td>
+<td>server/learning/domain.mjs, engine.mjs</td>
+<td>Phân biệt predicted/corroborated; cập nhật sai lầm, mức hỗ trợ, 8 giai đoạn và phiên</td>
+</tr>
+<tr>
+<td>Không tăng hồ sơ hai lần khi mạng chập chờn</td>
+<td>engine.mjs, Code.gs, gateway.mjs</td>
+<td>Năm lần gửi đồng thời một event chỉ có một lượt; mất ACK rồi gửi lại không tăng điểm</td>
+</tr>
+<tr>
+<td>Ghi lượt và hồ sơ nhất quán</td>
+<td>google-apps-script/Code.gs</td>
+<td>Kiểm thử chính adapter: một batch; batch lỗi không có lượt mồ côi; khóa bận không ghi</td>
+</tr>
+<tr>
+<td>Dữ liệu khảo sát riêng</td>
+<td>engine.mjs: survey, app/page.tsx</td>
+<td>Surveys riêng; consent riêng; mã gửi trùng không thêm dòng</td>
+</tr>
+<tr>
+<td>Ghi/đọc Google chỉ phía máy chủ</td>
+<td>netlify/functions/learning.mjs, teacher.mjs; gateway.mjs</td>
+<td>HMAC; URL đích allowlist; payload/chữ ký sai bị chặn; không có khóa thật trong source</td>
+</tr>
+<tr>
+<td>Sheet hiện trong Drive của thầy</td>
+<td>HUONG_DAN_GOOGLE_SHEETS.md mục 1–4</td>
+<td>Cấu hình do thầy tạo/sở hữu; cần tự hoàn tất bằng tài khoản Google</td>
+</tr>
+<tr>
+<td>Cấu hình mẫu không chứa bí mật</td>
+<td>.env.example, google-apps-script/appsscript.json</td>
+<td>Mẫu giá trị trống; không đưa tệp .env vào ZIP</td>
+</tr>
+<tr>
+<td>Hồ sơ rút gọn và ví dụ liên quan, giới hạn chi phí</td>
+<td>domain.mjs: learningContext; integration.mjs</td>
+<td>Tối đa 3 ví dụ và 5.200 ký tự dữ liệu; tái dùng cùng một đánh giá AI</td>
+</tr>
+<tr>
+<td>Không tự coi câu trả lời học sinh là kiến thức đúng</td>
+<td>integration.mjs; domain.mjs: updateProgress</td>
+<td>Cần accepted có căn cứ; sai/chưa chắc không tăng bằng chứng đúng; xin đáp án không lưu</td>
+</tr>
+<tr>
+<td>Phân biệt dự đoán với bước củng cố</td>
+<td>domain.mjs, learning-memory-panel.tsx, teacher-console.tsx</td>
+<td>Hai câu khác nhau, liên tiếp đúng câu gợi mở, cùng phiên/kỹ năng; không gán thành thạo</td>
+</tr>
+<tr>
+<td>Hàng đợi các trường hợp đáng xem</td>
+<td>engine.mjs: ingest/report</td>
+<td>Lỗi lặp, bước tự sửa sau gợi mở, báo gợi mở chưa tốt; chưa duyệt không vào prompt</td>
+</tr>
+<tr>
+<td>Giáo viên xem, sửa nháp, duyệt hoặc bác bỏ</td>
+<td>components/teacher-console.tsx; api.mjs; engine.mjs</td>
+<td>Kiểm thử draft/approve/reject; giao diện duyệt trong Chromium</td>
+</tr>
+<tr>
+<td>Phiên bản, sửa kho và rollback</td>
+<td>engine.mjs: teacher:review/publish/rollback</td>
+<td>Kiểm tra expectedRevision, lịch sử Audit; rollback và kích hoạt lại bản trước</td>
+</tr>
+<tr>
+<td>Chỉ số thực chất</td>
+<td>domain.mjs: metrics; teacher-console.tsx</td>
+<td>Tỷ lệ tự làm theo ngưỡng gợi mở, hỗ trợ trung bình, lỗi lặp và phiên gần đây; có giới hạn diễn giải</td>
+</tr>
+<tr>
+<td>Thông báo và đồng ý lưu</td>
+<td>components/learning-memory-panel.tsx; api.mjs</td>
+<td>Mặc định tắt; không tạo hồ sơ khi chưa tích đồng ý phù hợp; có cờ guardianConfirmed</td>
+</tr>
+<tr>
+<td>Ngừng ghi và hủy hàng chờ</td>
+<td>lib/learning-memory.ts; engine.mjs: consent</td>
+<td>Tắt ngay tại thiết bị; server tăng revision; bật lại không phục hồi quyền của phiếu cũ</td>
+</tr>
+<tr>
+<td>Xuất/xóa theo mã riêng có xác thực</td>
+<td>api.mjs, engine.mjs, learning-memory-panel.tsx</td>
+<td>Xuất phân trang; không có hash bí mật; xóa 6 bảng cá nhân; mã đã xóa không khôi phục được</td>
+</tr>
+<tr>
+<td>Tối thiểu dữ liệu, không bắt buộc tên/email</td>
+<td>app/page.tsx, lib/tutor.ts, domain.mjs: cleanText</td>
+<td>UI học khi bỏ trống thông tin cá nhân; profile local không cần trường/tên; kiểm thử lọc mẫu PII</td>
+</tr>
+<tr>
+<td>Không lưu ảnh đề vào bộ nhớ</td>
+<td>integration.mjs</td>
+<td>Event chỉ nhận văn bản học đã giới hạn; không có ảnh, data URL hoặc tệp Drive</td>
+</tr>
+<tr>
+<td>Quyền toàn lớp chỉ giáo viên</td>
+<td>security.mjs, api.mjs, teacher.mjs</td>
+<td>HOCGIOITOAN và teacher:true tự khai không đăng nhập được; cookie riêng HttpOnly</td>
+</tr>
+<tr>
+<td>Giới hạn đầu vào, tần suất và lượng ghi</td>
+<td>security.mjs, engine.mjs, Code.gs; config Netlify Functions</td>
+<td>413/403/429, hạn mức theo học sinh, cap dòng; HTML/nonce sai không báo đã lưu</td>
+</tr>
+<tr>
+<td>Buổi học vẫn chạy nếu Google lỗi</td>
+<td>integration.mjs, lib/learning-memory.ts</td>
+<td>Lỗi context/ghi không thay phản hồi gia sư thành thành công lưu giả</td>
+</tr>
+<tr>
+<td>Giữ thứ tự tiến bộ khi gửi lại muộn</td>
+<td>domain.mjs</td>
+<td>Lượt cũ không thay last/updateAt mới hơn và không tạo củng cố sai</td>
+</tr>
+<tr>
+<td>Hết hạn dữ liệu và dọn hằng ngày</td>
+<td>engine.mjs; Code.gs: purgeExpired</td>
+<td>TTL khi đọc; purge xóa dữ liệu hết hạn, giữ kho khái quát; thầy tạo trigger</td>
+</tr>
+<tr>
+<td>Giữ khảo sát Form hiện có</td>
+<td>lib/feedback.ts, lib/survey.ts, server/feedback.mjs giữ nguyên</td>
+<td>Bộ test Form gốc: consent, xác nhận HTML, lỗi mạng và ID entry</td>
+</tr>
+<tr>
+<td>Chạy build và kiểm thử</td>
+<td>package.json; tests/v650-*.test.mjs; scripts/check-v650-ui.mjs</td>
+<td>Xem KET_QUA_KIEM_THU.md và log kèm theo</td>
+</tr>
+<tr>
+<td>ZIP, hướng dẫn, sơ đồ, bảng đối chiếu, bước tự làm</td>
+<td>docs/v650/ và HUONG_DAN_V6_5_0.html</td>
+<td>Đã chuẩn bị trong gói; phần kết nối thật còn do chủ tài khoản thực hiện</td>
+</tr>
+</tbody></table></div>
+<h2>Tệp nâng cấp chính</h2>
+<ul>
+<li>Giao diện: app/page.tsx, app/learning-memory.css, components/learning-memory-panel.tsx, components/teacher-console.tsx, main.tsx.</li>
+<li>Phía trình duyệt: lib/learning-memory.ts, lib/tutor.ts (hồ sơ tự khai không bắt buộc thông tin cá nhân).</li>
+<li>Máy chủ: server/learning/{api,security,gateway,integration,domain,engine}.mjs; chỗ nối trong server/{gemini,openai,feature-api}.mjs.</li>
+<li>Triển khai: netlify/functions/{learning,teacher,chat}.mjs, netlify.toml, scripts/start.mjs, .env.example.</li>
+<li>Google: google-apps-script/Code.gs, Domain.gs, appsscript.json; Domain.gs sinh từ domain.mjs/engine.mjs bằng scripts/build-learning-gateway.mjs.</li>
+<li>Kiểm thử: tests/v650-{learning,integration,apps-script,client}.test.mjs, v650-fixture.mjs; scripts/check-v650-ui.mjs. Hai kiểm thử bảo toàn hash và mock thành phần được cập nhật để nhận diện những thay đổi có chủ đích.</li>
+</ul>
+</article></details>
+<details id="khao-sat" ><summary>Khảo sát mã nguồn ban đầu</summary><article><h1>Khảo sát và quyết định nâng cấp V6.5.0</h1>
+<h2>Mã thực tế trong tệp đính kèm</h2>
+<ul>
+<li><code>package.json</code>: V6.4.0, React 19, Vite 8; build ra <code>dist</code>, Node &gt;=22.13.</li>
+<li><code>app/page.tsx</code>: giao diện, hồ sơ tự khai, gửi bài, gợi mở, dựng hình, đánh giá, tám giai đoạn. Mã lớp giữ trong trạng thái React; kiểm tra qua <code>/api/chat</code>.</li>
+<li><code>server/chat.mjs</code>: định tuyến theo AI_PROVIDER; ưu tiên OpenAI nếu có khóa, có Gemini dự phòng theo cấu hình. Không mặc định chỉ có Gemini.</li>
+<li><code>server/openai.mjs</code>: OpenAI Responses; mô hình/mức suy luận do máy chủ kiểm tra; giữ store:false, schema và bộ xử lý dựng hình.</li>
+<li><code>server/gemini.mjs</code>: Google generateContent; cùng chuyển sang <code>feature-api.mjs</code> cho gia sư thích ứng/ảnh.</li>
+<li><code>server/adaptive-tutor.mjs</code>: phân loại 12 dạng câu trả lời, 8 giai đoạn, chặn xin đáp án, kiểm tra căn cứ trích từ câu học sinh; ký tutorToken. Đây là phần đánh giá có cấu trúc được tái sử dụng.</li>
+<li><code>lib/adaptive-learning.ts</code>: bốn câu chẩn đoán, quan sát bằng quy tắc chữ, mức hỗ trợ tự điều chỉnh cục bộ; observation có verified:false. Không phải kho liên buổi trên máy chủ.</li>
+<li><code>lib/feedback.ts</code> và <code>server/feedback.mjs</code>: POST tới Netlify rồi gửi Form với 5 trường tên/trường/email/rating/comment. Có consent; chỉ báo confirmed khi Google trả trang xác nhận. Chống trùng cũ chỉ là Map trong một instance nóng, không phải khóa bền vững phân tán.</li>
+<li><code>lib/survey.ts</code>: thêm nhãn lớp/vai trò, thông tin sử dụng tùy chọn vào comment. <code>lib/form-config.json</code>: đường dẫn Form và mã entry. Không có endpoint Google Sheets quản trị hoặc thông tin xác thực Google trong nguồn.</li>
+<li><code>netlify.toml</code>: triển khai Functions, API chat và SPA fallback. <code>scripts/start.mjs</code>: máy chủ HTTP cục bộ với API chat/feedback.</li>
+</ul>
+<h2>Dữ liệu trước nâng cấp</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Dữ liệu</th>
+<th>Nơi nằm trong V6.4.0</th>
+<th>Điều kiện gửi ra ngoài</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tên, trường, email, lớp, mức độ, mục tiêu</td>
+<td>React; localStorage ai-tutor-profile-v1 khi chọn ghi nhớ</td>
+<td>Thông tin cá nhân chỉ gửi lúc đồng ý khảo sát Form; mức độ/mục tiêu/khó khăn đi trong ngữ cảnh AI</td>
+</tr>
+<tr>
+<td>Hồ sơ chẩn đoán, quan sát, câu gợi mở</td>
+<td>React; localStorage ai-tutor-learner-v5 nếu chọn ghi nhớ</td>
+<td>Phần hồ sơ được ghép vào yêu cầu AI, chưa lưu hồ sơ Google liên buổi</td>
+</tr>
+<tr>
+<td>Hội thoại, bản nháp, đề, tutorToken, tiến độ</td>
+<td>sessionStorage theo lib/session-recovery.ts</td>
+<td>Hội thoại rút gọn gửi API AI; dữ liệu khôi phục nằm ở trình duyệt</td>
+</tr>
+<tr>
+<td>Trạng thái ảnh</td>
+<td>sessionStorage theo lib/image-session.ts và bộ nhớ thành phần</td>
+<td>Ảnh đề gửi nhà cung cấp AI khi dùng đọc ảnh, chưa có kho ảnh Drive</td>
+</tr>
+<tr>
+<td>Rating và nhận xét khảo sát</td>
+<td>React trong phiên</td>
+<td>Khi tích đồng ý và Gửi: Netlify feedback → Google Form</td>
+</tr>
+<tr>
+<td>Mã truy cập lớp</td>
+<td>React</td>
+<td>Gửi máy chủ để xác thực lớp; không phải quyền quản trị</td>
+</tr>
+</tbody></table></div>
+<h2>Phần giữ và phần thêm</h2>
+<p>Giữ dữ liệu bài mẫu, lý thuyết, các bộ dựng hình, UI nền xanh/dark mode, điều kiện tám giai đoạn, nhà cung cấp AI, Google Form cũ và phương thức Netlify. Không thay toàn bộ ứng dụng.</p>
+<p>Thêm tầng bộ nhớ riêng <code>server/learning/</code>, sử dụng đánh giá đã qua <code>applyTutorTurn</code> thay vì tin mức độ/điểm học sinh tự gửi. Hai bộ điều hợp AI truyền Request thật đến tầng feature để xác thực cookie; dữ liệu bộ nhớ tin cậy không lấy từ một trường prompt do trình duyệt tự khai.</p>
+<p>Google Sheets không có thao tác append kèm khóa duy nhất và giao dịch đọc-sửa hồ sơ theo cách cần dùng ở đây. Bản này thêm cổng Apps Script ký HMAC, ScriptLock và một batch Sheets để ghi đồng thời Turns/Profiles/Sessions/Students/ReviewQueue. Không dùng Map trong một Netlify instance làm cơ chế chống trùng chính. Không dùng service account tạo tệp vì yêu cầu thầy sở hữu trực tiếp trong Drive cá nhân.</p>
+<p>Mẫu dùng chung có hai bước: sự kiện cần xem → giáo viên biên tập/duyệt → phiên bản kho bất biến → active pointer. Dữ liệu học sinh chưa duyệt không được đưa vào kho mẫu; rollback không xóa lịch sử phiên bản. Chỉ số giáo viên lấy từ hồ sơ tóm tắt, không phải tổng số hội thoại đơn thuần.</p>
+<p>Thông tin cá nhân trong biểu mẫu hồ sơ chuyển thành tùy chọn. Khi bật bộ nhớ, khảo sát dùng Sheets theo mã nội bộ; khi chưa bật vẫn có thể tự chọn gửi Form cũ với sự đồng ý riêng. Không dùng tên/email để nhận dạng học sinh liên buổi.</p>
+<h2>Điểm kỹ thuật cần biết</h2>
+<ul>
+<li>Khi chưa đặt khóa lưu trữ, AI/dựng hình vẫn chạy theo cấu hình gốc. Nút bộ nhớ thông báo chưa cấu hình.</li>
+<li>Nếu đọc hồ sơ thất bại trước lượt AI, không dùng hồ sơ cũ không xác nhận, không ghi lượt đó. Nếu ghi sau khi AI trả lời thất bại/không rõ đã ghi hay chưa, có phiếu ký gửi lại 24 giờ.</li>
+<li>Phiếu cùng ID nhưng khác nội dung bị từ chối. Tắt/bật consent tăng revision; phiếu cũ không được ghi trở lại.</li>
+<li>TTL có kiểm tra khi đọc; purgeExpired dọn dữ liệu hết hạn bằng batch dưới cùng khóa.</li>
+<li>Không tự tạo/tải tệp Drive dài; đây là quyết định thu thập tối thiểu. Chỉ triển khai thêm lưu minh chứng khi có nhu cầu và quyền cụ thể.</li>
+<li>Sửa lỗi sẵn có ở feature-api: khi có STATE_SIGNING_KEY, header gọi Gemini nay dùng GEMINI_API_KEY, không dùng khóa ký trạng thái.</li>
+<li>Kiểm thử bảo toàn bằng hash cũ có danh sách các tệp cố ý thay đổi; giữ nguyên baseline lịch sử, thêm kiểm thử hành vi cho các phần nâng cấp.</li>
+</ul>
+</article></details><footer>Phiên bản 6.5.0 · Dựa trên tệp V6.4.0 đính kèm · Nhật ký kiểm thử và nguồn mã nằm trong ZIP.</footer></main></html>

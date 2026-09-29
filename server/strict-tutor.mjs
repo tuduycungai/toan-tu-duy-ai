@@ -1,4 +1,3 @@
-/** Product guardrails, not a proof that a language model can never make an error. */
 import { correctTheoremBridge } from './theorem-checks.mjs';
 import {
   requestedExerciseCount,
@@ -20,7 +19,7 @@ export function studentRequest(messages) {
 }
 export function asksForAnswer(messages) {
   let s = plain(studentRequest(messages));
-  // Negative requests are genuine requests for hints, not attempts to receive an answer.
+
   s = s.replace(
     /(?:khong|chua|dung)\s+(?:(?:can|cho|dua|cung cap|kem|xuat|hien|toan bo)\s+)*(?:dap an|loi giai)(?:\s+hoan chinh)?(?:\s+(?:hoac|hay|va)\s+(?:dap an|loi giai)(?:\s+hoan chinh)?)?/g,
     '',

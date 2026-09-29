@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 export const SURVEY_INTERVAL_MS = 13 * 60_000;
 
-/** Remind on a fixed cadence; never submit or reset a survey draft. */
 export function useSurveyReminder({
   enabled,
   open,
@@ -38,8 +37,7 @@ export function useSurveyReminder({
 
   useEffect(() => {
     if (!enabled || !due) return;
-    // An already open survey counts as this reminder; closing it must not
-    // immediately open another one. Multiple overdue ticks merge into one.
+
     if (open) {
       setDue(false);
       return;

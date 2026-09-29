@@ -1,4 +1,7 @@
 'use client';
+import { useLearningMemory, learningAPI } from '@/lib/learning-memory';
+import { LearningMemoryPanel } from '@/components/learning-memory-panel';
+import './learning-memory.css';
 import { readImageSession, clearImageSession } from '@/lib/image-session';
 import { ImageProblem } from '@/components/image-problem';
 import { readSession, saveSession, type TutorProgress } from '@/lib/session-recovery';
@@ -136,6 +139,7 @@ function Typed({ text }: { text: string }) {
   );
 }
 export default function App() {
+  const memory = useLearningMemory();
   const [recovered] = useState(readSession);
   const [tutorToken, setTutorToken] = useState(recovered.tutorToken || ''),
     [progress, setProgress] = useState<TutorProgress | undefined>(recovered.progress);
@@ -199,7 +203,7 @@ export default function App() {
   const submittedFeedback = useRef<FeedbackData | null>(null),
     submittedParticipant = useRef('');
   useSurveyReminder({
-    enabled: !!code && !!profile?.email,
+    enabled: !!code && !!profile,
     open: feedbackOpen,
     blocked:
       imageState === 'pending' ||
@@ -251,6 +255,7 @@ export default function App() {
   function newChat() {
     if (busy) return;
     clearImageSession();
+    memory.newSession();
     setTutorToken('');
     setProgress(undefined);
     setImageEpoch((v) => v + 1);
@@ -356,7 +361,7 @@ export default function App() {
       grade: '8',
       subject: 'Hình học tứ giác',
     };
-    if (!next.name || !next.school || !next.email) return;
+    if (!next.name) next.name = 'Học sinh';
     if (profile?.email !== next.email) setLearner(createLearnerState(next.level));
     else if (profile?.level !== next.level)
       setLearner((state) => setLearnerLevel(state, next.level));
@@ -391,7 +396,7 @@ export default function App() {
       setSettings(true);
       return;
     }
-    if (!profile?.email) {
+    if (!profile) {
       setInput(text);
       setProfileOpen(true);
       return;
@@ -451,6 +456,7 @@ export default function App() {
       setMap(defaultPlan);
       setMapSource('Khung định hướng chung');
     }
+    const memoryRequest = memory.request();
     const controller = new AbortController();
     abort.current = controller;
     const timer = setTimeout(() => controller.abort(), 65000);
@@ -458,6 +464,7 @@ export default function App() {
       const payload = () =>
         JSON.stringify({
           accessCode: code,
+          memory: memoryRequest.memory,
           messages: next,
           mode: selected.api,
           adaptive: !/^Tạo đúng \d+ câu|bài tương tự/iu.test(text),
@@ -479,6 +486,7 @@ export default function App() {
         if (r.status === 401) setCode('');
         throw Error(d.error || 'Chưa nhận được phản hồi.');
       }
+      memory.accept(d.learning, memoryRequest.epoch);
       if (typeof d.text !== 'string' || !d.text.trim()) throw Error('AI chưa trả về nội dung.');
       if (typeof d.tutorToken === 'string') {
         setTutorToken(d.tutorToken);
@@ -552,13 +560,12 @@ export default function App() {
       setSettings(true);
       return;
     }
-    if (!profile?.email) {
+    if (!profile) {
       setProfileOpen(true);
       return;
     }
     if (feedbackOpen || feedbackLock.current) return;
-    // A confirmed response can be followed by a new, explicitly consented survey.
-    // An unconfirmed response keeps its payload and ID to avoid blind retries.
+
     if (feedbackStatus === 'confirmed') {
       setRating(0);
       setComment('');
@@ -599,7 +606,7 @@ export default function App() {
       !rating ||
       !consent ||
       feedbackStatus === 'confirmed' ||
-      feedbackStatus === 'unconfirmed'
+      (feedbackStatus === 'unconfirmed' && !memory.enabled)
     )
       return;
     feedbackLock.current = true;
@@ -608,7 +615,19 @@ export default function App() {
     submittedFeedback.current = feedbackData();
     submittedParticipant.current = participantLabel(profile);
     try {
-      const d = await submitFeedback(submittedFeedback.current, code);
+      const d = memory.enabled
+        ? await learningAPI('survey', {
+            id: submissionId,
+            sessionId: memory.sessionId(),
+            rating,
+            comment,
+            consent,
+          }).then(() => ({
+            ok: true,
+            delivery: 'confirmed' as const,
+            message: 'Google Sheets đã xác nhận lưu đánh giá theo mã học sinh.',
+          }))
+        : await submitFeedback(submittedFeedback.current, code);
       setFeedbackStatus(d.delivery);
       setFeedbackMessage(d.message);
       if (d.ok && d.delivery === 'confirmed')
@@ -616,7 +635,7 @@ export default function App() {
           'Đã ghi nhận khảo sát. Cảm ơn bạn đã góp ý; bạn có thể tiếp tục sử dụng ứng dụng.',
         );
     } catch (e) {
-      setFeedbackStatus('unconfirmed');
+      setFeedbackStatus(memory.enabled ? 'error' : 'unconfirmed');
       setFeedbackMessage(
         e instanceof Error && e.name === 'AbortError'
           ? 'Chưa xác nhận được khảo sát đã lưu. Bạn có thể kiểm tra hoặc gửi qua biểu mẫu trực tiếp.'
@@ -681,6 +700,21 @@ export default function App() {
           </span>
         </button>
         <div className="top-actions">
+          <LearningMemoryPanel
+            memory={memory}
+            code={code}
+            onReset={() => {
+              newChat();
+              setProfile(null);
+              setDraft({ ...emptyProfile });
+              setLearner(createLearnerState());
+              setRemember(false);
+              try {
+                localStorage.removeItem('ai-tutor-profile-v1');
+                localStorage.removeItem('ai-tutor-learner-v5');
+              } catch {}
+            }}
+          />
           <span className="scope-badge">Hình học 8</span>
           <button
             className="icon-button"
@@ -718,6 +752,12 @@ export default function App() {
           </button>
         </div>
       </header>
+      {memory.studentId && (
+        <div className="memory-status" role="status">
+          {memory.status}
+          {memory.pending ? ` · ${memory.pending} lượt chờ` : ''}
+        </div>
+      )}
       <div className="workspace">
         <aside className={`learning-panel ${mobileNav ? 'nav-open' : ''}`}>
           <div className="side-heading">
@@ -1557,16 +1597,15 @@ export default function App() {
               mình học phù hợp hơn.
             </DialogTitle>
             <DialogDescription>
-              Thông tin chỉ được gửi cùng khảo sát đến biểu mẫu thu thập khi bạn đồng ý gửi. Nếu để
-              trống lớp, ứng dụng ghi nhận vai trò Giáo viên.
+              Em có thể bỏ trống thông tin cá nhân. Bộ nhớ học tập dùng mã riêng và chỉ được bật khi
+              em đồng ý. Để trống lớp chỉ là nhãn hiển thị, không cấp quyền giáo viên.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={saveProfile}>
             <div className="form-grid">
               <label>
-                Họ và tên <span>*</span>
+                Họ và tên hoặc biệt danh (không bắt buộc)
                 <input
-                  required
                   maxLength={120}
                   value={draft.name}
                   onChange={(e) => setDraft({ ...draft, name: e.target.value })}
@@ -1575,9 +1614,8 @@ export default function App() {
                 />
               </label>
               <label>
-                Trường đang học (nơi công tác) <span>*</span>
+                Trường đang học (nơi công tác) — không bắt buộc
                 <input
-                  required
                   maxLength={120}
                   value={draft.school}
                   onChange={(e) => setDraft({ ...draft, school: e.target.value })}
@@ -1585,9 +1623,8 @@ export default function App() {
                 />
               </label>
               <label>
-                Email <span>*</span>
+                Email (không bắt buộc)
                 <input
-                  required
                   type="email"
                   maxLength={180}
                   value={draft.email || ''}
@@ -1680,7 +1717,7 @@ export default function App() {
                 checked={remember}
                 onChange={(e) => setRemember(e.target.checked)}
               />
-              Ghi nhớ hồ sơ trên thiết bị này
+              Ghi nhớ hồ sơ trên thiết bị này (tùy chọn, độc lập với Google Sheets)
             </label>
             <p className="caption">
               Tên, trường và email không tự động gửi đến nhà cung cấp AI. Chỉ mức độ, mục tiêu và
@@ -1796,8 +1833,9 @@ export default function App() {
                 </span>
                 <span>{submittedParticipant.current || participantLabel(profile)}</span>
                 <small>
-                  Vai trò hoặc lớp được gửi cùng khảo sát. Không gửi toàn bộ hội thoại hoặc mã truy
-                  cập vào Google Form.
+                  {memory.enabled
+                    ? 'Google Sheets chỉ nhận mã học sinh, mức hài lòng và góp ý đã lọc; không gửi các thông tin cá nhân hiển thị ở trên.'
+                    : 'Khảo sát Google Form cũ yêu cầu tên, trường, email. Em có thể bỏ qua, hoặc bật bộ nhớ học tập để gửi đánh giá theo mã riêng.'}
                 </small>
               </div>
               <label className="check-row consent">
@@ -1807,7 +1845,9 @@ export default function App() {
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
                 />
-                Tôi đồng ý gửi thông tin trên và đánh giá đến biểu mẫu thu thập.
+                {memory.enabled
+                  ? 'Tôi đồng ý gửi đánh giá theo mã học sinh vào Google Sheets, không kèm thông tin cá nhân.'
+                  : 'Tôi đồng ý gửi tên, trường, email và đánh giá trên đến Google Form cũ (tùy chọn).'}
               </label>
             </fieldset>
             {feedbackMessage && (

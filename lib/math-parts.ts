@@ -1,5 +1,5 @@
 export type MathPart = { type: 'text' | 'inline' | 'display'; value: string };
-/** Delimiters are recognized without trimming prose; spaces between words remain intact. */
+
 export function mathParts(text: string): MathPart[] {
   const parts: MathPart[] = [];
   const pattern =
@@ -22,7 +22,7 @@ export function safeMathSource(tex: string) {
     )
   );
 }
-/** A readable, escaped fallback only for malformed/unsupported math; never executed as HTML. */
+
 export function mathFallback(tex: string) {
   let text = tex;
   for (let i = 0; i < 5; i++)

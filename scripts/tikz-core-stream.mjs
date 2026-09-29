@@ -1,4 +1,3 @@
-/** Stream a trusted, fixed-size TeX core into the target WASM buffer without a dump copy. */
 export async function streamCoreToMemory(memory, response, makeInflater) {
   if (!response.ok || !response.body) throw Error('Không tải được dữ liệu TeX theo luồng.');
   const bytes = new Uint8Array(memory.buffer),

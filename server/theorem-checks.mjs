@@ -5,10 +5,6 @@ const plain = (value) =>
     .replace(/[đĐ]/g, 'd')
     .toLowerCase();
 
-/** Repair a specific false universal statement observed in live review output.
- * This checks the public knowledge bridge, not the student's quoted work.
- * It is not a general mathematical proof checker.
- */
 export function correctTheoremBridge(text) {
   return text.replace(/^CAU_NOI:[^\n]*/gmu, (line) => {
     const s = plain(line);

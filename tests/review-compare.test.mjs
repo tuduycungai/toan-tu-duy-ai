@@ -12,7 +12,6 @@ import { handleChat } from '../server/gemini.mjs';
 import { guardTutorOutput } from '../server/strict-tutor.mjs';
 import { learningModes, lessons, parseTutorResponse } from '../lib/learning.ts';
 
-// Authored acceptance examples, not responses recorded from a live model.
 export const examples = {
   review: {
     input:

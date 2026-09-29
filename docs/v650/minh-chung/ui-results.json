@@ -1,0 +1,15 @@
+{
+  "passed": 8,
+  "results": [
+    "Không tự ghi dữ liệu; nút đồng ý mặc định chưa chọn.",
+    "Học được khi bỏ trống họ tên, trường và email.",
+    "Đồng ý tạo mã riêng, cookie HttpOnly; hộp thoại không tràn ngang ở 390 px.",
+    "Chat thật trong trình duyệt gọi hai lớp máy chủ mô phỏng, lưu 3 lượt, tạo hàng đợi từ lỗi lặp.",
+    "Xuất dữ liệu tải được tệp JSON; khảo sát vào Sheets không yêu cầu tên/email.",
+    "Nút ngừng ghi cập nhật phía máy chủ và giữ buổi học hoạt động.",
+    "Giáo viên duyệt mẫu, phiên bản mới xuất hiện; rollback về base hoạt động.",
+    "Xóa dữ liệu theo danh tính xác thực; mẫu giáo viên đã khái quát hóa còn trong lịch sử phiên bản."
+  ],
+  "errors": [],
+  "scope": "Chromium desktop/mobile viewport; all Google and AI responses mocked; no live credentials used."
+}

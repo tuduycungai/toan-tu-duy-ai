@@ -21,8 +21,7 @@ for (const c of cases()) {
     assert.doesNotThrow(() => prepareTikz(latex));
   });
 }
-// Similarity invariance: renamed points, translations, rotations and changed sizes.
-// Numerical length givens are scaled, while ratios/angles are unchanged.
+
 for (const [scale, rotation, offset] of [
   [0.15, 0.36, [-31, 11]],
   [1.75, 1.23, [17, -9]],

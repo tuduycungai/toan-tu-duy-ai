@@ -1,6 +1,5 @@
 import type { Segment } from './geometry';
 
-/** Placement grammar: the order of each point/side pair is retained. */
 export function readPointPlacements(source: string) {
   const items: { point: string; of: Segment }[] = [];
   const boundary = String.raw`(?<![\p{L}\p{N}'′])`,
@@ -40,7 +39,7 @@ export function readPointPlacements(source: string) {
     'giu',
   );
   source = source.replace(pointFirst, (_m, n, s) => save(n, s));
-  // An elided second “trên”: “Trên AB lấy P tùy ý, CD lần lượt lấy Q tùy ý”.
+
   if (items.length) {
     const elided = new RegExp(
       String.raw`${boundary}(${side})\s+${order}(?:lấy|chọn)\s+(?:điểm\s+)?(${point})${free}`,

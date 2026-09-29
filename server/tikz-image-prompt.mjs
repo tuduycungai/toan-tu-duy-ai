@@ -1,4 +1,3 @@
-// User-supplied drawing prompt, retained verbatim; runtime constraints precede it.
 export const REQUESTED_TIKZ_PROMPT = String.raw`Hỗ trợ vẽ ảnh. Vẽ hình này chỉ bằng một câu lệnh trong Gemini.
 
 Đóng vai (Role):

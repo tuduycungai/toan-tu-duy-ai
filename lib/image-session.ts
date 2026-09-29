@@ -25,14 +25,10 @@ export function readImageSession(): ImageSnapshot | null {
 export function saveImageSession(s: ImageSnapshot) {
   try {
     sessionStorage.setItem(KEY, JSON.stringify({ ...s, version: 1, savedAt: Date.now() }));
-  } catch {
-    /* Storage errors must not interrupt a lesson. */
-  }
+  } catch {}
 }
 export function clearImageSession() {
   try {
     sessionStorage.removeItem(KEY);
-  } catch {
-    /* Private mode. */
-  }
+  } catch {}
 }

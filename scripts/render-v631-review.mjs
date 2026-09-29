@@ -1,4 +1,3 @@
-// Static review uses the application's actual coordinate renderer. No API call.
 import { createServer } from 'vite';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';

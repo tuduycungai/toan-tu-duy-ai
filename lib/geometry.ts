@@ -1,4 +1,3 @@
-/** Geometry construction and validation. Never executes model code or trusts model coordinates. */
 export type XY = { x: number; y: number };
 export type Segment = [string, string];
 export type DirectedLine = {
@@ -263,7 +262,7 @@ export function construct(recipe: Recipe): Drawing {
     for (let i = 0; i < todo.length; ) {
       const c = todo[i];
       let v: XY;
-      // Only defer unresolved dependencies. Invalid geometry must never be ignored.
+
       const refs =
         c.op === 'intersection'
           ? c.lines.flatMap(linePoints)
@@ -327,8 +326,7 @@ export function construct(recipe: Recipe): Drawing {
           ([n, pt]) => n !== line.through && distance(a, pt) > EPS && onLine(pt, line, points),
         )
         .map(([, pt]) => pt);
-      // An undirected construction does not establish which way an unspecified
-      // ray points. Choose the side containing its known points, or ask for data.
+
       if (!onRay.length) throw Error('Cần thêm điểm trên tia ' + line.name + ' để xác định hướng.');
       const direction = sub(onRay[0], a);
       if (onRay.some((pt) => dot(sub(pt, a), direction) < -EPS))
@@ -336,14 +334,12 @@ export function construct(recipe: Recipe): Drawing {
       onRay.sort((x, y) => distance(a, x) - distance(a, y));
       return { name: line.name || '', a, b: lerp(a, onRay.at(-1)!, 1.3), ray: true };
     }
-    // Clip the guide to the polygon. No artificial named point is introduced.
+
     for (const [u, v] of sides) {
       try {
         const hit = intersection(a, b, p(u), p(v));
         if (onSegment(hit, p(u), p(v)) && !hits.some((h) => distance(h, hit) < EPS)) hits.push(hit);
-      } catch {
-        /* parallel edge */
-      }
+      } catch {}
     }
     for (const pt of Object.values(points))
       if (onLine(pt, line, points) && !hits.some((h) => distance(h, pt) < EPS)) hits.push(pt);
@@ -386,7 +382,7 @@ export function construct(recipe: Recipe): Drawing {
   }
   return drawing;
 }
-/** A subsegment of a drawn edge is visible (AE on AB, CF on CD). */
+
 export function segmentVisible(d: Drawing, s: Segment) {
   const a = d.points[s[0]],
     b = d.points[s[1]];
@@ -401,7 +397,6 @@ export function segmentVisible(d: Drawing, s: Segment) {
   );
 }
 
-// Numeric primitives are shared by SVG and TikZ so that both exports show the same relations.
 export function markStrokes(d: Drawing): { a: XY; b: XY; type: Mark['type'] }[] {
   const pts = d.points,
     all = Object.values(pts),
@@ -467,7 +462,7 @@ export function toTikZ(d: Drawing): string {
     ids = Object.fromEntries(entries.map(([n], i) => [n, 'p' + i]));
   const f = (n: number) => String(Number(n.toFixed(7)));
   const xy = (p: XY) => `(${f(p.x)},${f(p.y)})`;
-  // Labels come only from the point-name grammar. No model TeX is interpolated.
+
   const label = (n: string) => {
     if (!/^[A-Z](?:[0-9]{1,2}|['′]{1,2})?$/.test(n)) throw Error('Unsafe point label');
     return n.replace(/([A-Z])(\d+)/, '$1_{$2}').replace(/′/g, "'");

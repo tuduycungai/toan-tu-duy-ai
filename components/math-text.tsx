@@ -28,7 +28,7 @@ function Formula({ source, display }: { source: string; display: boolean }) {
     <span className="math-fallback">{mathFallback(source)}</span>
   );
 }
-/** Only KaTeX-generated markup is inserted; surrounding/model HTML stays escaped React text. */
+
 export function MathText({ text }: { text: string }) {
   const normalized = text.replace(/\n[\t ]*\n(?:[\t ]*\n)+/g, '\n\n');
   return (

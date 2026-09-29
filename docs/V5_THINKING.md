@@ -25,9 +25,9 @@ Mỗi câu hỏi hiển thị được lưu với các trường:
 
 `questionFromReply` ghi câu hỏi từ phản hồi thực tế, không ghi câu hỏi dự kiến như thể AI đã hỏi nó. Lời chào không có câu hỏi sẽ không tạo một câu hỏi giả trong nhật ký. Nhãn thao tác được lấy từ câu “Thao tác tư duy:” khi nhận ra; mục tiêu và bước tiếp theo là siêu dữ liệu sư phạm do ứng dụng đề xuất, không phải điểm đánh giá đã xác minh.
 
-## Nguồn tài liệu đã đọc
+## Nguồn tài liệu sư phạm
 
 - **Bài giảng vấn đề tư duy.pdf**: 18 trang. Các trang 9–14 trình bày phân tích/tổng hợp, so sánh/tương tự hóa, khái quát hóa/đặc biệt hóa và vai trò rèn luyện qua nhiệm vụ thực hành.
-- **các thao tác tư duy.pdf**: Nguyễn Thanh Hưng – Ngô Tùng Nhân, “Rèn luyện thao tác tư duy cho học sinh trong dạy học chương ‘Tứ giác’ (Toán 8) ở trường trung học cơ sở”, Tạp chí Giáo dục, số đặc biệt tháng 4/2019, tr.184–187. Đây là bài báo trong yêu cầu dù tên tệp được đính kèm khác tên được nêu trong văn bản.
+- **các thao tác tư duy.pdf**: Nguyễn Thanh Hưng – Ngô Tùng Nhân, “Rèn luyện thao tác tư duy cho học sinh trong dạy học chương ‘Tứ giác’ (Toán 8) ở trường trung học cơ sở”, Tạp chí Giáo dục, số đặc biệt tháng 4/2019, tr.184–187.
 
 Ứng dụng vận dụng việc chia nhiệm vụ, gắn thao tác với đối tượng và kết nối điều kiện đủ. Không sao chép cả hệ thống câu hỏi kèm lời giải của bài báo vào một lượt. Giữ hiệu chỉnh có sẵn: hai đường chéo hình thoi **không nhất thiết** bằng nhau; hình vuông là trường hợp chúng bằng nhau. Không tuyên bố tài liệu đã chứng minh hiệu quả của chính phần mềm V5.

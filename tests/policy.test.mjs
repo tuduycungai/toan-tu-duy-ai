@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { instructions, SYSTEM } from '../server/policy.mjs';
 import { handleChat } from '../server/gemini.mjs';
 import { cases } from './pedagogy-cases.mjs';
-// Contract tests check instructions wired to Gemini, NOT actual model compliance.
+
 const clauses = [
   ['first-turn', 'LƯỢT ĐẦU CỦA BÀI MỚI: không đưa lời giải hoàn chỉnh'],
   ['single-question', 'đúng một câu hỏi chính sau “Gợi mở:”'],

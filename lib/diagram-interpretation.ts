@@ -6,7 +6,7 @@ import {
   verifyConstraints,
 } from './problem-diagram';
 import { validateShape, type DiagramResult } from './geometry';
-/** An ID ties normalization to one original problem; it is not an authentication token. */
+
 export function diagramId(problem: string) {
   let h = 2166136261;
   for (const c of normalizeProblem(problem)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
@@ -50,7 +50,7 @@ const geometryNames = (s: string) =>
       .filter((m) => !['CHO', 'SAO', 'TA', 'CO', 'VA', 'AI'].includes(m[0]))
       .flatMap((m) => m[0].split('')),
   );
-/** AI can normalize language; it cannot supply unchecked coordinates or change the original known facts. */
+
 export function resolveTutorDiagram(problem: string, reply = ''): DiagramResult {
   const original = resolveProblemDiagram(problem);
   if (original.status === 'ready' || !reply) return original;
@@ -89,9 +89,9 @@ export function resolveTutorDiagram(problem: string, reply = ''): DiagramResult 
         /[<>\[\]{}]|chứng minh|cmr|nếu|giả sử/iu.test(text)
       )
         return original;
-      // All numeric data must survive normalization unchanged; no invented lengths/ratios.
+
       if (numbers(quote) !== numbers(text)) return original;
-      // Preserve limiting language even when a model proposes a fluent paraphrase.
+
       for (const marker of [
         /không/iu,
         /ngoài/iu,
@@ -105,7 +105,7 @@ export function resolveTutorDiagram(problem: string, reply = ''): DiagramResult 
         /trung điểm/iu,
       ])
         if (marker.test(quote) && !marker.test(text)) return original;
-      // A normalized clause cannot silently specialize a free point or add a right angle.
+
       for (const [out, source] of [
         [/trung điểm/iu, /trung điểm|chính giữa|chia.{0,50}(?:bằng nhau|đều)/iu],
         [
@@ -126,7 +126,7 @@ export function resolveTutorDiagram(problem: string, reply = ''): DiagramResult 
     const canonical = normalized.join('. '),
       candidate = resolveProblemDiagram(canonical);
     if (candidate.status !== 'ready') return original;
-    // Recheck every relation and the base shape that the deterministic reader could already identify.
+
     const known = parseProblem(problem);
     if (known) {
       const kinds = {
@@ -151,7 +151,7 @@ export function resolveTutorDiagram(problem: string, reply = ''): DiagramResult 
       );
       verifyConstraints(candidate.drawing, known.constraints);
     }
-    // Goals may name useful segments, but are never passed into the constraint solver as givens.
+
     const goalStart = parts.full.search(/chứng minh|cmr|tính/iu);
     const goalPart = goalStart < 0 ? '' : parts.full.slice(goalStart);
     for (const m of goalPart.matchAll(/(?<![A-Z])[A-Z]{2}(?![A-Z])/g)) {

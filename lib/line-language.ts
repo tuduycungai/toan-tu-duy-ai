@@ -5,7 +5,7 @@ export type LineReading = {
   points: Construction[];
   memberships: { point: string; of: Segment }[];
 };
-/** Read named lines before intersections, preserving the same line through all following clauses. */
+
 export function readLineDescriptions(text: string): LineReading {
   const named = new Map<string, DirectedLine>(),
     points: Construction[] = [],
@@ -38,8 +38,7 @@ export function readLineDescriptions(text: string): LineReading {
     named.set(key, line);
     return key;
   }
-  // Ax/By name rays, not extra vertices X/Y. The intersection fixes the
-  // representative direction; contradictory half-rays are rejected in construct.
+
   text = text.replace(
     new RegExp(
       String.raw`${start}(?:từ|qua)\s+(?:điểm\s+)?(${point})\s+(?:kẻ|vẽ|dựng)\s+tia\s+([A-Z][a-z])(?![\p{L}\p{N}'′])\s+${direction}\s*${ofEdge}`,
@@ -52,7 +51,7 @@ export function readLineDescriptions(text: string): LineReading {
       return ' ';
     },
   );
-  // A short internal marker carries an unnamed/implicit line into "..., cắt AD ...".
+
   const marker = (key: string) => '@@' + [...named.keys()].indexOf(key) + '@@';
   const saveDefinition = (
     clause: string,
@@ -120,7 +119,7 @@ export function readLineDescriptions(text: string): LineReading {
     cut(a, b, n, false);
     return ' ';
   });
-  // d cắt hai cạnh AD và BC lần lượt tại M và N.
+
   const many = new RegExp(
     String.raw`${start}(?:đường\s+thẳng\s+)?(${namePattern})${localSep}${cutting}\s+${qualifier}(${edge}(?:${sep}${edge}){1,3})\s+(?:lần\s+lượt\s+)?tại\s+(${point}(?:${sep}${point}){1,3})`,
     'giu',
@@ -132,7 +131,7 @@ export function readLineDescriptions(text: string): LineReading {
     es.forEach((b, i) => cut(a, b, ns[i], /cạnh|đoạn/iu.test(kind || '')));
     return ' ';
   });
-  // d cắt AD tại M và BC tại N.
+
   const paired = new RegExp(
     String.raw`${start}(?:đường\s+thẳng\s+)?(${namePattern})${localSep}${cutting}\s+${qualifier}(${edge})\s+tại\s+(${point})${sep}(?:cắt\s+)?${qualifier}(${edge})\s+tại\s+(${point})`,
     'giu',
@@ -150,7 +149,7 @@ export function readLineDescriptions(text: string): LineReading {
     cut(a, b, n, /cạnh|đoạn/iu.test(kind || ''));
     return ' ';
   });
-  // AC và BD cắt nhau tại O.
+
   const together = new RegExp(
     String.raw`${start}(${namePattern})\s+và\s+(${namePattern})\s+(?:cắt|giao)\s+nhau\s+tại\s+(${point})`,
     'giu',

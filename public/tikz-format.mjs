@@ -1,4 +1,3 @@
-/** Shared allowlist parser. TikZ runs only in the fixed-memory browser WASM engine. */
 export const ALLOWED_LIBRARIES = [
   'calc',
   'angles',
@@ -36,7 +35,7 @@ export function prepareTikz(source) {
     )
   )
     throw Error('Mã hình chứa cú pháp không được phép.');
-  // Expand only finite, literal point lists. Never execute TeX loop control.
+
   let loopCount = 0;
   while (clean.includes('\\foreach')) {
     if (++loopCount > 6) throw Error('Quá nhiều vòng lặp điểm.');
@@ -67,8 +66,7 @@ export function prepareTikz(source) {
       (m) => m[1],
     ),
   );
-  // Never let a declaration whitelist an existing TeX primitive before it is redefined.
-  // Single-letter scalar names support calculations without widening the command allowlist.
+
   if ([...variables].some((name) => !/^[a-zA-Z]$/.test(name)))
     throw Error('Biến pgfmath chỉ dùng tên một chữ cái, ví dụ \\R hoặc \\h.');
   for (const m of clean.matchAll(/\\([a-zA-Z]+|[^a-zA-Z])/g))

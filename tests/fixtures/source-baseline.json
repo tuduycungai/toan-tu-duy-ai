@@ -37,5 +37,14 @@
   },
   "intentionalCodeChanges": {
     "server/policy.mjs": "Removed unused DIAGRAM_POLICY import; full guide prompt remains protected by review-compare.test.mjs."
+  },
+  "commentOnlyCleanup": {
+    "sourceArchive": "San-pham-hoan-chinh-v6.4.0(2).zip",
+    "sourceSha256": "d6caafcf2cb39cb300a7fc4869c95114e310d95bd6cbda9313a74e5e4c43af6a",
+    "normalization": "CSS comments removed using PostCSS source ranges; rule/declaration trees verified unchanged against the supplied archive; resulting CSS formatted with Prettier 3.6.2. Original historical hashes above are retained.",
+    "styles": {
+      "app/globals.css": "3615d86aca24308d4ee096a69cb1a397f14cafc9e8e8c386bd67095150e1ecc6",
+      "app/enhancements.css": "d8f9c973d34dbd0ad5ba287782a4160485da447c18d67f46360a0a76d2bbe57b"
+    }
   }
 }

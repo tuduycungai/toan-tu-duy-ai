@@ -1,0 +1,76 @@
+{
+  "inputFile": "TU-DUY-TOAN-HOC-V6_4_0-LAM-SACH(2).zip",
+  "inputSHA256": "6035154a1d8096381e4686667fa93aaa126f226f46021b2b20529c364db97f7d",
+  "unchangedOriginalFiles": 186,
+  "changedOriginalFiles": [
+    {
+      "path": ".env.example",
+      "status": "modified"
+    },
+    {
+      "path": "HUONG_DAN.md",
+      "status": "modified"
+    },
+    {
+      "path": "README.md",
+      "status": "modified"
+    },
+    {
+      "path": "app/page.tsx",
+      "status": "modified"
+    },
+    {
+      "path": "lib/tutor.ts",
+      "status": "modified"
+    },
+    {
+      "path": "main.tsx",
+      "status": "modified"
+    },
+    {
+      "path": "netlify.toml",
+      "status": "modified"
+    },
+    {
+      "path": "netlify/functions/chat.mjs",
+      "status": "modified"
+    },
+    {
+      "path": "package-lock.json",
+      "status": "modified"
+    },
+    {
+      "path": "package.json",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/start.mjs",
+      "status": "modified"
+    },
+    {
+      "path": "server/feature-api.mjs",
+      "status": "modified"
+    },
+    {
+      "path": "server/gemini.mjs",
+      "status": "modified"
+    },
+    {
+      "path": "server/openai.mjs",
+      "status": "modified"
+    },
+    {
+      "path": "tests/preserved.test.mjs",
+      "status": "modified"
+    },
+    {
+      "path": "tests/survey-component.test.mjs",
+      "status": "modified"
+    },
+    {
+      "path": "tests/survey-preserved.test.mjs",
+      "status": "modified"
+    }
+  ],
+  "scope": "New source and docs are listed by the ZIP manifest; this list compares only original files."
+}

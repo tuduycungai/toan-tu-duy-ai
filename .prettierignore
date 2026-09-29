@@ -8,5 +8,4 @@ research/
 package-lock.json
 tests/fixtures/
 
-# Reproducible SVG exports from review:figures
 docs/v640-review/*.svg

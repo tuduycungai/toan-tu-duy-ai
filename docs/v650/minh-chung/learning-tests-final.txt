@@ -1,0 +1,48 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> toan-tu-duy-ai-netlify@6.5.0 test:learning
+> node --test tests/v650-*.test.mjs
+
+✔ deployable Domain.gs exactly matches tested source modules (1.333715ms)
+✔ actual Apps Script gateway rejects forged signatures and busy locks before writing (5.031479ms)
+✔ actual Sheet adapter commits all changes in one batch, deduplicates across script instances and writes formula text literally (5.814503ms)
+✔ actual failed Sheets batch cannot leave an event without its profile and is safe to retry (2.929565ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ browser queue has fixed identity, size, age and attempt limits (1.017156ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ declining consent never calls enroll, and default never attaches memory metadata (12.34112ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ pending UI never says saved and pause clears queued receipts before a failed server acknowledgment (6.969316ms)
+✔ retry receipt is removed only after a confirmed server result (3.901423ms)
+✔ local learning preferences can be remembered without personal identity fields (11.072674ms)
+✔ gemini: actual provider handler retrieves summary, assesses with schema, then persists server evidence (13.346479ms)
+✔ openai: actual provider handler retrieves summary, assesses with schema, then persists server evidence (5.835704ms)
+✔ lost acknowledgment returns a signed pending receipt and replay makes no duplicate (4.173875ms)
+✔ storage outage does not block AI and never claims saved (1.584804ms)
+✔ no opt-in means no Google calls; client-supplied profile cannot enter trusted context (1.321366ms)
+✔ answer requests and prompt injection are never stored as learning examples (4.309319ms)
+✔ consent and guardian acknowledgment are required before the first persistent row (12.863068ms)
+✔ one atomic transaction records event, progress, session and quota; duplicate survives new handlers (6.099212ms)
+✔ atomic failure leaves no partial event or profile (0.356358ms)
+✔ prediction, corroboration and out-of-order retry are distinct (0.285271ms)
+✔ pause revokes in-flight receipts and resume never re-enables old receipts (3.631025ms)
+✔ tampered receipt, another learner and class code cannot grant data access (1.422619ms)
+✔ teacher review is explicit, draft and reject are excluded, publication and rollback are versioned (2.651715ms)
+✔ unsafe guidance, identifiers and unsolicited full answers are rejected at review (0.366083ms)
+✔ anonymous survey consent, duplicate detection and separate table (2.351341ms)
+✔ export excludes credential hashes; deletion removes all personal tables; credential cannot recreate deleted data (1.801562ms)
+✔ 90-day purge removes expired learner data but keeps generalized approved versions (0.531202ms)
+✔ input limits, CSRF and missing configuration fail before network (1.061924ms)
+✔ storage transport requires signed acknowledgment; HTTP 200 HTML is not saved (0.531182ms)
+✔ per learner minute, daily and session limits are durable (0.302857ms)
+✔ all original consent fields are required at the gateway as well (0.128044ms)
+✔ student exports paginate and never expose another learner or recovery hashes (2.887641ms)
+✔ expired data is excluded from retrieval even before the daily purge runs (0.270349ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 396.224995

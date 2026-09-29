@@ -97,7 +97,7 @@ export async function handleChat(request, env, fetcher = fetch) {
   if (!/^gemini-[a-zA-Z0-9.-]+$/.test(model))
     return reply({ error: 'GEMINI_MODEL chưa hợp lệ. Giáo viên cần kiểm tra cấu hình.' }, 503);
   if (!check && (featureImage || body.adaptive === true))
-    return handleFeature(body, env, model, fetcher);
+    return handleFeature(body, env, model, fetcher, null, request);
   if (!check && !diagram && asksForAnswer(body.messages))
     return reply({ text: guidedFallback(body.messages), model });
   const contents = check

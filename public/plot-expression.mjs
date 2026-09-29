@@ -1,4 +1,3 @@
-// A bounded arithmetic parser. Model/user expressions are data, never JavaScript.
 export function parsePlotExpression(input) {
   if (typeof input !== 'string' || !input.trim() || input.length > 200)
     throw Error('Biểu thức đồ thị trống hoặc quá dài.');

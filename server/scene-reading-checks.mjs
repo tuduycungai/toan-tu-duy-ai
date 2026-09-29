@@ -1,6 +1,6 @@
 import { evaluateScene } from '../public/geometry-scene.mjs';
 import { checkGeometryCode } from './geometry-checks.mjs';
-// Check confirmed OCR givens independently of the scene's own constraint list.
+
 export function checkReadingScene(scene, reading) {
   const { points } = evaluateScene(scene);
   for (const name of reading.points)

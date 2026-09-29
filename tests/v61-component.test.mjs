@@ -41,8 +41,7 @@ const good = () => Response.json({ latex, question: '' });
 const originalFetch = globalThis.fetch;
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 globalThis.location = { origin: 'http://test' };
-// V6.2 selects manual drawing on touch devices. These existing compiler tests
-// exercise desktop behavior and need the browser API in their Node environment.
+
 const originalMatchMedia = globalThis.matchMedia;
 globalThis.matchMedia = () => ({ matches: false });
 globalThis.document = Object.assign(new EventTarget(), { hidden: false });

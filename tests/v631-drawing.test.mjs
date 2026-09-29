@@ -23,7 +23,7 @@ function verify(text) {
   assert(g.onLine(p.Q, ['A', 'C'], p));
   assert(g.onLine(p.H, ['B', 'Q'], p));
   assert(g.onLine(p.H, ['A', 'I'], p));
-  // The entire MP line reaches Q, even though Q lies beyond the midpoint P.
+
   assert(d.segments.some((s) => s.includes('M') && s.includes('Q')));
   assert.equal(d.guides.filter((l) => l.ray).length, 2);
   assert.equal(m.goal, 'Tứ giác AMBQ là hình gì?');

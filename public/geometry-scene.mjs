@@ -450,7 +450,7 @@ export function evaluateScene(scene) {
         ps.every((p) => Math.abs(dot(planeNormal, sub(p, a))) < EPS * Math.max(1, distance(p, a))),
         'Các đỉnh đa giác không đồng phẳng.',
       );
-      // Crossing non-adjacent sides invalidates a polygon (wireframes use segments).
+
       const drop = planeNormal.map(Math.abs).indexOf(Math.max(...planeNormal.map(Math.abs)));
       const flat = (p) => p.filter((_v, i) => i !== drop);
       const orient = (p, q, r) => normal2([q[0] - p[0], q[1] - p[1]], [r[0] - p[0], r[1] - p[1]]);
@@ -530,7 +530,6 @@ const num = (x) => {
 };
 const project = (p, space) => (space ? [p[0] + 0.43 * p[1], p[2] + 0.28 * p[1]] : [p[0], p[1]]);
 
-// One renderer is used by the server, browser and export. No SVG from the model.
 export function renderScene(scene) {
   const evaluated = evaluateScene(scene);
   requireValue(scene.status === 'ready', 'Chưa có hình để xuất.');
@@ -851,8 +850,7 @@ export function renderScene(scene) {
     elements.push(
       `<text x="${num(r.x)}" y="${num(r.y)}" font-size="16" fill="#122d50" paint-order="stroke" stroke="white" stroke-width="4" stroke-linejoin="round">${esc(item.text)}</text>`,
     );
-    // Convert only an explicit math alphabet. Never remove unknown characters:
-    // an incomplete label disables TikZ export while SVG/PNG retain the exact text.
+
     let safe = item.text
       .replaceAll('−', '-')
       .replaceAll('′', "'")

@@ -1,5 +1,5 @@
 import { mobileDevice } from './device-budget';
-/** Embed computed SVG styles so downloaded figures remain readable outside the app. */
+
 export function serializeDiagram(svg: SVGSVGElement, caption: string) {
   const clone = svg.cloneNode(true) as SVGSVGElement;
   const source = [svg, ...svg.querySelectorAll('*')],

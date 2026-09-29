@@ -94,7 +94,7 @@ export function DiagramSVG({ drawing: d, aux }: { drawing: Drawing; aux: boolean
           ),
         },
   );
-  // Greedy label placement considers all point locations and earlier label rectangles.
+
   const boxes: { x: number; y: number; w: number; h: number }[] = [];
   const labels = pointGroups(d).map(({ names, point: p }) => {
     const q = project(p),

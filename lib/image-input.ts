@@ -24,7 +24,7 @@ export function releaseImage(image: PreparedImage | null) {
 export async function prepareImage(file: File): Promise<PreparedImage> {
   if (file.size > IMAGE_LIMITS.fileBytes)
     throw Error('Ảnh vượt quá 24 MB. Hãy chụp riêng phần đề.');
-  // Read only the header, not the whole original camera file into JS memory.
+
   const header = validateImage(await file.slice(0, 1024 * 1024).arrayBuffer(), file.type);
   const mobile = mobileDevice();
   if (mobile && header.width * header.height > mobileImagePixels)

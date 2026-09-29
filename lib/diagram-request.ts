@@ -72,8 +72,7 @@ export async function requestDiagram(
       });
     let response = await send('geometry-v1');
     let fallback = false;
-    // Unsupported operations may use the existing broad TikZ renderer. An invalid
-    // construction is repaired, never silently converted to an unchecked image.
+
     if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
       const candidate = await response
         .clone()

@@ -1,12 +1,22 @@
-// Local adapter only. Production continues to use the unchanged Netlify function.
 import http from 'node:http';
 import { Readable } from 'node:stream';
 import { createServer as createViteServer } from 'vite';
 import { handleChat } from '../server/chat.mjs';
 import { handleFeedback } from '../server/feedback.mjs';
+import { handleLearning, handleTeacher } from '../server/learning/api.mjs';
 const vite = await createViteServer({ server: { middlewareMode: true }, appType: 'spa' });
 const server = http.createServer(async (req, res) => {
-  if (['/api/chat', '/.netlify/functions/feedback'].includes(req.url?.split('?')[0])) {
+  if (
+    [
+      '/api/chat',
+      '/.netlify/functions/chat',
+      '/api/learning',
+      '/api/teacher',
+      '/.netlify/functions/learning',
+      '/.netlify/functions/teacher',
+      '/.netlify/functions/feedback',
+    ].includes(req.url?.split('?')[0])
+  ) {
     try {
       const request = new Request('http://localhost' + req.url, {
         method: req.method,
@@ -15,7 +25,14 @@ const server = http.createServer(async (req, res) => {
           ? { body: Readable.toWeb(req), duplex: 'half' }
           : {}),
       });
-      const handler = req.url.startsWith('/api/chat') ? handleChat : handleFeedback;
+      const path = req.url.split('?')[0];
+      const handler = path.endsWith('/learning')
+        ? handleLearning
+        : path.endsWith('/teacher')
+          ? handleTeacher
+          : path.endsWith('/chat')
+            ? handleChat
+            : handleFeedback;
       const result = await handler(request, process.env);
       res.writeHead(result.status, Object.fromEntries(result.headers));
       res.end(Buffer.from(await result.arrayBuffer()));

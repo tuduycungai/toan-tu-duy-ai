@@ -200,7 +200,7 @@ export function applyTutorTurn(previous, value, messages) {
   const requested = asksForAnswer(messages);
   state.classification = requested ? 'answer_request' : value.classification;
   const valid = ['correct_complete', 'alternative_path'].includes(state.classification);
-  // A literal quote anchors evidence to this student turn. Reference material is stripped above.
+
   const accepted = valid
     ? value.accepted
         .filter(
@@ -228,7 +228,7 @@ export function applyTutorTurn(previous, value, messages) {
     };
     if (!state.conclusions.some((x) => x.claim === item.claim)) state.conclusions.push(item);
   }
-  // Do not silently evict proof memory in a long conversation.
+
   if (state.conclusions.length > 60)
     throw Error('Bài có quá nhiều bước. Hãy tách thành từng ý để tiếp tục an toàn.');
   if (!state.goals.length)
@@ -282,7 +282,6 @@ export function applyTutorTurn(previous, value, messages) {
     accepted.length > 0;
   let question = clip(value.question, 700);
   if (state.questionHashes.includes(hash(question))) {
-    // One bounded retry is performed by the caller; never loop the same question forever.
     throw Object.assign(
       Error('Câu hỏi trùng lịch sử. Hãy chia nhỏ nhiệm vụ hoặc hỏi điều kiện cụ thể khác.'),
       { duplicate: true },
@@ -297,7 +296,7 @@ export function applyTutorTurn(previous, value, messages) {
   const line = (s) => clip(s, 260).replace(/[\r\n?？]+/g, ' ');
   const summary = state.stage === 7 && summaryAllowed ? clip(value.summary, 2400) : '';
   const text = `[SO_DO]\nDU_KIEN: ${line(value.givens) || 'Đối chiếu đề đã xác nhận.'}\nMUC_TIEU: ${line(value.goal)}\nCAU_NOI: ${line(value.bridge)}\nBUOC_TIEP: ${line(question)}\n[/SO_DO]\nThao tác tư duy: ${line(value.operation)}\n${clip(value.feedback, 1000)}${summary ? '\nTổng hợp từ các bước em đã chứng minh:\n' + summary : ''}\n${state.selfCheckPassed ? 'Kinh nghiệm: ' + line(value.bridge) + '\n[KET_THUC_BUOI_HOC]' : 'Gợi mở: ' + question}`;
-  // Check obvious solution leakage in fields that should contain a single small hint.
+
   if (
     !summaryAllowed &&
     /(?:lời giải(?: hoàn chỉnh| chi tiết)?\s*:|Bước\s*[2-9]\s*[:.])/iu.test(text)

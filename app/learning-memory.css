@@ -1,0 +1,117 @@
+.memory-dialog {
+  max-height: 88dvh;
+  overflow-y: auto;
+  max-width: 660px;
+}
+.memory-dialog p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+.memory-dialog fieldset {
+  border: 0;
+  padding: 0;
+}
+.memory-dialog details {
+  margin: 14px 0;
+}
+.memory-dialog code {
+  overflow-wrap: anywhere;
+}
+.memory-dialog input:not([type='checkbox']),
+.memory-dialog textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+.memory-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.memory-code {
+  border: 1px solid #80a898;
+  padding: 12px;
+  border-radius: 12px;
+}
+.memory-status {
+  padding: 8px 20px;
+  font-size: 12px;
+  background: color-mix(in srgb, #83b79b 15%, transparent);
+}
+.teacher-shell {
+  max-width: 1050px;
+  margin: auto;
+  padding: 25px;
+}
+.teacher-shell h1 {
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+.teacher-shell h2 {
+  font-size: 20px;
+  margin: 18px 0 10px;
+}
+.teacher-shell p {
+  line-height: 1.6;
+}
+.teacher-shell textarea,
+.teacher-shell input,
+.teacher-shell select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #84a795;
+  border-radius: 8px;
+  background: var(--background, #edf5ee);
+  color: inherit;
+}
+.teacher-shell input[type='checkbox'] {
+  display: inline-block;
+  width: auto;
+}
+.teacher-card {
+  border: 1px solid #84a795;
+  padding: 18px;
+  border-radius: 14px;
+  margin: 18px 0;
+  overflow-wrap: anywhere;
+}
+.teacher-table {
+  overflow-x: auto;
+}
+.teacher-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.teacher-table td,
+.teacher-table th {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #aaa;
+}
+@media (max-width: 650px) {
+  .memory-trigger {
+    font-size: 11px;
+    padding: 6px !important;
+  }
+  .teacher-shell {
+    padding: 14px;
+  }
+}
+[data-slot='dialog-content'].memory-dialog {
+  display: block;
+}
+[data-slot='dialog-content'].memory-dialog p {
+  margin: 12px 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+[data-slot='dialog-content'].memory-dialog button {
+  margin-top: 8px;
+}
+.memory-dialog [data-slot='dialog-title'] {
+  padding-right: 24px;
+}
