@@ -17,14 +17,26 @@ import { useBlobURL } from '../lib/use-blob-url';
 import { MathText } from './math-text';
 
 type Props = {
+  scope?: string;
+  chapterId?: string;
+  lessonId?: string;
   accessCode: string;
   disabled: boolean;
   onConnect: () => void;
   onReady: (problem: string) => void;
   onStateChange: (state: 'none' | 'pending' | 'accepted') => void;
 };
-export function ImageProblem({ accessCode, disabled, onConnect, onReady, onStateChange }: Props) {
-  const [recovery, setRecovery] = useState(readImageSession);
+export function ImageProblem({
+  accessCode,
+  disabled,
+  onConnect,
+  onReady,
+  onStateChange,
+  scope = '',
+  chapterId,
+  lessonId,
+}: Props) {
+  const [recovery, setRecovery] = useState(() => readImageSession(scope));
   const [image, setImage] = useState<PreparedImage | null>(null),
     [note, setNote] = useState(''),
     [reading, setReading] = useState<ImageReading | null>(null),
@@ -74,11 +86,11 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
   }, []);
   useEffect(() => {
     if (accepted) {
-      clearImageSession();
+      clearImageSession(scope);
       return;
     }
     if (!reading || !token) return;
-    const save = () => saveImageSession({ transcription: transcript, imageToken: token });
+    const save = () => saveImageSession({ transcription: transcript, imageToken: token }, scope);
     const timer = setTimeout(save, 400);
     addEventListener('pagehide', save);
     return () => {
@@ -92,7 +104,7 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
     onStateChange('pending');
   };
   function remove() {
-    clearImageSession();
+    clearImageSession(scope);
     setRecovery(null);
     releaseImage(imageResource.current);
     imageResource.current = null;
@@ -168,7 +180,7 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
   }
   function applyReading(d: ImageResponse, preserveDrawing = false) {
     setRecovery(null);
-    saveImageSession({ transcription: d.reading.transcription, imageToken: d.imageToken });
+    saveImageSession({ transcription: d.reading.transcription, imageToken: d.imageToken }, scope);
     setImage((current) => (current ? { ...current, data: '' } : null));
     setReading(d.reading);
     setTranscript(d.reading.transcription);
@@ -182,11 +194,14 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
     }
     pending();
   }
+  const geometry = !chapterId || ['c3', 'c4'].includes(chapterId);
+  const scopedRequest = <T,>(body: Record<string, unknown>, code: string, signal: AbortSignal) =>
+    imageRequest<T>({ ...body, chapterId, lessonId }, code, signal);
   const read = () =>
     void job(async (signal) => {
       if (!image) return;
       setStatus('AI đang đọc đề và kiểm tra ký hiệu…');
-      const d = await imageRequest<ImageResponse>(
+      const d = await scopedRequest<ImageResponse>(
         { mode: 'image-read', image: { data: image.data, mimeType: image.mimeType }, note },
         accessCode,
         signal,
@@ -203,7 +218,7 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
       setStatus(attempt ? `Đang sửa hình (${attempt}/2)…` : 'Đang sinh và kiểm tra mã hình…');
       let received: DiagramResponse | undefined;
       try {
-        received = await imageRequest<DiagramResponse>(
+        received = await scopedRequest<DiagramResponse>(
           {
             mode: 'image-diagram',
             diagramFormat: format,
@@ -262,7 +277,7 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
   const confirm = () =>
     void job(async (signal) => {
       setStatus('Đang đối chiếu đề em xác nhận…');
-      const d = await imageRequest<ImageResponse>(
+      const d = await scopedRequest<ImageResponse>(
         {
           mode: revising ? 'image-revise' : 'image-confirm',
           imageToken: token,
@@ -275,8 +290,14 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
       if (signal.aborted) return;
       applyReading(d, d.reading.transcription === reading?.transcription);
       setRevising(false);
-      if (d.confirmed) await draw(d.imageToken, signal, d.reading.transcription);
-      else
+      if (d.confirmed) {
+        if (geometry) await draw(d.imageToken, signal, d.reading.transcription);
+        else {
+          setAccepted(true);
+          onStateChange('accepted');
+          onReady(d.reading.transcription);
+        }
+      } else
         setError(
           d.reading.structureStatus === 'needs_repair'
             ? 'Chưa kiểm tra được cấu trúc hình. Đề vẫn được giữ; em có thể thử xác nhận lại.'
@@ -353,7 +374,7 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
             disabled={busy || disabled}
             onClick={() =>
               void job(async (signal) => {
-                const d = await imageRequest<ImageResponse>(
+                const d = await scopedRequest<ImageResponse>(
                   { mode: 'image-restore', imageToken: recovery.imageToken },
                   accessCode,
                   signal,
@@ -493,7 +514,13 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
                 }
                 onClick={confirm}
               >
-                {revising ? 'Cập nhật dữ kiện hình' : 'Xác nhận và vẽ hình'}
+                {revising
+                  ? geometry
+                    ? 'Cập nhật dữ kiện hình'
+                    : 'Cập nhật dữ kiện'
+                  : geometry
+                    ? 'Xác nhận và vẽ hình'
+                    : 'Xác nhận đề và bắt đầu học'}
               </button>
             </>
           )}
@@ -549,7 +576,7 @@ export function ImageProblem({ accessCode, disabled, onConnect, onReady, onState
                   className="primary"
                   disabled={busy || disabled}
                   onClick={() => {
-                    clearImageSession();
+                    clearImageSession(scope);
                     setAccepted(true);
                     onStateChange('accepted');
                     onReady(reading.transcription);

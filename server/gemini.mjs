@@ -1,3 +1,5 @@
+import { resolveCurriculum, curriculumInstructions, curriculumExerciseSet } from './curriculum.mjs';
+import { studentRequest as curriculumStudent } from './strict-tutor.mjs';
 import { handleFeature, IMAGE_MODES } from './feature-api.mjs';
 import { DIAGRAM_PROMPT, parseDiagram } from './diagram-policy.mjs';
 import { timingSafeEqual } from 'node:crypto';
@@ -96,6 +98,24 @@ export async function handleChat(request, env, fetcher = fetch) {
   const model = env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash';
   if (!/^gemini-[a-zA-Z0-9.-]+$/.test(model))
     return reply({ error: 'GEMINI_MODEL chưa hợp lệ. Giáo viên cần kiểm tra cấu hình.' }, 503);
+  let curriculumContext;
+  if (!check) {
+    try {
+      curriculumContext = resolveCurriculum(body);
+    } catch (e) {
+      return reply({ error: e.message }, e.status || 400);
+    }
+    if (!featureImage && !diagram && curriculumContext.chapterId !== 'c3') {
+      const student = curriculumStudent(body.messages);
+      const generation = student.match(/^Tạo đúng (\d+) câu/iu);
+      if (generation)
+        return reply({
+          ...curriculumExerciseSet(curriculumContext, Number(generation[1]), student),
+          model,
+        });
+      body.adaptive = true;
+    }
+  }
   if (!check && (featureImage || body.adaptive === true))
     return handleFeature(body, env, model, fetcher, null, request);
   if (!check && !diagram && asksForAnswer(body.messages))
@@ -131,7 +151,10 @@ export async function handleChat(request, env, fetcher = fetch) {
                   ? 'Reply with OK only.'
                   : diagram
                     ? DIAGRAM_PROMPT
-                    : instructions(body.mode, body.messages),
+                    : instructions(body.mode, body.messages) +
+                      (curriculumContext && body.chapterId
+                        ? curriculumInstructions(curriculumContext, body.problem)
+                        : ''),
               },
             ],
           },

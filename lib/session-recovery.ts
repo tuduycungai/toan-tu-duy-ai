@@ -17,9 +17,9 @@ type Snapshot = {
   mode: string;
 };
 const empty = (): Snapshot => ({ messages: [], wire: [], input: '', problem: '', mode: 'guide' });
-export function readSession(): Snapshot {
+export function readSession(scope = ''): Snapshot {
   try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
+    const raw = sessionStorage.getItem(scope ? SESSION_KEY + ':' + scope : SESSION_KEY);
     if (!raw || raw.length > 500000) return empty();
     const s = JSON.parse(raw);
     if (
@@ -66,10 +66,10 @@ export function readSession(): Snapshot {
     return empty();
   }
 }
-export function saveSession(s: Snapshot) {
+export function saveSession(s: Snapshot, scope = '') {
   try {
     sessionStorage.setItem(
-      SESSION_KEY,
+      scope ? SESSION_KEY + ':' + scope : SESSION_KEY,
       JSON.stringify({
         ...s,
         messages: s.messages.slice(-40),
@@ -78,5 +78,9 @@ export function saveSession(s: Snapshot) {
         savedAt: Date.now(),
       }),
     );
+    if (scope && (s.problem || s.input || s.messages.length)) {
+      const [chapterId, lessonId] = scope.split(':');
+      sessionStorage.setItem('curriculum-last', JSON.stringify({ chapterId, lessonId }));
+    }
   } catch {}
 }

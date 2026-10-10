@@ -172,8 +172,9 @@ export function LearningMemoryPanel({
           </details>
           {memory.profile && (
             <p>
-              Đã quan sát {memory.profile.observedTurns} lượt; mức hỗ trợ{' '}
-              {memory.profile.supportLevel}/4. Kỹ năng có bước tiếp theo củng cố:{' '}
+              {memory.scope ? 'Trong bài đang chọn: đã quan sát' : 'Đã quan sát'}{' '}
+              {memory.profile.observedTurns} lượt; mức hỗ trợ {memory.profile.supportLevel}/4. Kỹ
+              năng có bước tiếp theo củng cố:{' '}
               {Object.values(memory.profile.skills || {}).filter((s) => s.corroborated > 0).length}.
               Đây là bằng chứng theo bước, chưa phải xác nhận thành thạo.
             </p>

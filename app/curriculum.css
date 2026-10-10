@@ -1,0 +1,516 @@
+.curriculum-home {
+  min-height: 100vh;
+  background: var(--bg, #f2f7f0);
+  color: var(--text, #203d36);
+  font-family: inherit;
+}
+.curriculum-top {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 32px;
+  border-bottom: 1px solid var(--line, #d7e3d5);
+}
+.curriculum-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.4px;
+}
+.curriculum-home main {
+  max-width: 1160px;
+  margin: auto;
+  padding: 0 24px;
+}
+.curriculum-hero {
+  padding: 70px 0 48px;
+  max-width: 850px;
+}
+.curriculum-hero h1 {
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+  font-weight: 650;
+  margin: 18px 0 24px;
+}
+.curriculum-hero em {
+  font-family: Georgia, serif;
+  font-weight: 500;
+  color: var(--accent, #207758);
+}
+.curriculum-hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 630px;
+}
+.curriculum-pill {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+.resume-button {
+  margin-top: 24px;
+  max-width: 100%;
+  text-align: left;
+  white-space: normal;
+}
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.chapter-card {
+  border: 1px solid var(--line, #d6e2d6);
+  border-radius: 20px;
+  padding: 25px;
+  background: var(--surface, #fffef8);
+  display: flex;
+  flex-direction: column;
+  min-height: 340px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s;
+}
+.chapter-card:hover {
+  transform: translateY(-3px);
+}
+.chapter-card .eyebrow {
+  margin-top: 14px;
+  font-size: 11px;
+}
+.chapter-symbol {
+  height: 72px;
+  font-family: Georgia, serif;
+  font-size: 37px;
+  color: #1e785f;
+  display: flex;
+  align-items: center;
+}
+.chapter-c2 .chapter-symbol {
+  color: #a46738;
+}
+.chapter-c3 .chapter-symbol {
+  color: #637c4b;
+  font-size: 66px;
+}
+.chapter-c4 .chapter-symbol {
+  color: #437889;
+  font-size: 64px;
+}
+.chapter-c5 .chapter-symbol {
+  color: #826caf;
+  font-size: 53px;
+}
+.chapter-card h2 {
+  font-size: 23px;
+  line-height: 1.28;
+  margin: 10px 0 14px;
+  font-weight: 650;
+  letter-spacing: -0.5px;
+}
+.chapter-card p {
+  font-size: 14px;
+  line-height: 1.65;
+  opacity: 0.8;
+  margin-bottom: 25px;
+}
+.chapter-card-foot {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+.chapter-card-foot > span {
+  font-size: 12px;
+  opacity: 0.65;
+}
+.chapter-card-foot button {
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 10px;
+}
+.curriculum-promise {
+  display: flex;
+  gap: 20px;
+  padding: 40px 0 50px;
+  max-width: 730px;
+  align-items: flex-start;
+}
+.curriculum-promise > svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.curriculum-promise h2 {
+  font-size: 19px;
+  margin-bottom: 9px;
+}
+.curriculum-promise p {
+  font-size: 14px;
+  line-height: 1.8;
+  opacity: 0.7;
+}
+.curriculum-home footer {
+  text-align: center;
+  font-size: 12px;
+  padding: 22px;
+  border-top: 1px solid var(--line, #d7e3d5);
+}
+.chapter-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line, #d7e3d5);
+  background: var(--surface, #fffef8);
+}
+.chapter-toolbar > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid var(--line, #d7e3d5);
+  border-radius: 8px;
+}
+.chapter-toolbar strong {
+  font-size: 14px;
+}
+.chapter-toolbar label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  margin-left: auto;
+  max-width: 100%;
+  min-width: 0;
+}
+.chapter-toolbar select {
+  max-width: 470px;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid var(--line, #d7e3d5);
+  border-radius: 8px;
+  background: var(--surface, #fffef8);
+  color: inherit;
+}
+.chapter-suggestion {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 14px 24px;
+  background: #f8edd7;
+  color: #654817;
+}
+.chapter-suggestion button {
+  padding: 7px;
+  border: 1px solid #d2bd91;
+  border-radius: 6px;
+}
+.curriculum-intro {
+  padding: 46px 40px;
+}
+.curriculum-intro > h1 {
+  font-size: 34px;
+  line-height: 1.3;
+  margin: 15px 0 20px;
+  font-weight: 600;
+  letter-spacing: -0.7px;
+}
+.curriculum-intro > p {
+  line-height: 1.7;
+  max-width: 800px;
+  margin-bottom: 22px;
+}
+.curriculum-bank {
+  padding: 26px 0;
+}
+.main-panel > .curriculum-bank {
+  padding: 36px;
+}
+.curriculum-bank > h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.exercise-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 17px;
+  border: 1px solid var(--line, #d7e3d5);
+  background: var(--surface, #fffef8);
+  padding: 24px;
+  border-radius: 14px;
+  font-size: 16px;
+  line-height: 1.7;
+  min-width: 0;
+  overflow: hidden;
+}
+.exercise-card:hover {
+  border-color: #379677;
+  box-shadow: 0 6px 18px #16715510;
+}
+.exercise-card .eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+}
+.exercise-card small {
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+.exercise-card strong {
+  font-size: 12px;
+  margin-top: auto;
+  color: var(--accent, #277657);
+}
+.curriculum-theory {
+  padding: 20px;
+  border: 1px solid var(--line, #d7e3d5);
+  border-radius: 12px;
+  margin: 18px 0;
+  background: var(--surface, #fffef8);
+  min-width: 0;
+}
+.curriculum-theory summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.curriculum-theory p {
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+.theory-heading {
+  font-size: 16px;
+  font-weight: 650;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+}
+.statistics-lab {
+  padding: 18px;
+  border: 1px solid var(--line, #d7e3d5);
+  border-radius: 12px;
+  margin: 16px 0;
+  min-width: 0;
+}
+.statistics-lab h3 {
+  font-weight: 650;
+  margin-bottom: 12px;
+}
+.statistics-lab > label {
+  display: block;
+  font-size: 13px;
+  margin: 10px 0;
+}
+.statistics-lab textarea,
+.statistics-lab input:not([type='checkbox']),
+.statistics-lab select {
+  width: 100%;
+  background: var(--surface, #fffef8);
+  color: inherit;
+  border: 1px solid var(--line, #d7e3d5);
+  border-radius: 8px;
+  padding: 10px;
+}
+.chart-inputs {
+  display: flex;
+  gap: 14px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.chart-inputs label {
+  flex: 1;
+  min-width: 130px;
+  font-size: 12px;
+}
+.chart-inputs button {
+  padding: 8px;
+  border: 1px solid var(--line, #d7e3d5);
+  border-radius: 8px;
+}
+.chart-scroll,
+.table-scroll {
+  max-width: 100%;
+  overflow: auto;
+  margin-top: 16px;
+}
+.chart-scroll svg {
+  display: block;
+  width: 100%;
+  min-width: 420px;
+}
+.statistics-lab table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.statistics-lab th,
+.statistics-lab td {
+  border: 1px solid var(--line, #d7e3d5);
+  padding: 8px;
+  text-align: left;
+}
+.exercise-card .katex-display,
+.curriculum-theory .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+[data-theme='dark'] .curriculum-home {
+  background: #131d20;
+  color: #dfe8e1;
+}
+[data-theme='dark'] .chapter-card,
+[data-theme='dark'] .exercise-card,
+[data-theme='dark'] .curriculum-theory,
+[data-theme='dark'] .chapter-toolbar,
+[data-theme='dark'] .statistics-lab input,
+[data-theme='dark'] .statistics-lab textarea,
+[data-theme='dark'] .statistics-lab select,
+[data-theme='dark'] .chapter-toolbar select {
+  background: #1b282b;
+  color: #dfe8e1;
+  border-color: #344440;
+}
+@media (max-width: 900px) {
+  .chapter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .chapter-toolbar label {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+  .curriculum-intro {
+    padding: 28px 22px;
+  }
+  .chapter-toolbar select {
+    flex: 1;
+    max-width: 100%;
+  }
+  .exercise-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .curriculum-top {
+    padding: 18px;
+  }
+  .curriculum-logo {
+    font-size: 14px;
+  }
+  .curriculum-home main {
+    padding: 0 18px;
+  }
+  .curriculum-hero {
+    padding: 42px 0 28px;
+  }
+  .curriculum-hero h1 {
+    letter-spacing: -1px;
+    font-size: 38px;
+  }
+  .curriculum-hero p {
+    font-size: 16px;
+  }
+  .chapter-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .chapter-card {
+    min-height: 280px;
+    padding: 22px;
+  }
+  .chapter-symbol {
+    height: 52px;
+  }
+  .chapter-card h2 {
+    font-size: 24px;
+  }
+  .chapter-toolbar {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+  .chapter-toolbar strong {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .chapter-toolbar label {
+    display: block;
+  }
+  .chapter-toolbar select {
+    width: 100%;
+    margin-top: 6px;
+    font-size: 14px;
+  }
+  .curriculum-intro {
+    padding: 26px 18px;
+  }
+  .curriculum-intro > h1 {
+    font-size: 27px;
+  }
+  .exercise-card {
+    padding: 18px;
+  }
+  .main-panel > .curriculum-bank {
+    padding: 20px 18px;
+  }
+  .curriculum-pill {
+    font-size: 11px;
+    gap: 9px;
+  }
+}
+
+@media (max-width: 560px) {
+  .top-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .top-actions .memory-trigger {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 11px;
+  }
+  .top-actions .scope-badge {
+    display: none;
+  }
+  .top-actions .connection {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .topbar .brand {
+    flex-basis: 100%;
+  }
+  .chapter-toolbar label {
+    line-height: 1.5;
+  }
+}
+.statistics-lab > label:has(input[type='checkbox']) {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.statistics-lab input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}

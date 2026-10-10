@@ -24,7 +24,7 @@ function doPost(e) {
   } finally { if (lock && lock.hasLock()) lock.releaseLock(); }
 }
 function headers_(name) {
-  return ['id', 'studentId', 'sessionId', 'updatedAt', 'status', 'data', ...(name === 'Turns' ? ['problemId', 'stage', 'question', 'answer', 'verdict', 'errorKind', 'hintLevel', 'nextAction', 'ruleVersion', 'exampleVersion', 'nextQuestion', 'evidence', 'redacted'] : [])];
+  return ['id', 'studentId', 'sessionId', 'updatedAt', 'status', 'data', ...(name === 'Turns' ? ['problemId', 'stage', 'question', 'answer', 'verdict', 'errorKind', 'hintLevel', 'nextAction', 'ruleVersion', 'exampleVersion', 'nextQuestion', 'evidence', 'redacted', 'chapterId', 'lessonId', 'skillId'] : [])];
 }
 function sheetDatabase_() {
   const id = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
@@ -108,4 +108,27 @@ function purgeExpired() {
   lock.waitLock(8000);
   try { const db = sheetDatabase_(); const result = runOperation(db, 'purge', { teacher: true }); db.commit(); return result; }
   finally { lock.releaseLock(); }
+}
+
+function migrateV660() {
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(8000)) throw new Error('Có lượt đang ghi; thử lại sau.');
+  try {
+    const book = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID'));
+    const sheet = book.getSheetByName('Turns');
+    if (!sheet) throw new Error('Chưa có bảng Turns; chạy setup cho bảng mới.');
+    const expected = headers_('Turns');
+    const current = sheet.getRange(1,1,1,sheet.getLastColumn()).getValues()[0];
+    for(let i=0;i<Math.min(current.length,expected.length);i++) if(current[i] && current[i] !== expected[i]) throw new Error('Cột hiện tại không đúng thứ tự chuẩn; dừng để bảo toàn dữ liệu.');
+    if (sheet.getMaxColumns() < expected.length) sheet.insertColumnsAfter(sheet.getMaxColumns(), expected.length - sheet.getMaxColumns());
+    sheet.getRange(1,1,1,expected.length).setValues([expected]).setFontWeight('bold');
+    // Historical JSON stays unchanged. Unclassified cells are an explicit display label, not a claim about chapter III.
+    const n=sheet.getLastRow()-1;
+    if(n>0) {
+      const rows=sheet.getRange(2,6,n,1).getValues();
+      const cells=rows.map(([raw])=>{ if(!raw) return ['','','']; const e=JSON.parse(raw); return [e.chapterId||'unclassified',e.lessonId||'unclassified',e.skillId||e.skill||'']; });
+      sheet.getRange(2,expected.indexOf('chapterId')+1,n,3).setValues(cells);
+    }
+    return 'Đã bổ sung cột; giữ nguyên dữ liệu và mã cũ. Có thể chạy lại.';
+  } finally { lock.releaseLock(); }
 }

@@ -1,3 +1,5 @@
+import { resolveCurriculum, curriculumInstructions, validateMathTurn } from './curriculum.mjs';
+import { studentRequest } from './strict-tutor.mjs';
 import { prepareMemory, recordMemory } from './learning/integration.mjs';
 import {
   ADAPTIVE_SCHEMA,
@@ -90,6 +92,13 @@ export async function handleFeature(
     return text;
   }
   try {
+    const context = resolveCurriculum(body);
+    const curriculumPrompt = curriculumInstructions(
+      context,
+      body.problem,
+      body.messages ? studentRequest(body.messages) : '',
+    );
+    const geometry = ['c3', 'c4'].includes(context.chapterId);
     if (body.adaptive === true && !IMAGE_MODES.includes(body.mode)) {
       let state;
       try {
@@ -108,13 +117,20 @@ export async function handleFeature(
 
       for (let attempt = 0; attempt < 2; attempt++) {
         const raw = await generate(
-          adaptiveInstructions(state, body.mode, body.messages) + memory.context + correction,
+          adaptiveInstructions(state, body.mode, body.messages) +
+            curriculumPrompt +
+            memory.context +
+            correction,
           contents,
           ADAPTIVE_SCHEMA,
           4800,
         );
         try {
-          const result = applyTutorTurn(state, JSON.parse(raw), body.messages);
+          const result = applyTutorTurn(
+            state,
+            validateMathTurn(context, studentRequest(body.messages), JSON.parse(raw), state),
+            body.messages,
+          );
           const response = tutorResponse(result, secret);
           const learning = await recordMemory(memory, body, state, result, env, fetcher);
           return reply({ ...response, model, learning });
@@ -145,7 +161,11 @@ export async function handleFeature(
       validateImage(bytes, img.mimeType, IMAGE_LIMITS.uploadBytes);
       const note = typeof body.note === 'string' ? body.note.slice(0, 1200) : '';
       const raw = await generate(
-        IMAGE_PROMPT,
+        IMAGE_PROMPT +
+          curriculumPrompt +
+          (geometry
+            ? ''
+            : '\nĐây là đề đại số hoặc thống kê: không tạo đối tượng, điểm hay quan hệ hình học nếu không có. Giữ đầy đủ biểu thức, bảng, số liệu, đơn vị và yêu cầu. Mảng hình học có thể rỗng.'),
         [
           {
             role: 'user',
@@ -176,7 +196,14 @@ export async function handleFeature(
       return reply({
         reading,
         imageToken: seal(
-          { reading, confirmed: false, attempt: 0, correction: '' },
+          {
+            reading,
+            confirmed: false,
+            attempt: 0,
+            correction: '',
+            chapterId: context.chapterId,
+            lessonId: context.lessonId,
+          },
           secret,
           'image',
         ),
@@ -187,6 +214,11 @@ export async function handleFeature(
     let saved;
     try {
       saved = unseal(body.imageToken, secret, 'image');
+      if (
+        (saved.chapterId || 'c3') !== context.chapterId ||
+        (saved.lessonId && saved.lessonId !== context.lessonId)
+      )
+        throw Error('Ảnh thuộc chương hoặc bài học khác.');
     } catch (e) {
       throw fail(e.message, 409);
     }
@@ -213,7 +245,11 @@ export async function handleFeature(
         throw fail('Còn dữ kiện chưa rõ. Em hãy bổ sung hoặc chụp lại trước khi vẽ.');
       if (changed || needsRepair) {
         const raw = await generate(
-          IMAGE_PROMPT,
+          IMAGE_PROMPT +
+            curriculumPrompt +
+            (geometry
+              ? ''
+              : '\nĐây là đề đại số hoặc thống kê: không tạo đối tượng, điểm hay quan hệ hình học nếu không có. Giữ đầy đủ biểu thức, bảng, số liệu, đơn vị và yêu cầu. Mảng hình học có thể rỗng.'),
           [
             {
               role: 'user',
@@ -253,7 +289,14 @@ export async function handleFeature(
           reading,
           confirmed,
           imageToken: seal(
-            { reading, confirmed, attempt: 0, correction: correction || saved.correction },
+            {
+              reading,
+              confirmed,
+              attempt: 0,
+              correction: correction || saved.correction,
+              chapterId: context.chapterId,
+              lessonId: context.lessonId,
+            },
             secret,
             'image',
           ),

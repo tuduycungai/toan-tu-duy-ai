@@ -1,0 +1,14 @@
+{
+  "environment": "Chromium local; handlers real; external AI and Google simulated",
+  "results": [
+    "5 thẻ mở không gian thật; tên và 34 mục bài/ôn tập đúng dữ liệu chương trình.",
+    "Cả 5 chương gửi câu thật trong trình duyệt qua handler máy chủ; Gemini được mô phỏng, chương/bài/đề khớp.",
+    "Đổi chương, Back và tải lại khôi phục đúng hội thoại/bản nháp của chương.",
+    "Chuyển chương lúc đang chờ hủy yêu cầu; phản hồi muộn không trộn phiên, giữ câu chưa gửi xong.",
+    "Bảng→xác nhận→cột/đoạn thẳng/quạt tròn; mốc 2020–2022–2025 có tỉ lệ ngang đúng, tải SVG được.",
+    "Ảnh đại số: chọn tệp, đọc bằng phản hồi OCR mô phỏng, sửa văn bản, xác nhận lại và học; không gọi dựng hình.",
+    "375 px: cả 5 chương, công thức, bảng và biểu đồ không gây tràn trang; sáng/tối hoạt động.",
+    "Không có lỗi JavaScript trình duyệt."
+  ],
+  "errors": []
+}

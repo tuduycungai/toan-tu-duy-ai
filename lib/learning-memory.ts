@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 export type MemoryProfile = {
+  scopes?: Record<
+    string,
+    {
+      turns: number;
+      supportLevel: number;
+      skills: MemoryProfile['skills'];
+      errors: Record<string, number>;
+      updatedAt: string;
+    }
+  >;
   supportLevel: number;
   observedTurns: number;
   updatedAt: string;
@@ -57,14 +67,22 @@ export function filteredQueue(items: Pending[], now = Date.now()) {
 export function addPending(items: Pending[], item: Pending) {
   return filteredQueue([...items.filter((p) => p.id !== item.id), item]);
 }
-export function useLearningMemory() {
+export function useLearningMemory(scope = '') {
   const [enabled, setEnabled] = useState(false),
     [studentId, setStudentId] = useState(''),
     [profile, setProfile] = useState<MemoryProfile | null>(null);
   const [status, setStatus] = useState('Chưa bật lưu tiến bộ vào Google Sheets.'),
     [pending, setPending] = useState(0),
     [lastEvent, setLastEvent] = useState('');
-  const session = useRef(crypto.randomUUID()),
+  const session = useRef(
+      (() => {
+        try {
+          const old = sessionStorage.getItem('memory-session:' + scope);
+          if (old && /^[\w-]{16,80}$/.test(old)) return old;
+        } catch {}
+        return crypto.randomUUID();
+      })(),
+    ),
     live = useRef(false),
     flushing = useRef(false);
   const epoch = useRef(0);
@@ -144,6 +162,9 @@ export function useLearningMemory() {
     }
   }
   useEffect(() => {
+    try {
+      sessionStorage.setItem('memory-session:' + scope, session.current);
+    } catch {}
     void sync();
     const online = () => void sync();
     const storage = (event: StorageEvent) => {
@@ -251,7 +272,17 @@ export function useLearningMemory() {
   return {
     enabled,
     studentId,
-    profile,
+    profile:
+      scope && profile
+        ? {
+            observedTurns: profile.scopes?.[scope]?.turns || 0,
+            supportLevel: profile.scopes?.[scope]?.supportLevel ?? 2,
+            skills: profile.scopes?.[scope]?.skills || {},
+            repeatedErrors: profile.scopes?.[scope]?.errors || {},
+            updatedAt: profile.scopes?.[scope]?.updatedAt || '',
+          }
+        : profile,
+    scope,
     status,
     pending,
     lastEvent,
@@ -266,6 +297,9 @@ export function useLearningMemory() {
     sessionId: () => session.current,
     newSession: () => {
       session.current = crypto.randomUUID();
+      try {
+        sessionStorage.setItem('memory-session:' + scope, session.current);
+      } catch {}
     },
     request: () => ({
       epoch: epoch.current,

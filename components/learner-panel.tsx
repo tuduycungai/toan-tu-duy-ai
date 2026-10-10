@@ -11,8 +11,10 @@ import {
 export function LearnerPanel({
   state,
   onChange,
+  geometry = true,
 }: {
   state: LearnerState;
+  geometry?: boolean;
   onChange: (value: LearnerState) => void;
 }) {
   const [choice, setChoice] = useState(-1),
@@ -27,8 +29,9 @@ export function LearnerPanel({
         Hồ sơ học tập · {state.level}
       </summary>
       <p className="caption">
-        Mức hỗ trợ có thể thay đổi. Bốn câu chẩn đoán chỉ gợi ý điểm bắt đầu; giáo viên và em có thể
-        điều chỉnh.
+        {geometry
+          ? 'Bốn câu chẩn đoán chỉ gợi ý điểm bắt đầu; giáo viên và em có thể điều chỉnh.'
+          : 'Em chọn mức học phù hợp. Gia sư điều chỉnh gợi mở từ các bước em thực hiện trong bài này.'}
       </p>
       <label>
         Khối lớp
@@ -88,69 +91,71 @@ export function LearnerPanel({
             : 'Chưa đủ bốn câu chẩn đoán; chưa tự phân loại.'}{' '}
         Mức hỗ trợ: {state.supportLevel}/3.
       </p>
-      <details className="diagnostic-panel">
-        <summary>Chẩn đoán kiến thức ({state.diagnostics.length}/4)</summary>
-        {last && (
-          <p role="status">
-            {last.correct ? 'Lựa chọn vừa rồi đúng. ' : 'Lựa chọn vừa rồi cần xem lại. '}
-            {diagnostics.find((q) => q.id === last.id)?.reason} Giáo viên cần xem thêm phần em giải
-            thích.
-          </p>
-        )}
-        {current ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              onChange(recordDiagnostic(state, current.id, choice, explanation));
+      {geometry && (
+        <details className="diagnostic-panel">
+          <summary>Chẩn đoán kiến thức ({state.diagnostics.length}/4)</summary>
+          {last && (
+            <p role="status">
+              {last.correct ? 'Lựa chọn vừa rồi đúng. ' : 'Lựa chọn vừa rồi cần xem lại. '}
+              {diagnostics.find((q) => q.id === last.id)?.reason} Giáo viên cần xem thêm phần em
+              giải thích.
+            </p>
+          )}
+          {current ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                onChange(recordDiagnostic(state, current.id, choice, explanation));
+                setChoice(-1);
+                setExplanation('');
+              }}
+            >
+              <fieldset>
+                <legend>{current.question}</legend>
+                {current.options.map((s, i) => (
+                  <label className="diagnostic-option" key={s}>
+                    <input
+                      type="radio"
+                      name={current.id}
+                      checked={choice === i}
+                      onChange={() => setChoice(i)}
+                    />
+                    <span>{s}</span>
+                  </label>
+                ))}
+              </fieldset>
+              <label>
+                Vì sao em chọn như vậy?
+                <textarea
+                  value={explanation}
+                  maxLength={700}
+                  onChange={(e) => setExplanation(e.target.value)}
+                  required
+                />
+              </label>
+              <button type="submit" disabled={choice < 0 || explanation.trim().length < 3}>
+                Ghi nhận & câu tiếp theo
+              </button>
+            </form>
+          ) : (
+            <p>
+              Đã hoàn tất bốn câu. Tiếp tục giải thích từng bước trong bài để điều chỉnh hỗ trợ theo
+              quá trình học.
+            </p>
+          )}
+          <button
+            type="button"
+            className="text-button"
+            onClick={() => {
+              onChange({ ...state, diagnostics: [] });
               setChoice(-1);
               setExplanation('');
             }}
           >
-            <fieldset>
-              <legend>{current.question}</legend>
-              {current.options.map((s, i) => (
-                <label className="diagnostic-option" key={s}>
-                  <input
-                    type="radio"
-                    name={current.id}
-                    checked={choice === i}
-                    onChange={() => setChoice(i)}
-                  />
-                  <span>{s}</span>
-                </label>
-              ))}
-            </fieldset>
-            <label>
-              Vì sao em chọn như vậy?
-              <textarea
-                value={explanation}
-                maxLength={700}
-                onChange={(e) => setExplanation(e.target.value)}
-                required
-              />
-            </label>
-            <button type="submit" disabled={choice < 0 || explanation.trim().length < 3}>
-              Ghi nhận & câu tiếp theo
-            </button>
-          </form>
-        ) : (
-          <p>
-            Đã hoàn tất bốn câu. Tiếp tục giải thích từng bước trong bài để điều chỉnh hỗ trợ theo
-            quá trình học.
-          </p>
-        )}
-        <button
-          type="button"
-          className="text-button"
-          onClick={() => {
-            onChange({ ...state, diagnostics: [] });
-            setChoice(-1);
-            setExplanation('');
-          }}
-        >
-          Làm lại chẩn đoán
-        </button>
-      </details>
+            Làm lại chẩn đoán
+          </button>
+        </details>
+      )}
       <details>
         <summary>Bằng chứng và lỗi cần xem lại</summary>
         {state.diagnostics

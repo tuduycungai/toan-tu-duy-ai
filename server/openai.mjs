@@ -1,3 +1,5 @@
+import { resolveCurriculum, curriculumInstructions, curriculumExerciseSet } from './curriculum.mjs';
+import { studentRequest as curriculumStudent } from './strict-tutor.mjs';
 import { timingSafeEqual } from 'node:crypto';
 import { validMessages } from './gemini.mjs';
 import { handleFeature, IMAGE_MODES } from './feature-api.mjs';
@@ -281,6 +283,24 @@ export async function handleOpenAI(request, env, fetcher = fetch) {
       maxTokens,
       fetcher,
     );
+  let curriculumContext;
+  if (!check) {
+    try {
+      curriculumContext = resolveCurriculum(body);
+    } catch (e) {
+      return reply({ error: e.message }, e.status || 400);
+    }
+    if (!featureImage && !diagram && curriculumContext.chapterId !== 'c3') {
+      const student = curriculumStudent(body.messages);
+      const generation = student.match(/^Tạo đúng (\d+) câu/iu);
+      if (generation)
+        return reply({
+          ...curriculumExerciseSet(curriculumContext, Number(generation[1]), student),
+          model,
+        });
+      body.adaptive = true;
+    }
+  }
   if (!check && (featureImage || body.adaptive === true))
     return handleFeature(
       body,
@@ -332,7 +352,10 @@ export async function handleOpenAI(request, env, fetcher = fetch) {
         ? 'Reply with OK only.'
         : diagram
           ? DIAGRAM_PROMPT
-          : instructions(body.mode, body.messages),
+          : instructions(body.mode, body.messages) +
+            (curriculumContext && body.chapterId
+              ? curriculumInstructions(curriculumContext, body.problem)
+              : ''),
       contents,
       schema,
       diagram ? 6000 : 4800,

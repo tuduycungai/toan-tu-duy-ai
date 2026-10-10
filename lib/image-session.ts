@@ -1,8 +1,8 @@
 const KEY = 'ai-tutor-image-v6.2.4';
 type ImageSnapshot = { transcription: string; imageToken: string };
-export function readImageSession(): ImageSnapshot | null {
+export function readImageSession(scope = ''): ImageSnapshot | null {
   try {
-    const raw = sessionStorage.getItem(KEY);
+    const raw = sessionStorage.getItem(scope ? KEY + ':' + scope : KEY);
     if (!raw || raw.length > 130000) return null;
     const s = JSON.parse(raw);
     if (
@@ -22,13 +22,16 @@ export function readImageSession(): ImageSnapshot | null {
     return null;
   }
 }
-export function saveImageSession(s: ImageSnapshot) {
+export function saveImageSession(s: ImageSnapshot, scope = '') {
   try {
-    sessionStorage.setItem(KEY, JSON.stringify({ ...s, version: 1, savedAt: Date.now() }));
+    sessionStorage.setItem(
+      scope ? KEY + ':' + scope : KEY,
+      JSON.stringify({ ...s, version: 1, savedAt: Date.now() }),
+    );
   } catch {}
 }
-export function clearImageSession() {
+export function clearImageSession(scope = '') {
   try {
-    sessionStorage.removeItem(KEY);
+    sessionStorage.removeItem(scope ? KEY + ':' + scope : KEY);
   } catch {}
 }

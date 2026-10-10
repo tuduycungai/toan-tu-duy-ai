@@ -1,0 +1,3714 @@
+{
+  "chapters": [
+    {
+      "id": "c1",
+      "roman": "I",
+      "title": "Đa thức",
+      "description": "Nhận diện cấu trúc, thu gọn và thực hiện các phép toán đa thức.",
+      "kind": "algebra",
+      "units": [
+        "l01",
+        "l02",
+        "l03",
+        "c1-review-3",
+        "l04",
+        "l05",
+        "c1-review-5",
+        "c1-end"
+      ]
+    },
+    {
+      "id": "c2",
+      "roman": "II",
+      "title": "Hằng đẳng thức đáng nhớ và ứng dụng",
+      "description": "Khám phá cấu trúc biểu thức và lựa chọn cách biến đổi phù hợp.",
+      "kind": "identity",
+      "units": [
+        "l06",
+        "l07",
+        "l08",
+        "c2-review-8",
+        "l09",
+        "c2-review-9",
+        "c2-end"
+      ]
+    },
+    {
+      "id": "c3",
+      "roman": "III",
+      "title": "Tứ giác",
+      "description": "Kết nối giả thiết, tính chất và dấu hiệu để tự xây dựng chứng minh.",
+      "kind": "geometry",
+      "units": [
+        "l10",
+        "l11",
+        "c3-review-11",
+        "l12",
+        "c3-review-12",
+        "l13",
+        "l14",
+        "c3-review-14",
+        "c3-end"
+      ]
+    },
+    {
+      "id": "c4",
+      "roman": "IV",
+      "title": "Định lí Thalès",
+      "description": "Nhận ra các đoạn tương ứng, điều kiện song song và tỉ lệ.",
+      "kind": "geometry",
+      "units": [
+        "l15",
+        "l16",
+        "l17",
+        "c4-review-17",
+        "c4-end"
+      ]
+    },
+    {
+      "id": "c5",
+      "roman": "V",
+      "title": "Dữ liệu và biểu đồ",
+      "description": "Đọc dữ liệu, chọn biểu đồ và đưa ra nhận xét có căn cứ.",
+      "kind": "statistics",
+      "units": [
+        "l18",
+        "l19",
+        "l20",
+        "c5-review-20",
+        "c5-end"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "l01",
+      "number": 1,
+      "chapterId": "c1",
+      "title": "Đơn thức",
+      "pages": [
+        5,
+        10
+      ],
+      "objectives": [
+        "Nhận biết, thu gọn, xác định hệ số, phần biến, bậc và đơn thức đồng dạng."
+      ],
+      "prerequisites": [
+        "Lũy thừa số mũ tự nhiên; quy tắc dấu."
+      ],
+      "theory": [
+        "Đơn thức là số, biến hoặc tích của số và biến. Thu gọn trước khi tìm bậc. Bậc là tổng số mũ; số 0 không có bậc. Chỉ cộng hệ số của các đơn thức đồng dạng."
+      ],
+      "skills": [
+        "monomial"
+      ],
+      "errors": [
+        "Cộng số mũ khi cộng đơn thức; cho rằng cùng bậc thì đồng dạng."
+      ],
+      "questions": [
+        "Hai hạng tử có đúng cùng phần biến không?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l02",
+      "number": 2,
+      "chapterId": "c1",
+      "title": "Đa thức",
+      "pages": [
+        11,
+        14
+      ],
+      "objectives": [
+        "Nhận diện hạng tử, thu gọn, tìm bậc và tính giá trị đa thức."
+      ],
+      "prerequisites": [
+        "Bài 1; thay giá trị của biến."
+      ],
+      "theory": [
+        "Đa thức là tổng các đơn thức. Thu gọn bằng cách cộng các hạng tử đồng dạng. Bậc là bậc cao nhất của hạng tử sau thu gọn. Đa thức 0 không có bậc."
+      ],
+      "skills": [
+        "polynomial"
+      ],
+      "errors": [
+        "Tìm bậc trước khi triệt tiêu hạng tử; bỏ dấu của hạng tử."
+      ],
+      "questions": [
+        "Sau khi nhóm các hạng tử đồng dạng, hạng tử nào còn lại?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l03",
+      "number": 3,
+      "chapterId": "c1",
+      "title": "Phép cộng và phép trừ đa thức",
+      "pages": [
+        15,
+        16
+      ],
+      "objectives": [
+        "Cộng, trừ đa thức và kiểm tra bằng phép toán ngược."
+      ],
+      "prerequisites": [
+        "Bài 1–2; quy tắc bỏ ngoặc."
+      ],
+      "theory": [
+        "Cộng hoặc trừ đa thức: nối bằng dấu thích hợp, bỏ ngoặc, nhóm hạng tử đồng dạng. Trừ một đa thức phải đổi dấu từng hạng tử."
+      ],
+      "skills": [
+        "add_subtract"
+      ],
+      "errors": [
+        "Chỉ đổi dấu hạng tử đầu của đa thức bị trừ."
+      ],
+      "questions": [
+        "Dấu trừ trước ngoặc tác động đến những hạng tử nào?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l04",
+      "number": 4,
+      "chapterId": "c1",
+      "title": "Phép nhân đa thức",
+      "pages": [
+        19,
+        21
+      ],
+      "objectives": [
+        "Nhân đơn thức, nhân đơn thức với đa thức và nhân hai đa thức."
+      ],
+      "prerequisites": [
+        "Bài 1–3; tính phân phối."
+      ],
+      "theory": [
+        "Nhân mỗi hạng tử với từng hạng tử của đa thức kia rồi thu gọn. Nhân hệ số, cộng số mũ của cùng biến."
+      ],
+      "skills": [
+        "multiply"
+      ],
+      "errors": [
+        "Nhân thiếu hạng tử chéo; sai dấu tích hai số âm."
+      ],
+      "questions": [
+        "Mỗi hạng tử của thừa số thứ nhất đã nhân đủ với thừa số thứ hai chưa?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l05",
+      "number": 5,
+      "chapterId": "c1",
+      "title": "Phép chia đa thức cho đơn thức",
+      "pages": [
+        22,
+        24
+      ],
+      "objectives": [
+        "Nhận biết chia hết và thực hiện phép chia đa thức cho đơn thức."
+      ],
+      "prerequisites": [
+        "Bài 1–4; chia lũy thừa cùng cơ số."
+      ],
+      "theory": [
+        "Chỉ xét phép chia hết; đơn thức chia khác 0. Mỗi hạng tử của đa thức phải chia hết cho đơn thức chia. Chia hệ số, trừ số mũ tương ứng rồi cộng các thương."
+      ],
+      "skills": [
+        "divide"
+      ],
+      "errors": [
+        "Chia chỉ hạng tử đầu; quên kiểm tra từng số mũ."
+      ],
+      "questions": [
+        "Mỗi hạng tử có chia hết cho đơn thức đã cho không?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l06",
+      "number": 6,
+      "chapterId": "c2",
+      "title": "Hiệu hai bình phương. Bình phương của một tổng hay một hiệu",
+      "pages": [
+        29,
+        33
+      ],
+      "objectives": [
+        "Nhận diện và vận dụng ba hằng đẳng thức bậc hai."
+      ],
+      "prerequisites": [
+        "Phép nhân đa thức."
+      ],
+      "theory": [
+        "$A^2-B^2=(A-B)(A+B)$; $(A+B)^2=A^2+2AB+B^2$; $(A-B)^2=A^2-2AB+B^2$. Đúng với mọi giá trị của các biểu thức."
+      ],
+      "skills": [
+        "square_identity"
+      ],
+      "errors": [
+        "Bỏ hạng tử 2AB; nhầm bình phương của hiệu với hiệu hai bình phương."
+      ],
+      "questions": [
+        "Trong biểu thức này, hai thành phần A và B là gì?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l07",
+      "number": 7,
+      "chapterId": "c2",
+      "title": "Lập phương của một tổng. Lập phương của một hiệu",
+      "pages": [
+        34,
+        36
+      ],
+      "objectives": [
+        "Khai triển và nhận dạng lập phương của tổng hoặc hiệu."
+      ],
+      "prerequisites": [
+        "Bài 4, 6."
+      ],
+      "theory": [
+        "$(A+B)^3=A^3+3A^2B+3AB^2+B^3$; $(A-B)^3=A^3-3A^2B+3AB^2-B^3$."
+      ],
+      "skills": [
+        "cube_identity"
+      ],
+      "errors": [
+        "Nhầm dấu hạng tử 3AB² trong lập phương hiệu; thiếu hệ số 3."
+      ],
+      "questions": [
+        "Em có thể kiểm tra các hệ số bằng phép nhân đa thức không?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l08",
+      "number": 8,
+      "chapterId": "c2",
+      "title": "Tổng và hiệu hai lập phương",
+      "pages": [
+        37,
+        39
+      ],
+      "objectives": [
+        "Phân tích và khai triển tổng, hiệu hai lập phương."
+      ],
+      "prerequisites": [
+        "Bài 4, 7."
+      ],
+      "theory": [
+        "$A^3+B^3=(A+B)(A^2-AB+B^2)$; $A^3-B^3=(A-B)(A^2+AB+B^2)$."
+      ],
+      "skills": [
+        "cube_factor"
+      ],
+      "errors": [
+        "Nhầm dấu của AB hoặc của B²."
+      ],
+      "questions": [
+        "Hai số hạng đã là lập phương của biểu thức nào?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l09",
+      "number": 9,
+      "chapterId": "c2",
+      "title": "Phân tích đa thức thành nhân tử",
+      "pages": [
+        42,
+        44
+      ],
+      "objectives": [
+        "Chọn nhân tử chung, hằng đẳng thức hoặc nhóm hạng tử; khai triển kiểm tra."
+      ],
+      "prerequisites": [
+        "Bài 3–8."
+      ],
+      "theory": [
+        "Biến đổi đa thức thành tích. Ưu tiên nhân tử chung; nhận dạng hằng đẳng thức; nhóm để xuất hiện nhân tử chung. Kiểm tra bằng khai triển ngược."
+      ],
+      "skills": [
+        "factorisation"
+      ],
+      "errors": [
+        "Chỉ viết thành tổng; quên nhân tử còn lại; đổi dấu sai khi nhóm."
+      ],
+      "questions": [
+        "Cách nhóm nào làm xuất hiện cùng một nhân tử?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l10",
+      "number": 10,
+      "chapterId": "c3",
+      "title": "Tứ giác",
+      "pages": [
+        48,
+        51
+      ],
+      "objectives": [
+        "Nhận biết tứ giác lồi, cạnh, góc, đường chéo; dùng tổng các góc."
+      ],
+      "prerequisites": [
+        "Góc và tổng góc tam giác."
+      ],
+      "theory": [
+        "Tứ giác có bốn cạnh, bốn đỉnh, hai đường chéo. Trong chương xét tứ giác lồi. Tổng bốn góc bằng $360^\\circ$."
+      ],
+      "skills": [
+        "quadrilateral"
+      ],
+      "errors": [
+        "Nhầm đường chéo với cạnh; dùng tổng 180° cho tứ giác."
+      ],
+      "questions": [
+        "Nếu chia tứ giác bằng một đường chéo thì được bao nhiêu tam giác?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l11",
+      "number": 11,
+      "chapterId": "c3",
+      "title": "Hình thang cân",
+      "pages": [
+        52,
+        55
+      ],
+      "objectives": [
+        "Nhận biết hình thang cân; dùng tính chất cạnh bên và đường chéo."
+      ],
+      "prerequisites": [
+        "Bài 10; góc tạo bởi hai đường song song."
+      ],
+      "theory": [
+        "Hình thang có hai cạnh đối song song. Hình thang cân có hai góc kề một đáy bằng nhau; hai cạnh bên bằng nhau và hai đường chéo bằng nhau. Hình thang có hai đường chéo bằng nhau là hình thang cân."
+      ],
+      "skills": [
+        "isosceles_trapezoid"
+      ],
+      "errors": [
+        "Tự kết luận hình thang cân chỉ từ hai cạnh bên bằng nhau mà không xét đủ điều kiện."
+      ],
+      "questions": [
+        "Đề đã cho điều kiện song song và hai góc kề cùng đáy chưa?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l12",
+      "number": 12,
+      "chapterId": "c3",
+      "title": "Hình bình hành",
+      "pages": [
+        57,
+        61
+      ],
+      "objectives": [
+        "Dùng định nghĩa, tính chất và dấu hiệu hình bình hành."
+      ],
+      "prerequisites": [
+        "Bài 10–11; tam giác bằng nhau."
+      ],
+      "theory": [
+        "Hai cặp cạnh đối song song. Các cạnh đối, góc đối bằng nhau; đường chéo cắt nhau tại trung điểm mỗi đường. Các dấu hiệu: hai cặp cạnh đối bằng nhau; một cặp cạnh đối vừa song song vừa bằng nhau; hai đường chéo cùng bị chia đôi. Tứ giác có hai cặp góc đối bằng nhau là hình bình hành."
+      ],
+      "skills": [
+        "parallelogram"
+      ],
+      "errors": [
+        "Một cặp cạnh đối bằng nhau chưa đủ; chỉ một đường chéo bị chia đôi chưa đủ."
+      ],
+      "questions": [
+        "Dấu hiệu em chọn yêu cầu những điều kiện nào?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l13",
+      "number": 13,
+      "chapterId": "c3",
+      "title": "Hình chữ nhật",
+      "pages": [
+        64,
+        66
+      ],
+      "objectives": [
+        "Dùng bốn góc vuông và dấu hiệu từ hình bình hành."
+      ],
+      "prerequisites": [
+        "Bài 12; tam giác vuông."
+      ],
+      "theory": [
+        "Hình chữ nhật là tứ giác có bốn góc vuông. Là hình bình hành có một góc vuông hoặc có hai đường chéo bằng nhau. Đường chéo bằng nhau và cắt nhau tại trung điểm. Trong tam giác vuông, đường trung tuyến ứng với cạnh huyền bằng nửa cạnh huyền; đảo lại cũng đúng."
+      ],
+      "skills": [
+        "rectangle"
+      ],
+      "errors": [
+        "Chỉ đường chéo bằng nhau chưa đủ cho tứ giác bất kì."
+      ],
+      "questions": [
+        "Em đã chứng minh được hình bình hành trước khi dùng dấu hiệu đường chéo chưa?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l14",
+      "number": 14,
+      "chapterId": "c3",
+      "title": "Hình thoi và hình vuông",
+      "pages": [
+        67,
+        72
+      ],
+      "objectives": [
+        "Nhận biết hình thoi, hình vuông; lựa chọn dấu hiệu đủ."
+      ],
+      "prerequisites": [
+        "Bài 12–13."
+      ],
+      "theory": [
+        "Hình thoi có bốn cạnh bằng nhau; đường chéo vuông góc và là phân giác. Hình bình hành có hai cạnh kề bằng nhau hoặc đường chéo vuông góc là hình thoi. Hình vuông có bốn góc vuông và bốn cạnh bằng nhau. Hình bình hành có một đường chéo là phân giác của một góc là hình thoi. Hình chữ nhật có hai cạnh kề bằng nhau, hoặc hai đường chéo vuông góc, hoặc một đường chéo là phân giác một góc thì là hình vuông. Hình thoi có một góc vuông hoặc hai đường chéo bằng nhau thì là hình vuông."
+      ],
+      "skills": [
+        "rhombus_square"
+      ],
+      "errors": [
+        "Đường chéo vuông góc chưa đủ cho tứ giác bất kì; hình thoi chưa chắc là hình vuông."
+      ],
+      "questions": [
+        "Cần thêm điều kiện nào để hình thoi trở thành hình vuông?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l15",
+      "number": 15,
+      "chapterId": "c4",
+      "title": "Định lí Thalès trong tam giác",
+      "pages": [
+        76,
+        80
+      ],
+      "objectives": [
+        "Nhận biết đoạn tương ứng; vận dụng định lí thuận, đảo để tính và chứng minh song song."
+      ],
+      "prerequisites": [
+        "Tỉ lệ thức; điểm thuộc đoạn; góc và song song."
+      ],
+      "theory": [
+        "Trong tam giác ABC, M thuộc AB, N thuộc AC và MN song song BC thì AM/AB=AN/AC và AM/MB=AN/NC. Đảo: các đoạn tương ứng tỉ lệ trên hai cạnh thì đường nối hai điểm song song cạnh thứ ba. Các độ dài phải cùng đơn vị."
+      ],
+      "skills": [
+        "thales"
+      ],
+      "errors": [
+        "Ghép sai đoạn; nhầm AB với MB; áp dụng khi chưa biết song song."
+      ],
+      "questions": [
+        "Hai tỉ số em chọn có cùng vị trí tương ứng không?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l16",
+      "number": 16,
+      "chapterId": "c4",
+      "title": "Đường trung bình của tam giác",
+      "pages": [
+        81,
+        83
+      ],
+      "objectives": [
+        "Nhận biết đường trung bình; chứng minh song song và tính độ dài."
+      ],
+      "prerequisites": [
+        "Trung điểm; Bài 15."
+      ],
+      "theory": [
+        "Đường nối trung điểm hai cạnh của tam giác song song cạnh thứ ba và bằng một nửa cạnh đó. Đường qua trung điểm một cạnh và song song cạnh thứ hai đi qua trung điểm cạnh còn lại."
+      ],
+      "skills": [
+        "triangle_midline"
+      ],
+      "errors": [
+        "Chỉ một trung điểm chưa đủ; bỏ điều kiện điểm thuộc cạnh."
+      ],
+      "questions": [
+        "Cả hai đầu đoạn đã được xác định là trung điểm chưa?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l17",
+      "number": 17,
+      "chapterId": "c4",
+      "title": "Tính chất đường phân giác của tam giác",
+      "pages": [
+        84,
+        86
+      ],
+      "objectives": [
+        "Viết đúng tỉ lệ đoạn trên cạnh đối diện và tính độ dài."
+      ],
+      "prerequisites": [
+        "Tỉ lệ thức; tổng đoạn; góc phân giác."
+      ],
+      "theory": [
+        "Trong tam giác ABC, AD là phân giác góc A, D thuộc BC thì BD/DC=AB/AC. Kết hợp BD+DC=BC nếu biết cả cạnh BC. Đảo: nếu D thuộc đoạn BC và BD/DC=AB/AC thì AD là phân giác góc A. Phân giác ngoài là kiến thức mở rộng, không dùng mặc định."
+      ],
+      "skills": [
+        "angle_bisector"
+      ],
+      "errors": [
+        "Đảo một tỉ số mà không đảo tỉ số còn lại; nhầm BD/BC với AB/AC."
+      ],
+      "questions": [
+        "BD và DC lần lượt kề với cạnh nào của góc A?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l18",
+      "number": 18,
+      "chapterId": "c5",
+      "title": "Thu thập và phân loại dữ liệu",
+      "pages": [
+        90,
+        92
+      ],
+      "objectives": [
+        "Chọn cách thu thập; phân loại dữ liệu định tính và số liệu rời rạc, liên tục."
+      ],
+      "prerequisites": [
+        "Bảng số liệu và đơn vị đo."
+      ],
+      "theory": [
+        "Thu thập trực tiếp (quan sát, đo, hỏi) hoặc từ nguồn có sẵn. Dữ liệu không là số có thể sắp thứ tự hoặc không. Số liệu gồm rời rạc (đếm) và liên tục (đo). Kiểm tra giá trị bất hợp lí theo ngữ cảnh."
+      ],
+      "skills": [
+        "data_classification"
+      ],
+      "errors": [
+        "Cho rằng mọi dữ liệu viết bằng số đều là số đo; nhầm đếm với đo."
+      ],
+      "questions": [
+        "Dữ liệu này thu được bằng đếm, đo hay ghi tên loại?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l19",
+      "number": 19,
+      "chapterId": "c5",
+      "title": "Biểu diễn dữ liệu bằng bảng, biểu đồ",
+      "pages": [
+        93,
+        98
+      ],
+      "objectives": [
+        "Chọn và chuyển đổi bảng, biểu đồ tranh, cột, cột kép, đoạn thẳng, quạt tròn."
+      ],
+      "prerequisites": [
+        "Bài 18; tỉ lệ phần trăm."
+      ],
+      "theory": [
+        "Cột để so sánh nhóm; cột kép so sánh hai tập; đoạn thẳng thể hiện thay đổi theo thời gian; quạt tròn thể hiện các phần trong một tổng. Ghi trục, đơn vị, chú giải. Góc quạt bằng tỉ lệ nhân 360°."
+      ],
+      "skills": [
+        "chart_representation"
+      ],
+      "errors": [
+        "Tổng phần trăm khác 100%; vẽ cột không theo tỉ lệ; thiếu đơn vị."
+      ],
+      "questions": [
+        "Mục tiêu là so sánh các nhóm, theo thời gian hay các phần của một tổng?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "l20",
+      "number": 20,
+      "chapterId": "c5",
+      "title": "Phân tích số liệu thống kê dựa vào biểu đồ",
+      "pages": [
+        99,
+        105
+      ],
+      "objectives": [
+        "Đọc, so sánh, nhận xét xu hướng và phát hiện biểu diễn dễ gây hiểu nhầm."
+      ],
+      "prerequisites": [
+        "Bài 18–19; phép tính phần trăm."
+      ],
+      "theory": [
+        "Nhận xét phải kèm số liệu, đơn vị và phạm vi khảo sát. Đọc thang chia trước khi so chiều cao cột. Phân biệt tăng bao nhiêu đơn vị và tăng bao nhiêu phần trăm. Không suy quan hệ nhân quả từ tương quan đơn thuần. Biểu đồ đoạn thẳng phải thể hiện đúng khoảng cách thời gian; không suy tốc độ từ độ dốc khi mốc cách đều trên hình nhưng không cách đều về thời gian."
+      ],
+      "skills": [
+        "data_analysis"
+      ],
+      "errors": [
+        "So chiều cao cột khi trục bị cắt; lấy sai mẫu số phần trăm; khái quát vượt dữ liệu."
+      ],
+      "questions": [
+        "Nhận xét của em được hỗ trợ bởi hai số liệu nào?",
+        "Em có thể tự kiểm tra kết quả bằng một cách khác không?"
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "c1-review-3",
+      "chapterId": "c1",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        17,
+        17
+      ],
+      "lessonIds": [
+        "l01",
+        "l02",
+        "l03"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Đơn thức",
+        "Đa thức",
+        "Phép cộng và phép trừ đa thức"
+      ],
+      "skills": [
+        "monomial",
+        "polynomial",
+        "add_subtract"
+      ],
+      "theory": [
+        "Đơn thức là số, biến hoặc tích của số và biến. Thu gọn trước khi tìm bậc. Bậc là tổng số mũ; số 0 không có bậc. Chỉ cộng hệ số của các đơn thức đồng dạng.",
+        "Đa thức là tổng các đơn thức. Thu gọn bằng cách cộng các hạng tử đồng dạng. Bậc là bậc cao nhất của hạng tử sau thu gọn. Đa thức 0 không có bậc.",
+        "Cộng hoặc trừ đa thức: nối bằng dấu thích hợp, bỏ ngoặc, nhóm hạng tử đồng dạng. Trừ một đa thức phải đổi dấu từng hạng tử."
+      ],
+      "errors": [
+        "Cộng số mũ khi cộng đơn thức; cho rằng cùng bậc thì đồng dạng.",
+        "Tìm bậc trước khi triệt tiêu hạng tử; bỏ dấu của hạng tử.",
+        "Chỉ đổi dấu hạng tử đầu của đa thức bị trừ."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c1-review-5",
+      "chapterId": "c1",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        25,
+        25
+      ],
+      "lessonIds": [
+        "l01",
+        "l02",
+        "l03",
+        "l04",
+        "l05"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Đơn thức",
+        "Đa thức",
+        "Phép cộng và phép trừ đa thức",
+        "Phép nhân đa thức",
+        "Phép chia đa thức cho đơn thức"
+      ],
+      "skills": [
+        "monomial",
+        "polynomial",
+        "add_subtract",
+        "multiply",
+        "divide"
+      ],
+      "theory": [
+        "Đơn thức là số, biến hoặc tích của số và biến. Thu gọn trước khi tìm bậc. Bậc là tổng số mũ; số 0 không có bậc. Chỉ cộng hệ số của các đơn thức đồng dạng.",
+        "Đa thức là tổng các đơn thức. Thu gọn bằng cách cộng các hạng tử đồng dạng. Bậc là bậc cao nhất của hạng tử sau thu gọn. Đa thức 0 không có bậc.",
+        "Cộng hoặc trừ đa thức: nối bằng dấu thích hợp, bỏ ngoặc, nhóm hạng tử đồng dạng. Trừ một đa thức phải đổi dấu từng hạng tử.",
+        "Nhân mỗi hạng tử với từng hạng tử của đa thức kia rồi thu gọn. Nhân hệ số, cộng số mũ của cùng biến.",
+        "Chỉ xét phép chia hết; đơn thức chia khác 0. Mỗi hạng tử của đa thức phải chia hết cho đơn thức chia. Chia hệ số, trừ số mũ tương ứng rồi cộng các thương."
+      ],
+      "errors": [
+        "Cộng số mũ khi cộng đơn thức; cho rằng cùng bậc thì đồng dạng.",
+        "Tìm bậc trước khi triệt tiêu hạng tử; bỏ dấu của hạng tử.",
+        "Chỉ đổi dấu hạng tử đầu của đa thức bị trừ.",
+        "Nhân thiếu hạng tử chéo; sai dấu tích hai số âm.",
+        "Chia chỉ hạng tử đầu; quên kiểm tra từng số mũ."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c1-end",
+      "chapterId": "c1",
+      "title": "Bài tập cuối chương",
+      "kind": "review",
+      "pages": [
+        27,
+        27
+      ],
+      "lessonIds": [
+        "l01",
+        "l02",
+        "l03",
+        "l04",
+        "l05"
+      ],
+      "objectives": [
+        "Tổng hợp kiến thức chương; kiểm tra điều kiện và cách giải."
+      ],
+      "prerequisites": [
+        "Đơn thức",
+        "Đa thức",
+        "Phép cộng và phép trừ đa thức",
+        "Phép nhân đa thức",
+        "Phép chia đa thức cho đơn thức"
+      ],
+      "skills": [
+        "monomial",
+        "polynomial",
+        "add_subtract",
+        "multiply",
+        "divide"
+      ],
+      "theory": [
+        "Đơn thức là số, biến hoặc tích của số và biến. Thu gọn trước khi tìm bậc. Bậc là tổng số mũ; số 0 không có bậc. Chỉ cộng hệ số của các đơn thức đồng dạng.",
+        "Đa thức là tổng các đơn thức. Thu gọn bằng cách cộng các hạng tử đồng dạng. Bậc là bậc cao nhất của hạng tử sau thu gọn. Đa thức 0 không có bậc.",
+        "Cộng hoặc trừ đa thức: nối bằng dấu thích hợp, bỏ ngoặc, nhóm hạng tử đồng dạng. Trừ một đa thức phải đổi dấu từng hạng tử.",
+        "Nhân mỗi hạng tử với từng hạng tử của đa thức kia rồi thu gọn. Nhân hệ số, cộng số mũ của cùng biến.",
+        "Chỉ xét phép chia hết; đơn thức chia khác 0. Mỗi hạng tử của đa thức phải chia hết cho đơn thức chia. Chia hệ số, trừ số mũ tương ứng rồi cộng các thương."
+      ],
+      "errors": [
+        "Cộng số mũ khi cộng đơn thức; cho rằng cùng bậc thì đồng dạng.",
+        "Tìm bậc trước khi triệt tiêu hạng tử; bỏ dấu của hạng tử.",
+        "Chỉ đổi dấu hạng tử đầu của đa thức bị trừ.",
+        "Nhân thiếu hạng tử chéo; sai dấu tích hai số âm.",
+        "Chia chỉ hạng tử đầu; quên kiểm tra từng số mũ."
+      ],
+      "questions": [
+        "Bài này kết nối những kỹ năng nào của chương?"
+      ]
+    },
+    {
+      "id": "c2-review-8",
+      "chapterId": "c2",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        40,
+        40
+      ],
+      "lessonIds": [
+        "l06",
+        "l07",
+        "l08"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Hiệu hai bình phương. Bình phương của một tổng hay một hiệu",
+        "Lập phương của một tổng. Lập phương của một hiệu",
+        "Tổng và hiệu hai lập phương"
+      ],
+      "skills": [
+        "square_identity",
+        "cube_identity",
+        "cube_factor"
+      ],
+      "theory": [
+        "$A^2-B^2=(A-B)(A+B)$; $(A+B)^2=A^2+2AB+B^2$; $(A-B)^2=A^2-2AB+B^2$. Đúng với mọi giá trị của các biểu thức.",
+        "$(A+B)^3=A^3+3A^2B+3AB^2+B^3$; $(A-B)^3=A^3-3A^2B+3AB^2-B^3$.",
+        "$A^3+B^3=(A+B)(A^2-AB+B^2)$; $A^3-B^3=(A-B)(A^2+AB+B^2)$."
+      ],
+      "errors": [
+        "Bỏ hạng tử 2AB; nhầm bình phương của hiệu với hiệu hai bình phương.",
+        "Nhầm dấu hạng tử 3AB² trong lập phương hiệu; thiếu hệ số 3.",
+        "Nhầm dấu của AB hoặc của B²."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c2-review-9",
+      "chapterId": "c2",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        45,
+        45
+      ],
+      "lessonIds": [
+        "l06",
+        "l07",
+        "l08",
+        "l09"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Hiệu hai bình phương. Bình phương của một tổng hay một hiệu",
+        "Lập phương của một tổng. Lập phương của một hiệu",
+        "Tổng và hiệu hai lập phương",
+        "Phân tích đa thức thành nhân tử"
+      ],
+      "skills": [
+        "square_identity",
+        "cube_identity",
+        "cube_factor",
+        "factorisation"
+      ],
+      "theory": [
+        "$A^2-B^2=(A-B)(A+B)$; $(A+B)^2=A^2+2AB+B^2$; $(A-B)^2=A^2-2AB+B^2$. Đúng với mọi giá trị của các biểu thức.",
+        "$(A+B)^3=A^3+3A^2B+3AB^2+B^3$; $(A-B)^3=A^3-3A^2B+3AB^2-B^3$.",
+        "$A^3+B^3=(A+B)(A^2-AB+B^2)$; $A^3-B^3=(A-B)(A^2+AB+B^2)$.",
+        "Biến đổi đa thức thành tích. Ưu tiên nhân tử chung; nhận dạng hằng đẳng thức; nhóm để xuất hiện nhân tử chung. Kiểm tra bằng khai triển ngược."
+      ],
+      "errors": [
+        "Bỏ hạng tử 2AB; nhầm bình phương của hiệu với hiệu hai bình phương.",
+        "Nhầm dấu hạng tử 3AB² trong lập phương hiệu; thiếu hệ số 3.",
+        "Nhầm dấu của AB hoặc của B².",
+        "Chỉ viết thành tổng; quên nhân tử còn lại; đổi dấu sai khi nhóm."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c2-end",
+      "chapterId": "c2",
+      "title": "Bài tập cuối chương",
+      "kind": "review",
+      "pages": [
+        47,
+        47
+      ],
+      "lessonIds": [
+        "l06",
+        "l07",
+        "l08",
+        "l09"
+      ],
+      "objectives": [
+        "Tổng hợp kiến thức chương; kiểm tra điều kiện và cách giải."
+      ],
+      "prerequisites": [
+        "Hiệu hai bình phương. Bình phương của một tổng hay một hiệu",
+        "Lập phương của một tổng. Lập phương của một hiệu",
+        "Tổng và hiệu hai lập phương",
+        "Phân tích đa thức thành nhân tử"
+      ],
+      "skills": [
+        "square_identity",
+        "cube_identity",
+        "cube_factor",
+        "factorisation"
+      ],
+      "theory": [
+        "$A^2-B^2=(A-B)(A+B)$; $(A+B)^2=A^2+2AB+B^2$; $(A-B)^2=A^2-2AB+B^2$. Đúng với mọi giá trị của các biểu thức.",
+        "$(A+B)^3=A^3+3A^2B+3AB^2+B^3$; $(A-B)^3=A^3-3A^2B+3AB^2-B^3$.",
+        "$A^3+B^3=(A+B)(A^2-AB+B^2)$; $A^3-B^3=(A-B)(A^2+AB+B^2)$.",
+        "Biến đổi đa thức thành tích. Ưu tiên nhân tử chung; nhận dạng hằng đẳng thức; nhóm để xuất hiện nhân tử chung. Kiểm tra bằng khai triển ngược."
+      ],
+      "errors": [
+        "Bỏ hạng tử 2AB; nhầm bình phương của hiệu với hiệu hai bình phương.",
+        "Nhầm dấu hạng tử 3AB² trong lập phương hiệu; thiếu hệ số 3.",
+        "Nhầm dấu của AB hoặc của B².",
+        "Chỉ viết thành tổng; quên nhân tử còn lại; đổi dấu sai khi nhóm."
+      ],
+      "questions": [
+        "Bài này kết nối những kỹ năng nào của chương?"
+      ]
+    },
+    {
+      "id": "c3-review-11",
+      "chapterId": "c3",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        56,
+        56
+      ],
+      "lessonIds": [
+        "l10",
+        "l11"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Tứ giác",
+        "Hình thang cân"
+      ],
+      "skills": [
+        "quadrilateral",
+        "isosceles_trapezoid"
+      ],
+      "theory": [
+        "Tứ giác có bốn cạnh, bốn đỉnh, hai đường chéo. Trong chương xét tứ giác lồi. Tổng bốn góc bằng $360^\\circ$.",
+        "Hình thang có hai cạnh đối song song. Hình thang cân có hai góc kề một đáy bằng nhau; hai cạnh bên bằng nhau và hai đường chéo bằng nhau. Hình thang có hai đường chéo bằng nhau là hình thang cân."
+      ],
+      "errors": [
+        "Nhầm đường chéo với cạnh; dùng tổng 180° cho tứ giác.",
+        "Tự kết luận hình thang cân chỉ từ hai cạnh bên bằng nhau mà không xét đủ điều kiện."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c3-review-12",
+      "chapterId": "c3",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        62,
+        62
+      ],
+      "lessonIds": [
+        "l10",
+        "l11",
+        "l12"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Tứ giác",
+        "Hình thang cân",
+        "Hình bình hành"
+      ],
+      "skills": [
+        "quadrilateral",
+        "isosceles_trapezoid",
+        "parallelogram"
+      ],
+      "theory": [
+        "Tứ giác có bốn cạnh, bốn đỉnh, hai đường chéo. Trong chương xét tứ giác lồi. Tổng bốn góc bằng $360^\\circ$.",
+        "Hình thang có hai cạnh đối song song. Hình thang cân có hai góc kề một đáy bằng nhau; hai cạnh bên bằng nhau và hai đường chéo bằng nhau. Hình thang có hai đường chéo bằng nhau là hình thang cân.",
+        "Hai cặp cạnh đối song song. Các cạnh đối, góc đối bằng nhau; đường chéo cắt nhau tại trung điểm mỗi đường. Các dấu hiệu: hai cặp cạnh đối bằng nhau; một cặp cạnh đối vừa song song vừa bằng nhau; hai đường chéo cùng bị chia đôi. Tứ giác có hai cặp góc đối bằng nhau là hình bình hành."
+      ],
+      "errors": [
+        "Nhầm đường chéo với cạnh; dùng tổng 180° cho tứ giác.",
+        "Tự kết luận hình thang cân chỉ từ hai cạnh bên bằng nhau mà không xét đủ điều kiện.",
+        "Một cặp cạnh đối bằng nhau chưa đủ; chỉ một đường chéo bị chia đôi chưa đủ."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c3-review-14",
+      "chapterId": "c3",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        73,
+        73
+      ],
+      "lessonIds": [
+        "l10",
+        "l11",
+        "l12",
+        "l13",
+        "l14"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Tứ giác",
+        "Hình thang cân",
+        "Hình bình hành",
+        "Hình chữ nhật",
+        "Hình thoi và hình vuông"
+      ],
+      "skills": [
+        "quadrilateral",
+        "isosceles_trapezoid",
+        "parallelogram",
+        "rectangle",
+        "rhombus_square"
+      ],
+      "theory": [
+        "Tứ giác có bốn cạnh, bốn đỉnh, hai đường chéo. Trong chương xét tứ giác lồi. Tổng bốn góc bằng $360^\\circ$.",
+        "Hình thang có hai cạnh đối song song. Hình thang cân có hai góc kề một đáy bằng nhau; hai cạnh bên bằng nhau và hai đường chéo bằng nhau. Hình thang có hai đường chéo bằng nhau là hình thang cân.",
+        "Hai cặp cạnh đối song song. Các cạnh đối, góc đối bằng nhau; đường chéo cắt nhau tại trung điểm mỗi đường. Các dấu hiệu: hai cặp cạnh đối bằng nhau; một cặp cạnh đối vừa song song vừa bằng nhau; hai đường chéo cùng bị chia đôi. Tứ giác có hai cặp góc đối bằng nhau là hình bình hành.",
+        "Hình chữ nhật là tứ giác có bốn góc vuông. Là hình bình hành có một góc vuông hoặc có hai đường chéo bằng nhau. Đường chéo bằng nhau và cắt nhau tại trung điểm. Trong tam giác vuông, đường trung tuyến ứng với cạnh huyền bằng nửa cạnh huyền; đảo lại cũng đúng.",
+        "Hình thoi có bốn cạnh bằng nhau; đường chéo vuông góc và là phân giác. Hình bình hành có hai cạnh kề bằng nhau hoặc đường chéo vuông góc là hình thoi. Hình vuông có bốn góc vuông và bốn cạnh bằng nhau. Hình bình hành có một đường chéo là phân giác của một góc là hình thoi. Hình chữ nhật có hai cạnh kề bằng nhau, hoặc hai đường chéo vuông góc, hoặc một đường chéo là phân giác một góc thì là hình vuông. Hình thoi có một góc vuông hoặc hai đường chéo bằng nhau thì là hình vuông."
+      ],
+      "errors": [
+        "Nhầm đường chéo với cạnh; dùng tổng 180° cho tứ giác.",
+        "Tự kết luận hình thang cân chỉ từ hai cạnh bên bằng nhau mà không xét đủ điều kiện.",
+        "Một cặp cạnh đối bằng nhau chưa đủ; chỉ một đường chéo bị chia đôi chưa đủ.",
+        "Chỉ đường chéo bằng nhau chưa đủ cho tứ giác bất kì.",
+        "Đường chéo vuông góc chưa đủ cho tứ giác bất kì; hình thoi chưa chắc là hình vuông."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c3-end",
+      "chapterId": "c3",
+      "title": "Bài tập cuối chương",
+      "kind": "review",
+      "pages": [
+        74,
+        74
+      ],
+      "lessonIds": [
+        "l10",
+        "l11",
+        "l12",
+        "l13",
+        "l14"
+      ],
+      "objectives": [
+        "Tổng hợp kiến thức chương; kiểm tra điều kiện và cách giải."
+      ],
+      "prerequisites": [
+        "Tứ giác",
+        "Hình thang cân",
+        "Hình bình hành",
+        "Hình chữ nhật",
+        "Hình thoi và hình vuông"
+      ],
+      "skills": [
+        "quadrilateral",
+        "isosceles_trapezoid",
+        "parallelogram",
+        "rectangle",
+        "rhombus_square"
+      ],
+      "theory": [
+        "Tứ giác có bốn cạnh, bốn đỉnh, hai đường chéo. Trong chương xét tứ giác lồi. Tổng bốn góc bằng $360^\\circ$.",
+        "Hình thang có hai cạnh đối song song. Hình thang cân có hai góc kề một đáy bằng nhau; hai cạnh bên bằng nhau và hai đường chéo bằng nhau. Hình thang có hai đường chéo bằng nhau là hình thang cân.",
+        "Hai cặp cạnh đối song song. Các cạnh đối, góc đối bằng nhau; đường chéo cắt nhau tại trung điểm mỗi đường. Các dấu hiệu: hai cặp cạnh đối bằng nhau; một cặp cạnh đối vừa song song vừa bằng nhau; hai đường chéo cùng bị chia đôi. Tứ giác có hai cặp góc đối bằng nhau là hình bình hành.",
+        "Hình chữ nhật là tứ giác có bốn góc vuông. Là hình bình hành có một góc vuông hoặc có hai đường chéo bằng nhau. Đường chéo bằng nhau và cắt nhau tại trung điểm. Trong tam giác vuông, đường trung tuyến ứng với cạnh huyền bằng nửa cạnh huyền; đảo lại cũng đúng.",
+        "Hình thoi có bốn cạnh bằng nhau; đường chéo vuông góc và là phân giác. Hình bình hành có hai cạnh kề bằng nhau hoặc đường chéo vuông góc là hình thoi. Hình vuông có bốn góc vuông và bốn cạnh bằng nhau. Hình bình hành có một đường chéo là phân giác của một góc là hình thoi. Hình chữ nhật có hai cạnh kề bằng nhau, hoặc hai đường chéo vuông góc, hoặc một đường chéo là phân giác một góc thì là hình vuông. Hình thoi có một góc vuông hoặc hai đường chéo bằng nhau thì là hình vuông."
+      ],
+      "errors": [
+        "Nhầm đường chéo với cạnh; dùng tổng 180° cho tứ giác.",
+        "Tự kết luận hình thang cân chỉ từ hai cạnh bên bằng nhau mà không xét đủ điều kiện.",
+        "Một cặp cạnh đối bằng nhau chưa đủ; chỉ một đường chéo bị chia đôi chưa đủ.",
+        "Chỉ đường chéo bằng nhau chưa đủ cho tứ giác bất kì.",
+        "Đường chéo vuông góc chưa đủ cho tứ giác bất kì; hình thoi chưa chắc là hình vuông."
+      ],
+      "questions": [
+        "Bài này kết nối những kỹ năng nào của chương?"
+      ]
+    },
+    {
+      "id": "c4-review-17",
+      "chapterId": "c4",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        87,
+        87
+      ],
+      "lessonIds": [
+        "l15",
+        "l16",
+        "l17"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Định lí Thalès trong tam giác",
+        "Đường trung bình của tam giác",
+        "Tính chất đường phân giác của tam giác"
+      ],
+      "skills": [
+        "thales",
+        "triangle_midline",
+        "angle_bisector"
+      ],
+      "theory": [
+        "Trong tam giác ABC, M thuộc AB, N thuộc AC và MN song song BC thì AM/AB=AN/AC và AM/MB=AN/NC. Đảo: các đoạn tương ứng tỉ lệ trên hai cạnh thì đường nối hai điểm song song cạnh thứ ba. Các độ dài phải cùng đơn vị.",
+        "Đường nối trung điểm hai cạnh của tam giác song song cạnh thứ ba và bằng một nửa cạnh đó. Đường qua trung điểm một cạnh và song song cạnh thứ hai đi qua trung điểm cạnh còn lại.",
+        "Trong tam giác ABC, AD là phân giác góc A, D thuộc BC thì BD/DC=AB/AC. Kết hợp BD+DC=BC nếu biết cả cạnh BC. Đảo: nếu D thuộc đoạn BC và BD/DC=AB/AC thì AD là phân giác góc A. Phân giác ngoài là kiến thức mở rộng, không dùng mặc định."
+      ],
+      "errors": [
+        "Ghép sai đoạn; nhầm AB với MB; áp dụng khi chưa biết song song.",
+        "Chỉ một trung điểm chưa đủ; bỏ điều kiện điểm thuộc cạnh.",
+        "Đảo một tỉ số mà không đảo tỉ số còn lại; nhầm BD/BC với AB/AC."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c4-end",
+      "chapterId": "c4",
+      "title": "Bài tập cuối chương",
+      "kind": "review",
+      "pages": [
+        89,
+        89
+      ],
+      "lessonIds": [
+        "l15",
+        "l16",
+        "l17"
+      ],
+      "objectives": [
+        "Tổng hợp kiến thức chương; kiểm tra điều kiện và cách giải."
+      ],
+      "prerequisites": [
+        "Định lí Thalès trong tam giác",
+        "Đường trung bình của tam giác",
+        "Tính chất đường phân giác của tam giác"
+      ],
+      "skills": [
+        "thales",
+        "triangle_midline",
+        "angle_bisector"
+      ],
+      "theory": [
+        "Trong tam giác ABC, M thuộc AB, N thuộc AC và MN song song BC thì AM/AB=AN/AC và AM/MB=AN/NC. Đảo: các đoạn tương ứng tỉ lệ trên hai cạnh thì đường nối hai điểm song song cạnh thứ ba. Các độ dài phải cùng đơn vị.",
+        "Đường nối trung điểm hai cạnh của tam giác song song cạnh thứ ba và bằng một nửa cạnh đó. Đường qua trung điểm một cạnh và song song cạnh thứ hai đi qua trung điểm cạnh còn lại.",
+        "Trong tam giác ABC, AD là phân giác góc A, D thuộc BC thì BD/DC=AB/AC. Kết hợp BD+DC=BC nếu biết cả cạnh BC. Đảo: nếu D thuộc đoạn BC và BD/DC=AB/AC thì AD là phân giác góc A. Phân giác ngoài là kiến thức mở rộng, không dùng mặc định."
+      ],
+      "errors": [
+        "Ghép sai đoạn; nhầm AB với MB; áp dụng khi chưa biết song song.",
+        "Chỉ một trung điểm chưa đủ; bỏ điều kiện điểm thuộc cạnh.",
+        "Đảo một tỉ số mà không đảo tỉ số còn lại; nhầm BD/BC với AB/AC."
+      ],
+      "questions": [
+        "Bài này kết nối những kỹ năng nào của chương?"
+      ]
+    },
+    {
+      "id": "c5-review-20",
+      "chapterId": "c5",
+      "title": "Luyện tập chung",
+      "kind": "review",
+      "pages": [
+        106,
+        106
+      ],
+      "lessonIds": [
+        "l18",
+        "l19",
+        "l20"
+      ],
+      "objectives": [
+        "Kết nối các kiến thức đã học và tự kiểm tra."
+      ],
+      "prerequisites": [
+        "Thu thập và phân loại dữ liệu",
+        "Biểu diễn dữ liệu bằng bảng, biểu đồ",
+        "Phân tích số liệu thống kê dựa vào biểu đồ"
+      ],
+      "skills": [
+        "data_classification",
+        "chart_representation",
+        "data_analysis"
+      ],
+      "theory": [
+        "Thu thập trực tiếp (quan sát, đo, hỏi) hoặc từ nguồn có sẵn. Dữ liệu không là số có thể sắp thứ tự hoặc không. Số liệu gồm rời rạc (đếm) và liên tục (đo). Kiểm tra giá trị bất hợp lí theo ngữ cảnh.",
+        "Cột để so sánh nhóm; cột kép so sánh hai tập; đoạn thẳng thể hiện thay đổi theo thời gian; quạt tròn thể hiện các phần trong một tổng. Ghi trục, đơn vị, chú giải. Góc quạt bằng tỉ lệ nhân 360°.",
+        "Nhận xét phải kèm số liệu, đơn vị và phạm vi khảo sát. Đọc thang chia trước khi so chiều cao cột. Phân biệt tăng bao nhiêu đơn vị và tăng bao nhiêu phần trăm. Không suy quan hệ nhân quả từ tương quan đơn thuần. Biểu đồ đoạn thẳng phải thể hiện đúng khoảng cách thời gian; không suy tốc độ từ độ dốc khi mốc cách đều trên hình nhưng không cách đều về thời gian."
+      ],
+      "errors": [
+        "Cho rằng mọi dữ liệu viết bằng số đều là số đo; nhầm đếm với đo.",
+        "Tổng phần trăm khác 100%; vẽ cột không theo tỉ lệ; thiếu đơn vị.",
+        "So chiều cao cột khi trục bị cắt; lấy sai mẫu số phần trăm; khái quát vượt dữ liệu."
+      ],
+      "questions": [
+        "Em sẽ chọn kiến thức nào để bắt đầu?"
+      ]
+    },
+    {
+      "id": "c5-end",
+      "chapterId": "c5",
+      "title": "Bài tập cuối chương",
+      "kind": "review",
+      "pages": [
+        109,
+        109
+      ],
+      "lessonIds": [
+        "l18",
+        "l19",
+        "l20"
+      ],
+      "objectives": [
+        "Tổng hợp kiến thức chương; kiểm tra điều kiện và cách giải."
+      ],
+      "prerequisites": [
+        "Thu thập và phân loại dữ liệu",
+        "Biểu diễn dữ liệu bằng bảng, biểu đồ",
+        "Phân tích số liệu thống kê dựa vào biểu đồ"
+      ],
+      "skills": [
+        "data_classification",
+        "chart_representation",
+        "data_analysis"
+      ],
+      "theory": [
+        "Thu thập trực tiếp (quan sát, đo, hỏi) hoặc từ nguồn có sẵn. Dữ liệu không là số có thể sắp thứ tự hoặc không. Số liệu gồm rời rạc (đếm) và liên tục (đo). Kiểm tra giá trị bất hợp lí theo ngữ cảnh.",
+        "Cột để so sánh nhóm; cột kép so sánh hai tập; đoạn thẳng thể hiện thay đổi theo thời gian; quạt tròn thể hiện các phần trong một tổng. Ghi trục, đơn vị, chú giải. Góc quạt bằng tỉ lệ nhân 360°.",
+        "Nhận xét phải kèm số liệu, đơn vị và phạm vi khảo sát. Đọc thang chia trước khi so chiều cao cột. Phân biệt tăng bao nhiêu đơn vị và tăng bao nhiêu phần trăm. Không suy quan hệ nhân quả từ tương quan đơn thuần. Biểu đồ đoạn thẳng phải thể hiện đúng khoảng cách thời gian; không suy tốc độ từ độ dốc khi mốc cách đều trên hình nhưng không cách đều về thời gian."
+      ],
+      "errors": [
+        "Cho rằng mọi dữ liệu viết bằng số đều là số đo; nhầm đếm với đo.",
+        "Tổng phần trăm khác 100%; vẽ cột không theo tỉ lệ; thiếu đơn vị.",
+        "So chiều cao cột khi trục bị cắt; lấy sai mẫu số phần trăm; khái quát vượt dữ liệu."
+      ],
+      "questions": [
+        "Bài này kết nối những kỹ năng nào của chương?"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "l01-e1",
+      "chapterId": "c1",
+      "lessonId": "l01",
+      "skillId": "monomial",
+      "skills": [
+        "monomial"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận biết, thu gọn, xác định hệ số, phần biến, bậc và đơn thức đồng dạng.",
+      "problem": "Thu gọn đơn thức $2x^2y\\cdot(-3xy^2)$, rồi nêu hệ số và bậc.",
+      "answer": "-6x^3y^3; hệ số -6; bậc 6.",
+      "rubric": "Nhân hệ số; cộng số mũ của cùng biến; cộng số mũ để tìm bậc.",
+      "hints": [
+        "Hai hạng tử có đúng cùng phần biến không?",
+        "Nhân hệ số; cộng số mũ của cùng biến; cộng số mũ để tìm bậc — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "2x^2y*(-3xy^2)",
+        "right": "-6x^3y^3"
+      }
+    },
+    {
+      "id": "l01-e2",
+      "chapterId": "c1",
+      "lessonId": "l01",
+      "skillId": "monomial",
+      "skills": [
+        "monomial"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận biết, thu gọn, xác định hệ số, phần biến, bậc và đơn thức đồng dạng.",
+      "problem": "Tính $4x^2y-7x^2y+2x^2y$.",
+      "answer": "-x^2y",
+      "rubric": "Các hạng tử đồng dạng; hệ số 4-7+2=-1.",
+      "hints": [
+        "Hai hạng tử có đúng cùng phần biến không?",
+        "Các hạng tử đồng dạng; hệ số 4-7+2=-1 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "4x^2y-7x^2y+2x^2y",
+        "right": "-x^2y"
+      }
+    },
+    {
+      "id": "l01-e3",
+      "chapterId": "c1",
+      "lessonId": "l01",
+      "skillId": "monomial",
+      "skills": [
+        "monomial"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận biết, thu gọn, xác định hệ số, phần biến, bậc và đơn thức đồng dạng.",
+      "problem": "Đơn thức $-2x^2y$ có giá trị bao nhiêu tại $x=-2,y=3$?",
+      "answer": "-24",
+      "rubric": "Thay có ngoặc: -2×(-2)^2×3.",
+      "hints": [
+        "Hai hạng tử có đúng cùng phần biến không?",
+        "Thay có ngoặc: -2×(-2)^2×3 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "-2*(-2)^2*3",
+        "right": "-24"
+      }
+    },
+    {
+      "id": "l01-e4",
+      "chapterId": "c1",
+      "lessonId": "l01",
+      "skillId": "monomial",
+      "skills": [
+        "monomial"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận biết, thu gọn, xác định hệ số, phần biến, bậc và đơn thức đồng dạng.",
+      "problem": "Bạn An nói $x^2y$ và $xy^2$ đồng dạng vì cùng bậc 3. Em nhận xét.",
+      "answer": "Sai; phần biến khác nhau.",
+      "rubric": "Cùng bậc là điều kiện chưa đủ; so số mũ của từng biến.",
+      "hints": [
+        "Hai hạng tử có đúng cùng phần biến không?",
+        "Cùng bậc là điều kiện chưa đủ; so số mũ của từng biến — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l01-e5",
+      "chapterId": "c1",
+      "lessonId": "l01",
+      "skillId": "monomial",
+      "skills": [
+        "monomial"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận biết, thu gọn, xác định hệ số, phần biến, bậc và đơn thức đồng dạng.",
+      "problem": "Một hình chữ nhật có chiều dài $3x$ m và chiều rộng $2y$ m, với $x,y>0$. Viết đơn thức diện tích.",
+      "answer": "6xy m²",
+      "rubric": "Diện tích là tích chiều dài và chiều rộng.",
+      "hints": [
+        "Hai hạng tử có đúng cùng phần biến không?",
+        "Diện tích là tích chiều dài và chiều rộng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "3x*2y",
+        "right": "6xy"
+      }
+    },
+    {
+      "id": "l02-e1",
+      "chapterId": "c1",
+      "lessonId": "l02",
+      "skillId": "polynomial",
+      "skills": [
+        "polynomial"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận diện hạng tử, thu gọn, tìm bậc và tính giá trị đa thức.",
+      "problem": "Thu gọn $P=2x^2+3xy-x^2-xy+4$ rồi tìm bậc.",
+      "answer": "x^2+2xy+4; bậc 2.",
+      "rubric": "Nhóm hạng tử cùng phần biến trước khi tìm bậc.",
+      "hints": [
+        "Sau khi nhóm các hạng tử đồng dạng, hạng tử nào còn lại?",
+        "Nhóm hạng tử cùng phần biến trước khi tìm bậc — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "2x^2+3xy-x^2-xy+4",
+        "right": "x^2+2xy+4"
+      }
+    },
+    {
+      "id": "l02-e2",
+      "chapterId": "c1",
+      "lessonId": "l02",
+      "skillId": "polynomial",
+      "skills": [
+        "polynomial"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận diện hạng tử, thu gọn, tìm bậc và tính giá trị đa thức.",
+      "problem": "Tìm bậc của $P=x^5-x^5+2xy-3$.",
+      "answer": "2",
+      "rubric": "Hai hạng tử bậc 5 triệt tiêu.",
+      "hints": [
+        "Sau khi nhóm các hạng tử đồng dạng, hạng tử nào còn lại?",
+        "Hai hạng tử bậc 5 triệt tiêu — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "x^5-x^5+2xy-3",
+        "right": "2xy-3"
+      }
+    },
+    {
+      "id": "l02-e3",
+      "chapterId": "c1",
+      "lessonId": "l02",
+      "skillId": "polynomial",
+      "skills": [
+        "polynomial"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận diện hạng tử, thu gọn, tìm bậc và tính giá trị đa thức.",
+      "problem": "Tính $P=x^2-2xy+y^2$ tại $x=3,y=1$.",
+      "answer": "4",
+      "rubric": "Thay số đúng dấu; thực hiện lũy thừa trước.",
+      "hints": [
+        "Sau khi nhóm các hạng tử đồng dạng, hạng tử nào còn lại?",
+        "Thay số đúng dấu; thực hiện lũy thừa trước — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "3^2-2*3*1+1^2",
+        "right": "4"
+      }
+    },
+    {
+      "id": "l02-e4",
+      "chapterId": "c1",
+      "lessonId": "l02",
+      "skillId": "polynomial",
+      "skills": [
+        "polynomial"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận diện hạng tử, thu gọn, tìm bậc và tính giá trị đa thức.",
+      "problem": "Có thể gọi $x+1/x$ là đa thức theo biến x không? Vì sao?",
+      "answer": "Không",
+      "rubric": "Biến ở mẫu không phải lũy thừa với số mũ nguyên không âm.",
+      "hints": [
+        "Sau khi nhóm các hạng tử đồng dạng, hạng tử nào còn lại?",
+        "Biến ở mẫu không phải lũy thừa với số mũ nguyên không âm — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l02-e5",
+      "chapterId": "c1",
+      "lessonId": "l02",
+      "skillId": "polynomial",
+      "skills": [
+        "polynomial"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận diện hạng tử, thu gọn, tìm bậc và tính giá trị đa thức.",
+      "problem": "Một quyển vở giá x nghìn đồng, một bút giá y nghìn đồng. Viết đa thức số tiền mua 5 quyển vở và 3 bút.",
+      "answer": "5x+3y nghìn đồng",
+      "rubric": "Mỗi loại dùng số lượng nhân đơn giá rồi cộng.",
+      "hints": [
+        "Sau khi nhóm các hạng tử đồng dạng, hạng tử nào còn lại?",
+        "Mỗi loại dùng số lượng nhân đơn giá rồi cộng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "5*x+3*y",
+        "right": "5x+3y"
+      }
+    },
+    {
+      "id": "l03-e1",
+      "chapterId": "c1",
+      "lessonId": "l03",
+      "skillId": "add_subtract",
+      "skills": [
+        "add_subtract"
+      ],
+      "level": "Nhận biết",
+      "objective": "Cộng, trừ đa thức và kiểm tra bằng phép toán ngược.",
+      "problem": "Tính $(2x^2+3x-1)+(x^2-x+4)$.",
+      "answer": "3x^2+2x+3",
+      "rubric": "Cộng hệ số các hạng tử cùng bậc.",
+      "hints": [
+        "Dấu trừ trước ngoặc tác động đến những hạng tử nào?",
+        "Cộng hệ số các hạng tử cùng bậc — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(2x^2+3x-1)+(x^2-x+4)",
+        "right": "3x^2+2x+3"
+      }
+    },
+    {
+      "id": "l03-e2",
+      "chapterId": "c1",
+      "lessonId": "l03",
+      "skillId": "add_subtract",
+      "skills": [
+        "add_subtract"
+      ],
+      "level": "Thực hành",
+      "objective": "Cộng, trừ đa thức và kiểm tra bằng phép toán ngược.",
+      "problem": "Tính $(3x^2-2xy+y^2)-(x^2+xy-2y^2)$.",
+      "answer": "2x^2-3xy+3y^2",
+      "rubric": "Đổi dấu cả ba hạng tử trong ngoặc bị trừ.",
+      "hints": [
+        "Dấu trừ trước ngoặc tác động đến những hạng tử nào?",
+        "Đổi dấu cả ba hạng tử trong ngoặc bị trừ — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(3x^2-2xy+y^2)-(x^2+xy-2y^2)",
+        "right": "2x^2-3xy+3y^2"
+      }
+    },
+    {
+      "id": "l03-e3",
+      "chapterId": "c1",
+      "lessonId": "l03",
+      "skillId": "add_subtract",
+      "skills": [
+        "add_subtract"
+      ],
+      "level": "Vận dụng",
+      "objective": "Cộng, trừ đa thức và kiểm tra bằng phép toán ngược.",
+      "problem": "Tìm đa thức Q biết $Q+(x^2-y)=3x^2+2y$.",
+      "answer": "2x^2+3y",
+      "rubric": "Lấy tổng trừ số hạng đã biết.",
+      "hints": [
+        "Dấu trừ trước ngoặc tác động đến những hạng tử nào?",
+        "Lấy tổng trừ số hạng đã biết — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(3x^2+2y)-(x^2-y)",
+        "right": "2x^2+3y"
+      }
+    },
+    {
+      "id": "l03-e4",
+      "chapterId": "c1",
+      "lessonId": "l03",
+      "skillId": "add_subtract",
+      "skills": [
+        "add_subtract"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Cộng, trừ đa thức và kiểm tra bằng phép toán ngược.",
+      "problem": "Bạn Bình viết $(x-y)-(2x-y)=-x-2y$. Hãy tìm và sửa lỗi.",
+      "answer": "Kết quả đúng là -x",
+      "rubric": "Trước ngoặc là dấu trừ nên -y trong ngoặc thành +y.",
+      "hints": [
+        "Dấu trừ trước ngoặc tác động đến những hạng tử nào?",
+        "Trước ngoặc là dấu trừ nên -y trong ngoặc thành +y — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x-y)-(2x-y)",
+        "right": "-x"
+      }
+    },
+    {
+      "id": "l03-e5",
+      "chapterId": "c1",
+      "lessonId": "l03",
+      "skillId": "add_subtract",
+      "skills": [
+        "add_subtract"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Cộng, trừ đa thức và kiểm tra bằng phép toán ngược.",
+      "problem": "Doanh thu là $5x+2y$ nghìn đồng, chi phí là $3x+y+10$ nghìn đồng. Viết đa thức lợi nhuận.",
+      "answer": "2x+y-10 nghìn đồng",
+      "rubric": "Lợi nhuận bằng doanh thu trừ toàn bộ chi phí.",
+      "hints": [
+        "Dấu trừ trước ngoặc tác động đến những hạng tử nào?",
+        "Lợi nhuận bằng doanh thu trừ toàn bộ chi phí — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(5x+2y)-(3x+y+10)",
+        "right": "2x+y-10"
+      }
+    },
+    {
+      "id": "l04-e1",
+      "chapterId": "c1",
+      "lessonId": "l04",
+      "skillId": "multiply",
+      "skills": [
+        "multiply"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhân đơn thức, nhân đơn thức với đa thức và nhân hai đa thức.",
+      "problem": "Tính $(-2xy)(3x^2y)$.",
+      "answer": "-6x^3y^2",
+      "rubric": "Nhân hệ số và lũy thừa cùng cơ số.",
+      "hints": [
+        "Mỗi hạng tử của thừa số thứ nhất đã nhân đủ với thừa số thứ hai chưa?",
+        "Nhân hệ số và lũy thừa cùng cơ số — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(-2xy)*(3x^2y)",
+        "right": "-6x^3y^2"
+      }
+    },
+    {
+      "id": "l04-e2",
+      "chapterId": "c1",
+      "lessonId": "l04",
+      "skillId": "multiply",
+      "skills": [
+        "multiply"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhân đơn thức, nhân đơn thức với đa thức và nhân hai đa thức.",
+      "problem": "Khai triển $2x(x^2-3x+4)$.",
+      "answer": "2x^3-6x^2+8x",
+      "rubric": "Phân phối 2x cho đủ ba hạng tử.",
+      "hints": [
+        "Mỗi hạng tử của thừa số thứ nhất đã nhân đủ với thừa số thứ hai chưa?",
+        "Phân phối 2x cho đủ ba hạng tử — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "2x(x^2-3x+4)",
+        "right": "2x^3-6x^2+8x"
+      }
+    },
+    {
+      "id": "l04-e3",
+      "chapterId": "c1",
+      "lessonId": "l04",
+      "skillId": "multiply",
+      "skills": [
+        "multiply"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhân đơn thức, nhân đơn thức với đa thức và nhân hai đa thức.",
+      "problem": "Khai triển $(x+2y)(2x-y)$.",
+      "answer": "2x^2+3xy-2y^2",
+      "rubric": "Thực hiện đủ bốn tích rồi thu gọn.",
+      "hints": [
+        "Mỗi hạng tử của thừa số thứ nhất đã nhân đủ với thừa số thứ hai chưa?",
+        "Thực hiện đủ bốn tích rồi thu gọn — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x+2y)(2x-y)",
+        "right": "2x^2+3xy-2y^2"
+      }
+    },
+    {
+      "id": "l04-e4",
+      "chapterId": "c1",
+      "lessonId": "l04",
+      "skillId": "multiply",
+      "skills": [
+        "multiply"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhân đơn thức, nhân đơn thức với đa thức và nhân hai đa thức.",
+      "problem": "Bạn viết $(x+1)(x+2)=x^2+2$. Hãy giải thích phần bị bỏ sót.",
+      "answer": "Thiếu 3x; đúng là x^2+3x+2",
+      "rubric": "Mỗi hạng tử phải nhân với cả hai hạng tử kia.",
+      "hints": [
+        "Mỗi hạng tử của thừa số thứ nhất đã nhân đủ với thừa số thứ hai chưa?",
+        "Mỗi hạng tử phải nhân với cả hai hạng tử kia — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x+1)(x+2)",
+        "right": "x^2+3x+2"
+      }
+    },
+    {
+      "id": "l04-e5",
+      "chapterId": "c1",
+      "lessonId": "l04",
+      "skillId": "multiply",
+      "skills": [
+        "multiply"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhân đơn thức, nhân đơn thức với đa thức và nhân hai đa thức.",
+      "problem": "Vườn hình chữ nhật dài $(x+3)$ m, rộng $(x+1)$ m, x>0. Viết đa thức diện tích.",
+      "answer": "x^2+4x+3 m²",
+      "rubric": "Nhân hai biểu thức độ dài và thu gọn.",
+      "hints": [
+        "Mỗi hạng tử của thừa số thứ nhất đã nhân đủ với thừa số thứ hai chưa?",
+        "Nhân hai biểu thức độ dài và thu gọn — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x+3)(x+1)",
+        "right": "x^2+4x+3"
+      }
+    },
+    {
+      "id": "l05-e1",
+      "chapterId": "c1",
+      "lessonId": "l05",
+      "skillId": "divide",
+      "skills": [
+        "divide"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận biết chia hết và thực hiện phép chia đa thức cho đơn thức.",
+      "problem": "Tính thương $12x^3y^2:(3xy)$ trong phép chia hết đơn thức.",
+      "answer": "4x^2y",
+      "rubric": "Chia hệ số và trừ số mũ tương ứng.",
+      "hints": [
+        "Mỗi hạng tử có chia hết cho đơn thức đã cho không?",
+        "Chia hệ số và trừ số mũ tương ứng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "12x^3y^2",
+        "right": "(3xy)*(4x^2y)"
+      }
+    },
+    {
+      "id": "l05-e2",
+      "chapterId": "c1",
+      "lessonId": "l05",
+      "skillId": "divide",
+      "skills": [
+        "divide"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận biết chia hết và thực hiện phép chia đa thức cho đơn thức.",
+      "problem": "Chia đa thức $6x^3-9x^2+3x$ cho đơn thức $3x$.",
+      "answer": "2x^2-3x+1",
+      "rubric": "Chia từng hạng tử; nhân lại để kiểm tra.",
+      "hints": [
+        "Mỗi hạng tử có chia hết cho đơn thức đã cho không?",
+        "Chia từng hạng tử; nhân lại để kiểm tra — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "6x^3-9x^2+3x",
+        "right": "3x*(2x^2-3x+1)"
+      }
+    },
+    {
+      "id": "l05-e3",
+      "chapterId": "c1",
+      "lessonId": "l05",
+      "skillId": "divide",
+      "skills": [
+        "divide"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận biết chia hết và thực hiện phép chia đa thức cho đơn thức.",
+      "problem": "Chia $8x^3y^2-4x^2y^3$ cho $-2x^2y$.",
+      "answer": "-4xy+2y^2",
+      "rubric": "Kiểm tra dấu và số mũ trong mỗi thương.",
+      "hints": [
+        "Mỗi hạng tử có chia hết cho đơn thức đã cho không?",
+        "Kiểm tra dấu và số mũ trong mỗi thương — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "8x^3y^2-4x^2y^3",
+        "right": "(-2x^2y)*(-4xy+2y^2)"
+      }
+    },
+    {
+      "id": "l05-e4",
+      "chapterId": "c1",
+      "lessonId": "l05",
+      "skillId": "divide",
+      "skills": [
+        "divide"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận biết chia hết và thực hiện phép chia đa thức cho đơn thức.",
+      "problem": "Đa thức $x^2+y$ có chia hết cho đơn thức x không? Giải thích.",
+      "answer": "Không",
+      "rubric": "Hạng tử y không chia hết cho x trong đa thức.",
+      "hints": [
+        "Mỗi hạng tử có chia hết cho đơn thức đã cho không?",
+        "Hạng tử y không chia hết cho x trong đa thức — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l05-e5",
+      "chapterId": "c1",
+      "lessonId": "l05",
+      "skillId": "divide",
+      "skills": [
+        "divide"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận biết chia hết và thực hiện phép chia đa thức cho đơn thức.",
+      "problem": "Hình chữ nhật có diện tích $6x^2+3x$ m² và chiều rộng $3x$ m, x>0. Tìm chiều dài.",
+      "answer": "2x+1 m",
+      "rubric": "Diện tích chia chiều rộng.",
+      "hints": [
+        "Mỗi hạng tử có chia hết cho đơn thức đã cho không?",
+        "Diện tích chia chiều rộng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "6x^2+3x",
+        "right": "3x*(2x+1)"
+      }
+    },
+    {
+      "id": "l06-e1",
+      "chapterId": "c2",
+      "lessonId": "l06",
+      "skillId": "square_identity",
+      "skills": [
+        "square_identity"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận diện và vận dụng ba hằng đẳng thức bậc hai.",
+      "problem": "Khai triển $(x+3)^2$.",
+      "answer": "x^2+6x+9",
+      "rubric": "Xác định A=x, B=3 và hạng tử 2AB.",
+      "hints": [
+        "Trong biểu thức này, hai thành phần A và B là gì?",
+        "Xác định A=x, B=3 và hạng tử 2AB — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x+3)^2",
+        "right": "x^2+6x+9"
+      }
+    },
+    {
+      "id": "l06-e2",
+      "chapterId": "c2",
+      "lessonId": "l06",
+      "skillId": "square_identity",
+      "skills": [
+        "square_identity"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận diện và vận dụng ba hằng đẳng thức bậc hai.",
+      "problem": "Khai triển $(2x-y)^2$.",
+      "answer": "4x^2-4xy+y^2",
+      "rubric": "Bình phương từng thành phần và trừ hai lần tích.",
+      "hints": [
+        "Trong biểu thức này, hai thành phần A và B là gì?",
+        "Bình phương từng thành phần và trừ hai lần tích — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(2x-y)^2",
+        "right": "4x^2-4xy+y^2"
+      }
+    },
+    {
+      "id": "l06-e3",
+      "chapterId": "c2",
+      "lessonId": "l06",
+      "skillId": "square_identity",
+      "skills": [
+        "square_identity"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận diện và vận dụng ba hằng đẳng thức bậc hai.",
+      "problem": "Viết $9x^2-4y^2$ thành tích.",
+      "answer": "(3x-2y)(3x+2y)",
+      "rubric": "Nhận diện hiệu hai bình phương.",
+      "hints": [
+        "Trong biểu thức này, hai thành phần A và B là gì?",
+        "Nhận diện hiệu hai bình phương — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "9x^2-4y^2",
+        "right": "(3x-2y)(3x+2y)"
+      }
+    },
+    {
+      "id": "l06-e4",
+      "chapterId": "c2",
+      "lessonId": "l06",
+      "skillId": "square_identity",
+      "skills": [
+        "square_identity"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận diện và vận dụng ba hằng đẳng thức bậc hai.",
+      "problem": "Bạn viết $(x-y)^2=x^2-y^2$. Tìm phản ví dụ và sửa.",
+      "answer": "Ví dụ x=2,y=1: 1≠3; đúng x^2-2xy+y^2.",
+      "rubric": "Bình phương hiệu có ba hạng tử.",
+      "hints": [
+        "Trong biểu thức này, hai thành phần A và B là gì?",
+        "Bình phương hiệu có ba hạng tử — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x-y)^2",
+        "right": "x^2-2xy+y^2"
+      }
+    },
+    {
+      "id": "l06-e5",
+      "chapterId": "c2",
+      "lessonId": "l06",
+      "skillId": "square_identity",
+      "skills": [
+        "square_identity"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận diện và vận dụng ba hằng đẳng thức bậc hai.",
+      "problem": "Tính nhanh diện tích hình vuông cạnh 99 cm bằng hằng đẳng thức.",
+      "answer": "9801 cm²",
+      "rubric": "Viết 99=100-1 rồi bình phương.",
+      "hints": [
+        "Trong biểu thức này, hai thành phần A và B là gì?",
+        "Viết 99=100-1 rồi bình phương — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(100-1)^2",
+        "right": "9801"
+      }
+    },
+    {
+      "id": "l07-e1",
+      "chapterId": "c2",
+      "lessonId": "l07",
+      "skillId": "cube_identity",
+      "skills": [
+        "cube_identity"
+      ],
+      "level": "Nhận biết",
+      "objective": "Khai triển và nhận dạng lập phương của tổng hoặc hiệu.",
+      "problem": "Khai triển $(x+1)^3$.",
+      "answer": "x^3+3x^2+3x+1",
+      "rubric": "Dùng bốn hạng tử hệ số 1,3,3,1.",
+      "hints": [
+        "Em có thể kiểm tra các hệ số bằng phép nhân đa thức không?",
+        "Dùng bốn hạng tử hệ số 1,3,3,1 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x+1)^3",
+        "right": "x^3+3x^2+3x+1"
+      }
+    },
+    {
+      "id": "l07-e2",
+      "chapterId": "c2",
+      "lessonId": "l07",
+      "skillId": "cube_identity",
+      "skills": [
+        "cube_identity"
+      ],
+      "level": "Thực hành",
+      "objective": "Khai triển và nhận dạng lập phương của tổng hoặc hiệu.",
+      "problem": "Khai triển $(2x-y)^3$.",
+      "answer": "8x^3-12x^2y+6xy^2-y^3",
+      "rubric": "Lập phương hiệu có dấu +,-,+,-.",
+      "hints": [
+        "Em có thể kiểm tra các hệ số bằng phép nhân đa thức không?",
+        "Lập phương hiệu có dấu +,-,+,- — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(2x-y)^3",
+        "right": "8x^3-12x^2y+6xy^2-y^3"
+      }
+    },
+    {
+      "id": "l07-e3",
+      "chapterId": "c2",
+      "lessonId": "l07",
+      "skillId": "cube_identity",
+      "skills": [
+        "cube_identity"
+      ],
+      "level": "Vận dụng",
+      "objective": "Khai triển và nhận dạng lập phương của tổng hoặc hiệu.",
+      "problem": "Viết $x^3+6x^2+12x+8$ thành lập phương của một tổng.",
+      "answer": "(x+2)^3",
+      "rubric": "Xác định hai thành phần rồi kiểm tra hai hạng tử giữa.",
+      "hints": [
+        "Em có thể kiểm tra các hệ số bằng phép nhân đa thức không?",
+        "Xác định hai thành phần rồi kiểm tra hai hạng tử giữa — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "x^3+6x^2+12x+8",
+        "right": "(x+2)^3"
+      }
+    },
+    {
+      "id": "l07-e4",
+      "chapterId": "c2",
+      "lessonId": "l07",
+      "skillId": "cube_identity",
+      "skills": [
+        "cube_identity"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Khai triển và nhận dạng lập phương của tổng hoặc hiệu.",
+      "problem": "Bạn cho $(x-1)^3=x^3-3x^2-3x-1$. Hãy sửa dấu sai.",
+      "answer": "x^3-3x^2+3x-1",
+      "rubric": "Hạng tử 3AB² mang dấu dương.",
+      "hints": [
+        "Em có thể kiểm tra các hệ số bằng phép nhân đa thức không?",
+        "Hạng tử 3AB² mang dấu dương — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x-1)^3",
+        "right": "x^3-3x^2+3x-1"
+      }
+    },
+    {
+      "id": "l07-e5",
+      "chapterId": "c2",
+      "lessonId": "l07",
+      "skillId": "cube_identity",
+      "skills": [
+        "cube_identity"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Khai triển và nhận dạng lập phương của tổng hoặc hiệu.",
+      "problem": "Một khối lập phương có cạnh $(x+2)$ cm, x>0. Khai triển thể tích.",
+      "answer": "x^3+6x^2+12x+8 cm³",
+      "rubric": "Thể tích là lập phương cạnh.",
+      "hints": [
+        "Em có thể kiểm tra các hệ số bằng phép nhân đa thức không?",
+        "Thể tích là lập phương cạnh — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x+2)^3",
+        "right": "x^3+6x^2+12x+8"
+      }
+    },
+    {
+      "id": "l08-e1",
+      "chapterId": "c2",
+      "lessonId": "l08",
+      "skillId": "cube_factor",
+      "skills": [
+        "cube_factor"
+      ],
+      "level": "Nhận biết",
+      "objective": "Phân tích và khai triển tổng, hiệu hai lập phương.",
+      "problem": "Phân tích $x^3+8$ thành nhân tử.",
+      "answer": "(x+2)(x^2-2x+4)",
+      "rubric": "Tổng hai lập phương với B=2.",
+      "hints": [
+        "Hai số hạng đã là lập phương của biểu thức nào?",
+        "Tổng hai lập phương với B=2 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "x^3+8",
+        "right": "(x+2)(x^2-2x+4)"
+      }
+    },
+    {
+      "id": "l08-e2",
+      "chapterId": "c2",
+      "lessonId": "l08",
+      "skillId": "cube_factor",
+      "skills": [
+        "cube_factor"
+      ],
+      "level": "Thực hành",
+      "objective": "Phân tích và khai triển tổng, hiệu hai lập phương.",
+      "problem": "Phân tích $27x^3-y^3$ thành nhân tử.",
+      "answer": "(3x-y)(9x^2+3xy+y^2)",
+      "rubric": "Hiệu hai lập phương với A=3x.",
+      "hints": [
+        "Hai số hạng đã là lập phương của biểu thức nào?",
+        "Hiệu hai lập phương với A=3x — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "27x^3-y^3",
+        "right": "(3x-y)(9x^2+3xy+y^2)"
+      }
+    },
+    {
+      "id": "l08-e3",
+      "chapterId": "c2",
+      "lessonId": "l08",
+      "skillId": "cube_factor",
+      "skills": [
+        "cube_factor"
+      ],
+      "level": "Vận dụng",
+      "objective": "Phân tích và khai triển tổng, hiệu hai lập phương.",
+      "problem": "Rút gọn $(x+2)(x^2-2x+4)-x^3$.",
+      "answer": "8",
+      "rubric": "Nhận ra tích biểu diễn tổng hai lập phương.",
+      "hints": [
+        "Hai số hạng đã là lập phương của biểu thức nào?",
+        "Nhận ra tích biểu diễn tổng hai lập phương — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "(x+2)(x^2-2x+4)-x^3",
+        "right": "8"
+      }
+    },
+    {
+      "id": "l08-e4",
+      "chapterId": "c2",
+      "lessonId": "l08",
+      "skillId": "cube_factor",
+      "skills": [
+        "cube_factor"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Phân tích và khai triển tổng, hiệu hai lập phương.",
+      "problem": "Bạn viết $a^3+b^3=(a+b)(a^2+ab+b^2)$. Sửa và kiểm tra.",
+      "answer": "(a+b)(a^2-ab+b^2)",
+      "rubric": "Hạng tử ab ở nhân tử thứ hai mang dấu âm.",
+      "hints": [
+        "Hai số hạng đã là lập phương của biểu thức nào?",
+        "Hạng tử ab ở nhân tử thứ hai mang dấu âm — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "a^3+b^3",
+        "right": "(a+b)(a^2-ab+b^2)"
+      }
+    },
+    {
+      "id": "l08-e5",
+      "chapterId": "c2",
+      "lessonId": "l08",
+      "skillId": "cube_factor",
+      "skills": [
+        "cube_factor"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Phân tích và khai triển tổng, hiệu hai lập phương.",
+      "problem": "Hai khối lập phương cạnh 12 cm và 2 cm. Tính hiệu thể tích bằng phân tích hiệu lập phương.",
+      "answer": "1720 cm³",
+      "rubric": "(12-2)(12²+12×2+2²).",
+      "hints": [
+        "Hai số hạng đã là lập phương của biểu thức nào?",
+        "(12-2)(12²+12×2+2²) — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "12^3-2^3",
+        "right": "1720"
+      }
+    },
+    {
+      "id": "l09-e1",
+      "chapterId": "c2",
+      "lessonId": "l09",
+      "skillId": "factorisation",
+      "skills": [
+        "factorisation"
+      ],
+      "level": "Nhận biết",
+      "objective": "Chọn nhân tử chung, hằng đẳng thức hoặc nhóm hạng tử; khai triển kiểm tra.",
+      "problem": "Phân tích $6x^2y-9xy^2$ thành nhân tử.",
+      "answer": "3xy(2x-3y)",
+      "rubric": "Đặt nhân tử chung 3xy.",
+      "hints": [
+        "Cách nhóm nào làm xuất hiện cùng một nhân tử?",
+        "Đặt nhân tử chung 3xy — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "6x^2y-9xy^2",
+        "right": "3xy(2x-3y)"
+      }
+    },
+    {
+      "id": "l09-e2",
+      "chapterId": "c2",
+      "lessonId": "l09",
+      "skillId": "factorisation",
+      "skills": [
+        "factorisation"
+      ],
+      "level": "Thực hành",
+      "objective": "Chọn nhân tử chung, hằng đẳng thức hoặc nhóm hạng tử; khai triển kiểm tra.",
+      "problem": "Phân tích $x^2-10x+25$.",
+      "answer": "(x-5)^2",
+      "rubric": "Nhận dạng bình phương một hiệu.",
+      "hints": [
+        "Cách nhóm nào làm xuất hiện cùng một nhân tử?",
+        "Nhận dạng bình phương một hiệu — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "x^2-10x+25",
+        "right": "(x-5)^2"
+      }
+    },
+    {
+      "id": "l09-e3",
+      "chapterId": "c2",
+      "lessonId": "l09",
+      "skillId": "factorisation",
+      "skills": [
+        "factorisation"
+      ],
+      "level": "Vận dụng",
+      "objective": "Chọn nhân tử chung, hằng đẳng thức hoặc nhóm hạng tử; khai triển kiểm tra.",
+      "problem": "Phân tích $xy+2x+3y+6$ bằng cách nhóm.",
+      "answer": "(x+3)(y+2)",
+      "rubric": "Nhóm x(y+2)+3(y+2).",
+      "hints": [
+        "Cách nhóm nào làm xuất hiện cùng một nhân tử?",
+        "Nhóm x(y+2)+3(y+2) — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "xy+2x+3y+6",
+        "right": "(x+3)(y+2)"
+      }
+    },
+    {
+      "id": "l09-e4",
+      "chapterId": "c2",
+      "lessonId": "l09",
+      "skillId": "factorisation",
+      "skills": [
+        "factorisation"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Chọn nhân tử chung, hằng đẳng thức hoặc nhóm hạng tử; khai triển kiểm tra.",
+      "problem": "Bạn viết $x^2-4=x(x-4)$. Dùng khai triển để kiểm tra rồi sửa.",
+      "answer": "(x-2)(x+2)",
+      "rubric": "Tích đã viết bằng x²-4x; dùng hiệu hai bình phương.",
+      "hints": [
+        "Cách nhóm nào làm xuất hiện cùng một nhân tử?",
+        "Tích đã viết bằng x²-4x; dùng hiệu hai bình phương — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "x^2-4",
+        "right": "(x-2)(x+2)"
+      }
+    },
+    {
+      "id": "l09-e5",
+      "chapterId": "c2",
+      "lessonId": "l09",
+      "skillId": "factorisation",
+      "skills": [
+        "factorisation"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Chọn nhân tử chung, hằng đẳng thức hoặc nhóm hạng tử; khai triển kiểm tra.",
+      "problem": "Tấm bìa vuông cạnh x cm bị cắt một hình vuông cạnh 3 cm, x>3. Viết diện tích còn lại dưới dạng tích.",
+      "answer": "(x-3)(x+3) cm²",
+      "rubric": "Hiệu diện tích là x²-9.",
+      "hints": [
+        "Cách nhóm nào làm xuất hiện cùng một nhân tử?",
+        "Hiệu diện tích là x²-9 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "polynomial",
+        "left": "x^2-9",
+        "right": "(x-3)(x+3)"
+      }
+    },
+    {
+      "id": "l10-e1",
+      "chapterId": "c3",
+      "lessonId": "l10",
+      "skillId": "quadrilateral",
+      "skills": [
+        "quadrilateral"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận biết tứ giác lồi, cạnh, góc, đường chéo; dùng tổng các góc.",
+      "problem": "Tứ giác lồi ABCD có góc A=80°, B=95°, C=105°. Tính góc D.",
+      "answer": "80°",
+      "rubric": "Tổng góc 360°.",
+      "hints": [
+        "Nếu chia tứ giác bằng một đường chéo thì được bao nhiêu tam giác?",
+        "Tổng góc 360° — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "360-80-95-105",
+        "value": 80
+      }
+    },
+    {
+      "id": "l10-e2",
+      "chapterId": "c3",
+      "lessonId": "l10",
+      "skillId": "quadrilateral",
+      "skills": [
+        "quadrilateral"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận biết tứ giác lồi, cạnh, góc, đường chéo; dùng tổng các góc.",
+      "problem": "Tứ giác lồi ABCD có những đường chéo nào?",
+      "answer": "AC và BD",
+      "rubric": "Đường chéo nối hai đỉnh không kề nhau.",
+      "hints": [
+        "Nếu chia tứ giác bằng một đường chéo thì được bao nhiêu tam giác?",
+        "Đường chéo nối hai đỉnh không kề nhau — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l10-e3",
+      "chapterId": "c3",
+      "lessonId": "l10",
+      "skillId": "quadrilateral",
+      "skills": [
+        "quadrilateral"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận biết tứ giác lồi, cạnh, góc, đường chéo; dùng tổng các góc.",
+      "problem": "Tứ giác lồi có các góc lần lượt x, 2x, 3x, 4x. Tìm các góc.",
+      "answer": "36°,72°,108°,144°",
+      "rubric": "Tổng 10x=360°; mỗi góc nhỏ hơn 180°.",
+      "hints": [
+        "Nếu chia tứ giác bằng một đường chéo thì được bao nhiêu tam giác?",
+        "Tổng 10x=360°; mỗi góc nhỏ hơn 180° — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "360/10",
+        "value": 36
+      }
+    },
+    {
+      "id": "l10-e4",
+      "chapterId": "c3",
+      "lessonId": "l10",
+      "skillId": "quadrilateral",
+      "skills": [
+        "quadrilateral"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận biết tứ giác lồi, cạnh, góc, đường chéo; dùng tổng các góc.",
+      "problem": "Có tứ giác lồi mang bốn góc 60°, 70°, 80°, 90° không?",
+      "answer": "Không",
+      "rubric": "Tổng 300° khác 360°.",
+      "hints": [
+        "Nếu chia tứ giác bằng một đường chéo thì được bao nhiêu tam giác?",
+        "Tổng 300° khác 360° — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "60+70+80+90",
+        "value": 300
+      }
+    },
+    {
+      "id": "l10-e5",
+      "chapterId": "c3",
+      "lessonId": "l10",
+      "skillId": "quadrilateral",
+      "skills": [
+        "quadrilateral"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận biết tứ giác lồi, cạnh, góc, đường chéo; dùng tổng các góc.",
+      "problem": "Khung trang trí là tứ giác lồi có ba góc vuông. Góc còn lại bằng bao nhiêu?",
+      "answer": "90°",
+      "rubric": "Lấy 360° trừ tổng ba góc vuông.",
+      "hints": [
+        "Nếu chia tứ giác bằng một đường chéo thì được bao nhiêu tam giác?",
+        "Lấy 360° trừ tổng ba góc vuông — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "360-3*90",
+        "value": 90
+      }
+    },
+    {
+      "id": "l11-e1",
+      "chapterId": "c3",
+      "lessonId": "l11",
+      "skillId": "isosceles_trapezoid",
+      "skills": [
+        "isosceles_trapezoid"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận biết hình thang cân; dùng tính chất cạnh bên và đường chéo.",
+      "problem": "Hình thang cân ABCD có AB song song CD, góc A=70°. Tính góc B, C, D.",
+      "answer": "B=70°, C=D=110°",
+      "rubric": "Góc kề một đáy bằng nhau; góc trong cùng phía bù nhau.",
+      "hints": [
+        "Đề đã cho điều kiện song song và hai góc kề cùng đáy chưa?",
+        "Góc kề một đáy bằng nhau; góc trong cùng phía bù nhau — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l11-e2",
+      "chapterId": "c3",
+      "lessonId": "l11",
+      "skillId": "isosceles_trapezoid",
+      "skills": [
+        "isosceles_trapezoid"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận biết hình thang cân; dùng tính chất cạnh bên và đường chéo.",
+      "problem": "Hình thang cân ABCD (AB song song CD) có AD=5 cm. Tìm BC.",
+      "answer": "5 cm",
+      "rubric": "Hai cạnh bên bằng nhau.",
+      "hints": [
+        "Đề đã cho điều kiện song song và hai góc kề cùng đáy chưa?",
+        "Hai cạnh bên bằng nhau — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l11-e3",
+      "chapterId": "c3",
+      "lessonId": "l11",
+      "skillId": "isosceles_trapezoid",
+      "skills": [
+        "isosceles_trapezoid"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận biết hình thang cân; dùng tính chất cạnh bên và đường chéo.",
+      "problem": "Hình thang ABCD (AB song song CD) có AC=BD. Chứng minh là hình thang cân.",
+      "answer": "Dùng dấu hiệu hình thang có hai đường chéo bằng nhau.",
+      "rubric": "Nêu đủ tiền đề là hình thang rồi áp dụng dấu hiệu.",
+      "hints": [
+        "Đề đã cho điều kiện song song và hai góc kề cùng đáy chưa?",
+        "Nêu đủ tiền đề là hình thang rồi áp dụng dấu hiệu — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l11-e4",
+      "chapterId": "c3",
+      "lessonId": "l11",
+      "skillId": "isosceles_trapezoid",
+      "skills": [
+        "isosceles_trapezoid"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận biết hình thang cân; dùng tính chất cạnh bên và đường chéo.",
+      "problem": "Một hình bình hành có hai góc kề 60° và 120°. Hai cạnh bên bằng nhau có đủ suy ra hình thang cân không?",
+      "answer": "Không",
+      "rubric": "Theo định nghĩa hình thang có một cặp cạnh song song, hình bình hành này là phản ví dụ: hai góc kề đáy không bằng nhau.",
+      "hints": [
+        "Đề đã cho điều kiện song song và hai góc kề cùng đáy chưa?",
+        "Theo định nghĩa hình thang có một cặp cạnh song song, hình bình hành này là phản ví dụ: hai góc kề đáy không bằng nhau — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l11-e5",
+      "chapterId": "c3",
+      "lessonId": "l11",
+      "skillId": "isosceles_trapezoid",
+      "skills": [
+        "isosceles_trapezoid"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận biết hình thang cân; dùng tính chất cạnh bên và đường chéo.",
+      "problem": "Khung hình thang cân có hai đáy 8 cm, 14 cm và cạnh bên 5 cm. Tính chu vi.",
+      "answer": "32 cm",
+      "rubric": "Cộng hai đáy và hai cạnh bên.",
+      "hints": [
+        "Đề đã cho điều kiện song song và hai góc kề cùng đáy chưa?",
+        "Cộng hai đáy và hai cạnh bên — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "8+14+2*5",
+        "value": 32
+      }
+    },
+    {
+      "id": "l12-e1",
+      "chapterId": "c3",
+      "lessonId": "l12",
+      "skillId": "parallelogram",
+      "skills": [
+        "parallelogram"
+      ],
+      "level": "Nhận biết",
+      "objective": "Dùng định nghĩa, tính chất và dấu hiệu hình bình hành.",
+      "problem": "Tứ giác ABCD có AB song song CD và AD song song BC. Nêu loại tứ giác và căn cứ.",
+      "answer": "Hình bình hành",
+      "rubric": "Định nghĩa hai cặp cạnh đối song song.",
+      "hints": [
+        "Dấu hiệu em chọn yêu cầu những điều kiện nào?",
+        "Định nghĩa hai cặp cạnh đối song song — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l12-e2",
+      "chapterId": "c3",
+      "lessonId": "l12",
+      "skillId": "parallelogram",
+      "skills": [
+        "parallelogram"
+      ],
+      "level": "Thực hành",
+      "objective": "Dùng định nghĩa, tính chất và dấu hiệu hình bình hành.",
+      "problem": "Hai đường chéo hình bình hành ABCD cắt nhau tại O, AC=12 cm, BD=8 cm. Tính OA và OB.",
+      "answer": "OA=6 cm, OB=4 cm",
+      "rubric": "Hai đường chéo cắt nhau tại trung điểm mỗi đường.",
+      "hints": [
+        "Dấu hiệu em chọn yêu cầu những điều kiện nào?",
+        "Hai đường chéo cắt nhau tại trung điểm mỗi đường — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l12-e3",
+      "chapterId": "c3",
+      "lessonId": "l12",
+      "skillId": "parallelogram",
+      "skills": [
+        "parallelogram"
+      ],
+      "level": "Vận dụng",
+      "objective": "Dùng định nghĩa, tính chất và dấu hiệu hình bình hành.",
+      "problem": "Tứ giác ABCD có AB song song CD và AB=CD. Chứng minh ABCD là hình bình hành.",
+      "answer": "Dùng dấu hiệu một cặp cạnh đối vừa song song vừa bằng nhau.",
+      "rubric": "Hai điều kiện phải thuộc cùng một cặp cạnh.",
+      "hints": [
+        "Dấu hiệu em chọn yêu cầu những điều kiện nào?",
+        "Hai điều kiện phải thuộc cùng một cặp cạnh — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l12-e4",
+      "chapterId": "c3",
+      "lessonId": "l12",
+      "skillId": "parallelogram",
+      "skills": [
+        "parallelogram"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Dùng định nghĩa, tính chất và dấu hiệu hình bình hành.",
+      "problem": "Tứ giác có AB=CD. Có đủ kết luận hình bình hành chưa?",
+      "answer": "Chưa đủ",
+      "rubric": "Cần điều kiện bổ sung như AB song song CD hoặc AD=BC.",
+      "hints": [
+        "Dấu hiệu em chọn yêu cầu những điều kiện nào?",
+        "Cần điều kiện bổ sung như AB song song CD hoặc AD=BC — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l12-e5",
+      "chapterId": "c3",
+      "lessonId": "l12",
+      "skillId": "parallelogram",
+      "skills": [
+        "parallelogram"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Dùng định nghĩa, tính chất và dấu hiệu hình bình hành.",
+      "problem": "Khung hình bình hành có hai cạnh kề 7 cm và 4 cm. Tính chu vi.",
+      "answer": "22 cm",
+      "rubric": "Các cạnh đối bằng nhau.",
+      "hints": [
+        "Dấu hiệu em chọn yêu cầu những điều kiện nào?",
+        "Các cạnh đối bằng nhau — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "2*(7+4)",
+        "value": 22
+      }
+    },
+    {
+      "id": "l13-e1",
+      "chapterId": "c3",
+      "lessonId": "l13",
+      "skillId": "rectangle",
+      "skills": [
+        "rectangle"
+      ],
+      "level": "Nhận biết",
+      "objective": "Dùng bốn góc vuông và dấu hiệu từ hình bình hành.",
+      "problem": "Một tứ giác có ba góc vuông. Có phải hình chữ nhật không?",
+      "answer": "Có",
+      "rubric": "Tổng góc 360° nên góc còn lại vuông; dùng định nghĩa.",
+      "hints": [
+        "Em đã chứng minh được hình bình hành trước khi dùng dấu hiệu đường chéo chưa?",
+        "Tổng góc 360° nên góc còn lại vuông; dùng định nghĩa — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l13-e2",
+      "chapterId": "c3",
+      "lessonId": "l13",
+      "skillId": "rectangle",
+      "skills": [
+        "rectangle"
+      ],
+      "level": "Thực hành",
+      "objective": "Dùng bốn góc vuông và dấu hiệu từ hình bình hành.",
+      "problem": "Hai đường chéo hình chữ nhật ABCD cắt nhau tại O và AC=10 cm. Tính OB.",
+      "answer": "5 cm",
+      "rubric": "BD=AC và O là trung điểm BD.",
+      "hints": [
+        "Em đã chứng minh được hình bình hành trước khi dùng dấu hiệu đường chéo chưa?",
+        "BD=AC và O là trung điểm BD — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "10/2",
+        "value": 5
+      }
+    },
+    {
+      "id": "l13-e3",
+      "chapterId": "c3",
+      "lessonId": "l13",
+      "skillId": "rectangle",
+      "skills": [
+        "rectangle"
+      ],
+      "level": "Vận dụng",
+      "objective": "Dùng bốn góc vuông và dấu hiệu từ hình bình hành.",
+      "problem": "Hình bình hành ABCD có AC=BD. Chứng minh ABCD là hình chữ nhật.",
+      "answer": "Dùng dấu hiệu hình bình hành có hai đường chéo bằng nhau.",
+      "rubric": "Kiểm tra cả giả thiết hình bình hành và đẳng thức đường chéo.",
+      "hints": [
+        "Em đã chứng minh được hình bình hành trước khi dùng dấu hiệu đường chéo chưa?",
+        "Kiểm tra cả giả thiết hình bình hành và đẳng thức đường chéo — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l13-e4",
+      "chapterId": "c3",
+      "lessonId": "l13",
+      "skillId": "rectangle",
+      "skills": [
+        "rectangle"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Dùng bốn góc vuông và dấu hiệu từ hình bình hành.",
+      "problem": "Bạn cho rằng mọi tứ giác có hai đường chéo bằng nhau là hình chữ nhật. Em phản biện.",
+      "answer": "Sai; hình thang cân không vuông có hai đường chéo bằng nhau.",
+      "rubric": "Không được bỏ tiền đề hình bình hành.",
+      "hints": [
+        "Em đã chứng minh được hình bình hành trước khi dùng dấu hiệu đường chéo chưa?",
+        "Không được bỏ tiền đề hình bình hành — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l13-e5",
+      "chapterId": "c3",
+      "lessonId": "l13",
+      "skillId": "rectangle",
+      "skills": [
+        "rectangle"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Dùng bốn góc vuông và dấu hiệu từ hình bình hành.",
+      "problem": "Khung hình chữ nhật có chu vi 30 cm, chiều dài 9 cm. Tìm chiều rộng.",
+      "answer": "6 cm",
+      "rubric": "Nửa chu vi là tổng hai kích thước.",
+      "hints": [
+        "Em đã chứng minh được hình bình hành trước khi dùng dấu hiệu đường chéo chưa?",
+        "Nửa chu vi là tổng hai kích thước — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "30/2-9",
+        "value": 6
+      }
+    },
+    {
+      "id": "l14-e1",
+      "chapterId": "c3",
+      "lessonId": "l14",
+      "skillId": "rhombus_square",
+      "skills": [
+        "rhombus_square"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận biết hình thoi, hình vuông; lựa chọn dấu hiệu đủ.",
+      "problem": "Tứ giác ABCD có AB=BC=CD=DA. Nêu loại hình và định nghĩa.",
+      "answer": "Hình thoi",
+      "rubric": "Bốn cạnh bằng nhau; chưa đủ để kết luận hình vuông.",
+      "hints": [
+        "Cần thêm điều kiện nào để hình thoi trở thành hình vuông?",
+        "Bốn cạnh bằng nhau; chưa đủ để kết luận hình vuông — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l14-e2",
+      "chapterId": "c3",
+      "lessonId": "l14",
+      "skillId": "rhombus_square",
+      "skills": [
+        "rhombus_square"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận biết hình thoi, hình vuông; lựa chọn dấu hiệu đủ.",
+      "problem": "Hình bình hành ABCD có AC vuông góc BD. Kết luận gì?",
+      "answer": "Hình thoi",
+      "rubric": "Dấu hiệu hình bình hành có hai đường chéo vuông góc.",
+      "hints": [
+        "Cần thêm điều kiện nào để hình thoi trở thành hình vuông?",
+        "Dấu hiệu hình bình hành có hai đường chéo vuông góc — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l14-e3",
+      "chapterId": "c3",
+      "lessonId": "l14",
+      "skillId": "rhombus_square",
+      "skills": [
+        "rhombus_square"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận biết hình thoi, hình vuông; lựa chọn dấu hiệu đủ.",
+      "problem": "Hình chữ nhật ABCD có AB=BC. Chứng minh ABCD là hình vuông.",
+      "answer": "Hình chữ nhật có hai cạnh kề bằng nhau là hình vuông.",
+      "rubric": "Các cạnh đối bằng nhau cho bốn cạnh bằng nhau, cùng bốn góc vuông.",
+      "hints": [
+        "Cần thêm điều kiện nào để hình thoi trở thành hình vuông?",
+        "Các cạnh đối bằng nhau cho bốn cạnh bằng nhau, cùng bốn góc vuông — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l14-e4",
+      "chapterId": "c3",
+      "lessonId": "l14",
+      "skillId": "rhombus_square",
+      "skills": [
+        "rhombus_square"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận biết hình thoi, hình vuông; lựa chọn dấu hiệu đủ.",
+      "problem": "Tứ giác có hai đường chéo vuông góc có nhất thiết là hình thoi không?",
+      "answer": "Không",
+      "rubric": "Hình cánh diều với các cạnh không đồng thời bằng nhau là phản ví dụ; cần đủ tiền đề.",
+      "hints": [
+        "Cần thêm điều kiện nào để hình thoi trở thành hình vuông?",
+        "Hình cánh diều với các cạnh không đồng thời bằng nhau là phản ví dụ; cần đủ tiền đề — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l14-e5",
+      "chapterId": "c3",
+      "lessonId": "l14",
+      "skillId": "rhombus_square",
+      "skills": [
+        "rhombus_square"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận biết hình thoi, hình vuông; lựa chọn dấu hiệu đủ.",
+      "problem": "Một khung hình thoi có chu vi 28 cm. Tính độ dài cạnh.",
+      "answer": "7 cm",
+      "rubric": "Bốn cạnh bằng nhau.",
+      "hints": [
+        "Cần thêm điều kiện nào để hình thoi trở thành hình vuông?",
+        "Bốn cạnh bằng nhau — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "28/4",
+        "value": 7
+      }
+    },
+    {
+      "id": "l15-e1",
+      "chapterId": "c4",
+      "lessonId": "l15",
+      "skillId": "thales",
+      "skills": [
+        "thales"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận biết đoạn tương ứng; vận dụng định lí thuận, đảo để tính và chứng minh song song.",
+      "problem": "Tam giác ABC có M thuộc AB, N thuộc AC, MN song song BC. Biết AM=3 cm, AB=9 cm, AC=12 cm. Tính AN.",
+      "answer": "4 cm",
+      "rubric": "AM/AB=AN/AC; vị trí các điểm và song song đã cho.",
+      "hints": [
+        "Hai tỉ số em chọn có cùng vị trí tương ứng không?",
+        "AM/AB=AN/AC; vị trí các điểm và song song đã cho — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "3*12/9",
+        "value": 4
+      }
+    },
+    {
+      "id": "l15-e2",
+      "chapterId": "c4",
+      "lessonId": "l15",
+      "skillId": "thales",
+      "skills": [
+        "thales"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận biết đoạn tương ứng; vận dụng định lí thuận, đảo để tính và chứng minh song song.",
+      "problem": "Tam giác ABC có M thuộc AB, N thuộc AC, MN song song BC; AM=2 cm, MB=3 cm, AN=4 cm. Tính NC.",
+      "answer": "6 cm",
+      "rubric": "AM/MB=AN/NC.",
+      "hints": [
+        "Hai tỉ số em chọn có cùng vị trí tương ứng không?",
+        "AM/MB=AN/NC — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "3*4/2",
+        "value": 6
+      }
+    },
+    {
+      "id": "l15-e3",
+      "chapterId": "c4",
+      "lessonId": "l15",
+      "skillId": "thales",
+      "skills": [
+        "thales"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận biết đoạn tương ứng; vận dụng định lí thuận, đảo để tính và chứng minh song song.",
+      "problem": "Trong tam giác ABC, M thuộc AB, N thuộc AC; AM=2 cm, AB=6 cm, AN=3 cm, AC=9 cm. Chứng minh MN song song BC.",
+      "answer": "Áp dụng Thalès đảo vì 2/6=3/9.",
+      "rubric": "Các điểm thuộc đúng hai cạnh và tỉ số tương ứng bằng nhau.",
+      "hints": [
+        "Hai tỉ số em chọn có cùng vị trí tương ứng không?",
+        "Các điểm thuộc đúng hai cạnh và tỉ số tương ứng bằng nhau — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l15-e4",
+      "chapterId": "c4",
+      "lessonId": "l15",
+      "skillId": "thales",
+      "skills": [
+        "thales"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận biết đoạn tương ứng; vận dụng định lí thuận, đảo để tính và chứng minh song song.",
+      "problem": "Trong tam giác ABC chỉ biết M thuộc AB và N thuộc AC. Bạn viết AM/AB=AN/AC. Điều kiện nào còn thiếu để dùng Thalès thuận?",
+      "answer": "MN song song BC",
+      "rubric": "Không được suy song song chỉ từ hình vẽ.",
+      "hints": [
+        "Hai tỉ số em chọn có cùng vị trí tương ứng không?",
+        "Không được suy song song chỉ từ hình vẽ — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l15-e5",
+      "chapterId": "c4",
+      "lessonId": "l15",
+      "skillId": "thales",
+      "skills": [
+        "thales"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận biết đoạn tương ứng; vận dụng định lí thuận, đảo để tính và chứng minh song song.",
+      "problem": "Tam giác ABC mô tả hai đường ngắm từ A. M thuộc AB, N thuộc AC, MN song song BC; AM=5 m, MB=10 m, AN=4 m. Tính AC.",
+      "answer": "12 m",
+      "rubric": "AB=AM+MB=15 m; AN/AC=AM/AB.",
+      "hints": [
+        "Hai tỉ số em chọn có cùng vị trí tương ứng không?",
+        "AB=AM+MB=15 m; AN/AC=AM/AB — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "4*(5+10)/5",
+        "value": 12
+      }
+    },
+    {
+      "id": "l16-e1",
+      "chapterId": "c4",
+      "lessonId": "l16",
+      "skillId": "triangle_midline",
+      "skills": [
+        "triangle_midline"
+      ],
+      "level": "Nhận biết",
+      "objective": "Nhận biết đường trung bình; chứng minh song song và tính độ dài.",
+      "problem": "Trong tam giác ABC, M và N lần lượt là trung điểm AB và AC. Nêu quan hệ MN với BC.",
+      "answer": "MN song song BC và MN=BC/2",
+      "rubric": "Áp dụng định lí đường trung bình.",
+      "hints": [
+        "Cả hai đầu đoạn đã được xác định là trung điểm chưa?",
+        "Áp dụng định lí đường trung bình — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l16-e2",
+      "chapterId": "c4",
+      "lessonId": "l16",
+      "skillId": "triangle_midline",
+      "skills": [
+        "triangle_midline"
+      ],
+      "level": "Thực hành",
+      "objective": "Nhận biết đường trung bình; chứng minh song song và tính độ dài.",
+      "problem": "Trong tam giác ABC, M và N là trung điểm AB, AC; BC=14 cm. Tính MN.",
+      "answer": "7 cm",
+      "rubric": "MN là đường trung bình.",
+      "hints": [
+        "Cả hai đầu đoạn đã được xác định là trung điểm chưa?",
+        "MN là đường trung bình — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "14/2",
+        "value": 7
+      }
+    },
+    {
+      "id": "l16-e3",
+      "chapterId": "c4",
+      "lessonId": "l16",
+      "skillId": "triangle_midline",
+      "skills": [
+        "triangle_midline"
+      ],
+      "level": "Vận dụng",
+      "objective": "Nhận biết đường trung bình; chứng minh song song và tính độ dài.",
+      "problem": "Tam giác ABC có M là trung điểm AB. Đường qua M song song BC cắt AC tại N. Chứng minh N là trung điểm AC.",
+      "answer": "Theo Thalès AN/AC=AM/AB=1/2, nên AN=NC.",
+      "rubric": "N thuộc AC và hai đoạn bằng nhau; hoặc áp dụng định lí đường qua trung điểm.",
+      "hints": [
+        "Cả hai đầu đoạn đã được xác định là trung điểm chưa?",
+        "N thuộc AC và hai đoạn bằng nhau; hoặc áp dụng định lí đường qua trung điểm — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l16-e4",
+      "chapterId": "c4",
+      "lessonId": "l16",
+      "skillId": "triangle_midline",
+      "skills": [
+        "triangle_midline"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Nhận biết đường trung bình; chứng minh song song và tính độ dài.",
+      "problem": "Trong tam giác ABC, M là trung điểm AB, N thuộc AC bất kì. Có chắc MN=BC/2 không?",
+      "answer": "Không",
+      "rubric": "Chưa biết N là trung điểm hoặc MN song song BC.",
+      "hints": [
+        "Cả hai đầu đoạn đã được xác định là trung điểm chưa?",
+        "Chưa biết N là trung điểm hoặc MN song song BC — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l16-e5",
+      "chapterId": "c4",
+      "lessonId": "l16",
+      "skillId": "triangle_midline",
+      "skills": [
+        "triangle_midline"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Nhận biết đường trung bình; chứng minh song song và tính độ dài.",
+      "problem": "Giàn đỡ tam giác ABC có thanh MN nối trung điểm hai cạnh AB, AC. Thanh dài 2,4 m. Tìm BC.",
+      "answer": "4,8 m",
+      "rubric": "Cạnh thứ ba gấp đôi đường trung bình.",
+      "hints": [
+        "Cả hai đầu đoạn đã được xác định là trung điểm chưa?",
+        "Cạnh thứ ba gấp đôi đường trung bình — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "2*2.4",
+        "value": 4.8
+      }
+    },
+    {
+      "id": "l17-e1",
+      "chapterId": "c4",
+      "lessonId": "l17",
+      "skillId": "angle_bisector",
+      "skills": [
+        "angle_bisector"
+      ],
+      "level": "Nhận biết",
+      "objective": "Viết đúng tỉ lệ đoạn trên cạnh đối diện và tính độ dài.",
+      "problem": "Tam giác ABC có AD là phân giác góc A, D thuộc BC; AB=6 cm, AC=9 cm. Tìm BD/DC.",
+      "answer": "2/3",
+      "rubric": "BD/DC=AB/AC; tỉ số cùng thứ tự.",
+      "hints": [
+        "BD và DC lần lượt kề với cạnh nào của góc A?",
+        "BD/DC=AB/AC; tỉ số cùng thứ tự — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "6/9",
+        "value": 0.6666666666666666
+      }
+    },
+    {
+      "id": "l17-e2",
+      "chapterId": "c4",
+      "lessonId": "l17",
+      "skillId": "angle_bisector",
+      "skills": [
+        "angle_bisector"
+      ],
+      "level": "Thực hành",
+      "objective": "Viết đúng tỉ lệ đoạn trên cạnh đối diện và tính độ dài.",
+      "problem": "Tam giác ABC có AD phân giác góc A, D thuộc BC; AB=8 cm, AC=12 cm, BC=15 cm. Tính BD và DC.",
+      "answer": "BD=6 cm, DC=9 cm",
+      "rubric": "Chia 15 theo tỉ lệ 2:3.",
+      "hints": [
+        "BD và DC lần lượt kề với cạnh nào của góc A?",
+        "Chia 15 theo tỉ lệ 2:3 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l17-e3",
+      "chapterId": "c4",
+      "lessonId": "l17",
+      "skillId": "angle_bisector",
+      "skills": [
+        "angle_bisector"
+      ],
+      "level": "Vận dụng",
+      "objective": "Viết đúng tỉ lệ đoạn trên cạnh đối diện và tính độ dài.",
+      "problem": "Tam giác ABC có AD phân giác góc A, D thuộc BC; AB=5 cm, AC=10 cm, BD=3 cm. Tính DC.",
+      "answer": "6 cm",
+      "rubric": "BD/DC=1/2.",
+      "hints": [
+        "BD và DC lần lượt kề với cạnh nào của góc A?",
+        "BD/DC=1/2 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "3*10/5",
+        "value": 6
+      }
+    },
+    {
+      "id": "l17-e4",
+      "chapterId": "c4",
+      "lessonId": "l17",
+      "skillId": "angle_bisector",
+      "skills": [
+        "angle_bisector"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Viết đúng tỉ lệ đoạn trên cạnh đối diện và tính độ dài.",
+      "problem": "AD là phân giác trong tam giác ABC, D thuộc BC. Bạn viết BD/BC=AB/AC. Sửa tỉ lệ.",
+      "answer": "BD/DC=AB/AC",
+      "rubric": "Hai đoạn chia cạnh đối diện là BD và DC, không phải BD và BC.",
+      "hints": [
+        "BD và DC lần lượt kề với cạnh nào của góc A?",
+        "Hai đoạn chia cạnh đối diện là BD và DC, không phải BD và BC — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l17-e5",
+      "chapterId": "c4",
+      "lessonId": "l17",
+      "skillId": "angle_bisector",
+      "skills": [
+        "angle_bisector"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Viết đúng tỉ lệ đoạn trên cạnh đối diện và tính độ dài.",
+      "problem": "Khu vườn tam giác ABC có AB=8 m, AC=12 m, BC=10 m. Lối AD chia đôi góc A, D thuộc BC. Tìm BD.",
+      "answer": "4 m",
+      "rubric": "BD/DC=2/3; BD+DC=10.",
+      "hints": [
+        "BD và DC lần lượt kề với cạnh nào của góc A?",
+        "BD/DC=2/3; BD+DC=10 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "10*8/(8+12)",
+        "value": 4
+      }
+    },
+    {
+      "id": "l18-e1",
+      "chapterId": "c5",
+      "lessonId": "l18",
+      "skillId": "data_classification",
+      "skills": [
+        "data_classification"
+      ],
+      "level": "Nhận biết",
+      "objective": "Chọn cách thu thập; phân loại dữ liệu định tính và số liệu rời rạc, liên tục.",
+      "problem": "Dữ liệu tên môn thể thao yêu thích thuộc loại nào?",
+      "answer": "Dữ liệu không là số, không thể sắp thứ tự",
+      "rubric": "Tên loại không là đại lượng đo hay mức xếp hạng.",
+      "hints": [
+        "Dữ liệu này thu được bằng đếm, đo hay ghi tên loại?",
+        "Tên loại không là đại lượng đo hay mức xếp hạng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l18-e2",
+      "chapterId": "c5",
+      "lessonId": "l18",
+      "skillId": "data_classification",
+      "skills": [
+        "data_classification"
+      ],
+      "level": "Thực hành",
+      "objective": "Chọn cách thu thập; phân loại dữ liệu định tính và số liệu rời rạc, liên tục.",
+      "problem": "Số anh chị em của mỗi bạn là số liệu rời rạc hay liên tục?",
+      "answer": "Rời rạc",
+      "rubric": "Đây là số đếm nguyên không âm.",
+      "hints": [
+        "Dữ liệu này thu được bằng đếm, đo hay ghi tên loại?",
+        "Đây là số đếm nguyên không âm — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l18-e3",
+      "chapterId": "c5",
+      "lessonId": "l18",
+      "skillId": "data_classification",
+      "skills": [
+        "data_classification"
+      ],
+      "level": "Vận dụng",
+      "objective": "Chọn cách thu thập; phân loại dữ liệu định tính và số liệu rời rạc, liên tục.",
+      "problem": "Chiều cao đo bằng cm của học sinh là số liệu rời rạc hay liên tục?",
+      "answer": "Liên tục",
+      "rubric": "Là đại lượng đo, có thể mang các giá trị trong một khoảng.",
+      "hints": [
+        "Dữ liệu này thu được bằng đếm, đo hay ghi tên loại?",
+        "Là đại lượng đo, có thể mang các giá trị trong một khoảng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l18-e4",
+      "chapterId": "c5",
+      "lessonId": "l18",
+      "skillId": "data_classification",
+      "skills": [
+        "data_classification"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Chọn cách thu thập; phân loại dữ liệu định tính và số liệu rời rạc, liên tục.",
+      "problem": "Mã số học sinh 001, 002, 003 có nên tính trung bình để mô tả học lực không?",
+      "answer": "Không",
+      "rubric": "Mã là nhãn định danh, không phải số đo học lực.",
+      "hints": [
+        "Dữ liệu này thu được bằng đếm, đo hay ghi tên loại?",
+        "Mã là nhãn định danh, không phải số đo học lực — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l18-e5",
+      "chapterId": "c5",
+      "lessonId": "l18",
+      "skillId": "data_classification",
+      "skills": [
+        "data_classification"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Chọn cách thu thập; phân loại dữ liệu định tính và số liệu rời rạc, liên tục.",
+      "problem": "Muốn biết phương tiện đến trường của lớp, em chọn cách thu thập nào và cần hỏi gì?",
+      "answer": "Lập bảng hỏi hoặc phỏng vấn toàn lớp; hỏi phương tiện thường dùng và quy định chọn một loại.",
+      "rubric": "Xác định đối tượng, thời điểm và tránh đếm trùng.",
+      "hints": [
+        "Dữ liệu này thu được bằng đếm, đo hay ghi tên loại?",
+        "Xác định đối tượng, thời điểm và tránh đếm trùng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l19-e1",
+      "chapterId": "c5",
+      "lessonId": "l19",
+      "skillId": "chart_representation",
+      "skills": [
+        "chart_representation"
+      ],
+      "level": "Nhận biết",
+      "objective": "Chọn và chuyển đổi bảng, biểu đồ tranh, cột, cột kép, đoạn thẳng, quạt tròn.",
+      "problem": "Có số học sinh ba nhóm: A:10; B:15; C:5. Chọn biểu đồ phù hợp để so sánh số lượng.",
+      "answer": "Biểu đồ cột",
+      "rubric": "Ba nhóm là các loại, mục tiêu so sánh số lượng.",
+      "hints": [
+        "Mục tiêu là so sánh các nhóm, theo thời gian hay các phần của một tổng?",
+        "Ba nhóm là các loại, mục tiêu so sánh số lượng — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "chart": {
+        "labels": [
+          "A",
+          "B",
+          "C"
+        ],
+        "values": [
+          10,
+          15,
+          5
+        ],
+        "unit": "học sinh",
+        "label": "Nhóm"
+      }
+    },
+    {
+      "id": "l19-e2",
+      "chapterId": "c5",
+      "lessonId": "l19",
+      "skillId": "chart_representation",
+      "skills": [
+        "chart_representation"
+      ],
+      "level": "Thực hành",
+      "objective": "Chọn và chuyển đổi bảng, biểu đồ tranh, cột, cột kép, đoạn thẳng, quạt tròn.",
+      "problem": "Bảng số sách đọc theo tháng: T1:12; T2:18; T3:15; T4:24. Chọn biểu đồ để thấy thay đổi theo thời gian.",
+      "answer": "Biểu đồ đoạn thẳng (cột cũng có thể dùng cho ít mốc).",
+      "rubric": "Trục ngang là thời gian theo đúng thứ tự.",
+      "hints": [
+        "Mục tiêu là so sánh các nhóm, theo thời gian hay các phần của một tổng?",
+        "Trục ngang là thời gian theo đúng thứ tự — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "chart": {
+        "labels": [
+          "T1",
+          "T2",
+          "T3",
+          "T4"
+        ],
+        "values": [
+          12,
+          18,
+          15,
+          24
+        ],
+        "unit": "quyển",
+        "label": "Tháng"
+      }
+    },
+    {
+      "id": "l19-e3",
+      "chapterId": "c5",
+      "lessonId": "l19",
+      "skillId": "chart_representation",
+      "skills": [
+        "chart_representation"
+      ],
+      "level": "Vận dụng",
+      "objective": "Chọn và chuyển đổi bảng, biểu đồ tranh, cột, cột kép, đoạn thẳng, quạt tròn.",
+      "problem": "Một lớp có tỉ lệ chọn ba câu lạc bộ A=50%, B=30%, C=20%. Tính các góc quạt tròn.",
+      "answer": "180°,108°,72°",
+      "rubric": "Mỗi góc bằng tỉ lệ nhân 360°; tổng 360°.",
+      "hints": [
+        "Mục tiêu là so sánh các nhóm, theo thời gian hay các phần của một tổng?",
+        "Mỗi góc bằng tỉ lệ nhân 360°; tổng 360° — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "chart": {
+        "labels": [
+          "A",
+          "B",
+          "C"
+        ],
+        "values": [
+          50,
+          30,
+          20
+        ],
+        "unit": "%",
+        "label": "CLB",
+        "percent": true
+      }
+    },
+    {
+      "id": "l19-e4",
+      "chapterId": "c5",
+      "lessonId": "l19",
+      "skillId": "chart_representation",
+      "skills": [
+        "chart_representation"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Chọn và chuyển đổi bảng, biểu đồ tranh, cột, cột kép, đoạn thẳng, quạt tròn.",
+      "problem": "Ba phần trong một tổng được ghi 45%, 40%, 25%. Có thể vẽ biểu đồ quạt tròn cho toàn tổng như vậy không?",
+      "answer": "Không; tổng là 110%",
+      "rubric": "Kiểm tra tổng và dữ liệu gốc trước khi vẽ.",
+      "hints": [
+        "Mục tiêu là so sánh các nhóm, theo thời gian hay các phần của một tổng?",
+        "Kiểm tra tổng và dữ liệu gốc trước khi vẽ — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "45+40+25",
+        "value": 110
+      }
+    },
+    {
+      "id": "l19-e5",
+      "chapterId": "c5",
+      "lessonId": "l19",
+      "skillId": "chart_representation",
+      "skills": [
+        "chart_representation"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Chọn và chuyển đổi bảng, biểu đồ tranh, cột, cột kép, đoạn thẳng, quạt tròn.",
+      "problem": "Số sách hai lớp trong hai tháng: tháng 1, lớp 8A:12, 8B:10; tháng 2, lớp 8A:18, 8B:16. Chọn biểu đồ so sánh hai lớp theo tháng.",
+      "answer": "Biểu đồ cột kép",
+      "rubric": "Có hai tập số liệu và hai thời điểm; cần chú giải lớp.",
+      "hints": [
+        "Mục tiêu là so sánh các nhóm, theo thời gian hay các phần của một tổng?",
+        "Có hai tập số liệu và hai thời điểm; cần chú giải lớp — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "chart": {
+        "labels": [
+          "T1",
+          "T2"
+        ],
+        "values": [
+          12,
+          18
+        ],
+        "second": [
+          10,
+          16
+        ],
+        "series": [
+          "8A",
+          "8B"
+        ],
+        "unit": "quyển",
+        "label": "Tháng"
+      }
+    },
+    {
+      "id": "l20-e1",
+      "chapterId": "c5",
+      "lessonId": "l20",
+      "skillId": "data_analysis",
+      "skills": [
+        "data_analysis"
+      ],
+      "level": "Nhận biết",
+      "objective": "Đọc, so sánh, nhận xét xu hướng và phát hiện biểu diễn dễ gây hiểu nhầm.",
+      "problem": "Số sách ba nhóm quyên góp: A:10; B:15; C:5. Nhóm nào nhiều nhất và hơn nhóm ít nhất bao nhiêu quyển?",
+      "answer": "B; hơn C 10 quyển",
+      "rubric": "Đọc 15 và 5, tính hiệu.",
+      "hints": [
+        "Nhận xét của em được hỗ trợ bởi hai số liệu nào?",
+        "Đọc 15 và 5, tính hiệu — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "chart": {
+        "labels": [
+          "A",
+          "B",
+          "C"
+        ],
+        "values": [
+          10,
+          15,
+          5
+        ],
+        "unit": "quyển",
+        "label": "Nhóm"
+      },
+      "verification": {
+        "kind": "number",
+        "expression": "15-5",
+        "value": 10
+      }
+    },
+    {
+      "id": "l20-e2",
+      "chapterId": "c5",
+      "lessonId": "l20",
+      "skillId": "data_analysis",
+      "skills": [
+        "data_analysis"
+      ],
+      "level": "Thực hành",
+      "objective": "Đọc, so sánh, nhận xét xu hướng và phát hiện biểu diễn dễ gây hiểu nhầm.",
+      "problem": "Số sản phẩm trong ba tháng lần lượt 20, 30, 25. Nhận xét xu hướng.",
+      "answer": "Tăng 10 từ tháng 1 đến 2; giảm 5 từ tháng 2 đến 3; không tăng liên tục.",
+      "rubric": "Đối chiếu từng khoảng thay vì chỉ đầu và cuối.",
+      "hints": [
+        "Nhận xét của em được hỗ trợ bởi hai số liệu nào?",
+        "Đối chiếu từng khoảng thay vì chỉ đầu và cuối — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "chart": {
+        "labels": [
+          "T1",
+          "T2",
+          "T3"
+        ],
+        "values": [
+          20,
+          30,
+          25
+        ],
+        "unit": "sản phẩm",
+        "label": "Tháng"
+      }
+    },
+    {
+      "id": "l20-e3",
+      "chapterId": "c5",
+      "lessonId": "l20",
+      "skillId": "data_analysis",
+      "skills": [
+        "data_analysis"
+      ],
+      "level": "Vận dụng",
+      "objective": "Đọc, so sánh, nhận xét xu hướng và phát hiện biểu diễn dễ gây hiểu nhầm.",
+      "problem": "Số học sinh tham gia CLB tăng từ 20 lên 25. Tính phần trăm tăng so với ban đầu.",
+      "answer": "25%",
+      "rubric": "Hiệu 5 chia số ban đầu 20 rồi nhân 100.",
+      "hints": [
+        "Nhận xét của em được hỗ trợ bởi hai số liệu nào?",
+        "Hiệu 5 chia số ban đầu 20 rồi nhân 100 — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "(25-20)/20*100",
+        "value": 25
+      }
+    },
+    {
+      "id": "l20-e4",
+      "chapterId": "c5",
+      "lessonId": "l20",
+      "skillId": "data_analysis",
+      "skills": [
+        "data_analysis"
+      ],
+      "level": "Phân tích lỗi",
+      "objective": "Đọc, so sánh, nhận xét xu hướng và phát hiện biểu diễn dễ gây hiểu nhầm.",
+      "problem": "Hai cột biểu diễn 90 và 100 nhưng trục dọc bắt đầu từ 80. Bạn nói số thứ hai gấp đôi số thứ nhất vì chiều cao cột gấp đôi. Em phản biện.",
+      "answer": "Sai; tỉ số dữ liệu là 100/90=10/9, không phải 2.",
+      "rubric": "Trục bị cắt làm sai nhận xét từ chiều cao cột.",
+      "hints": [
+        "Nhận xét của em được hỗ trợ bởi hai số liệu nào?",
+        "Trục bị cắt làm sai nhận xét từ chiều cao cột — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức"
+    },
+    {
+      "id": "l20-e5",
+      "chapterId": "c5",
+      "lessonId": "l20",
+      "skillId": "data_analysis",
+      "skills": [
+        "data_analysis"
+      ],
+      "level": "Thực tế / vận dụng",
+      "objective": "Đọc, so sánh, nhận xét xu hướng và phát hiện biểu diễn dễ gây hiểu nhầm.",
+      "problem": "Khảo sát 30 bạn trong lớp có 18 bạn thích bóng đá. Có thể kết luận 60% học sinh toàn trường thích bóng đá không?",
+      "answer": "Chưa; 60% chỉ mô tả mẫu 30 bạn đã khảo sát.",
+      "rubric": "Cần mẫu đại diện và phạm vi kết luận phù hợp.",
+      "hints": [
+        "Nhận xét của em được hỗ trợ bởi hai số liệu nào?",
+        "Cần mẫu đại diện và phạm vi kết luận phù hợp — em sẽ dùng điều này thế nào?",
+        "Em kiểm tra kết quả theo dữ kiện ban đầu như thế nào?"
+      ],
+      "source": "Tự biên soạn theo phạm vi SGK Toán 8 tập 1 – Kết nối tri thức",
+      "verification": {
+        "kind": "number",
+        "expression": "18/30*100",
+        "value": 60
+      }
+    }
+  ]
+}

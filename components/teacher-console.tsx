@@ -1,3 +1,4 @@
+import curriculumSkills from '../lib/skill-labels.json';
 import { useEffect, useState } from 'react';
 import { downloadJSON } from '../lib/learning-memory';
 import '../app/learning-memory.css';
@@ -44,6 +45,7 @@ type Dashboard = {
   profiles: Profile[];
 };
 const skills: Record<string, string> = {
+  ...curriculumSkills,
   reading: 'Đọc và tách đề',
   midpoint: 'Trung điểm',
   parallel: 'Song song',

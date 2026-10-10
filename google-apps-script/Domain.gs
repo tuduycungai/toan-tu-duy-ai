@@ -1,8 +1,134 @@
 // Generated from server/learning/domain.mjs and engine.mjs. Edit sources, then run npm run build:gateway.
-const RULE_VERSION = '6.5.0-r1';
+const RULE_VERSION = '6.6.0-r1';
+const LEGACY_RULE_VERSION = '6.5.0-r1';
+const CURRICULUM_UNITS = {
+  l01: { chapterId: 'c1', skills: ['monomial'] },
+  l02: { chapterId: 'c1', skills: ['polynomial'] },
+  l03: { chapterId: 'c1', skills: ['add_subtract'] },
+  l04: { chapterId: 'c1', skills: ['multiply'] },
+  l05: { chapterId: 'c1', skills: ['divide'] },
+  l06: { chapterId: 'c2', skills: ['square_identity'] },
+  l07: { chapterId: 'c2', skills: ['cube_identity'] },
+  l08: { chapterId: 'c2', skills: ['cube_factor'] },
+  l09: { chapterId: 'c2', skills: ['factorisation'] },
+  l10: { chapterId: 'c3', skills: ['quadrilateral'] },
+  l11: { chapterId: 'c3', skills: ['isosceles_trapezoid'] },
+  l12: { chapterId: 'c3', skills: ['parallelogram'] },
+  l13: { chapterId: 'c3', skills: ['rectangle'] },
+  l14: { chapterId: 'c3', skills: ['rhombus_square'] },
+  l15: { chapterId: 'c4', skills: ['thales'] },
+  l16: { chapterId: 'c4', skills: ['triangle_midline'] },
+  l17: { chapterId: 'c4', skills: ['angle_bisector'] },
+  l18: { chapterId: 'c5', skills: ['data_classification'] },
+  l19: { chapterId: 'c5', skills: ['chart_representation'] },
+  l20: { chapterId: 'c5', skills: ['data_analysis'] },
+  'c1-review-3': { chapterId: 'c1', skills: ['monomial', 'polynomial', 'add_subtract'] },
+  'c1-review-5': {
+    chapterId: 'c1',
+    skills: ['monomial', 'polynomial', 'add_subtract', 'multiply', 'divide'],
+  },
+  'c1-end': {
+    chapterId: 'c1',
+    skills: ['monomial', 'polynomial', 'add_subtract', 'multiply', 'divide'],
+  },
+  'c2-review-8': { chapterId: 'c2', skills: ['square_identity', 'cube_identity', 'cube_factor'] },
+  'c2-review-9': {
+    chapterId: 'c2',
+    skills: ['square_identity', 'cube_identity', 'cube_factor', 'factorisation'],
+  },
+  'c2-end': {
+    chapterId: 'c2',
+    skills: ['square_identity', 'cube_identity', 'cube_factor', 'factorisation'],
+  },
+  'c3-review-11': { chapterId: 'c3', skills: ['quadrilateral', 'isosceles_trapezoid'] },
+  'c3-review-12': {
+    chapterId: 'c3',
+    skills: ['quadrilateral', 'isosceles_trapezoid', 'parallelogram'],
+  },
+  'c3-review-14': {
+    chapterId: 'c3',
+    skills: [
+      'quadrilateral',
+      'isosceles_trapezoid',
+      'parallelogram',
+      'rectangle',
+      'rhombus_square',
+    ],
+  },
+  'c3-end': {
+    chapterId: 'c3',
+    skills: [
+      'quadrilateral',
+      'isosceles_trapezoid',
+      'parallelogram',
+      'rectangle',
+      'rhombus_square',
+    ],
+  },
+  'c4-review-17': { chapterId: 'c4', skills: ['thales', 'triangle_midline', 'angle_bisector'] },
+  'c4-end': { chapterId: 'c4', skills: ['thales', 'triangle_midline', 'angle_bisector'] },
+  'c5-review-20': {
+    chapterId: 'c5',
+    skills: ['data_classification', 'chart_representation', 'data_analysis'],
+  },
+  'c5-end': {
+    chapterId: 'c5',
+    skills: ['data_classification', 'chart_representation', 'data_analysis'],
+  },
+};
+function validLearningContext(e) {
+  if (!e.chapterId && !e.lessonId) return typeof e.skill === 'string' && !e.skill.includes(':');
+  const unit = CURRICULUM_UNITS[e.lessonId];
+  return (
+    !!unit &&
+    unit.chapterId === e.chapterId &&
+    (e.skill === e.chapterId + ':reading' ||
+      unit.skills.some((s) => e.skill === e.chapterId + ':' + s)) &&
+    e.skillId === e.skill &&
+    typeof e.problemId === 'string'
+  );
+}
+function scopedProfile(p, chapterId, lessonId) {
+  const key = chapterId + ':' + lessonId;
+  return p?.scopes?.[key] || emptyProgress(p?.studentId || '');
+}
+
 const CONSENT_VERSION = '2026-09-v1';
 const RETENTION_DAYS = 90;
-const SKILLS = ['reading', 'midpoint', 'parallel', 'quadrilateral', 'proof'];
+const SKILLS = [
+  'reading',
+  'midpoint',
+  'parallel',
+  'quadrilateral',
+  'proof',
+  ...[
+    'c1:monomial',
+    'c1:polynomial',
+    'c1:add_subtract',
+    'c1:multiply',
+    'c1:divide',
+    'c2:square_identity',
+    'c2:cube_identity',
+    'c2:cube_factor',
+    'c2:factorisation',
+    'c3:quadrilateral',
+    'c3:isosceles_trapezoid',
+    'c3:parallelogram',
+    'c3:rectangle',
+    'c3:rhombus_square',
+    'c4:thales',
+    'c4:triangle_midline',
+    'c4:angle_bisector',
+    'c5:data_classification',
+    'c5:chart_representation',
+    'c5:data_analysis',
+    'c1:reading',
+    'c2:reading',
+    'c3:reading',
+    'c4:reading',
+    'c5:reading',
+  ],
+];
 const ERRORS = [
   'wrong_given_goal',
   'wrong_theorem',
@@ -60,8 +186,17 @@ function emptyProgress(studentId) {
     updatedAt: '',
   };
 }
-function updateProgress(previous, event) {
+function updateProgress(previous, event, scoped = false) {
   const p = JSON.parse(JSON.stringify(previous || emptyProgress(event.studentId)));
+  if (!scoped && event.chapterId && event.lessonId) {
+    p.scopes = p.scopes || {};
+    const key = event.chapterId + ':' + event.lessonId;
+    p.scopes[key] = updateProgress(
+      p.scopes[key] || emptyProgress(event.studentId),
+      event,
+      true,
+    ).profile;
+  }
   p.turns++;
   const chronological = !p.last?.at || event.updatedAt >= p.last.at;
   p.updatedAt = p.updatedAt && p.updatedAt > event.updatedAt ? p.updatedAt : event.updatedAt;
@@ -158,6 +293,7 @@ function profileSummary(p) {
     supportLevel: p.supportLevel,
     observedTurns: p.turns,
     skills: p.skills,
+    scopes: p.scopes || {},
     repeatedErrors: p.errors,
     stages: p.stages,
     recentSessions: p.sessions.slice(-3),
@@ -405,7 +541,8 @@ function runOperation(db, op, a, now = Date.now()) {
         e.hintLevel > 4 ||
         !['correct', 'incorrect', 'uncertain'].includes(e.verdict) ||
         !['', ...ERRORS].includes(e.errorKind) ||
-        e.ruleVersion !== RULE_VERSION ||
+        ![RULE_VERSION, LEGACY_RULE_VERSION].includes(e.ruleVersion) ||
+        (e.ruleVersion === RULE_VERSION && !validLearningContext(e)) ||
         JSON.stringify(e).length > 10000 ||
         now - Date.parse(e.updatedAt) > 86400000 ||
         Date.parse(e.updatedAt) > now + 60000 ||
@@ -420,6 +557,12 @@ function runOperation(db, op, a, now = Date.now()) {
       }
       const session = db.get('Sessions', e.sessionId);
       if (session && session.studentId !== s.id) fail('Phiên học không hợp lệ.', 403);
+      if (
+        session?.chapterId &&
+        session.chapterId !== 'unclassified' &&
+        (session.chapterId !== e.chapterId || session.lessonId !== e.lessonId)
+      )
+        fail('Phiên thuộc chương hoặc bài khác.', 409);
       if ((session?.turns || 0) >= 150)
         fail('Phiên đã đủ 150 lượt lưu. Em có thể tiếp tục học không ghi hoặc mở buổi mới.', 429);
       const day = at.slice(0, 10);
@@ -440,6 +583,8 @@ function runOperation(db, op, a, now = Date.now()) {
         id: e.sessionId,
         studentId: s.id,
         turns: (session?.turns || 0) + 1,
+        chapterId: e.chapterId || session?.chapterId || 'unclassified',
+        lessonId: e.lessonId || session?.lessonId || 'unclassified',
         createdAt: session?.createdAt || at,
         updatedAt: at,
       });
@@ -450,6 +595,8 @@ function runOperation(db, op, a, now = Date.now()) {
           kind: candidate,
           status: 'pending',
           skill: e.skill,
+          chapterId: e.chapterId || 'unclassified',
+          lessonId: e.lessonId || 'unclassified',
           errorKind: e.errorKind,
           question: e.question,
           answer: e.answer,
@@ -497,6 +644,8 @@ function runOperation(db, op, a, now = Date.now()) {
           kind: 'guidance_concern',
           status: 'pending',
           skill: e.skill,
+          chapterId: e.chapterId || 'unclassified',
+          lessonId: e.lessonId || 'unclassified',
           errorKind: e.errorKind,
           question: e.question,
           answer: e.answer,

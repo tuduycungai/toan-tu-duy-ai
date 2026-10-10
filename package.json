@@ -1,6 +1,6 @@
 {
   "name": "toan-tu-duy-ai-netlify",
-  "version": "6.5.0",
+  "version": "6.6.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -15,7 +15,7 @@
     "test:v5": "node --test tests/v5-*.test.mjs",
     "test:ui": "node scripts/check-v630-ui.mjs",
     "test:ui:legacy": "node scripts/check-ui.mjs",
-    "prebuild": "node scripts/prepare-tikz.mjs",
+    "prebuild": "node scripts/build-curriculum.mjs && node scripts/build-learning-gateway.mjs && node scripts/prepare-tikz.mjs",
     "prestart": "node scripts/prepare-tikz.mjs",
     "predev": "node scripts/prepare-tikz.mjs",
     "test:ui:v5": "node scripts/check-v5-ui.mjs",
@@ -36,7 +36,10 @@
     "review:figures": "node scripts/render-v640-review.mjs",
     "build:gateway": "node scripts/build-learning-gateway.mjs",
     "test:learning": "node --test tests/v650-*.test.mjs",
-    "test:ui:v650": "node scripts/check-v650-ui.mjs"
+    "test:ui:v650": "node scripts/check-v650-ui.mjs",
+    "test:v660": "node --test tests/v660-*.test.mjs",
+    "test:ui:v660": "node scripts/check-v660-ui.mjs",
+    "test:ui:regression:v660": "node scripts/check-v660-regression-ui.mjs"
   },
   "dependencies": {
     "@rod2ik/tikzjax": "1.6.0",

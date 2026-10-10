@@ -1,5 +1,7 @@
 import {
   RULE_VERSION,
+  LEGACY_RULE_VERSION,
+  validLearningContext,
   CONSENT_VERSION,
   RETENTION_DAYS,
   TABLES,
@@ -180,7 +182,8 @@ export function runOperation(db, op, a, now = Date.now()) {
         e.hintLevel > 4 ||
         !['correct', 'incorrect', 'uncertain'].includes(e.verdict) ||
         !['', ...ERRORS].includes(e.errorKind) ||
-        e.ruleVersion !== RULE_VERSION ||
+        ![RULE_VERSION, LEGACY_RULE_VERSION].includes(e.ruleVersion) ||
+        (e.ruleVersion === RULE_VERSION && !validLearningContext(e)) ||
         JSON.stringify(e).length > 10000 ||
         now - Date.parse(e.updatedAt) > 86400000 ||
         Date.parse(e.updatedAt) > now + 60000 ||
@@ -195,6 +198,12 @@ export function runOperation(db, op, a, now = Date.now()) {
       }
       const session = db.get('Sessions', e.sessionId);
       if (session && session.studentId !== s.id) fail('Phiên học không hợp lệ.', 403);
+      if (
+        session?.chapterId &&
+        session.chapterId !== 'unclassified' &&
+        (session.chapterId !== e.chapterId || session.lessonId !== e.lessonId)
+      )
+        fail('Phiên thuộc chương hoặc bài khác.', 409);
       if ((session?.turns || 0) >= 150)
         fail('Phiên đã đủ 150 lượt lưu. Em có thể tiếp tục học không ghi hoặc mở buổi mới.', 429);
       const day = at.slice(0, 10);
@@ -215,6 +224,8 @@ export function runOperation(db, op, a, now = Date.now()) {
         id: e.sessionId,
         studentId: s.id,
         turns: (session?.turns || 0) + 1,
+        chapterId: e.chapterId || session?.chapterId || 'unclassified',
+        lessonId: e.lessonId || session?.lessonId || 'unclassified',
         createdAt: session?.createdAt || at,
         updatedAt: at,
       });
@@ -225,6 +236,8 @@ export function runOperation(db, op, a, now = Date.now()) {
           kind: candidate,
           status: 'pending',
           skill: e.skill,
+          chapterId: e.chapterId || 'unclassified',
+          lessonId: e.lessonId || 'unclassified',
           errorKind: e.errorKind,
           question: e.question,
           answer: e.answer,
@@ -272,6 +285,8 @@ export function runOperation(db, op, a, now = Date.now()) {
           kind: 'guidance_concern',
           status: 'pending',
           skill: e.skill,
+          chapterId: e.chapterId || 'unclassified',
+          lessonId: e.lessonId || 'unclassified',
           errorKind: e.errorKind,
           question: e.question,
           answer: e.answer,

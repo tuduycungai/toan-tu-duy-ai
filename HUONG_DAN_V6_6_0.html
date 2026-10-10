@@ -1,0 +1,64 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TƯ DUY TOÁN HỌC 8 – Cập nhật V6.6.0</title><style>body{margin:0;background:#eef5ed;color:#193b35;font:17px/1.8 system-ui,sans-serif}main{max-width:900px;margin:40px auto;padding:36px;background:#fff;border-radius:18px}h1{font-size:32px;line-height:1.3}h2{font-size:23px;margin-top:42px;padding-top:20px;border-top:1px solid #dae4dc}li{padding:9px 0}code{font-size:.88em;background:#eef3ef;padding:2px 5px;overflow-wrap:anywhere}a{color:#1c6f58}nav{background:#eaf4e9;border-radius:10px;padding:20px}nav a{display:block;margin:6px 0}@media(max-width:650px){main{margin:0;padding:22px;border-radius:0}h1{font-size:28px}body{font-size:16px}}</style><main><nav><b>Tài liệu trong ZIP</b><a href="docs/v660/DOI_CHIEU_CHUC_NANG.md">Đối chiếu chức năng</a><a href="docs/v660/PHU_CHUONG_TRINH.md">Phủ chương trình</a><a href="docs/v660/BAO_CAO_KIEM_THU.md">Báo cáo kiểm thử và giới hạn</a><a href="docs/v660/MIGRATION_V660.md">Chi tiết migration</a></nav><h1>TƯ DUY TOÁN HỌC 8 — cập nhật V6.6.0</h1>
+<p>Bản nâng cấp trực tiếp từ ZIP V6.5.0 được cung cấp: 5 chương, 20 bài, 14 mục luyện tập/ôn tập và 100 bài tự biên soạn mới. Giữ 87 bài Tứ giác cũ, Vite/React, Netlify Functions và các bộ điều hợp OpenAI/Gemini.</p>
+<p><strong>Nếu website V6.5.0 đang chạy và đã có 9 bảng Google Sheets:</strong> làm phần A → B → C → D. Không tạo bảng tính mới, không xóa dữ liệu và không tạo lại các khóa đã dùng.</p>
+<h2>A. Sao lưu trước khi cập nhật</h2>
+<ol>
+<li>Giữ lại ZIP hoặc bản mã nguồn V6.5.0 đang triển khai.</li>
+<li>Trong Google Sheets hiện có, chọn Tệp → Tạo bản sao. Đặt tên có ngày sao lưu. Giữ bản sao riêng; ứng dụng vẫn dùng bảng tính gốc.</li>
+<li>Chọn thời điểm lớp không đang ghi dữ liệu. Không sửa hay sắp xếp trực tiếp các hàng trong 9 tab hệ thống khi ứng dụng đang ghi.</li>
+<li>Giải nén ZIP V6.6.0. Mở thư mục <strong>TU-DUY-TOAN-HOC-V6_6_0</strong>. Đây là thư mục chứa <code>package.json</code>, <code>netlify.toml</code>, <code>app</code>, <code>server</code> và <code>google-apps-script</code>.</li>
+</ol>
+<h2>B. Cập nhật Apps Script đang dùng</h2>
+<p>Cần cập nhật vì máy chủ gửi thêm chương, bài và kỹ năng; cổng cũ chưa hiểu các kỹ năng mới.</p>
+<ol>
+<li>Mở <strong>bảng tính gốc</strong> → Tiện ích mở rộng / Extensions → Apps Script.</li>
+<li>Mở tệp <code>Code.gs</code> trong dự án Apps Script hiện tại.</li>
+<li>Mở <code>google-apps-script/Code.gs</code> trong ZIP bằng trình soạn thảo văn bản. Sao chép <strong>nội dung tệp</strong>, thay toàn bộ nội dung của <code>Code.gs</code> trên Google.</li>
+<li>Mở tệp <code>Domain.gs</code> trên Google; thay nội dung bằng <code>google-apps-script/Domain.gs</code> trong ZIP. Không gộp hai tệp vào một tệp.</li>
+<li>Bấm Lưu. Bản sinh <code>Domain.gs</code> đã được kiểm tra cú pháp ES2020, tránh lỗi <code>Unexpected token =</code> đã gặp ở bản cũ.</li>
+<li>Giữ nguyên <code>SPREADSHEET_ID</code> và <code>GATEWAY_SECRET</code> trong Project Settings → Script Properties. Giữ Google Sheets API v4 và trigger <code>purgeExpired</code> hằng ngày đang có. Manifest không đổi so với V6.5.0.</li>
+<li>Ở ô chọn hàm cạnh nút Run, chọn <strong><code>migrateV660</code></strong> rồi bấm <strong>Run</strong>. Nếu Google yêu cầu cấp quyền, kiểm tra đúng dự án của thầy rồi tiếp tục theo tài khoản được phép quản lý bảng tính.</li>
+<li>Mở tab <strong>Turns</strong> trong bảng tính gốc. Ba cột mới là <strong>T: chapterId</strong>, <strong>U: lessonId</strong>, <strong>V: skillId</strong>. Cột A–S và JSON trong cột F được giữ nguyên. Dữ liệu cũ thiếu nhãn hiển thị <code>unclassified</code>.</li>
+<li>Có thể chạy <code>migrateV660</code> lần nữa: không thêm dòng, không tạo trùng, không xóa dữ liệu. Nếu báo thứ tự cột không chuẩn, dừng và đối chiếu với bản sao; không xóa hàng hay tự dịch cột để ép chạy.</li>
+<li>Chọn <strong>Deploy → Manage deployments → biểu tượng bút chì → Version: New version → Deploy</strong> cho deployment đang dùng. Chỉ bấm Lưu mã chưa cập nhật <code>/exec</code>.</li>
+<li>Nếu sửa đúng deployment hiện tại, URL <code>/exec</code> giữ nguyên. Giữ <code>LEARNING_GATEWAY_URL</code> trên Netlify. Chỉ sửa biến đó nếu thầy thực sự tạo deployment khác có URL mới.</li>
+</ol>
+<p>Nếu chưa từng bật Google Sheets: làm hướng dẫn <code>docs/v650/HUONG_DAN_GOOGLE_SHEETS.md</code> với <strong>hai tệp Apps Script của V6.6.0</strong>. Chạy <code>setup</code> cho bảng mới; <code>setup</code> tạo đủ 22 cột Turns. Không chạy <code>setup</code> để thay cho migration bảng cũ. Khi chưa cấu hình bộ nhớ, học sinh vẫn học được và ứng dụng báo chưa ghi dữ liệu.</p>
+<h2>C. Thay mã nguồn và build lại Netlify</h2>
+<ol>
+<li>Mở kho mã nguồn đang nối với Netlify trên máy tính. Sao lưu những chỉnh sửa riêng chưa có trong ZIP.</li>
+<li>Chép nội dung thư mục <code>TU-DUY-TOAN-HOC-V6_6_0</code> vào <strong>thư mục gốc kho hiện tại</strong>, nơi đang có <code>package.json</code>. Không chép lồng thêm một tầng thư mục. Không xóa thư mục <code>.git</code> của kho.</li>
+<li>Giữ nguyên biến môi trường trên Netlify: nhà cung cấp AI, khóa API, mô hình, mã lớp, khóa ký, URL và các khóa bộ nhớ. V6.6.0 không yêu cầu biến mới. <code>.env.example</code> chỉ là mẫu, không chứa khóa thật.</li>
+<li>Nếu dùng GitHub Desktop: mở Changes, xem danh sách đổi mới, nhập tiêu đề <code>Nang cap Toan 8 tap 1 V6.6.0</code>, bấm Commit rồi Push origin. Cách này không bị giới hạn số tệp của thao tác upload từng tệp trên website GitHub.</li>
+<li>Netlify tiếp tục dùng <strong>Build command: <code>npm run build</code></strong>, <strong>Publish: <code>dist</code></strong>, <strong>Functions: <code>netlify/functions</code></strong>, <strong>Node: 22</strong> theo <code>netlify.toml</code>.</li>
+<li>Chờ deploy xong. Phải có các Functions <code>chat</code>, <code>learning</code>, <code>teacher</code>, <code>feedback</code>. Không chỉ kéo <code>dist</code> vào Netlify Drop: giao diện tĩnh không thay cho các Functions.</li>
+<li>Mở lại website. Lượt truy cập mới phải vào trang có <strong>5 thẻ chương</strong> và tên <strong>TƯ DUY TOÁN HỌC 8</strong>.</li>
+</ol>
+<h2>D. Kiểm tra sau triển khai bằng tài khoản thật</h2>
+<p>Các bước dưới đây thầy thực hiện trên hệ thống của mình; gói bàn giao chưa kiểm tra dịch vụ thật.</p>
+<ol>
+<li>Bấm Chương I → chọn Bài 1 → Kết nối AI → nhập mã lớp đang cấu hình. Tên/trường/email có thể để trống; chọn lớp và mức học phù hợp.</li>
+<li>Chọn một bài mẫu và bấm Gửi. AI phải hỏi một bước, chưa cung cấp toàn bộ lời giải. Trả lời câu hỏi bằng một bước có căn cứ.</li>
+<li>Mở Bộ nhớ học tập. Nếu thầy đang dùng mã thử, bật ghi nhớ sau khi đọc và đồng ý thông báo; cất mã khôi phục riêng.</li>
+<li>Gửi một đề mới, đợi câu hỏi rồi trả lời. <strong>Đề mở đầu không được tính là câu trả lời đã hiểu.</strong> Chỉ coi đã lưu khi giao diện báo Google Sheets xác nhận.</li>
+<li>Kiểm tra dòng mới trong Turns: <code>chapterId=c1</code>, <code>lessonId=l01</code>, <code>skillId=c1:reading</code> ở giai đoạn đọc hiểu, hoặc <code>c1:monomial</code> khi đánh giá kỹ năng bài. JSON cột F chứa đầy đủ <code>problemId</code> và <code>sessionId</code>.</li>
+<li>Về trang chủ → Chương V → Bài 19. Xác nhận một bảng dữ liệu rồi thử cột, đoạn thẳng và quạt tròn. Biểu đồ dùng số đã xác nhận; dữ liệu phần trăm sai tổng sẽ bị từ chối.</li>
+<li>Quay lại Chương I; hội thoại và bản nháp vẫn ở đúng bài. Tải lại trang để kiểm tra phục hồi. Sau tải lại phải nhập lại mã lớp vì mã chỉ giữ trong bộ nhớ của trang.</li>
+<li>Mở Chương III: kiểm tra 6 bài mẫu cũ, 81 bài trong phiếu, xem hình/xuất hình, nhập ảnh và khảo sát. Chu kỳ khảo sát giữ <strong>13 phút</strong> theo mã nguồn gốc.</li>
+<li>Mở <code>?teacher=1</code> hoặc đường dẫn Khu vực giáo viên. Kiểm tra đăng nhập bằng khóa quản trị, xem trường hợp theo kỹ năng và duyệt một mẫu đã tự kiểm tra toán học.</li>
+<li>Với mã thử, xuất dữ liệu để đối chiếu; dùng nút xóa dữ liệu của mã thử khi không còn cần. Không xóa dữ liệu học sinh đang sử dụng.</li>
+</ol>
+<h2>E. Cách học và khôi phục phiên</h2>
+<p>- Đường dẫn trực tiếp: <code>/?chapter=c1&amp;lesson=l01</code>, <code>/?chapter=c3&amp;lesson=l12</code>, <code>/?chapter=c5&amp;lesson=l19</code>.</p>
+<p>- Mỗi cặp chương/bài có hội thoại, ảnh đã đọc, bản nháp, hồ sơ hỗ trợ và mã phiên riêng. Đổi chương bằng Về trang chủ; không mở Bài mới nếu muốn giữ nội dung hiện tại.</p>
+<p>- Phiên cục bộ giữ trong cùng thẻ trình duyệt, tối đa 12 giờ; đây không phải đồng bộ hội thoại đầy đủ qua thiết bị. Bộ nhớ Google giữ hồ sơ tiến bộ theo cơ chế đã có.</p>
+<p>- Trang chủ có Tiếp tục học khi tìm thấy phiên hợp lệ. Phiên trước khi nâng cấp cần người học chọn chương; bản cũ được giữ, trạng thái suy luận được khởi động lại để tránh nhầm chương.</p>
+<p>- Đề ảnh: chọn/chụp ảnh → đọc → sửa văn bản nếu cần → xác nhận. Đổi văn bản cần xác nhận lại. Đại số/thống kê không ép dựng hình; hình học tiếp tục cần hình đã kiểm tra.</p>
+<p>- Lý thuyết ngoài ngân hàng dựa vào bài đang chọn: đối chiếu điều kiện với đề. Gợi ý chuyển chương là đề xuất; người học quyết định mở chương mới.</p>
+<h2>F. Nếu cần quay về bản trước</h2>
+<ol>
+<li>Trên Netlify, redeploy bản mã V6.5.0 đã lưu.</li>
+<li>Nếu cần đồng bộ cổng cũ, triển khai lại phiên bản Apps Script trước trong <strong>cùng</strong> dự án/deployment.</li>
+<li>Giữ nguyên bảng tính. Ba cột thêm ở cuối không làm thay đổi vị trí A–S; không xóa dữ liệu để rollback.</li>
+<li>Dữ liệu mới có kỹ năng V6.6.0 vẫn còn trong JSON. Giao diện cũ có thể chưa hiển thị tên kỹ năng mới; dùng lại V6.6.0 để xem đúng.</li>
+</ol></main></html>

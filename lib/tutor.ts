@@ -76,7 +76,7 @@ export function context(p: Profile, mode: string) {
     '[Bối cảnh học tập tự khai] ' +
     JSON.stringify({
       khoi: p.grade || '8',
-      mon: 'Hình học THCS, trọng tâm tứ giác lớp 8',
+      mon: p.subject || 'Toán 8 tập 1',
       mucDo: p.level,
       diem: p.average,
       khoKhan: p.difficulties,

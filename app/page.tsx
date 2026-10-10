@@ -1,4 +1,23 @@
 'use client';
+import { readCurriculumLearner } from '@/lib/curriculum-learner';
+import {
+  chapters,
+  units,
+  legacyFor,
+  exercisesFor,
+  findExercise,
+  suggestChapter,
+  unitLabel,
+  type Chapter,
+  type Unit,
+  type Exercise,
+} from '@/lib/curriculum';
+import {
+  CurriculumBank,
+  CurriculumIntro,
+  CurriculumTheory,
+  StatisticsSupport,
+} from '@/components/curriculum-content';
 import { useLearningMemory, learningAPI } from '@/lib/learning-memory';
 import { LearningMemoryPanel } from '@/components/learning-memory-panel';
 import './learning-memory.css';
@@ -138,28 +157,71 @@ function Typed({ text }: { text: string }) {
     </>
   );
 }
-export default function App() {
-  const memory = useLearningMemory();
-  const [recovered] = useState(readSession);
+type WorkspaceProps = {
+  chapter?: Chapter;
+  unit?: Unit;
+  onHome?: () => void;
+  onUnit?: (id: string) => void;
+  onChapter?: (id: string) => void;
+  shared?: {
+    code: string;
+    setCode: (v: string) => void;
+    profile: Profile | null;
+    setProfile: (p: Profile | null) => void;
+    theme: string;
+    setTheme: (v: string) => void;
+  };
+};
+export default function App({
+  chapter = chapters[2],
+  unit = units.find((u) => u.id === 'l10')!,
+  onHome,
+  onUnit,
+  onChapter,
+  shared,
+}: WorkspaceProps = {}) {
+  const commonPlan =
+    chapter.id === 'c3'
+      ? defaultPlan
+      : {
+          given: 'Tách dữ kiện, điều kiện và yêu cầu trong đề.',
+          goal: 'Xác định việc cần tính, biến đổi hoặc giải thích.',
+          bridge: 'Đối chiếu quy tắc dự kiến với các điều kiện đã có.',
+          next: unit.questions[0],
+        };
+  const scope = onHome ? `${chapter.id}:${unit.id}` : '';
+  const geometryChapter = chapter.kind === 'geometry';
+  const memory = useLearningMemory(scope);
+  const [recovered] = useState(() => readSession(scope));
+  const [suggestion, setSuggestion] = useState('');
+  const chapterTopics =
+    chapter.id === 'c3'
+      ? topicList
+      : units.filter((u) => u.chapterId === chapter.id && u.kind === 'lesson').map((u) => u.title);
+  const topicOptions = chapter.id === 'c3' ? chapterTopics.slice(1) : chapterTopics;
   const [tutorToken, setTutorToken] = useState(recovered.tutorToken || ''),
     [progress, setProgress] = useState<TutorProgress | undefined>(recovered.progress);
   const [imageEpoch, setImageEpoch] = useState(0),
     [imageState, setImageState] = useState<'none' | 'pending' | 'accepted'>('none');
-  const [learner, setLearner] = useState(() => readLearnerState(readProfile()?.level)),
+  const [learner, setLearner] = useState(() =>
+      scope
+        ? readCurriculumLearner(readProfile()?.level, scope)
+        : readLearnerState(readProfile()?.level),
+    ),
     [previewProblem, setPreviewProblem] = useState(recovered.problem),
     [figureRevision, setFigureRevision] = useState(0);
   const [view, setView] = useState(
-      recovered.problem || recovered.messages.length || recovered.input || readImageSession()
+      recovered.problem || recovered.messages.length || recovered.input || readImageSession(scope)
         ? 'chat'
         : 'home',
     ),
     [mode, setMode] = useState(recovered.mode),
     [mobileNav, setMobileNav] = useState(false);
-  const [profile, setProfile] = useState<Profile | null>(readProfile),
+  const [localProfile, setLocalProfile] = useState<Profile | null>(readProfile),
     [draft, setDraft] = useState<Profile>(() => readProfile() || { ...emptyProfile, email: '' }),
     [profileOpen, setProfileOpen] = useState(false),
     [remember, setRemember] = useState(!!readProfile());
-  const [theme, setTheme] = useState(() => {
+  const [localTheme, setLocalTheme] = useState(() => {
       try {
         return localStorage.getItem('ai-tutor-theme') || 'light';
       } catch {
@@ -167,10 +229,16 @@ export default function App() {
       }
     }),
     [settings, setSettings] = useState(false),
-    [code, setCode] = useState(''),
+    [localCode, setLocalCode] = useState(''),
     [draftCode, setDraftCode] = useState(''),
     [checking, setChecking] = useState(false),
     [connectionError, setConnectionError] = useState('');
+  const profile = shared ? shared.profile : localProfile,
+    setProfile = shared?.setProfile || setLocalProfile;
+  const code = shared?.code ?? localCode,
+    setCode = shared?.setCode || setLocalCode;
+  const theme = shared?.theme ?? localTheme,
+    setTheme = shared?.setTheme || setLocalTheme;
   const [connectedModel, setConnectedModel] = useState('');
   const [messages, setMessages] = useState<DisplayMessage[]>(recovered.messages),
     [wire, setWire] = useState<Message[]>(recovered.wire),
@@ -178,13 +246,15 @@ export default function App() {
     [busy, setBusy] = useState(false),
     [error, setError] = useState(''),
     [notice, setNotice] = useState('');
-  const [lesson, setLesson] = useState<Lesson | null>(null),
+  const [lesson, setLesson] = useState<Lesson | null>(() =>
+      chapter.id === 'c3' ? lessons.find((l) => l.problem === recovered.problem) || null : null,
+    ),
     [map, setMap] = useState<Plan | null>(null),
     [mapSource, setMapSource] = useState('Khung định hướng chung'),
     [help, setHelp] = useState(false),
     [sampleOpen, setSampleOpen] = useState(false);
   const [filter, setFilter] = useState('Tất cả'),
-    [topic, setTopic] = useState('Hình bình hành'),
+    [topic, setTopic] = useState(chapter.id === 'c3' ? 'Hình bình hành' : unit.title),
     [count, setCount] = useState('5'),
     [difficulty, setDifficulty] = useState('Vận dụng');
   const [feedbackOpen, setFeedbackOpen] = useState(false),
@@ -223,16 +293,39 @@ export default function App() {
     autoPrompted = useRef(false),
     inputRef = useRef<HTMLTextAreaElement>(null),
     scrollRef = useRef<HTMLDivElement>(null);
+  const mounted = useRef(true);
+  const latestSnapshot = useRef({
+    messages,
+    wire,
+    input,
+    problem: previewProblem,
+    mode,
+    tutorToken,
+    progress,
+  });
+  if (!busy)
+    latestSnapshot.current = {
+      messages,
+      wire,
+      input,
+      problem: previewProblem,
+      mode,
+      tutorToken,
+      progress,
+    };
   useEffect(() => {
-    if (busy) return;
-    const persist = () =>
-      saveSession({ messages, wire, input, problem: previewProblem, mode, tutorToken, progress });
-    const timer = setTimeout(persist, 400);
+    mounted.current = true;
+    const persist = () => saveSession(latestSnapshot.current, scope);
     addEventListener('pagehide', persist);
     return () => {
-      clearTimeout(timer);
+      mounted.current = false;
+      persist();
       removeEventListener('pagehide', persist);
+      abort.current?.abort();
     };
+  }, []);
+  useEffect(() => {
+    if (!busy) saveSession(latestSnapshot.current, scope);
   }, [messages, wire, input, previewProblem, mode, busy, tutorToken, progress]);
   const selected = learningModes.find((m) => m.id === mode)!;
   useEffect(() => {
@@ -248,13 +341,17 @@ export default function App() {
   useEffect(() => () => abort.current?.abort(), []);
   useEffect(() => {
     try {
-      if (remember) localStorage.setItem('ai-tutor-learner-v5', JSON.stringify(learner));
-      else localStorage.removeItem('ai-tutor-learner-v5');
+      if (remember)
+        localStorage.setItem(
+          'ai-tutor-learner-v5' + (scope ? ':' + scope : ''),
+          JSON.stringify(learner),
+        );
+      else localStorage.removeItem('ai-tutor-learner-v5' + (scope ? ':' + scope : ''));
     } catch {}
   }, [learner, remember]);
   function newChat() {
     if (busy) return;
-    clearImageSession();
+    clearImageSession(scope);
     memory.newSession();
     setTutorToken('');
     setProgress(undefined);
@@ -290,6 +387,20 @@ export default function App() {
   }
   function prepareLesson(item: Lesson) {
     if (busy) return;
+    const classification = legacyFor(item.id);
+    if (
+      onUnit &&
+      classification &&
+      classification.lessonId !== unit.id &&
+      !unit.lessonIds?.includes(classification.lessonId)
+    ) {
+      saveSession(
+        { messages: [], wire: [], input: item.problem, problem: item.problem, mode: 'guide' },
+        `${chapter.id}:${classification.lessonId}`,
+      );
+      onUnit(classification.lessonId);
+      return;
+    }
     newChat();
     setLesson(item);
     setMap(item.plan);
@@ -302,6 +413,20 @@ export default function App() {
   }
   function prepareWorksheet(item: Worksheet) {
     if (busy) return;
+    const classification = legacyFor(item.id);
+    if (
+      onUnit &&
+      classification &&
+      classification.lessonId !== unit.id &&
+      !unit.lessonIds?.includes(classification.lessonId)
+    ) {
+      saveSession(
+        { messages: [], wire: [], input: item.problem, problem: item.problem, mode: 'guide' },
+        `${chapter.id}:${classification.lessonId}`,
+      );
+      onUnit(classification.lessonId);
+      return;
+    }
     newChat();
     setInput(item.problem);
     setPreviewProblem(item.problem);
@@ -359,7 +484,7 @@ export default function App() {
       email: draft.email.trim(),
       className: draft.className.trim(),
       grade: '8',
-      subject: 'Hình học tứ giác',
+      subject: `Toán 8 – Chương ${chapter.roman}: ${chapter.title} – ${unitLabel(unit)}`,
     };
     if (!next.name) next.name = 'Học sinh';
     if (profile?.email !== next.email) setLearner(createLearnerState(next.level));
@@ -387,8 +512,26 @@ export default function App() {
     }
     text = text.trim();
     const chosen = fresh ? undefined : selectedExercise(text, messages);
+    const chosenSample = chosen ? findExercise(chosen.problem) : undefined;
+    if (
+      chosenSample &&
+      chosenSample.lessonId !== unit.id &&
+      !unit.lessonIds?.includes(chosenSample.lessonId)
+    ) {
+      prepareCurriculumExercise(chosenSample);
+      return;
+    }
     if (chosen) text = `Em chọn câu ${chosen.number}. ${chosen.problem}`;
-    const proposed = chosen?.problem || problemForConversation(text, fresh ? '' : previewProblem);
+    const proposedChapter = suggestChapter(text);
+    if (proposedChapter && proposedChapter !== chapter.id && (!previewProblem || text.length > 100))
+      setSuggestion(proposedChapter);
+    const proposed =
+      chosen?.problem ||
+      (geometryChapter
+        ? problemForConversation(text, fresh ? '' : previewProblem)
+        : fresh || !previewProblem
+          ? text
+          : previewProblem);
     if (proposed !== previewProblem) setPreviewProblem(proposed);
     if (!text || lock.current) return;
     if (!code) {
@@ -404,13 +547,31 @@ export default function App() {
     const previous = fresh ? [] : messages;
     const oldProblem = previous.filter((m) => m.role === 'assistant').at(-1)?.problem || '';
     const problem =
-      chosen?.problem || problemForConversation(text, fresh ? '' : previewProblem || oldProblem);
-    const updatedLearner = observeAnswer(learner, text, !oldProblem || problem !== oldProblem);
-    const planned = planThinkingQuestion(
-      problem || text,
-      updatedLearner,
-      !oldProblem || problem !== oldProblem,
-    );
+      chosen?.problem ||
+      (geometryChapter
+        ? problemForConversation(text, fresh ? '' : previewProblem || oldProblem)
+        : fresh || !previewProblem
+          ? text
+          : previewProblem);
+    const updatedLearner =
+      chapter.id === 'c3'
+        ? observeAnswer(learner, text, !oldProblem || problem !== oldProblem)
+        : learner;
+    const planned = {
+      ...planThinkingQuestion(
+        problem || text,
+        updatedLearner,
+        !oldProblem || problem !== oldProblem,
+      ),
+      ...(geometryChapter
+        ? {}
+        : {
+            question: unit.questions[0],
+            thinkingOperation: 'Phân tích',
+            learningObjective: 'Nhận diện dữ kiện và chọn quy tắc phù hợp.',
+            expectedStudentAction: 'Giải thích một bước dựa trên điều kiện của đề.',
+          }),
+    };
     let next: Message[];
     try {
       const grounded =
@@ -423,8 +584,15 @@ export default function App() {
           (findWorksheet(problem)?.note
             ? '\n[Lưu ý biên tập đề, không phải bài làm của em] ' + findWorksheet(problem)!.note
             : '') +
-          learnerContext(updatedLearner, planned),
-        { ...profile, level: updatedLearner.level, grade: updatedLearner.grade },
+          (chapter.id === 'c3'
+            ? learnerContext(updatedLearner, planned)
+            : `\n[Bài đang học: ${unitLabel(unit)}; mức hỗ trợ ${updatedLearner.level}. Hỏi một bước phù hợp nội dung, chưa cho lời giải.]`),
+        {
+          ...profile,
+          subject: `Toán 8 – ${chapter.title} – ${unitLabel(unit)}`,
+          level: updatedLearner.level,
+          grade: updatedLearner.grade,
+        },
         selected.title,
       );
     } catch (e) {
@@ -436,7 +604,7 @@ export default function App() {
       setImageState('none');
       setImageEpoch((v) => v + 1);
     }
-    saveSession({
+    latestSnapshot.current = {
       messages: previous,
       wire: fresh ? [] : wire,
       input: text,
@@ -444,7 +612,8 @@ export default function App() {
       mode,
       tutorToken: continueToken,
       progress: continueToken ? progress : undefined,
-    });
+    };
+    saveSession(latestSnapshot.current, scope);
     lock.current = true;
     setBusy(true);
     setError('');
@@ -453,7 +622,7 @@ export default function App() {
     setMessages([...previous, { role: 'user', content: text }]);
     setInput('');
     if (!map) {
-      setMap(defaultPlan);
+      setMap(commonPlan);
       setMapSource('Khung định hướng chung');
     }
     const memoryRequest = memory.request();
@@ -464,6 +633,9 @@ export default function App() {
       const payload = () =>
         JSON.stringify({
           accessCode: code,
+          chapterId: chapter.id,
+          lessonId: unit.id,
+          problemId: findExercise(problem)?.id,
           memory: memoryRequest.memory,
           messages: next,
           mode: selected.api,
@@ -482,10 +654,12 @@ export default function App() {
       if (!r.headers.get('content-type')?.includes('application/json'))
         throw Error('Dịch vụ AI chưa sẵn sàng. Hãy kiểm tra lại kết nối.');
       const d = await r.json();
+      if (!mounted.current || controller.signal.aborted) return;
       if (!r.ok) {
         if (r.status === 401) setCode('');
         throw Error(d.error || 'Chưa nhận được phản hồi.');
       }
+      if (d.suggestedChapter) setSuggestion(d.suggestedChapter);
       memory.accept(d.learning, memoryRequest.epoch);
       if (typeof d.text !== 'string' || !d.text.trim()) throw Error('AI chưa trả về nội dung.');
       if (typeof d.tutorToken === 'string') {
@@ -533,6 +707,7 @@ export default function App() {
         setFeedbackOpen(true);
       }
     } catch (e) {
+      if (!mounted.current) return;
       setMessages(previous);
       setInput(text);
       setError(
@@ -544,15 +719,34 @@ export default function App() {
       );
     } finally {
       clearTimeout(timer);
-      lock.current = false;
-      abort.current = null;
-      setBusy(false);
+      if (mounted.current) {
+        lock.current = false;
+        abort.current = null;
+        setBusy(false);
+      }
     }
+  }
+  function prepareCurriculumExercise(item: Exercise) {
+    if (busy) return;
+    if (onUnit && item.lessonId !== unit.id && !unit.lessonIds?.includes(item.lessonId)) {
+      saveSession(
+        { messages: [], wire: [], input: item.problem, problem: item.problem, mode: 'guide' },
+        `${chapter.id}:${item.lessonId}`,
+      );
+      onUnit(item.lessonId);
+      return;
+    }
+    newChat();
+    setPreviewProblem(item.problem);
+    setInput(item.problem);
+    setMode('guide');
+    setView('chat');
+    setMobileNav(false);
   }
   function generate() {
     if (busy) return;
     newChat();
-    const text = `Tạo đúng ${count} câu ${mode === 'test' ? 'tự kiểm tra' : 'luyện tập'} NGẮN về ${topic}, hình học tứ giác lớp 8, mức độ ${difficulty}. Chỉ ra đề, chưa kèm lời giải. Ưu tiên bài liên quan trung điểm, đường chéo, nhận biết tứ giác và tìm lỗi suy luận; đủ dữ kiện và không suy biến. Tổng bộ đề khoảng 250 từ. Hỏi em muốn bắt đầu câu nào; không đánh dấu hoàn thành.`;
+    const text = `Tạo đúng ${count} câu ${mode === 'test' ? 'tự kiểm tra' : 'luyện tập'} NGẮN về ${topic}, Chương ${chapter.roman} – ${chapter.title}, Toán 8 tập 1, mức độ ${difficulty}. Chỉ ra đề đủ dữ kiện, không đưa đáp án. Hỏi em chọn câu nào để làm từng bước.`;
     void send(text, true);
   }
   function openSurvey() {
@@ -671,7 +865,7 @@ export default function App() {
   const activeReply =
     messages.filter((m) => m.role === 'assistant' && m.problem === activeProblem).at(-1)
       ?.diagramReply || '';
-  const displayPlan = map || lesson?.plan || defaultPlan;
+  const displayPlan = map || lesson?.plan || commonPlan;
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -681,21 +875,16 @@ export default function App() {
         <button
           ref={brandRef}
           className="brand"
-          onClick={() => setView('home')}
+          onClick={() => (onHome ? onHome() : setView('home'))}
           aria-label="Trang chủ Tư duy Toán học"
         >
           <span className="brand-mark">
             <Compass size={27} />
           </span>
           <span className="brand-copy">
-            Tư duy <b>Toán học</b>
+            TƯ DUY <b>TOÁN HỌC 8</b>
             <small>
-              <span>Mỗi tứ giác là một câu chuyện tư duy</span>
-              <span className="brand-divider" aria-hidden="true">
-                {' '}
-                —{' '}
-              </span>
-              <span>Mỗi lời giải là một hành trình khám phá</span>
+              <span>Học chủ động cùng AI – Mỗi bài toán là một hành trình khám phá.</span>
             </small>
           </span>
         </button>
@@ -711,11 +900,11 @@ export default function App() {
               setRemember(false);
               try {
                 localStorage.removeItem('ai-tutor-profile-v1');
-                localStorage.removeItem('ai-tutor-learner-v5');
+                localStorage.removeItem('ai-tutor-learner-v5' + (scope ? ':' + scope : ''));
               } catch {}
             }}
           />
-          <span className="scope-badge">Hình học 8</span>
+          <span className="scope-badge">Chương {chapter.roman}</span>
           <button
             className="icon-button"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -752,6 +941,38 @@ export default function App() {
           </button>
         </div>
       </header>
+      <div className="chapter-toolbar">
+        <button onClick={() => (onHome ? onHome() : setView('home'))}>
+          <HomeIcon size={16} /> Về trang chủ
+        </button>
+        <strong>
+          Chương {chapter.roman} – {chapter.title}
+        </strong>
+        <label>
+          Bài học{' '}
+          <select
+            aria-label="Chọn bài học"
+            value={unit.id}
+            onChange={(e) => onUnit?.(e.target.value)}
+          >
+            {chapter.units.map((id) => {
+              const u = units.find((v) => v.id === id)!;
+              return (
+                <option key={id} value={id}>
+                  {unitLabel(u)}
+                </option>
+              );
+            })}
+          </select>
+        </label>
+      </div>
+      {suggestion && (
+        <div className="chapter-suggestion" role="status">
+          Đề có thể liên quan Chương {chapters.find((c) => c.id === suggestion)?.roman}. Phiên hiện
+          tại được giữ.<button onClick={() => onChapter?.(suggestion)}>Mở chương phù hợp</button>
+          <button onClick={() => setSuggestion('')}>Tiếp tục tại đây</button>
+        </div>
+      )}
       {memory.studentId && (
         <div className="memory-status" role="status">
           {memory.status}
@@ -813,7 +1034,11 @@ export default function App() {
             }}
           >
             <BookOpen size={19} />
-            Ngân hàng bài tập<span>{lessons.length + worksheets.length}</span>
+            Ngân hàng bài tập
+            <span>
+              {(chapter.id === 'c3' ? lessons.length + worksheets.length : 0) +
+                exercisesFor(unit).length}
+            </span>
           </button>
           <div className="thinking-note">
             <span className="eyebrow">THÓI QUEN TƯ DUY</span>
@@ -822,17 +1047,19 @@ export default function App() {
               <br />
               rồi mới kết luận.
             </h3>
-            <p>Mỗi bước chứng minh cần một căn cứ. Mỗi phỏng đoán cần được kiểm tra.</p>
+            <p>Mỗi bước giải cần một căn cứ. Mỗi phỏng đoán cần được kiểm tra.</p>
             <div className="tiny-shapes" aria-hidden="true">
               <i />
               <i />
               <i />
             </div>
           </div>
-          <button className="sample-link" onClick={() => setSampleOpen(true)}>
-            <MessageCircle size={17} />
-            Xem một phiên học mẫu
-          </button>
+          {chapter.id === 'c3' && (
+            <button className="sample-link" onClick={() => setSampleOpen(true)}>
+              <MessageCircle size={17} />
+              Xem một phiên học mẫu
+            </button>
+          )}
           <a className="research-link" href="/co-so-su-pham.html" target="_blank" rel="noreferrer">
             Cơ sở sư phạm & tài liệu <ArrowUpRight size={15} />
           </a>
@@ -853,7 +1080,17 @@ export default function App() {
           </div>
         </aside>
         <main id="main" className="main-panel">
-          {view === 'home' ? (
+          {view === 'home' && chapter.id !== 'c3' ? (
+            <CurriculumIntro
+              chapter={chapter}
+              unit={unit}
+              onChoose={prepareCurriculumExercise}
+              onStart={() => choose('guide')}
+              disabled={busy}
+            />
+          ) : view === 'bank' && chapter.id !== 'c3' ? (
+            <CurriculumBank unit={unit} onChoose={prepareCurriculumExercise} disabled={busy} />
+          ) : view === 'home' ? (
             <section className="home-page fade">
               <div className="home-hero">
                 <div className="hero-copy">
@@ -910,6 +1147,7 @@ export default function App() {
                   </div>
                 </div>
               </div>
+              <CurriculumBank unit={unit} onChoose={prepareCurriculumExercise} disabled={busy} />
               <div className="learning-route">
                 <div>
                   <span>01</span>
@@ -1027,11 +1265,14 @@ export default function App() {
                     </button>
                   ))}
               </div>
+              <CurriculumBank unit={unit} onChoose={prepareCurriculumExercise} disabled={busy} />
               <WorksheetBank disabled={busy} onChoose={prepareWorksheet} />
             </section>
           ) : view === 'practice' ? (
             <section className="practice-page fade">
-              <span className="eyebrow">RÈN LUYỆN HÌNH HỌC TỨ GIÁC</span>
+              <span className="eyebrow">
+                CHƯƠNG {chapter.roman} – {chapter.title}
+              </span>
               <h1>{mode === 'test' ? 'Tự làm. Tự kiểm tra.' : 'Một chút luyện tập, mỗi ngày.'}</h1>
               <p className="lead">
                 Chọn một chủ đề và mức độ phù hợp. Mình sẽ bắt đầu bằng đề bài, rồi cùng kiểm tra
@@ -1049,7 +1290,7 @@ export default function App() {
                     <label>
                       Chủ đề
                       <select value={topic} onChange={(e) => setTopic(e.target.value)}>
-                        {topicList.slice(1).map((t) => (
+                        {topicOptions.map((t) => (
                           <option key={t}>{t}</option>
                         ))}
                       </select>
@@ -1072,7 +1313,7 @@ export default function App() {
                     </label>
                     <label>
                       Nội dung
-                      <input value="Tứ giác · Hình học 8" readOnly />
+                      <input value={chapter.title + ' · Toán 8'} readOnly />
                     </label>
                   </div>
                   <button className="primary" disabled={busy}>
@@ -1119,6 +1360,9 @@ export default function App() {
                 <div className="chat-column">
                   <ImageProblem
                     key={imageEpoch}
+                    scope={scope}
+                    chapterId={chapter.id}
+                    lessonId={unit.id}
                     accessCode={code}
                     disabled={busy}
                     onConnect={() => setSettings(true)}
@@ -1134,7 +1378,7 @@ export default function App() {
                       Giai đoạn {progress.stage}/8 · {progress.title}
                     </p>
                   )}
-                  {activeProblem && imageState === 'none' && (
+                  {activeProblem && (imageState === 'none' || !geometryChapter) && (
                     <section className="current-problem">
                       {messages.filter((m) => m.role === 'assistant').at(-1)?.thinking && (
                         <div className="current-question">
@@ -1149,34 +1393,49 @@ export default function App() {
                       )}
                       <details className="current-statement" open>
                         <summary>Đề bài đang học</summary>
-                        <p>{activeProblem}</p>
+                        <MathText text={activeProblem} />
                       </details>
-                      <ProblemFigure
-                        key={activeProblem}
-                        redrawToken={figureRevision}
-                        suspended={busy}
-                        onConnect={() => setSettings(true)}
-                        problem={activeProblem}
-                        accessCode={code}
-                        reply={activeReply}
-                        level={learner.level}
-                        onProblemChange={(q) => {
-                          setPreviewProblem(q);
-                          setInput(q);
-                        }}
-                      />
+                      {geometryChapter ? (
+                        <ProblemFigure
+                          key={activeProblem}
+                          redrawToken={figureRevision}
+                          suspended={busy}
+                          onConnect={() => setSettings(true)}
+                          problem={activeProblem}
+                          accessCode={code}
+                          reply={activeReply}
+                          level={learner.level}
+                          onProblemChange={(q) => {
+                            setPreviewProblem(q);
+                            setInput(q);
+                          }}
+                        />
+                      ) : chapter.id === 'c5' ? (
+                        <StatisticsSupport
+                          unit={unit}
+                          problem={activeProblem}
+                          onProblemChange={(p) => {
+                            setInput(p);
+                            setNotice('Đã đưa dữ liệu xác nhận vào ô gửi.');
+                          }}
+                        />
+                      ) : (
+                        <CurriculumTheory unit={unit} problem={activeProblem} />
+                      )}
+                      {chapter.id === 'c4' && (
+                        <CurriculumTheory unit={unit} problem={activeProblem} />
+                      )}
                     </section>
                   )}
                   <div className="conversation" ref={scrollRef} aria-label="Cuộc trò chuyện">
                     {messages.length === 0 && activeProblem ? (
                       <p className="preview-hint">
-                        Em có thể đối chiếu hình và lý thuyết, rồi gửi bước em muốn cùng Thầy tìm
-                        hiểu.
+                        Em đối chiếu dữ kiện và lý thuyết, rồi gửi bước em muốn cùng Thầy tìm hiểu.
                       </p>
                     ) : messages.length === 0 ? (
                       <div className="chat-welcome">
                         <TutorAvatar large />
-                        <span className="eyebrow">GIA SƯ HÌNH HỌC AI</span>
+                        <span className="eyebrow">GIA SƯ TOÁN HỌC 8 · AI</span>
                         <h2>
                           {lesson
                             ? lesson.title
@@ -1206,7 +1465,7 @@ export default function App() {
                           <span>
                             {lesson
                               ? 'Sơ đồ bên cạnh giúp em định hướng. Nhấn Gửi để bắt đầu.'
-                              : 'Thầy hỗ trợ hình học THCS, trọng tâm là tứ giác lớp 8.'}
+                              : 'Thầy đồng hành trong 5 chương Toán 8 tập 1, theo từng bước em làm.'}
                           </span>
                         </div>
                       </div>
@@ -1223,7 +1482,7 @@ export default function App() {
                             )}
                             <div className="message-body">
                               <span className="message-author">
-                                {m.role === 'assistant' ? 'Gia sư hình học · AI' : 'Em'}
+                                {m.role === 'assistant' ? 'Gia sư Toán học · AI' : 'Em'}
                               </span>
                               {parsed?.plan && (
                                 <details className="message-map">
@@ -1287,26 +1546,28 @@ export default function App() {
                   )}
                   {messages.length > 0 && (
                     <div className="followups">
-                      <button
-                        disabled={busy}
-                        onClick={() => {
-                          if (imageState !== 'none') {
+                      {geometryChapter && (
+                        <button
+                          disabled={busy}
+                          onClick={() => {
+                            if (imageState !== 'none') {
+                              document
+                                .querySelector('.image-problem')
+                                ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              setNotice(
+                                'Dùng nút Hình chưa đúng — yêu cầu sửa trong phần ảnh để chỉ rõ chỗ cần sửa.',
+                              );
+                              return;
+                            }
+                            setFigureRevision((v) => v + 1);
                             document
-                              .querySelector('.image-problem')
+                              .querySelector('.current-problem')
                               ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            setNotice(
-                              'Dùng nút Hình chưa đúng — yêu cầu sửa trong phần ảnh để chỉ rõ chỗ cần sửa.',
-                            );
-                            return;
-                          }
-                          setFigureRevision((v) => v + 1);
-                          document
-                            .querySelector('.current-problem')
-                            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }}
-                      >
-                        Vẽ lại hình
-                      </button>
+                          }}
+                        >
+                          Vẽ lại hình
+                        </button>
+                      )}
                       <button
                         disabled={busy}
                         onClick={() =>
@@ -1331,7 +1592,7 @@ export default function App() {
                         disabled={busy}
                         onClick={() =>
                           void send(
-                            'Hãy cho em một bài tương tự trong chủ đề tứ giác, chưa kèm đáp án.',
+                            `Tạo đúng 1 câu luyện tập về ${unit.title}, Chương ${chapter.roman}, chưa kèm đáp án.`,
                           )
                         }
                       >
@@ -1376,9 +1637,16 @@ export default function App() {
                         type="button"
                         className="preview-geometry-button"
                         disabled={!input.trim() || busy}
-                        onClick={previewGeometry}
+                        onClick={
+                          geometryChapter
+                            ? previewGeometry
+                            : () => {
+                                setPreviewProblem(input);
+                                setView('chat');
+                              }
+                        }
                       >
-                        Xem hình & lý thuyết
+                        {geometryChapter ? 'Xem hình & lý thuyết' : 'Xem đề & lý thuyết'}
                       </button>
                       <span>
                         {input.length}/6000 <small>· Shift + Enter để xuống dòng</small>
@@ -1406,7 +1674,7 @@ export default function App() {
                       Em tự kiểm tra
                     </h3>
                     {[
-                      'Em nêu được giả thiết và kết luận',
+                      'Em nêu được dữ kiện và yêu cầu',
                       'Em giải thích được bước then chốt',
                       'Em có thể tự làm lại',
                     ].map((s) => (
@@ -1427,11 +1695,17 @@ export default function App() {
                     ))}
                     <p>Đánh dấu theo cảm nhận của em, không phải điểm do AI chấm.</p>
                   </div>
-                  <LearnerPanel state={learner} onChange={setLearner} />
+                  <LearnerPanel
+                    state={learner}
+                    onChange={setLearner}
+                    geometry={chapter.id === 'c3'}
+                  />
                   <div className="side-tip">
                     <span>NHỚ MỘT ĐIỀU</span>
                     <p>
-                      Hình vẽ gợi ý cho ta phỏng đoán.
+                      {geometryChapter
+                        ? 'Hình vẽ gợi ý cho ta phỏng đoán.'
+                        : 'Kết quả cần được đối chiếu với điều kiện.'}
                       <br />
                       Lập luận mới giúp ta kết luận.
                     </p>
@@ -1469,8 +1743,8 @@ export default function App() {
               </p>
             </div>
             <p className="footer-purpose">
-              Hiểu vì sao, rồi mới kết luận.
-              <small>Phân tích · Tổng hợp · So sánh · Khái quát hóa</small>
+              TƯ DUY TOÁN HỌC 8
+              <small>Học chủ động cùng AI – Mỗi bài toán là một hành trình khám phá.</small>
             </p>
           </footer>
         </main>
@@ -1691,7 +1965,7 @@ export default function App() {
               <fieldset>
                 <legend>Nội dung em đang gặp khó</legend>
                 <div className="checkbox-chips">
-                  {topicList.slice(1).map((t) => (
+                  {topicOptions.map((t) => (
                     <label key={t}>
                       <input
                         type="checkbox"
@@ -1736,7 +2010,7 @@ export default function App() {
                     return;
                   try {
                     localStorage.removeItem('ai-tutor-profile-v1');
-                    localStorage.removeItem('ai-tutor-learner-v5');
+                    localStorage.removeItem('ai-tutor-learner-v5' + (scope ? ':' + scope : ''));
                     setLearner(createLearnerState());
                     setRemember(false);
                   } catch {
@@ -1962,13 +2236,13 @@ export default function App() {
           }}
         >
           <DialogHeader>
-            <DialogTitle>Học cùng gia sư hình học</DialogTitle>
+            <DialogTitle>Học cùng gia sư Toán học 8</DialogTitle>
             <DialogDescription>Một câu hỏi tốt, một bước tiến mới.</DialogDescription>
           </DialogHeader>
           <ol className="help-list">
             <li>Kết nối AI bằng mã truy cập giáo viên cung cấp.</li>
-            <li>Điền họ tên, trường, email và thông tin học tập.</li>
-            <li>Chọn bài mẫu hoặc gửi đề bài tứ giác và phần em đã làm.</li>
+            <li>Chọn thông tin học tập; tên, trường và email có thể để trống.</li>
+            <li>Chọn chương, bài học rồi gửi đề và phần em đã làm.</li>
             <li>
               Xem sơ đồ định hướng, tự làm bước nhỏ rồi giải thích căn cứ. Hình đang có được giữ khi
               trả lời tiếp; chỉ bấm “Vẽ lại hình” khi cần thay hình.
@@ -1980,9 +2254,9 @@ export default function App() {
             </li>
           </ol>
           <p>
-            Chỉ học hình học tứ giác lớp 8 và kiến thức liên quan. Có thể chọn ảnh, chụp ảnh hoặc
-            kéo thả; kiểm tra bản phiên âm và xác nhận hình trước khi học. Hội thoại chỉ giữ trong
-            phiên đang mở. Đánh giá hài lòng không thay thế đánh giá kết quả học tập.
+            Học 5 chương Toán 8 tập 1 và kiến thức tiên quyết liên quan. Có thể chọn ảnh, chụp ảnh
+            hoặc kéo thả; kiểm tra bản phiên âm và xác nhận hình trước khi học. Hội thoại chỉ giữ
+            trong phiên đang mở. Đánh giá hài lòng không thay thế đánh giá kết quả học tập.
           </p>
           <a href="/co-so-su-pham.html" target="_blank" rel="noreferrer" className="text-button">
             Xem cơ sở sư phạm và tài liệu tham khảo <ArrowUpRight size={16} />

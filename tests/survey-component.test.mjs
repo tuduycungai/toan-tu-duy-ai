@@ -39,6 +39,16 @@ function compile(path, mocks = {}) {
 const feedback = compile('lib/feedback.ts');
 const container = ({ children, ...props }) => h('div', props, children);
 const App = compile('app/page.tsx', {
+  '@/lib/curriculum': compile('lib/curriculum.ts'),
+  '@/lib/curriculum-learner': compile('lib/curriculum-learner.ts', {
+    './adaptive-learning': adaptive,
+  }),
+  '@/components/curriculum-content': {
+    CurriculumBank: none,
+    CurriculumIntro: none,
+    CurriculumTheory: none,
+    StatisticsSupport: none,
+  },
   '@/lib/learning-memory': {
     useLearningMemory: () => ({
       enabled: false,

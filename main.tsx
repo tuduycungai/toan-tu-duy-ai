@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import Home from './app/page';
+import { CurriculumShell as Home } from './components/curriculum-shell';
 import { TeacherConsole } from './components/teacher-console';
 import './app/globals.css';
 import './app/enhancements.css';
