@@ -15,7 +15,7 @@ export function studentRequest(messages) {
   return source
     .split(/\[Yêu cầu (?:của em|học sinh)\]/)
     .at(-1)
-    .split(/\[CHUAN_HOA_HINH\]|\[HO_SO_TU_DUY_V5\]|\[Lưu ý biên tập/)[0];
+    .split(/\[Bài đang học:|\[CHUAN_HOA_HINH\]|\[HO_SO_TU_DUY_V5\]|\[Lưu ý biên tập/)[0];
 }
 export function asksForAnswer(messages) {
   let s = plain(studentRequest(messages));

@@ -1,6 +1,8 @@
 import {
   RULE_VERSION,
   LEGACY_RULE_VERSION,
+  PREVIOUS_RULE_VERSION,
+  awardStars,
   validLearningContext,
   CONSENT_VERSION,
   RETENTION_DAYS,
@@ -182,8 +184,9 @@ export function runOperation(db, op, a, now = Date.now()) {
         e.hintLevel > 4 ||
         !['correct', 'incorrect', 'uncertain'].includes(e.verdict) ||
         !['', ...ERRORS].includes(e.errorKind) ||
-        ![RULE_VERSION, LEGACY_RULE_VERSION].includes(e.ruleVersion) ||
-        (e.ruleVersion === RULE_VERSION && !validLearningContext(e)) ||
+        ![RULE_VERSION, PREVIOUS_RULE_VERSION, LEGACY_RULE_VERSION].includes(e.ruleVersion) ||
+        ([RULE_VERSION, PREVIOUS_RULE_VERSION].includes(e.ruleVersion) &&
+          !validLearningContext(e)) ||
         JSON.stringify(e).length > 10000 ||
         now - Date.parse(e.updatedAt) > 86400000 ||
         Date.parse(e.updatedAt) > now + 60000 ||
@@ -194,7 +197,7 @@ export function runOperation(db, op, a, now = Date.now()) {
       if (old) {
         if (JSON.stringify(old) !== JSON.stringify(e))
           fail('Mã lượt học đã được dùng với nội dung khác.', 409);
-        return { saved: true, duplicate: true };
+        return { saved: true, duplicate: true, profile: profileSummary(db.get('Profiles', s.id)) };
       }
       const session = db.get('Sessions', e.sessionId);
       if (session && session.studentId !== s.id) fail('Phiên học không hợp lệ.', 403);
@@ -210,6 +213,7 @@ export function runOperation(db, op, a, now = Date.now()) {
       const daily = s.day === day ? s.daily || 0 : 0;
       if (daily >= 300) fail('Đã đủ 300 lượt lưu trong ngày.', 429);
       const { profile, candidate, corroborated } = updateProgress(db.get('Profiles', s.id), e);
+      const starsEarned = awardStars(profile, e, now);
       put('Turns', e);
       put('Profiles', { ...profile, id: s.id });
       put('Students', {
@@ -243,7 +247,7 @@ export function runOperation(db, op, a, now = Date.now()) {
           answer: e.answer,
           nextQuestion: e.nextQuestion,
         });
-      return { saved: true, corroborated, profile: profileSummary(profile) };
+      return { saved: true, corroborated, starsEarned, profile: profileSummary(profile) };
     }
     if (op === 'survey') {
       if (
@@ -269,7 +273,7 @@ export function runOperation(db, op, a, now = Date.now()) {
       if (old) {
         if (old.rating !== row.rating || old.comment !== row.comment)
           fail('Mã đánh giá đã dùng.', 409);
-        return { saved: true, duplicate: true };
+        return { saved: true, duplicate: true, profile: profileSummary(db.get('Profiles', s.id)) };
       }
       put('Surveys', row);
       return { saved: true };

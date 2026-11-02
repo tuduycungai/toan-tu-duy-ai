@@ -112,6 +112,17 @@ export async function recordMemory(memory, body, previous, result, env, fetcher 
     nextQuestion: cleanText(state.questions.at(-1), 700),
     evidence,
     answerHash: digest(answer),
+    ...(body.learningLanguage === 'en-vi'
+      ? {
+          languageMode: 'en-vi',
+          rewardKey: digest(
+            answer
+              .normalize('NFC')
+              .toLowerCase()
+              .replace(/[\s.,!?;:]+/g, ''),
+          ),
+        }
+      : {}),
     ruleVersion: RULE_VERSION,
     exampleVersion: memory.data.version?.id || 'base',
     consentRevision: memory.data.revision,
@@ -124,6 +135,7 @@ export async function recordMemory(memory, body, previous, result, env, fetcher 
       status: 'saved',
       eventId: event.id,
       profile: data.profile,
+      starsEarned: data.starsEarned || 0,
       message: 'Google Sheets đã xác nhận lưu lượt học.',
     };
   } catch (e) {

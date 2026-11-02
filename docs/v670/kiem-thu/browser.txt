@@ -1,0 +1,11 @@
+PASS English above parenthesized Vietnamese; no automatic speech or microphone.
+PASS English effort saves 3 stars through signed Sheets handler; duplicate answer adds zero.
+PASS Listen, stop and speed controls work with mocked WAV returned by the real speech handler.
+PASS Opt-in microphone, real browser recording → WAV encoding → mocked AI review; tracks stop after recording.
+PASS Denied microphone and AI audio outage show actionable errors; device voice is explicitly labeled.
+PASS Reload restores bilingual turns and saved account stars.
+PASS All five chapters show relevant vocabulary and share account stars without mixing conversations.
+PASS Photo English/Vietnamese updates on edited transcription before confirmation.
+PASS Leaving a lesson cancels pending speech and keeps the destination conversation separate.
+PASS 375 / 768 / 1280px layouts avoid horizontal overflow; mobile shortcut and dark theme work.
+UI PASSED 10

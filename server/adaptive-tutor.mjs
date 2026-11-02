@@ -225,7 +225,9 @@ export function applyTutorTurn(previous, value, messages) {
             clip(a.reason) &&
             clip(a.studentQuote).length >= 8 &&
             student.includes(a.studentQuote) &&
-            /(vì|do|theo|suy ra|nên|bởi|⇒|=|∥|⟂)/iu.test(a.studentQuote),
+            /(vì|do|theo|suy ra|nên|bởi|\bbecause\b|\bsince\b|\btherefore\b|\bby the\b|⇒|=|∥|⟂)/iu.test(
+              a.studentQuote,
+            ),
         )
         .slice(0, 10)
     : [];

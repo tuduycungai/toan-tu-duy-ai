@@ -1,4 +1,17 @@
-import { resolveCurriculum, curriculumInstructions, validateMathTurn } from './curriculum.mjs';
+import {
+  bilingualSchema,
+  BILINGUAL_PROMPT,
+  IMAGE_BILINGUAL_PROMPT,
+  bilingualReply,
+  bilingualReading,
+  translation,
+} from './bilingual.mjs';
+import {
+  resolveCurriculum,
+  curriculumInstructions,
+  validateMathTurn,
+  curriculumExerciseSet,
+} from './curriculum.mjs';
 import { studentRequest } from './strict-tutor.mjs';
 import { prepareMemory, recordMemory } from './learning/integration.mjs';
 import {
@@ -99,6 +112,31 @@ export async function handleFeature(
       body.messages ? studentRequest(body.messages) : '',
     );
     const geometry = ['c3', 'c4'].includes(context.chapterId);
+    const bilingual = body.learningLanguage === 'en-vi';
+    const generation =
+      !IMAGE_MODES.includes(body.mode) &&
+      body.messages &&
+      studentRequest(body.messages).match(/^Tạo đúng (\d+) câu/iu);
+    if (bilingual && generation) {
+      const set = curriculumExerciseSet(
+        context,
+        Number(generation[1]),
+        studentRequest(body.messages),
+      );
+      const schema = {
+        type: 'OBJECT',
+        properties: { english: { type: 'STRING' } },
+        required: ['english'],
+      };
+      const raw = await generate(
+        'Translate the supplied Vietnamese exercise list into English, including its final question. Preserve all numbers, point labels, units and LaTeX exactly. Do not answer or solve any exercise. Output JSON only.',
+        [{ role: 'user', parts: [{ text: set.text }] }],
+        schema,
+        6500,
+      );
+      const pair = translation(JSON.parse(raw).english, set.text, 14000);
+      return reply({ ...set, model, bilingual: { pairs: [pair], plan: [] } });
+    }
     if (body.adaptive === true && !IMAGE_MODES.includes(body.mode)) {
       let state;
       try {
@@ -120,20 +158,34 @@ export async function handleFeature(
           adaptiveInstructions(state, body.mode, body.messages) +
             curriculumPrompt +
             memory.context +
+            (bilingual ? BILINGUAL_PROMPT : '') +
             correction,
           contents,
-          ADAPTIVE_SCHEMA,
-          4800,
+          bilingual ? bilingualSchema(ADAPTIVE_SCHEMA) : ADAPTIVE_SCHEMA,
+          bilingual ? 9500 : 4800,
         );
         try {
-          const result = applyTutorTurn(
-            state,
-            validateMathTurn(context, studentRequest(body.messages), JSON.parse(raw), state),
-            body.messages,
+          const value = JSON.parse(raw);
+          const before = JSON.stringify(
+            ['feedback', 'question', 'givens', 'bridge', 'goal'].map((k) => value[k]),
           );
+          const validated = validateMathTurn(context, studentRequest(body.messages), value, state);
+          if (
+            bilingual &&
+            before !==
+              JSON.stringify(
+                ['feedback', 'question', 'givens', 'bridge', 'goal'].map((k) => validated[k]),
+              )
+          )
+            throw Error(
+              'Bộ kiểm tra toán đã phát hiện lỗi. Viết lại cả tiếng Việt và tiếng Anh cho đúng: ' +
+                validated.feedback,
+            );
+          const result = applyTutorTurn(state, validated, body.messages);
           const response = tutorResponse(result, secret);
+          const paired = bilingual ? bilingualReply(value, result, state.problem) : undefined;
           const learning = await recordMemory(memory, body, state, result, env, fetcher);
-          return reply({ ...response, model, learning });
+          return reply({ ...response, model, learning, ...(paired ? { bilingual: paired } : {}) });
         } catch (e) {
           if (attempt === 1)
             throw fail(
@@ -162,6 +214,7 @@ export async function handleFeature(
       const note = typeof body.note === 'string' ? body.note.slice(0, 1200) : '';
       const raw = await generate(
         IMAGE_PROMPT +
+          (bilingual ? IMAGE_BILINGUAL_PROMPT : '') +
           curriculumPrompt +
           (geometry
             ? ''
@@ -179,8 +232,8 @@ export async function handleFeature(
             ],
           },
         ],
-        IMAGE_SCHEMA,
-        7500,
+        bilingual ? bilingualSchema(IMAGE_SCHEMA, true) : IMAGE_SCHEMA,
+        bilingual ? 11000 : 7500,
       );
       let reading;
       try {
@@ -190,6 +243,7 @@ export async function handleFeature(
         } catch (e) {
           reading = recoverTranscription(value, e.message);
         }
+        if (bilingual) reading = bilingualReading(reading, value);
       } catch (e) {
         throw fail(e.message, 502);
       }
@@ -246,6 +300,7 @@ export async function handleFeature(
       if (changed || needsRepair) {
         const raw = await generate(
           IMAGE_PROMPT +
+            (bilingual ? IMAGE_BILINGUAL_PROMPT : '') +
             curriculumPrompt +
             (geometry
               ? ''
@@ -266,8 +321,8 @@ export async function handleFeature(
               ],
             },
           ],
-          IMAGE_SCHEMA,
-          7500,
+          bilingual ? bilingualSchema(IMAGE_SCHEMA, true) : IMAGE_SCHEMA,
+          bilingual ? 11000 : 7500,
         );
         let reading;
         try {
@@ -277,6 +332,7 @@ export async function handleFeature(
           } catch (e) {
             reading = recoverTranscription(value, e.message);
           }
+          if (bilingual) reading = bilingualReading(reading, value);
         } catch {
           throw fail(
             'Chưa kiểm tra được cấu trúc. Bản phiên âm vẫn được giữ; em có thể thử lại.',

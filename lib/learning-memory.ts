@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 export type MemoryProfile = {
+  gamification?: { total: number; bilingualTotal: number };
   scopes?: Record<
     string,
     {
@@ -19,6 +20,7 @@ export type MemoryProfile = {
 export type LearningReply = {
   status: string;
   eventId?: string;
+  starsEarned?: number;
   receipt?: string;
   profile?: MemoryProfile;
   message?: string;
@@ -92,6 +94,14 @@ export function useLearningMemory(scope = '') {
     setEnabled(consent);
     write(PREF, { studentId: id, consent, stopPending });
   }
+  function receiveProfile(next: MemoryProfile | null) {
+    setProfile((previous) => {
+      if (!next) return previous;
+      if (previous && (previous.gamification?.total || 0) > (next.gamification?.total || 0))
+        return { ...next, gamification: previous.gamification };
+      return next;
+    });
+  }
   async function flush() {
     if (!live.current || flushing.current) return;
     const list = filteredQueue(read<Pending[]>(QUEUE, []));
@@ -116,6 +126,10 @@ export function useLearningMemory(scope = '') {
           id: r.id || batch[i]?.id,
         }),
       );
+      const savedProfiles = data.results
+        .filter((r: { profile?: MemoryProfile }) => r.profile)
+        .map((r: { profile: MemoryProfile }) => r.profile);
+      if (savedProfiles.length) receiveProfile(savedProfiles.at(-1));
       const removed = new Set(
         results.filter((r) => r.saved || [401, 403, 409].includes(r.status || 0)).map((r) => r.id),
       );
@@ -136,6 +150,7 @@ export function useLearningMemory(scope = '') {
     }
   }
   async function sync() {
+    const startEpoch = epoch.current;
     const pref = read<{ studentId?: string; consent?: boolean; stopPending?: boolean }>(PREF, {});
     if (!pref.studentId) return;
     setStudentId(pref.studentId);
@@ -147,8 +162,9 @@ export function useLearningMemory(scope = '') {
         return;
       }
       const data = await learningAPI('status');
+      if (startEpoch !== epoch.current) return;
       remember(data.studentId, data.consent === true && pref.consent === true);
-      setProfile(data.profile || null);
+      receiveProfile(data.profile || null);
       setStatus(
         live.current
           ? 'Đã đọc hồ sơ tiến bộ; chỉ lưu các lượt học tiếp theo.'
@@ -156,6 +172,7 @@ export function useLearningMemory(scope = '') {
       );
       if (live.current) await flush();
     } catch {
+      if (startEpoch !== epoch.current) return;
       live.current = false;
       setEnabled(false);
       setStatus('Chưa xác nhận được hồ sơ. Em có thể học và thử kết nối lại bộ nhớ sau.');
@@ -172,6 +189,7 @@ export function useLearningMemory(scope = '') {
         epoch.current++;
         live.current = false;
         setEnabled(false);
+        setProfile(null);
         void sync();
       }
     };
@@ -245,7 +263,7 @@ export function useLearningMemory(scope = '') {
   }
   function accept(data: LearningReply | undefined, requestEpoch: number) {
     if (!data || epoch.current !== requestEpoch || !live.current) return;
-    if (data.profile) setProfile(data.profile);
+    if (data.profile) receiveProfile(data.profile);
     if (data.eventId) setLastEvent(data.eventId);
     if (data.status === 'pending' && data.receipt && data.eventId) {
       const before = read<Pending[]>(QUEUE, []);
@@ -267,11 +285,15 @@ export function useLearningMemory(scope = '') {
         return;
       }
     }
-    setStatus(data.message || (data.status === 'off' ? 'Lượt này không được ghi.' : ''));
+    setStatus(
+      (data.message || (data.status === 'off' ? 'Lượt này không được ghi.' : '')) +
+        (data.starsEarned ? ` +${data.starsEarned} sao đã lưu.` : ''),
+    );
   }
   return {
     enabled,
     studentId,
+    stars: profile?.gamification || { total: 0, bilingualTotal: 0 },
     profile:
       scope && profile
         ? {

@@ -132,3 +132,9 @@ function migrateV660() {
     return 'Đã bổ sung cột; giữ nguyên dữ liệu và mã cũ. Có thể chạy lại.';
   } finally { lock.releaseLock(); }
 }
+
+// V6.7 adds stars inside existing Profiles.data JSON; no extra sheet or column is needed.
+function migrateV670() {
+  const result = migrateV660();
+  return { ...result, version: '6.7.0', stars: 'Initialized lazily on the next eligible signed turn; no historical points are inferred.' };
+}

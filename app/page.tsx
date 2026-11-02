@@ -1,4 +1,12 @@
 'use client';
+import {
+  BilingualMessage,
+  PairedText,
+  LanguagePanel,
+  StarsBadge,
+} from '@/components/bilingual-learning';
+import { type BilingualReply } from '@/lib/math-english';
+import './bilingual.css';
 import { readCurriculumLearner } from '@/lib/curriculum-learner';
 import {
   chapters,
@@ -98,6 +106,7 @@ import { participantLabel, surveyComment } from '@/lib/survey';
 import { useSurveyReminder } from '@/lib/use-survey-reminder';
 import { exerciseChoices, selectedExercise } from '@/lib/exercise-choice';
 type DisplayMessage = Message & {
+  bilingual?: BilingualReply;
   problem?: string;
   diagramReply?: string;
   thinking?: ThinkingQuestion;
@@ -633,6 +642,7 @@ export default function App({
       const payload = () =>
         JSON.stringify({
           accessCode: code,
+          learningLanguage: 'en-vi',
           chapterId: chapter.id,
           lessonId: unit.id,
           problemId: findExercise(problem)?.id,
@@ -683,6 +693,7 @@ export default function App({
         {
           role: 'assistant',
           content: d.text,
+          bilingual: d.bilingual,
           problem,
           thinking: thinking.question ? thinking : undefined,
           diagramReply:
@@ -889,6 +900,11 @@ export default function App({
           </span>
         </button>
         <div className="top-actions">
+          <StarsBadge
+            enabled={memory.enabled}
+            total={memory.stars?.total || 0}
+            pending={memory.pending}
+          />
           <LearningMemoryPanel
             memory={memory}
             code={code}
@@ -1340,6 +1356,7 @@ export default function App({
               <div className="chat-heading">
                 <div>
                   <span className="eyebrow">KHÔNG GIAN SUY NGHĨ</span>
+                  <span className="bilingual-chip">English + Vietsub</span>
                   <h1>
                     {selected.title}
                     {selected.status && <span className="mode-status"> ({selected.status})</span>}
@@ -1355,6 +1372,19 @@ export default function App({
                     <span>Khảo sát đánh giá ứng dụng</span>
                   </button>
                 </div>
+              </div>
+              <div className="bilingual-jump">
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.dispatchEvent(new Event('open-math-english'));
+                    document
+                      .querySelector('.language-panel')
+                      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
+                >
+                  Từ vựng · Nghe · Luyện nói
+                </button>
               </div>
               <div className="study-layout">
                 <div className="chat-column">
@@ -1383,17 +1413,43 @@ export default function App({
                       {messages.filter((m) => m.role === 'assistant').at(-1)?.thinking && (
                         <div className="current-question">
                           <span className="eyebrow">BƯỚC EM TỰ LÀM</span>
-                          <p>
-                            {
-                              messages.filter((m) => m.role === 'assistant').at(-1)?.thinking
-                                ?.question
-                            }
-                          </p>
+                          {messages
+                            .filter((m) => m.role === 'assistant')
+                            .at(-1)
+                            ?.bilingual?.pairs.find((p) => p.kind === 'question') ? (
+                            <PairedText
+                              pair={
+                                messages
+                                  .filter((m) => m.role === 'assistant')
+                                  .at(-1)!
+                                  .bilingual!.pairs.find((p) => p.kind === 'question')!
+                              }
+                            />
+                          ) : (
+                            <p>
+                              {
+                                messages.filter((m) => m.role === 'assistant').at(-1)?.thinking
+                                  ?.question
+                              }
+                            </p>
+                          )}
                         </div>
                       )}
                       <details className="current-statement" open>
                         <summary>Đề bài đang học</summary>
-                        <MathText text={activeProblem} />
+                        {messages
+                          .filter((m) => m.problem === activeProblem && m.bilingual?.problem)
+                          .at(-1)?.bilingual?.problem ? (
+                          <PairedText
+                            pair={
+                              messages
+                                .filter((m) => m.problem === activeProblem && m.bilingual?.problem)
+                                .at(-1)!.bilingual!.problem!
+                            }
+                          />
+                        ) : (
+                          <MathText text={activeProblem} />
+                        )}
                       </details>
                       {geometryChapter ? (
                         <ProblemFigure
@@ -1484,14 +1540,23 @@ export default function App({
                               <span className="message-author">
                                 {m.role === 'assistant' ? 'Gia sư Toán học · AI' : 'Em'}
                               </span>
-                              {parsed?.plan && (
+                              {parsed?.plan && !m.bilingual && (
                                 <details className="message-map">
                                   <summary>Sơ đồ định hướng của lượt này</summary>
                                   <LearningMap plan={parsed.plan} source="Theo nội dung bài" />
                                 </details>
                               )}
                               <div className="message-content">
-                                {i < messages.length - 2 ? (
+                                {m.bilingual ? (
+                                  i < messages.length - 2 ? (
+                                    <details className="past-message">
+                                      <summary>Xem lượt trao đổi trước</summary>
+                                      <BilingualMessage value={m.bilingual} code={code} />
+                                    </details>
+                                  ) : (
+                                    <BilingualMessage value={m.bilingual} code={code} />
+                                  )
+                                ) : i < messages.length - 2 ? (
                                   <details className="past-message">
                                     <summary>Xem lượt trao đổi trước</summary>
                                     {parsed ? <MathText text={parsed.text} /> : m.content}
@@ -1622,7 +1687,7 @@ export default function App({
                           ? 'Nhập đề bài và từng bước trong lời giải của em…'
                           : mode === 'compare'
                             ? 'Nhập đề bài và các ý tưởng em muốn đối chiếu…'
-                            : 'Nhập đề bài hoặc chia sẻ bước em đang vướng…'
+                            : 'Trả lời bằng tiếng Việt, tiếng Anh hoặc cả hai…'
                       }
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={(e) => {
@@ -1667,6 +1732,28 @@ export default function App({
                   </p>
                 </div>
                 <aside className="reasoning-panel">
+                  <LanguagePanel
+                    key={activeProblem}
+                    code={code}
+                    problem={
+                      activeProblem +
+                      '\n' +
+                      (messages
+                        .filter((m) => m.role === 'assistant')
+                        .at(-1)
+                        ?.bilingual?.pairs.filter((p) => p.kind !== 'operation')
+                        .map((p) => p.en + ' ' + p.vi)
+                        .join(' ') || '')
+                    }
+                    lessonIds={unit.lessonIds || [unit.id]}
+                    question={
+                      messages
+                        .filter((m) => m.role === 'assistant')
+                        .at(-1)
+                        ?.bilingual?.pairs.find((p) => p.kind === 'question')?.en
+                    }
+                  />
+
                   <LearningMap plan={displayPlan} source={mapSource} />
                   <div className="self-check">
                     <h3>
@@ -2242,7 +2329,22 @@ export default function App({
           <ol className="help-list">
             <li>Kết nối AI bằng mã truy cập giáo viên cung cấp.</li>
             <li>Chọn thông tin học tập; tên, trường và email có thể để trống.</li>
-            <li>Chọn chương, bài học rồi gửi đề và phần em đã làm.</li>
+            <li>
+              Chọn chương, bài học rồi gửi đề và phần em đã làm. Gia sư viết tiếng Anh trước, bản
+              Việt trong ngoặc bên dưới.
+            </li>
+            <li>
+              Bấm “Nghe tiếng Anh” để nghe giọng AI. Trong bảng “Tiếng Anh trong bài”, nghe từng từ
+              và xem kiến thức liên quan.
+            </li>
+            <li>
+              Luyện phát âm là tự chọn: đồng ý gửi âm thanh, bấm ghi, nghe lại rồi bấm kiểm tra. Em
+              vẫn học và nhận sao bằng văn bản khi không dùng micro.
+            </li>
+            <li>
+              Bật Bộ nhớ học tập để lưu sao theo mã người học: +1 cho câu trả lời có nội dung, thêm
+              +2 khi dùng tiếng Anh toán học. Tối đa 30 sao/ngày; nội dung trùng không cộng lại.
+            </li>
             <li>
               Xem sơ đồ định hướng, tự làm bước nhỏ rồi giải thích căn cứ. Hình đang có được giữ khi
               trả lời tiếp; chỉ bấm “Vẽ lại hình” khi cần thay hình.

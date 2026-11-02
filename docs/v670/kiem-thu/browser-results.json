@@ -1,0 +1,16 @@
+{
+  "results": [
+    "English above parenthesized Vietnamese; no automatic speech or microphone.",
+    "English effort saves 3 stars through signed Sheets handler; duplicate answer adds zero.",
+    "Listen, stop and speed controls work with mocked WAV returned by the real speech handler.",
+    "Opt-in microphone, real browser recording → WAV encoding → mocked AI review; tracks stop after recording.",
+    "Denied microphone and AI audio outage show actionable errors; device voice is explicitly labeled.",
+    "Reload restores bilingual turns and saved account stars.",
+    "All five chapters show relevant vocabulary and share account stars without mixing conversations.",
+    "Photo English/Vietnamese updates on edited transcription before confirmation.",
+    "Leaving a lesson cancels pending speech and keeps the destination conversation separate.",
+    "375 / 768 / 1280px layouts avoid horizontal overflow; mobile shortcut and dark theme work."
+  ],
+  "errors": [],
+  "scope": "Local Chromium; actual app and handlers. Gemini, speech, pronunciation, Sheets and microphone input are test fixtures; no live-provider quality claim."
+}

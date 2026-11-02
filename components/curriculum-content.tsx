@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { lessonKnowledge } from '../lib/math-english';
+import { PairedText } from './bilingual-learning';
 import {
   exercisesFor,
   findExercise,
@@ -84,7 +86,7 @@ export function CurriculumIntro({
   );
 }
 export function CurriculumTheory({ unit, problem }: { unit: Unit; problem: string }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <section className="curriculum-theory">
       <button className="theory-heading" onClick={() => setOpen(!open)} aria-expanded={open}>
@@ -97,14 +99,10 @@ export function CurriculumTheory({ unit, problem }: { unit: Unit; problem: strin
               ? 'Theo bài tập đang học'
               : 'Theo bài học đang chọn; đối chiếu lại điều kiện với đề của em.'}
           </p>
-          {unit.theory.map((t) => (
-            <p key={t}>
-              <MathText text={t} />
-            </p>
+          {lessonKnowledge(unit.lessonIds || [unit.id]).map((pair, i) => (
+            <PairedText pair={pair} key={i} />
           ))}
-          <p>
-            <b>Tự kiểm tra:</b> {unit.questions[0]}
-          </p>
+          <p className="caption">Nghe phần kiến thức và luyện từ trong bảng Tiếng Anh trong bài.</p>
         </>
       )}
     </section>

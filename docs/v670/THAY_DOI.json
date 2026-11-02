@@ -1,0 +1,190 @@
+{
+  "from": "6.6.0",
+  "to": "6.7.0",
+  "changes": [
+    {
+      "file": "README.md",
+      "change": "updated"
+    },
+    {
+      "file": ".env.example",
+      "change": "updated"
+    },
+    {
+      "file": "HUONG_DAN_V6_7_0.html",
+      "change": "added"
+    },
+    {
+      "file": "package.json",
+      "change": "updated"
+    },
+    {
+      "file": "package-lock.json",
+      "change": "updated"
+    },
+    {
+      "file": "google-apps-script/Code.gs",
+      "change": "updated"
+    },
+    {
+      "file": "google-apps-script/Domain.gs",
+      "change": "updated"
+    },
+    {
+      "file": "components/curriculum-content.tsx",
+      "change": "updated"
+    },
+    {
+      "file": "components/pronunciation-practice.tsx",
+      "change": "added"
+    },
+    {
+      "file": "components/image-problem.tsx",
+      "change": "updated"
+    },
+    {
+      "file": "components/bilingual-learning.tsx",
+      "change": "added"
+    },
+    {
+      "file": "components/speech-button.tsx",
+      "change": "added"
+    },
+    {
+      "file": "lib/recording.ts",
+      "change": "added"
+    },
+    {
+      "file": "lib/learning-memory.ts",
+      "change": "updated"
+    },
+    {
+      "file": "lib/session-recovery.ts",
+      "change": "updated"
+    },
+    {
+      "file": "lib/image-workflow.ts",
+      "change": "updated"
+    },
+    {
+      "file": "lib/math-english.ts",
+      "change": "added"
+    },
+    {
+      "file": "scripts/check-v670-release.mjs",
+      "change": "added"
+    },
+    {
+      "file": "scripts/check-v670-ui.mjs",
+      "change": "added"
+    },
+    {
+      "file": "scripts/start.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "app/bilingual.css",
+      "change": "added"
+    },
+    {
+      "file": "app/page.tsx",
+      "change": "updated"
+    },
+    {
+      "file": "tests/v670-bilingual.test.mjs",
+      "change": "added"
+    },
+    {
+      "file": "tests/survey-component.test.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "tests/v640-image-component.test.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/openai.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/feature-api.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/language.mjs",
+      "change": "added"
+    },
+    {
+      "file": "server/strict-tutor.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/curriculum.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/gemini.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/adaptive-tutor.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/bilingual.mjs",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/BAO_CAO_KIEM_THU.md",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/THIET_KE_KY_THUAT.md",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/kiem-thu/tests.txt",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/kiem-thu/results.json",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/kiem-thu/lint.txt",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/kiem-thu/browser-results.json",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/kiem-thu/build.txt",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/kiem-thu/typecheck.txt",
+      "change": "added"
+    },
+    {
+      "file": "docs/v670/kiem-thu/browser.txt",
+      "change": "added"
+    },
+    {
+      "file": "netlify/functions/language.mjs",
+      "change": "added"
+    },
+    {
+      "file": "server/learning/domain.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/learning/engine.mjs",
+      "change": "updated"
+    },
+    {
+      "file": "server/learning/integration.mjs",
+      "change": "updated"
+    }
+  ]
+}

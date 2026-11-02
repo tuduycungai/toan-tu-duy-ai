@@ -29,6 +29,28 @@ export function readSession(scope = ''): Snapshot {
       Date.now() - s.savedAt > 12 * 60 * 60 * 1000
     )
       return empty();
+    const pairValid = (p: unknown): boolean =>
+      !!p &&
+      typeof p === 'object' &&
+      'en' in p &&
+      'vi' in p &&
+      typeof p.en === 'string' &&
+      typeof p.vi === 'string' &&
+      p.en.length <= 16000 &&
+      p.vi.length <= 16000;
+    const bilingualValid = (v: unknown): boolean => {
+      if (v === undefined) return true;
+      if (!v || typeof v !== 'object' || !('pairs' in v) || !('plan' in v)) return false;
+      return (
+        Array.isArray(v.pairs) &&
+        v.pairs.length <= 20 &&
+        v.pairs.every(pairValid) &&
+        Array.isArray(v.plan) &&
+        v.plan.length <= 10 &&
+        v.plan.every(pairValid) &&
+        (!('problem' in v) || v.problem === undefined || pairValid(v.problem))
+      );
+    };
     const valid = (a: unknown): a is Message[] =>
       Array.isArray(a) &&
       a.length <= 40 &&
@@ -37,7 +59,8 @@ export function readSession(scope = ''): Snapshot {
           m &&
           ['user', 'assistant'].includes(m.role) &&
           typeof m.content === 'string' &&
-          m.content.length <= 16000,
+          m.content.length <= 16000 &&
+          bilingualValid(m.bilingual),
       );
     if (!valid(s.messages) || !valid(s.wire)) return empty();
     const adaptive =

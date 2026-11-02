@@ -108,7 +108,7 @@ export function validateMathTurn(context, student, value, previous) {
         .toLowerCase()
         .replace(/[\s$.,;:]/g, '');
     const fields = ['feedback', 'question', 'goal', 'bridge', 'givens', 'summary']
-      .map((k) => value[k] || '')
+      .map((k) => (value[k] || '') + ' ' + (value.english?.[k] || ''))
       .join(' ');
     const already = normalize(student + ' ' + previous.conclusions.map((c) => c.claim).join(' '));
     const keys = [sample.answer, ...(sample.answer.match(/\$([^$]+)\$/g) || [])]

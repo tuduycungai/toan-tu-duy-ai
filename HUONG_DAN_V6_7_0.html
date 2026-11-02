@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hướng dẫn V6.7.0 — Tư duy Toán học 8</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #edf5ed;
+        color: #193b34;
+        font:
+          16px/1.7 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 980px;
+        margin: auto;
+        padding: 48px 24px 72px;
+      }
+      header {
+        background: #164a3b;
+        color: #fff;
+        padding: 36px;
+        border-radius: 24px;
+        margin-bottom: 28px;
+      }
+      small {
+        letter-spacing: 0.1em;
+      }
+      h1 {
+        font-size: 34px;
+        line-height: 1.2;
+        margin: 14px 0;
+      }
+      h2 {
+        font-size: 23px;
+        margin: 0 0 18px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      section {
+        background: white;
+        border: 1px solid #d4e2d7;
+        border-radius: 18px;
+        padding: 26px;
+        margin: 22px 0;
+      }
+      .tag {
+        display: inline-block;
+        background: #e0f2e9;
+        color: #21583d;
+        border-radius: 20px;
+        padding: 5px 12px;
+        margin: 5px 8px 0 0;
+        font-size: 13px;
+      }
+      .example {
+        border-left: 4px solid #429d76;
+        background: #f3faf5;
+        padding: 16px;
+      }
+      .example p {
+        margin: 4px 0;
+      }
+      .sub {
+        color: #587069;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .card {
+        border: 1px solid #d6e5da;
+        border-radius: 14px;
+        padding: 18px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+      }
+      td,
+      th {
+        padding: 11px;
+        border-bottom: 1px solid #d6e5da;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #edf6f0;
+      }
+      code {
+        font-family: ui-monospace, monospace;
+        font-size: 0.88em;
+        overflow-wrap: anywhere;
+        background: #edf4ef;
+        padding: 2px 5px;
+        border-radius: 4px;
+      }
+      a {
+        color: #19654c;
+      }
+      li {
+        margin: 9px 0;
+      }
+      .note {
+        background: #fff7de;
+        padding: 15px 18px;
+        border-radius: 12px;
+      }
+      .scroll {
+        overflow: auto;
+      }
+      .check {
+        padding-left: 24px;
+      }
+      @media (max-width: 650px) {
+        main {
+          padding: 18px 14px;
+        }
+        header,
+        section {
+          padding: 20px;
+        }
+        h1 {
+          font-size: 28px;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        main {
+          padding: 0;
+          max-width: none;
+        }
+        header {
+          background: #fff;
+          color: #193b34;
+          border: 2px solid #193b34;
+        }
+        section {
+          break-inside: avoid;
+        }
+        .note {
+          background: #fff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <small>BẢN CẬP NHẬT 6.7.0 · 02/11/2026</small>
+        <h1>Tư duy Toán học 8<br />Học Toán cùng tiếng Anh</h1>
+        <p>Đọc hiểu đề · Nghe giọng mẫu · Thử nói · Tích lũy sao theo mã người học.</p>
+        <span class="tag">5 chương · 20 bài</span><span class="tag">English + Vietsub</span
+        ><span class="tag">Giữ 8 giai đoạn gợi mở</span>
+      </header>
+      <section>
+        <h2>1. Học sinh sử dụng thế nào?</h2>
+        <ol>
+          <li>Kết nối AI bằng mã giáo viên cung cấp, chọn chương và bài học.</li>
+          <li>
+            Gõ hoặc chụp đề. Với ảnh, đọc bản Anh–Việt, kiểm tra bản phiên âm, sửa dữ kiện nếu cần
+            và xác nhận trước khi học.
+          </li>
+          <li>
+            Đọc tiếng Anh ở trên, Vietsub trong ngoặc ở dưới. Bấm <b>Nghe tiếng Anh</b>; chọn 0.85×
+            khi muốn nghe chậm, bấm Dừng khi cần.
+          </li>
+          <li>
+            Mở bảng <b>Tiếng Anh trong bài</b>: nghe từng từ, xem nghĩa/câu ví dụ và kiến thức cần
+            dùng. Trên điện thoại có nút chuyển nhanh đến bảng này.
+          </li>
+          <li>
+            Trả lời bằng Việt, Anh hoặc cả hai. Gia sư tiếp tục hỏi từng bước; nghe mẫu không thay
+            phần tự suy luận.
+          </li>
+        </ol>
+        <div class="example">
+          <p lang="en"><b>Which given fact would you start with?</b></p>
+          <p lang="vi" class="sub">(Em chọn dữ kiện nào để bắt đầu?)</p>
+          <p class="sub">Ví dụ cách hiển thị — không phải một kết quả kiểm thử AI thật.</p>
+        </div>
+      </section>
+      <section>
+        <h2>2. Luyện phát âm hoàn toàn tự chọn</h2>
+        <p>Chọn <b>Luyện nói</b> cạnh một từ hoặc luyện câu hỏi gần nhất của gia sư.</p>
+        <ol>
+          <li>Đánh dấu đồng ý gửi đoạn ghi âm để AI nhận xét.</li>
+          <li>
+            Bấm <b>Bắt đầu ghi âm</b> và cho phép micro. Không mở micro chỉ vì mở trang hoặc đánh
+            dấu đồng ý.
+          </li>
+          <li>Đọc trong 1–15 giây, bấm Dừng; có thể nghe lại hoặc Ghi lại.</li>
+          <li>
+            Bấm <b>Kiểm tra phát âm</b>. AI đưa câu nghe được, nhận xét Anh–Việt và gợi ý luyện từ.
+          </li>
+        </ol>
+        <p class="note">
+          Nhận xét mang tính tham khảo, không phải điểm thi hay phép đo chính xác từng âm vị. Nếu
+          không đủ âm thanh, hệ thống yêu cầu ghi lại. Ứng dụng không ghi âm vào Google Sheets, lịch
+          sử hội thoại hay bộ nhớ trình duyệt; đoạn âm thanh được gửi đến nhà cung cấp AI khi học
+          sinh bấm kiểm tra, theo chính sách của tài khoản dịch vụ đang dùng.
+        </p>
+        <p>
+          Micro cần HTTPS (hoặc localhost), trình duyệt hỗ trợ ghi âm và quyền truy cập. Không dùng
+          micro vẫn học và nhận sao bình thường. Khi rời bài hoặc hủy, ứng dụng dừng micro và âm
+          thanh đang phát.
+        </p>
+      </section>
+      <section>
+        <h2>3. Sao được cộng và lưu ra sao?</h2>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Tương tác</th>
+                <th>Sao</th>
+                <th>Điều kiện</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Câu trả lời có nội dung toán học</td>
+                <td>+1</td>
+                <td>
+                  Đã qua lượt đọc đề đầu tiên; AI xác định đây là một nỗ lực làm bài, kể cả khi còn
+                  sai.
+                </td>
+              </tr>
+              <tr>
+                <td>Dùng tiếng Anh toán học trong câu trả lời đó</td>
+                <td>Thêm +2</td>
+                <td>Có cấu trúc tiếng Anh và thuật ngữ toán liên quan; tổng tối đa +3/lượt.</td>
+              </tr>
+              <tr>
+                <td>Nghe lại, bấm nút, mở micro, chào hỏi, xin đáp án</td>
+                <td>0</td>
+                <td>Không lấy số lần bấm làm thước đo học tập.</td>
+              </tr>
+              <tr>
+                <td>Gửi lại cùng nội dung trong một ngày</td>
+                <td>0 thêm</td>
+                <td>Đối chiếu dấu vết nội dung và mã lượt học, cả khi đổi phiên.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Tối đa <b>30 sao/ngày theo giờ Việt Nam</b>. Không trừ sao khi làm sai, không dùng sao
+          thay điểm số.
+        </p>
+        <p>
+          Bật <b>Bộ nhớ học tập</b> để ghi sao theo mã người học hiện có. Lưu mã khôi phục riêng để
+          dùng lại trên thiết bị khác. Trên thiết bị chung, dùng chức năng rời hồ sơ khi kết thúc.
+        </p>
+        <p>
+          Sao chỉ hiển thị khi máy chủ xác nhận lưu; lượt chờ mạng được gửi lại theo cơ chế hiện có,
+          không tự cộng trước. Sao dùng chung cho các chương, cùng chính sách lưu hồ sơ
+          <b>90 ngày</b> của ứng dụng; xóa hồ sơ sẽ xóa cả sao. Đây chưa phải hệ thống tài khoản
+          email/mật khẩu mới.
+        </p>
+      </section>
+      <section>
+        <h2>4. Cập nhật bản đang chạy</h2>
+        <p><b>Giữ một bản sao mã nguồn hiện tại và dữ liệu Sheets trước khi thay phiên bản.</b></p>
+        <ol>
+          <li>
+            Giải nén gói V6.7.0. Đưa toàn bộ mã nguồn mới lên dự án Netlify/Git đang dùng, gồm thư
+            mục <code>netlify/functions</code>.
+          </li>
+          <li>
+            Giữ cấu hình xây dựng: <code>npm run build</code>; xuất bản: <code>dist</code>;
+            functions: <code>netlify/functions</code>; Node 22 (tối thiểu 22.13.0).
+          </li>
+          <li>
+            Trong dự án Google Apps Script hiện có, thay cả <code>Code.gs</code> và
+            <code>Domain.gs</code> bằng nội dung tương ứng trong <code>google-apps-script</code>.
+            Giữ <code>SPREADSHEET_ID</code>, <code>GATEWAY_SECRET</code> và quyền Sheets API đang
+            hoạt động.
+          </li>
+          <li>
+            Chọn hàm <code>migrateV670</code>, bấm Run. Hàm kiểm tra bảng hiện có; sao được khởi tạo
+            khi có lượt học mới đủ điều kiện. Không cộng hồi tố cho lịch sử cũ, không xóa hoặc tạo
+            lại 9 bảng.
+          </li>
+          <li>
+            Vào Deploy → Manage deployments → Edit → Version: New version → Deploy. Giữ cùng URL Web
+            App và quyền truy cập đang dùng.
+          </li>
+          <li>
+            Giữ các biến Netlify hiện tại, nhất là <code>STATE_SIGNING_KEY</code>,
+            <code>LEARNING_SIGNING_KEY</code> và các khóa kết nối. Chạy triển khai mới để Functions
+            được cập nhật.
+          </li>
+        </ol>
+        <p class="note">
+          Không chỉ kéo thư mục <code>dist</code> lên một host tĩnh: trò chuyện, giọng nói và lưu
+          sao cần Functions. Chưa triển khai bản này lên website đang hoạt động của thầy.
+        </p>
+      </section>
+      <section>
+        <h2>5. Giọng AI dùng cấu hình nào?</h2>
+        <p>
+          Phần giọng nói tự theo <code>AI_PROVIDER</code> và khóa API máy chủ hiện có. Không cần đổi
+          mô hình trò chuyện, đổi Google Sheets hay bắt buộc thêm khóa mới nếu tài khoản hiện tại
+          được quyền dùng mô hình âm thanh.
+        </p>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Biến tùy chọn</th>
+                <th>Mặc định</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>SPEECH_PROVIDER</code></td>
+                <td>
+                  Để trống: theo <code>AI_PROVIDER</code>. Có thể đặt <code>openai</code> hoặc
+                  <code>gemini</code>.
+                </td>
+              </tr>
+              <tr>
+                <td><code>OPENAI_AUDIO_MODEL</code></td>
+                <td><code>gpt-audio-1.5</code> — nghe mẫu và nhận xét phát âm.</td>
+              </tr>
+              <tr>
+                <td><code>GEMINI_TTS_MODEL</code></td>
+                <td><code>gemini-2.5-flash-preview-tts</code> — nghe mẫu.</td>
+              </tr>
+              <tr>
+                <td><code>GEMINI_PRONUNCIATION_MODEL</code></td>
+                <td><code>gemini-2.5-flash</code> — nhận xét đoạn âm thanh.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Giọng nói và phân tích âm thanh có thể phát sinh phí/hạn mức của tài khoản API. Chỉ gọi
+          khi bấm nghe hoặc kiểm tra; các đoạn vừa nghe được giữ tạm trong bộ nhớ phiên để giảm gọi
+          lại. Khi dịch vụ lỗi, hiện thông báo và tùy chọn <b>Dùng giọng thiết bị</b> nếu máy có
+          giọng tiếng Anh.
+        </p>
+      </section>
+      <section>
+        <h2>6. Kiểm tra trước khi giao cho lớp</h2>
+        <ul class="check">
+          <li>Gửi một đề, kiểm tra English và Vietsub cùng số, dấu và công thức.</li>
+          <li>Chụp ảnh rõ, sửa một số trong phiên âm, xác nhận lại; bản dịch phải cập nhật.</li>
+          <li>Nghe câu gia sư và một từ; thử Dừng và tốc độ chậm.</li>
+          <li>
+            Tự nguyện ghi một từ, kiểm tra nhận xét; thử từ chối quyền micro và học tiếp bằng văn
+            bản.
+          </li>
+          <li>
+            Bật bộ nhớ, trả lời một bước có nội dung bằng tiếng Anh, chờ xác nhận sao, tải lại trang
+            và khôi phục mã trên thiết bị thứ hai.
+          </li>
+          <li>
+            Kiểm tra lượt chờ mạng không làm cộng sao hai lần; học tiếng Việt vẫn được ghi nhận nỗ
+            lực.
+          </li>
+        </ul>
+        <p>
+          Kiểm thử trong gói dùng ứng dụng và handler thật với phản hồi dịch vụ mô phỏng. Chưa có
+          kiểm thử bằng khóa AI/Google Sheets sản xuất của thầy; cần bước kiểm tra thực tế trên đây
+          trước khi giao lớp.
+        </p>
+        <p>
+          <a href="docs/v670/BAO_CAO_KIEM_THU.md">Báo cáo kiểm thử</a> ·
+          <a href="docs/v670/THIET_KE_KY_THUAT.md">Chi tiết kỹ thuật</a> ·
+          <a href="README.md">README</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

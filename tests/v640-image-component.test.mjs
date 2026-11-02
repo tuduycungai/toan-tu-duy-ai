@@ -10,6 +10,8 @@ import { renderScene } from '../public/geometry-scene.mjs';
 import { reading } from './fixtures/v623-data.mjs';
 const fixture = cases()[0];
 let source = readFileSync(new URL('../components/image-problem.tsx', import.meta.url), 'utf8')
+  .replace(/import \{ PairedText \}[^\n]+/, 'const PairedText=()=>null;')
+  .replace(/import \{ SpeechButton \}[^\n]+/, 'const SpeechButton=()=>null;')
   .replace(/import \{\s*MathText\s*\}[^\n]+/, 'const MathText=({text})=>text;')
   .replace(
     /import \{\s*compileTikz\s*\}[^\n]+/,

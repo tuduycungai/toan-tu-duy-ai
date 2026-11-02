@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { handleLanguage } from '../server/language.mjs';
 import { Readable } from 'node:stream';
 import { createServer as createViteServer } from 'vite';
 import { handleChat } from '../server/chat.mjs';
@@ -9,6 +10,8 @@ const server = http.createServer(async (req, res) => {
   if (
     [
       '/api/chat',
+      '/api/language',
+      '/.netlify/functions/language',
       '/.netlify/functions/chat',
       '/api/learning',
       '/api/teacher',
@@ -26,13 +29,15 @@ const server = http.createServer(async (req, res) => {
           : {}),
       });
       const path = req.url.split('?')[0];
-      const handler = path.endsWith('/learning')
-        ? handleLearning
-        : path.endsWith('/teacher')
-          ? handleTeacher
-          : path.endsWith('/chat')
-            ? handleChat
-            : handleFeedback;
+      const handler = path.endsWith('/language')
+        ? handleLanguage
+        : path.endsWith('/learning')
+          ? handleLearning
+          : path.endsWith('/teacher')
+            ? handleTeacher
+            : path.endsWith('/chat')
+              ? handleChat
+              : handleFeedback;
       const result = await handler(request, process.env);
       res.writeHead(result.status, Object.fromEntries(result.headers));
       res.end(Buffer.from(await result.arrayBuffer()));

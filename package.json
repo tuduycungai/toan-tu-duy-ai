@@ -1,6 +1,6 @@
 {
   "name": "toan-tu-duy-ai-netlify",
-  "version": "6.6.0",
+  "version": "6.7.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -39,7 +39,9 @@
     "test:ui:v650": "node scripts/check-v650-ui.mjs",
     "test:v660": "node --test tests/v660-*.test.mjs",
     "test:ui:v660": "node scripts/check-v660-ui.mjs",
-    "test:ui:regression:v660": "node scripts/check-v660-regression-ui.mjs"
+    "test:ui:regression:v660": "node scripts/check-v660-regression-ui.mjs",
+    "test:v670": "node --test tests/v670-*.test.mjs",
+    "test:ui:v670": "node scripts/check-v670-ui.mjs"
   },
   "dependencies": {
     "@rod2ik/tikzjax": "1.6.0",

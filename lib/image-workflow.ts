@@ -1,6 +1,8 @@
 import type { GeometryScene } from '../public/geometry-scene.mjs';
 export type ImageReading = {
   transcription: string;
+  transcriptionEn?: string;
+  transcriptionVi?: string;
   figureLabels: string[];
   givens: string[];
   goals: string[];

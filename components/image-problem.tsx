@@ -1,3 +1,5 @@
+import { PairedText } from './bilingual-learning';
+import { SpeechButton } from './speech-button';
 import { useEffect, useRef, useState } from 'react';
 import { Camera, ImagePlus, X } from 'lucide-react';
 import { prepareImage, releaseImage, type PreparedImage } from '../lib/image-input';
@@ -196,7 +198,7 @@ export function ImageProblem({
   }
   const geometry = !chapterId || ['c3', 'c4'].includes(chapterId);
   const scopedRequest = <T,>(body: Record<string, unknown>, code: string, signal: AbortSignal) =>
-    imageRequest<T>({ ...body, chapterId, lessonId }, code, signal);
+    imageRequest<T>({ ...body, chapterId, lessonId, learningLanguage: 'en-vi' }, code, signal);
   const read = () =>
     void job(async (signal) => {
       if (!image) return;
@@ -435,7 +437,18 @@ export function ImageProblem({
       )}
       {reading && (
         <div className="image-reading">
-          <h3>1. Đề bài AI đã đọc</h3>
+          <h3>1. Đề bài AI đã đọc · English + Vietsub</h3>
+          {reading.transcriptionEn &&
+            reading.transcriptionVi &&
+            transcript === reading.transcription && (
+              <>
+                <PairedText pair={{ en: reading.transcriptionEn, vi: reading.transcriptionVi }} />
+                <SpeechButton text={reading.transcriptionEn} code={accessCode} />
+              </>
+            )}
+          {transcript !== reading.transcription && (
+            <p className="caption">Bản dịch sẽ cập nhật sau khi em xác nhận nội dung đã sửa.</p>
+          )}
           <label>
             Kiểm tra và sửa bản phiên âm
             <textarea

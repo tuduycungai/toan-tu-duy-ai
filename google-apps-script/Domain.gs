@@ -1,5 +1,6 @@
 // Generated from server/learning/domain.mjs and engine.mjs. Edit sources, then run npm run build:gateway.
-const RULE_VERSION = '6.6.0-r1';
+const RULE_VERSION = '6.7.0-r1';
+const PREVIOUS_RULE_VERSION = '6.6.0-r1';
 const LEGACY_RULE_VERSION = '6.5.0-r1';
 const CURRICULUM_UNITS = {
   l01: { chapterId: 'c1', skills: ['monomial'] },
@@ -292,6 +293,10 @@ function profileSummary(p) {
   return {
     supportLevel: p.supportLevel,
     observedTurns: p.turns,
+    gamification: {
+      total: p.gamification?.total || 0,
+      bilingualTotal: p.gamification?.bilingualTotal || 0,
+    },
     skills: p.skills,
     scopes: p.scopes || {},
     repeatedErrors: p.errors,
@@ -370,6 +375,50 @@ function metrics(profiles) {
     independentRate: totals.attempts ? totals.independent / totals.attempts : null,
     hintsPerStep: totals.attempts ? totals.hints / totals.attempts : null,
   };
+}
+
+// Server-signed attempts only. The adapter holds its distributed lock through commit.
+function awardStars(profile, event, now = Date.now()) {
+  const g = profile.gamification || { total: 0, bilingualTotal: 0, days: {} };
+  profile.gamification = g;
+  g.days = g.days || {};
+  const cutoff = new Date(now + 7 * 3600000 - 2 * 86400000).toISOString().slice(0, 10);
+  for (const day of Object.keys(g.days)) if (day < cutoff) delete g.days[day];
+  const eligible = [
+    'correct_complete',
+    'correct_partial',
+    'alternative_path',
+    'idea_missing_reason',
+    'wrong_given_goal',
+    'wrong_theorem',
+    'wrong_logic',
+    'wrong_calculation_notation',
+  ];
+  const answer = event.answer || '';
+  if (
+    event.ruleVersion !== RULE_VERSION ||
+    event.languageMode !== 'en-vi' ||
+    !eligible.includes(event.classification) ||
+    event.redacted ||
+    answer.trim().length < 10 ||
+    !/^[a-f0-9]{64}$/.test(event.rewardKey || '')
+  )
+    return 0;
+  const day = new Date(Date.parse(event.updatedAt) + 7 * 3600000).toISOString().slice(0, 10);
+  const bucket = g.days[day] || { earned: 0, keys: [] };
+  if (bucket.earned >= 30 || bucket.keys.includes(event.rewardKey)) return 0;
+  const english =
+    /\b(?:the|is|are|because|since|therefore|this|these|has|have|equals|we|i)\b/i.test(answer) &&
+    /\b(?:coefficient|variable|exponent|degree|term|polynomial|monomial|sum|difference|product|quotient|factor|identity|square|cube|parallel|perpendicular|angle|side|triangle|quadrilateral|rectangle|rhombus|parallelogram|diagonal|midpoint|ratio|data|chart|percentage|sample|equal|divided|multiply|subtract|add|simplify)\b/i.test(
+      answer,
+    );
+  const earned = Math.min(english ? 3 : 1, 30 - bucket.earned);
+  bucket.earned += earned;
+  bucket.keys.push(event.rewardKey);
+  g.days[day] = bucket;
+  g.total = (g.total || 0) + earned;
+  g.bilingualTotal = (g.bilingualTotal || 0) + (english ? Math.max(0, earned - 1) : 0);
+  return earned;
 }
 
 const fail = (message, status = 400) => {
@@ -541,8 +590,9 @@ function runOperation(db, op, a, now = Date.now()) {
         e.hintLevel > 4 ||
         !['correct', 'incorrect', 'uncertain'].includes(e.verdict) ||
         !['', ...ERRORS].includes(e.errorKind) ||
-        ![RULE_VERSION, LEGACY_RULE_VERSION].includes(e.ruleVersion) ||
-        (e.ruleVersion === RULE_VERSION && !validLearningContext(e)) ||
+        ![RULE_VERSION, PREVIOUS_RULE_VERSION, LEGACY_RULE_VERSION].includes(e.ruleVersion) ||
+        ([RULE_VERSION, PREVIOUS_RULE_VERSION].includes(e.ruleVersion) &&
+          !validLearningContext(e)) ||
         JSON.stringify(e).length > 10000 ||
         now - Date.parse(e.updatedAt) > 86400000 ||
         Date.parse(e.updatedAt) > now + 60000 ||
@@ -553,7 +603,7 @@ function runOperation(db, op, a, now = Date.now()) {
       if (old) {
         if (JSON.stringify(old) !== JSON.stringify(e))
           fail('Mã lượt học đã được dùng với nội dung khác.', 409);
-        return { saved: true, duplicate: true };
+        return { saved: true, duplicate: true, profile: profileSummary(db.get('Profiles', s.id)) };
       }
       const session = db.get('Sessions', e.sessionId);
       if (session && session.studentId !== s.id) fail('Phiên học không hợp lệ.', 403);
@@ -569,6 +619,7 @@ function runOperation(db, op, a, now = Date.now()) {
       const daily = s.day === day ? s.daily || 0 : 0;
       if (daily >= 300) fail('Đã đủ 300 lượt lưu trong ngày.', 429);
       const { profile, candidate, corroborated } = updateProgress(db.get('Profiles', s.id), e);
+      const starsEarned = awardStars(profile, e, now);
       put('Turns', e);
       put('Profiles', { ...profile, id: s.id });
       put('Students', {
@@ -602,7 +653,7 @@ function runOperation(db, op, a, now = Date.now()) {
           answer: e.answer,
           nextQuestion: e.nextQuestion,
         });
-      return { saved: true, corroborated, profile: profileSummary(profile) };
+      return { saved: true, corroborated, starsEarned, profile: profileSummary(profile) };
     }
     if (op === 'survey') {
       if (
@@ -628,7 +679,7 @@ function runOperation(db, op, a, now = Date.now()) {
       if (old) {
         if (old.rating !== row.rating || old.comment !== row.comment)
           fail('Mã đánh giá đã dùng.', 409);
-        return { saved: true, duplicate: true };
+        return { saved: true, duplicate: true, profile: profileSummary(db.get('Profiles', s.id)) };
       }
       put('Surveys', row);
       return { saved: true };

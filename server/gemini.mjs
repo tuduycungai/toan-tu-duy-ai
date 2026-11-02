@@ -105,10 +105,14 @@ export async function handleChat(request, env, fetcher = fetch) {
     } catch (e) {
       return reply({ error: e.message }, e.status || 400);
     }
-    if (!featureImage && !diagram && curriculumContext.chapterId !== 'c3') {
+    if (
+      !featureImage &&
+      !diagram &&
+      (curriculumContext.chapterId !== 'c3' || body.learningLanguage === 'en-vi')
+    ) {
       const student = curriculumStudent(body.messages);
       const generation = student.match(/^Tạo đúng (\d+) câu/iu);
-      if (generation)
+      if (generation && body.learningLanguage !== 'en-vi')
         return reply({
           ...curriculumExerciseSet(curriculumContext, Number(generation[1]), student),
           model,
